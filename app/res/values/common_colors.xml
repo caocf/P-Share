@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- three color style -->
+ 	<color name="common_color_normal">#1376ca</color>
+ 	<color name="common_color_disable">#D5D5D5</color>
+  	<color name="common_color_dark">#0277BD</color>
+   	<color name="common_color_light">#E3F2FD</color>
+   
+    <!-- actionbar color -->
+    <color name="actionbar_background">@color/common_color_normal</color>
+	<color name="actionbar_search_background">@color/common_color_normal</color>
+	<color name="actionbar_progress_background">@color/common_color_normal</color>
+    <color name="actionbar_tab_text">#8fffffff</color>
+    <color name="actionbar_tab_text_checked">#ffffff</color>
+	
+	<!-- menu color -->
+    <color name="menu_text">@color/common_color_disable</color>
+    <color name="menu_text_pressed">@color/common_color_normal</color>
+    <color name="menu_bg">#121a2a</color>
+    <color name="menu_bg_pressed">@color/common_color_light</color>
+    <color name="image_font_pressed">#8f000000</color>
+    <!-- common backgroud color -->
+    <color name="activity_background">#F2F2F2</color>
+  	<color name="fragment_background">#F2F2F2</color>
+  	<color name="image_background">#252525</color>
+  	<color name="statusbar_bg">#C4000000</color>
+  	
+	<!-- dialog -->
+	<color name="common_dialog_loading_background">#8f000000</color>
+	<color name="common_dialog_title">#ffffff</color>
+	<color name="common_dialog_title_background">@color/common_color_normal</color>
+	<color name="common_dialog_content">#666666</color>
+	<color name="common_dialog_line">@color/common_color_dark</color>
+	<color name="common_dialog_background">#ffffff</color>
+	<color name="common_dialog_button">#666666</color>
+	<color name="common_dialog_button_line">#cecece</color>
+	<color name="common_dialog_button_background_pressed">@color/common_color_normal</color>
+	<color name="common_dialog_list_driver">#cecece</color>
+	
+    <!-- common text color -->
+    <color name="common_driver">#eee</color>
+    <color name="common_line">#cecece</color>
+    <color name="common_title">#333333</color>
+    <color name="common_content">#666666</color>
+    <color name="common_mark">#999999</color>
+    <color name="common_hint">#999999</color>
+    <color name="common_input">#333333</color>
+    <color name="common_error">#ff0000</color>
+     
+	
+    <!-- scroll -->
+    <color name="scrollbar_track">@color/common_color_light</color>
+    <color name="scrollbar_thumb">@color/common_color_normal</color>
+    
+    <!-- progress -->
+	<color name="progress_horizontal_progress">@color/common_color_normal</color>
+	<color name="progress_horizontal_second">@color/common_color_light</color>
+	<color name="progress_horizontal_background">@color/common_color_disable</color>
+	
+    <!-- listview -->
+    <color name="list_item_driver">#cecece</color>
+    <color name="list_item_background">#ffffff</color>
+    <color name="list_item_background_enable">@color/common_color_disable</color>
+    <color name="list_item_background_pressed">@color/common_color_light</color>
+    <color name="list_item_background_selected">@color/common_color_light</color>
+    <color name="list_item_title">#333333</color>
+    <color name="list_item_content">#666666</color>
+    <color name="list_item_mark">#999999</color>
+    
+   
+    <!-- notification -->
+	<color name="update_notification_icon_bg">#3333B5E5</color>
+	<color name="update_notification_title">#ffffff</color>
+	<color name="update_notification_content">#999999</color>
+	<color name="notification_line">#999999</color>
+	
+	<!-- button -->
+	<color name="common_btn_normal">@color/common_color_normal</color>
+    <color name="common_btn_pressed">#4f000000</color>
+    <color name="common_btn_enable">#D5D5D5</color>
+    
+    <color name="common_btn_reverse_normal">@color/common_color_normal</color>
+    <color name="common_btn_reverse_pressed">@color/common_color_normal</color>
+    <color name="common_btn_reverse_enable">#D5D5D5</color>
+    
+    <!-- tab -->
+    <color name="common_tab_bg">@android:color/white</color>
+    <color name="common_tab_line">@color/common_color_normal</color>
+    
+    <!-- edittext -->
+    <color name="common_edittext_bg">@android:color/white</color>
+    <color name="common_edittext_normal">@color/common_color_disable</color>
+    <color name="common_edittext_focus">@color/common_color_normal</color>
+    
+    <!-- edittext layout-->
+    <color name="common_edittext_layout_bg">@android:color/white</color>
+    <color name="common_edittext_layout_normal">@color/common_color_disable</color>
+    <color name="common_edittext_layout_focus">@color/common_color_normal</color>
+    
+    <!-- layout -->
+    <color name="common_layout_bg">@android:color/white</color>
+    <color name="common_layout_bg_pressed">@color/common_color_light</color>
+    <color name="common_layout_text_normal">@android:color/black</color>
+    <color name="common_layout_text_pressed">@color/common_color_disable</color>
+    
+</resources>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="30dip" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/common_dialog_bg"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/dialog_common_title"
+            style="@style/Common_Dialog_Title"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/common_dialog_title"
+            android:visibility="gone" />
+		<View
+		    android:id="@+id/dialog_common_title_line"
+	        android:layout_width="match_parent"
+	        android:layout_height="2dp"
+	        android:background="@color/common_dialog_line"
+	        android:visibility="gone" />
+		 <TextView
+	            android:id="@+id/dialog_common_message"
+	            style="@style/Common_Dialog_Content"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:minLines="2"
+	            android:layout_margin="8dp"
+	            android:gravity="center|left"
+	            android:text="@string/common_dialog_title"
+	            android:visibility="gone"/>
+	
+	        <ListView
+	            android:id="@+id/dialog_common_list"
+	            android:layout_width="match_parent"
+	            android:layout_height="0dp"
+	            android:layout_weight="1"
+	            style="@style/Common_ListView"
+	            android:divider="@color/common_dialog_list_driver"
+	            android:visibility="gone" >
+	        </ListView>
+		 <LinearLayout
+		    android:id="@+id/dialog_common_content"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	        
+	 	 </LinearLayout>
+        <View
+            android:id="@+id/dialog_common_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/common_dialog_button_line" />
+
+        <LinearLayout
+            android:id="@+id/dialog_common_btn_area"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/dialog_common_left"
+                style="@style/Common_Dialog_Button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/common_dialog_confirm"
+                android:visibility="gone"/>
+
+            <View
+                android:id="@+id/dialog_common_left_line"
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/common_dialog_button_line"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/dialog_common_center"
+                style="@style/Common_Dialog_Button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/common_dialog_done"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/dialog_common_right_line"
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/common_dialog_button_line"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/dialog_common_right"
+                style="@style/Common_Dialog_Button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/common_dialog_cancel"
+                android:visibility="gone" />
+            
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

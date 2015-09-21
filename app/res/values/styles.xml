@@ -1,0 +1,269 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+	<!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
+
+
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.NoTitleBar">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:windowBackground">@drawable/ic_splashing</item>
+    </style>
+    <style name="spashing_theme" parent="@android:Theme.NoTitleBar.Fullscreen">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+     	<item name="android:windowBackground">@drawable/ic_splashing</item>
+    </style>
+    <!-- ActionBar theme. -->
+    <style name="ActionBar">
+        <item name="android:background">@color/actionbar_background</item>
+    </style>
+    <!-- Dialog theme. -->
+ 	<style name="TransparentDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+    </style>
+    
+    <style name="TransparentDialog.Bottom" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowAnimationStyle">@style/PopupWindowAnimation_Bottom</item>
+    </style>
+
+    <style name="TransparentDialog.Top" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowAnimationStyle">@style/PopupWindowAnimation_Top</item>
+    </style>
+    
+    <!-- Dialog Animation. -->
+    <style name="PopupWindowAnimation_Bottom">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
+    </style>
+
+    <style name="PopupWindowAnimation_Top">
+        <item name="android:windowEnterAnimation">@anim/slide_in_top</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_top</item>
+    </style>
+    
+    <!-- dialog Style-->
+    <style name="Common_Dialog_Title">
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">@color/common_dialog_title</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/common_dialog_title_bg</item>
+    </style>
+
+    <style name="Common_Dialog_Content">
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/common_dialog_content</item>
+    </style>
+
+    <style name="Common_Dialog_Button">
+        <item name="android:background">@drawable/common_dialog_btn</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/common_dialog_button</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Common_ListView" parent="android:Widget.ListView">
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:listSelector">@android:color/transparent</item>
+        <item name="android:divider">@color/common_driver</item>
+        <item name="android:dividerHeight">1px</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:scrollbarSize">2dp</item>
+        <item name="android:scrollbarTrackVertical">@drawable/common_scrollbar_vertical_track</item>
+        <item name="android:scrollbarThumbVertical">@drawable/common_scrollbar_vertical_thumb</item>
+    </style>
+
+
+    <style name="Common_GridView" parent="android:Widget.GridView">
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:listSelector">@android:color/transparent</item>
+        <item name="android:divider">#ffffff</item>
+        <item name="android:dividerHeight">1px</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:scrollbarSize">2dp</item>
+        <item name="android:scrollbarTrackVertical">@drawable/common_scrollbar_vertical_track</item>
+        <item name="android:scrollbarThumbVertical">@drawable/common_scrollbar_vertical_thumb</item>
+    </style>
+
+    <style name="Common_ScrollView" parent="android:Widget.ScrollView">
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:scrollbarSize">2dp</item>
+        <item name="android:scrollbarTrackVertical">@drawable/common_scrollbar_vertical_track</item>
+        <item name="android:scrollbarThumbVertical">@drawable/common_scrollbar_vertical_thumb</item>
+    </style>
+    
+ 	<style name="Common_ProgressBarHorizontal" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/common_progress_horizontal</item>
+    </style>
+    
+    <style name="Common_ProgressBarHorizontal_Transparent" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/common_progress_horizontal_transparent</item>
+    </style>
+
+
+    <style name="Common_EditText" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textColorHighlight">@color/text_grey</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/common_edittext_bg</item>
+    </style>
+
+    <style name="Common_TextView_Title">
+        <item name="android:textColor">@color/common_title</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Common_TextView_Content">
+        <item name="android:textColor">@color/common_content</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Common_TextView_Hint">
+        <item name="android:textColor">@color/common_hint</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Common_TextView_Mark">
+        <item name="android:textColor">@color/common_mark</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="Common_TextView_Error">
+        <item name="android:textColor">@color/common_error</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    
+	<style name="Common_Settings_TextView_Title">
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/common_title</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="Common_Settings_TextView_Hint">
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/common_hint</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="Common_Settings_Layout">
+        <item name="android:background">@drawable/common_layout_settings_bg_selector</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="Common_Button" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/common_btn_selector</item>
+    </style>
+    
+    <style name="Common_Button.Reverse" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@color/common_btn_text_selector</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/common_btn_reverse_selector</item>
+    </style>
+    <style name="Common_TextView.Reverse" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/common_btn_text_selector</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/common_btn_reverse_selector</item>
+    </style>
+    <style name="Common_Button.Red" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/btn_red_selector</item>
+    </style>
+
+    <style name="Common_Tab">
+        <item name="android:padding">12dp</item>
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/actionbar_tab_text_selector</item>
+        <item name="android:button">@null</item>
+        <item name="android:background">@drawable/actionbar_tab_selector</item>
+    </style>
+
+    <style name="Common_Radio_Tab">
+        <item name="android:padding">12dp</item>
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/actionbar_tab_text_selector</item>
+        <item name="android:button">@null</item>
+        <item name="android:background">@drawable/common_radio_selector</item>
+    </style>
+    
+
+	 <style name="Common_TextView_Update_Nofification_Title">
+        <item name="android:textColor">@color/update_notification_title</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    
+    <style name="Common_TextView_Update_Nofification_Content">
+        <item name="android:textColor">@color/update_notification_content</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+   
+    
+    <style name="Menu_Item">
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/common_menu_text_selector</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+     
+</resources>

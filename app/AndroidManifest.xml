@@ -1,0 +1,68 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.azhuoinfo.pshare"
+    android:versionCode="1"
+    android:versionName="1.0.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="21" />
+    
+     <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+     
+	<uses-feature android:name="android.hardware.telephony" android:required="false" />
+	
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- gps
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> -->
+    <application
+       	android:name=".MobileApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+         <!-- 应用ID  -->
+        <meta-data android:name="APP_ID" android:value="\ 103"/>
+        <!-- 渠道ID -->
+        <meta-data android:name="CHANNEL_ID" android:value="\ test"/>
+        <!--build日期  -->
+        <meta-data android:name="BUILD_DATE" android:value="20150518"/>
+        <!--svnv  -->
+        <meta-data android:name="BUILD_SVNV" android:value="r67"/>
+		<!-- OpenUDID -->
+		<service android:name="org.openudid.OpenUDID_service" android:exported="false">
+		    <intent-filter>
+		        <action android:name="org.openudid.GETUDID" />
+		    </intent-filter>
+		</service>
+        <activity
+            android:name=".activity.SplashActivity"
+            android:theme="@style/spashing_theme"
+            android:label="@string/app_name"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".activity.MainActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+    </application>
+
+</manifest>

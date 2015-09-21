@@ -1,0 +1,213 @@
+<resources>
+
+    <!-- app string -->
+    <string name="app_version">V%1$s</string>
+    <string name="app_build">Build %1$s  %2$s for %3$s</string>
+    <string name="app_devices">设备ID: %1$s</string>
+    <string name="app_copyright">版权说明</string>
+    <string name="app_upgraded">已经是最新版本</string>
+    <string name="app_activity_not_found">您的手机暂时不支持此功能！</string>
+    <string name="app_not_launcher_market">无法访问应用市场！</string>
+    <string name="app_enter">进入</string>
+    <string name="app_skip">跳过</string>
+    <string name="app_exit">请再一次Back键退出!</string>
+
+    <!-- commom status -->
+    <string name="common_nologin">未登录</string>
+    <string name="common_next">下一步</string>
+    <string name="common_login">请登录!</string>
+    <string name="common_edit">编辑</string>
+    <string name="common_empty">什么都没有!</string>
+    <string name="common_retry">获取失败,请重试！</string>
+    <string name="common_success">成功</string>
+    <string name="common_error">很抱歉,无法获取数据!</string>
+    <string name="common_loading">请稍后&#8230;</string>
+    <string name="common_processing">处理中</string>
+    <string name="common_submiting">提交中</string>
+    <string name="common_uploading">上传中</string>
+    <string name="common_upgrade">下载更新中</string>
+    <string name="common_loading_more">正在加载更多</string>
+    <string name="common_select_action_title">%1$d项被选择</string>
+    <string name="common_network_error">您的网络有故障,请检查网络.</string>
+    <string name="common_network_to3g">连接到网络3G,提醒您流量会产生费用.</string>
+    <string name="common_storage_remove">存储卡被移除,下载等功能可能无法使用！</string>
+    <string name="common_storage_null">没有存储卡</string>
+    <string name="common_disconnected">进入离线模式</string>
+
+    <!-- common pull refresh -->
+    <string name="common_header_hint_normal">下拉刷新</string>
+    <string name="common_header_hint_ready">松开刷新数据</string>
+    <string name="common_header_hint_loading">正在加载&#8230;</string>
+    <string name="common_header_last_time">上次更新时间：</string>
+    <string name="common_footer_hint_normal">查看更多</string>
+    <string name="common_footer_hint_ready">松开载入更多</string>
+    <string name="common_footer_hint_error">错误,请重试</string>
+    <string name="common_footer_hint_loading">正在加载&#8230;</string>
+
+    <!-- common dialog -->
+    <string name="common_dialog_disconnected">进入离线模式</string>
+    <string name="common_dialog_error">错误</string>
+    <string name="common_dialog_retry">重试</string>
+    <string name="common_dialog_title">提示</string>
+    <string name="common_dialog_confirm">确定</string>
+    <string name="common_dialog_done">完成</string>
+    <string name="common_dialog_cancel">取消</string>
+    <string name="common_dialog_exit">退出</string>
+    <string name="dialog_tips_title">提示</string>
+    <string name="dialog_delete_title">提示</string>
+    <string name="dialog_delete_content">你确定要删除吗？</string>
+    <string name="dialog_delete_success">删除成功！</string>
+    <string name="dialog_server_fail">获取服务器链接错误！</string>
+    <string name="dialog_upgrade_title">升级提示</string>
+    <string name="dialog_register_fail_title">提示</string>
+    <string name="dialog_register_fail_content">检测到本机有使用过帐号</string>
+    <string name="dialog_register_fail_confirm">去登录</string>
+    <string name="dialog_register_fail_cancel">生成新账号</string>
+    <string name="dialog_login_title">提示</string>
+    <string name="dialog_login_content">您需要登录后才能进行操作</string>
+    <string name="dialog_logout_title">提示</string>
+    <string name="dialog_logout_nopw_content">当前帐号未设置密码,切换帐号后将无法恢复</string>
+    <string name="dialog_logout_content">请确认再次退出账号吗?</string>
+    <string name="dialog_expire_title">提示</string>
+    <string name="dialog_expire_content">账号过期，请重新登录</string>
+    <string name="dialog_cache_content">您确定要清除应用缓存吗？</string>
+    <!-- common action menu -->
+    <string name="common_menu_shared">分享</string>
+    <string name="common_menu_download">下载</string>
+    <string name="common_menu_setas">设置为 &#8230;</string>
+    <string name="common_menu_setcover">设置为封面</string>
+    <string name="common_menu_changecover">修改封面</string>
+    <string name="common_menu_feedback">意见反馈</string>
+    <string name="common_menu_help">帮助</string>
+    <string name="common_menu_about">关于</string>
+
+    <!-- user login/register -->
+    <string name="user_avatar">头像</string>
+    <string name="user_nickname">昵称</string>
+    <string name="user_gender">性别</string>
+    <string name="user_gender_man">男</string>
+    <string name="user_gender_woman">女</string>
+    <string name="user_gender_unknow">未知</string>
+    <string name="user_location">位置</string>
+    <string name="user_birthday">生日</string>
+    <string name="user_mobile">手机</string>
+    <string name="user_email">邮箱</string>
+    <string name="user_userId">帐号</string>
+    <string name="user_login">登录</string>
+    <string name="user_register">注册</string>
+    <string name="user_logout">退出登录</string>
+    <string name="user_logout_success">已退出登录！</string>
+    <string name="user_third_login">第三方合作登录</string>
+    <string name="user_thirdlogin_getuser_fail">获取用户信息失败</string>
+    <string name="user_thirdlogin_auth_fail">授权失败</string>
+    <string name="user_username_hint">请输入手机号或邮箱</string>
+    <string name="user_password_hint">请输入密码(6&#8211;14位)</string>
+    <string name="user_oldpassword_hint">请输入旧密码</string>
+    <string name="user_newpassword_hint">请输入新密码(6&#8211;14位)</string>
+    <string name="user_repassword_hint">请再次输入密码</string>
+    <string name="user_renewpassword_hint">请再次输入新密码</string>
+    <string name="user_confirm">确认</string>
+    <string name="user_forget"><u>忘记密码?</u></string>
+    <string name="user_agreeon">请同意服务条款</string>
+    <string name="user_next">下一步</string>
+    <string name="user_bind">点击绑定</string>
+    <string name="user_change_password">修改密码</string>
+    <string name="user_change_sex">修改性别</string>
+    <string name="user_change_nickname">修改昵称</string>
+    <string name="user_change_birthday">修改生日</string>
+    <string name="user_change_location">修改位置</string>
+    <string name="user_change_mobile">绑定手机</string>
+    <string name="user_change_email">绑定邮箱</string>
+    <string name="user_change_avatar">修改头像</string>
+    <string name="user_change_success">修改成功！</string>
+    <string name="register_gender_">性别:</string>
+    <string name="register_nickname_">昵称:</string>
+    <string name="register_email_">邮箱:</string>
+    <string name="register_password_">密码:</string>
+    <string name="register_mobile_">手机号:</string>
+    <string name="register_mobile">手机注册</string>
+    <string name="register_device">一键注册</string>
+    <string name="register_email">邮箱注册</string>
+    <string name="register_mobile_hint">手机号</string>
+    <string name="register_email_hint">邮箱</string>
+    <string name="register_password_hint">密码(6&#8211;14位)</string>
+    <string name="register_nickname_hint">昵称(20个字符以内)</string>
+    <string name="register_location_hint">位置</string>
+    <string name="register_birthday_hint">生日</string>
+    <string name="register_verifycode_hint">验证码</string>
+    <string name="register_verifycode">获取验证码</string>
+
+    <string-array name="user_avatar_from">
+        <item>从相册选择</item>
+        <item>拍照</item>
+    </string-array>
+    <string-array name="user_gender">
+        <item>男</item>
+        <item>女</item>
+        <item>未知</item>
+    </string-array>
+
+    <!-- user validate -->
+    <string name="user_validate_username_notnull">手机号或邮箱不能为空</string>
+    <string name="user_validate_username_format">手机号或邮箱格式不正确！</string>
+    <string name="user_validate_nickname_notnull">昵称不能为空</string>
+    <string name="user_validate_nickname_format">昵称只能为20个字符以内，其中只可以包含数字、字母、下划线(_)、汉字</string>
+    <string name="user_validate_birthday_notnull">生日不能为空</string>
+    <string name="user_validate_location_notnull">位置不能为空</string>
+    <string name="user_validate_password_notnull">密码不能为空</string>
+    <string name="user_validate_password_format">密码长度在6~14位之间的非空字符</string>
+    <string name="user_validate_oldpassword_notnull">旧密码不能为空</string>
+    <string name="user_validate_newpassword_notnull">新密码不能为空</string>
+    <string name="user_validate_newpassword_format">新密码长度在6~14位之间的非空字符</string>
+    <string name="user_validate_renewpassword_notnull">重复新密码不能为空</string>
+    <string name="user_validate_renewpassword_notsame">新密码两次输入不一致</string>
+    <string name="user_validate_verifycode_notnull">验证码不能为空</string>
+    <string name="user_validate_verifycode_invalid">验证码不正确</string>
+    <string name="user_validate_email_notnull">邮箱不能为空</string>
+    <string name="user_validate_email_format">邮箱格式不正确</string>
+    <string name="user_validate_mobile_notnull">手机号不能为空</string>
+    <string name="user_validate_mobile_format">手机号格式不正确</string>
+
+    <!-- image menu|action -->
+    <string name="action_menu_shared">分享</string>
+    <string name="action_menu_download">下载</string>
+    <string name="action_menu_setas">设置为</string>
+    <string name="action_menu_setcover">设置封面</string>
+     <string name="action_menu_select">选择</string>
+    <string name="image_shared_title">分享图片</string>
+    <string name="image_saved_title">已保存到</string>
+    <string name="image_saved_fail">没有可用的存储空间</string>
+    <string name="image_setas_title">设置为 &#8230;</string>
+
+    <string-array name="wallpaper_action_array">
+        <item>保存到本地</item>
+        <item>设置为&#8230;</item>
+    </string-array>
+
+    <!-- share -->
+    <string name="share_title">“%1$s”</string>
+    <string name="share_content">%1$s分享“%2$s”\n--%3$s</string>
+    <!-- setting about feedback -->
+    <string name="settings_push">推送消息</string>
+    <string name="settings_about">关于</string>
+    <string name="settings_guide">用户向导</string>
+    <string name="settings_feedback">意见反馈</string>
+    <string name="settings_clearcache">清除缓存</string>
+    <string name="settings_help">帮助</string>
+    <string name="about_upgrade">升级检测</string>
+    <string name="about_copyright">版权信息</string>
+    <string name="about_service">服务条款</string>
+    <string name="about_private">隐私权政策</string>
+    <string name="about_license">开源代码许可</string>
+    <string name="about_rating">评分</string>
+    <string name="feedback_content_hint">您的意见或建议</string>
+    <string name="feedback_content_num">%1$s/500</string>
+    <string name="feedback_contact_hint">QQ、Msn、Email、手机号码等</string>
+    <string name="feedback_submit">发送</string>
+    <string name="feedback_validate_content_null">请输入意见或建议!</string>
+    <string name="feedback_validate_contact_null">请输入联系方式！</string>
+    <string name="feedback_validate_content_short">请输入至少10个字符！</string>
+    <string name="feedback_success">感谢您提出的宝贵意见！</string>
+    <string name="clean_cache_format">已清除%1$s缓存!</string>
+
+</resources>

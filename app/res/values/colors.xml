@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <bool name="default_circle_indicator_centered">true</bool>
+
+    <color name="default_circle_indicator_fill_color">#FFFFFFFF</color>
+    <color name="default_circle_indicator_page_color">#00000000</color>
+
+    <integer name="default_circle_indicator_orientation">0</integer>
+
+    <dimen name="default_circle_indicator_radius">3dp</dimen>
+
+    <bool name="default_circle_indicator_snap">false</bool>
+
+    <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>
+
+    <dimen name="default_circle_indicator_stroke_width">1dp</dimen>
+
+    <!-- text color -->
+    <color name="text_white">#ffffff</color>
+    <color name="text_black">#000000</color>
+    <color name="text_grey">#D5D5D5</color>
+    <color name="text_blue">#256EB1</color>
+
+
+    <!-- settings color -->
+    <color name="settings_text">#333333</color>
+    <color name="settings_text_pressed">#ffffff</color>
+    <color name="settings_bg_deafult">#ffffff</color>
+    <color name="settings_bg_pressed">@color/common_color_light</color>
+    <color name="editext_border_normal">#ea4c89</color>
+    <color name="editext_border_focus">#ea4c89</color>
+
+
+
+    <color name="btn_circle_pressed">#8fffffff</color>
+
+    <color name="btn_circle_0">#65B2D8</color>
+    <color name="btn_circle_1">#65C4C0</color>
+    <color name="btn_circle_2">#9CBAC3</color>
+    <color name="btn_circle_3">#478BAC</color>
+    <color name="btn_circle_4">#65B2D8</color>
+    <color name="btn_circle_5">#65B2D8</color>
+    <color name="btn_circle_6">#4989D2</color>
+</resources>

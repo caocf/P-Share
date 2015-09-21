@@ -1,0 +1,13 @@
+<resources>
+
+    <string name="app_name">CQurity</string>
+    <string name="test">test</string>
+    <string name="menu_settings">settings</string>
+    <string name="title_discovery">discovry</string>
+    <string name="title_activity">activity</string>
+    <string name="title_mine">Me</string>
+    <string name="title_project">Project</string>
+    <string name="title_people">People</string>
+    <string name="title_guide">User Guide</string>
+    <string name="mine_text_start">You can start from</string>
+</resources>
