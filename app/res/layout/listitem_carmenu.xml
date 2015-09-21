@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:padding="@dimen/padding1"
+    android:orientation="horizontal" >
+    <ImageView
+        android:id="@+id/item_iv" 
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="@dimen/padding2"
+        android:layout_centerVertical="true"
+        android:src="@drawable/blue_car"/>
+    <TextView
+        android:id="@+id/car_number" 
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="苏E88888"
+        android:textSize="@dimen/text_size3"
+        android:layout_toRightOf="@+id/item_iv"
+        android:layout_marginLeft="@dimen/padding3"
+        android:layout_centerVertical="true"
+        android:textColor="#999d9c"/>
+     <TextView
+         android:id="@+id/car_brand" 
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="奥迪"
+        android:textSize="@dimen/text_size3"
+        android:layout_toRightOf="@+id/car_number"
+        android:layout_marginLeft="@dimen/padding3"
+        android:layout_centerVertical="true"
+        android:textColor="#999d9c"/>
+    
+
+</RelativeLayout>

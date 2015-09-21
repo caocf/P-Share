@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f8f8ff"
+    android:orientation="vertical" >
+    <LinearLayout 
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <com.azhuoinfo.parking.view.MyListView
+	        android:id="@+id/rent_list" 
+	        android:layout_height="wrap_content"
+	        android:layout_width="match_parent"
+	        android:background="#ffffff">       
+	    </com.azhuoinfo.parking.view.MyListView>
+	    <RelativeLayout
+	        android:id="@+id/add_rent_car" 
+	        android:layout_height="wrap_content"
+	        android:layout_width="match_parent"
+	        android:padding="@dimen/padding2"
+	        android:layout_marginTop="@dimen/padding1"
+	        android:background="#ffffff">
+	        <ImageView 
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:layout_toLeftOf="@+id/tv_add"
+	            android:layout_centerVertical="true"
+	            android:layout_marginRight="@dimen/padding2"
+	            android:src="@drawable/add"/>
+	        <TextView
+	            android:id="@+id/tv_add" 
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:layout_centerInParent="true"
+	            android:text="@string/add"/>
+	    </RelativeLayout>
+    </LinearLayout>   
+
+</ScrollView>

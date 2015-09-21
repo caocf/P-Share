@@ -4,6 +4,7 @@
     <bool name="default_circle_indicator_centered">true</bool>
 
     <color name="default_circle_indicator_fill_color">#FFFFFFFF</color>
+
     <color name="default_circle_indicator_page_color">#00000000</color>
 
     <integer name="default_circle_indicator_orientation">0</integer>
@@ -28,8 +29,8 @@
     <color name="settings_text_pressed">#ffffff</color>
     <color name="settings_bg_deafult">#ffffff</color>
     <color name="settings_bg_pressed">@color/common_color_light</color>
-    <color name="editext_border_normal">#ea4c89</color>
-    <color name="editext_border_focus">#ea4c89</color>
+    <color name="edit_text_border_normal">#ea4c89</color>
+    <color name="edit_text_border_focus">#ea4c89</color>
 
 
 
@@ -42,4 +43,42 @@
     <color name="btn_circle_4">#65B2D8</color>
     <color name="btn_circle_5">#65B2D8</color>
     <color name="btn_circle_6">#4989D2</color>
+
+    <!--     text color -->
+    <!--    草绿色-->
+    <color name="text_color_green">#1d953f</color>
+    <!--    深绿色-->
+    <color name="text_dark_green">#00d8ac</color>
+    <!--     橘黄色 -->
+    <color name="text_color_croci">#ffa200</color>
+    <!--     青绿色 -->
+    <color name="text_turquoise">#00d7ad</color>
+    <!-- 红色 -->
+    <color name="text_color_red">#FF0000</color>
+    <!-- 蓝色 -->
+    <color name="text_color_blue">#1376ca</color>
+    <!--     半透明 -->
+    <color name="bg_half_transparency">#77000000</color>
+    <!--  actionbar bg color -->
+    <color name="bg_action_bar_blue">#1376ca</color>
+    <!--     页面背景色浅灰 -->
+    <color name="bg_color">#f8f8ff</color>
+    <!--     radiobutton color -->
+    <color name="rb_text_color">#4682B4</color>
+    <!--     text color gray-->
+    <color name="rb_text_color_gray">#DCDCDC</color>
+    <!--     切换 fragment rb color  -->
+    <color name="rb_text_color_blue">#1376c4</color>
+    <!--     浅灰色 -->
+    <color name="text_light_gray">#999d9c</color>
+    <!--  绿色 -->
+    <color name="text_green">#079100</color>
+    <!--  得到验证码的字体颜色-->
+    <color name="text_get_code">#65c294</color>
+    <!-- 积分颜色  黄色 -->
+    <color name="text_points_yellow">#fcaf17</color>
+    <!-- 代泊员电话号拨打颜色 -->
+    <color name="text_phone">#2E8B57</color>
+    <!-- 倒计时的时间颜色 -->
+    <color name="text_remaining_time">#008B00</color>
 </resources>

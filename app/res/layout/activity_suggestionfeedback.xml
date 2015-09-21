@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="match_parent" 
+        android:layout_height="@dimen/padding8"       
+        android:background="@color/bg_action_bar_blue">
+        <ImageView
+            android:id="@+id/activity_back"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/padding2"          
+			android:src="@drawable/left_head"/>
+        <TextView 
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="@color/text_white"
+           	android:layout_centerInParent="true"
+           	android:textSize="@dimen/text_size5" 
+            android:text="@string/install_suggestion_feedback"/>
+    </RelativeLayout>
+    <EditText
+        android:id="@+id/suggestion_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding12"
+        android:layout_margin="@dimen/padding4"
+        android:textSize="@dimen/text_size3"
+        android:hint="@string/suggestion_content"
+        android:gravity="top"
+        android:editable="true"
+        android:background="@drawable/suggestion_content_bg"        
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <Button
+        android:id="@+id/suggestion_submit"
+        style="@style/button_style"
+        android:text="@string/submit"/>	
+</LinearLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_half_transparency">
+
+    <LinearLayout
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_centerInParent="true"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="15dp" >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@drawable/circle_rectangle" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/agency_stop_car" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/person_name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/already_receiving" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="240dp"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/text_light_gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/pay_way" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/zhifubao"
+                android:drawableRight="@drawable/zhifubao"
+                android:background="@drawable/shape_1"/>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/weixin"
+                android:drawableRight="@drawable/weixin"
+                android:background="@drawable/shape_1"/>
+            
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_pay"
+            android:layout_width="190dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button" 
+            android:text="@string/pay"/>
+    </LinearLayout>
+
+</RelativeLayout>

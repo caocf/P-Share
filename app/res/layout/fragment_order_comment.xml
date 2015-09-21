@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_half_transparency">
+	<!-- 评论界面 -->
+    <LinearLayout
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_centerInParent="true"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="15dp" >
+        
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/text_size3"
+            android:text="请对代泊员进行评价！"/>
+        
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding2"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/padding1"              
+                android:button="@drawable/comment_click_bg"
+                android:text="很好"/>
+
+            <CheckBox
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/padding1"
+                android:text="好"                
+                android:button="@drawable/comment_click_bg"/>
+            
+            <CheckBox
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/padding1"
+                android:text="差"                
+                android:button="@drawable/comment_click_bg"/>            
+        </LinearLayout>
+		<EditText 
+		    android:layout_height="@dimen/padding8"
+		    android:layout_width="match_parent"
+		    android:layout_margin="@dimen/padding2"
+		    android:background="@drawable/suggestion_content_bg"/>
+        <Button
+            android:id="@+id/btn_pay"
+            android:layout_width="@dimen/padding11"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/padding2"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/text_white"
+            android:background="@drawable/button" 
+            android:text="@string/confirm"/>
+    </LinearLayout>
+
+</RelativeLayout>

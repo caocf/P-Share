@@ -3,6 +3,134 @@
     <string name="app_name">停车场</string>
     <string name="test">test</string>
     <string name="title_home">首页</string>
-   ]
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="exit_toast">再按一次退出</string>
+    <string name="homepage_search"> 我想停在哪里附近？</string>
+    <string name="homelistmenu_text">附近的停车场</string>
+    <string name="login">登录</string>
+    <string name="registered">注册</string>
+    <string name="next_step">下一步</string>
+    <string name="retrieve_password">找回密码</string>
+    <string name="reset_password">重置密码</string>
+    <string name="submit">提交</string>
+    <string name="remember_password">记住密码</string>
+    <string name="forget_password">忘记密码？</string>
+    <string name="get_code">获取验证码</string>
+    <string name="phone_number">请输入手机号</string>
+    <string name="numner">+86</string>
+    <string name="password">请输8-20位密码</string>
+    <string name="confrim_newpassword">确认新密码</string>
+    <string name="existing_account">已有账号</string>
+    <string name="yard_details">代泊区详情</string>
+    <string name="integration">优惠/积分</string>
+    <string name="order">我的预约/订单</string>
+    <string name="mine_carList">我的车列表</string>
+    <string name="install">设置</string>
+    <string name="install_version_update">版本更新</string>
+    <string name="install_suggestion_feedback">意见反馈</string>
+    <string name="install_score_cheer">评分打气</string>
+    <string name="install_about_us">关于我们</string>
+    <string name="install_push">推送</string>
+    <string name="suggestion_content">"  非常感谢你的意见......"</string>
+    <string name="personal_center">个人中心</string>
+    <string name="appointment">预约</string>
+    <string name="destination">目的地</string>
+    <string name="distance2">距离</string>
+    <string name="price2">价格</string>
+    <string name="special_requirements">"预约特殊需求 "</string>
+    <string name="selection_time">请选择时间</string>
+    <string name="time">"时间 : "</string>
+    <string name="make_appointment">"预约代泊 "</string>
+    <string name="price">"价格： "</string>
+    <string name="remaining_space">"剩余车位： "</string>
+    <string name="distance">"距离： "</string>
+    <string name="address">"地址： "</string>
+    <string name="parking_area">代泊区</string>
+    <string name="monthly_rent">我的月租列表</string>
+    <string name="add">添加</string>
+    <string name="add_car_information">增加车辆信息</string>
+    <string name="car_number">车牌号码</string>
+    <string name="car_brand">车型</string>
+    <string name="fill_in_car_brand">请填写车型</string>
+    <string name="Fill_in_car_number">请填写车牌车牌号</string>
+    <string name="fill_in_car_address">请选择车牌归属地</string>
+    <string name="confirm">确定</string>
+    <string name="iv_about_us">泊享P-share</string>
+    <string name="add1">点击添加车辆信息可缴纳</string>
+    <string name="add2">产权/月租管理费</string>
+    <string name="monthlyRent_list">我的月租列表</string>
+    <string name="rb_monthlyRent_historylist">历史缴费记录</string>
+    <string name="rb_monthlyRent_list">月租列表</string>
+    <string name="add_rent">添加产权/月租</string>
+    <string name="tv_city">国、省、市:</string>
+    <string name="tv_area">区:</string>
+    <string name="tv_living_area">小区:</string>
+    <string name="tv_time_frame">时间段:</string>
+    <string name="tv_start_time">开始时间:</string>
+    <string name="tv_finish_time">结束时间:</string>
+    <string name="tv_price">单价:</string>
+    <string name="tv_name">姓名:</string>
+    <string name="tv_car_brand">车牌:</string>
+    <string name="rent">产权/月租</string>
+    <string name="pay_money">金额：</string>
+    <string name="pay1">支付</string>
+    <string name="delete">删除此条信息</string>
+    <string name="agency_stop_car">代泊员</string>
+    <string name="already_receiving">已接单</string>
+    <string name="pay_way">支付方式：</string>
+    <string name="pay">去支付</string>
+    <string name="my_reserve">我的预约/订单</string>
+    <string name="your_agency_stop_car">您的代泊员:</string>
+    <string name="rb_historylist">历史订单</string>
+    <string name="rb_reserve">预/订</string>
+    <string name="minehome">我的家列表</string>
+
+    <!-- 设置中关于我们 -->
+    <string name="about_us">我们致力于帮助千万用户解决找停车位难的问题，客服联系方式：</string>
+
+    <!-- 预定完成后的返回代泊员信息 -->
+    <string name="tv_order_servicePerson_area">负责代泊区域：</string>
+    <string name="tv_order_servicePerson_position">职务：</string>
+    <string name="tv_you_servicePerson">你的代泊员：</string>
+    <string name="tv_user_stop_state">你的停车状态：</string>
+    <string name="tv_order_car_number">车牌号:</string>
+    <string name="button_payfinish">完成订单支付</string>
+    <string name="tv_order_takeCar_remainingtime">停车计时：</string>
+    <string name="tv_unselect_order">取消预约</string>
+    <string name="tv_order_takeCar_time">预约取车时间：</string>
+    <string name="tv_order_time">预约时间：</string>
+    <string name="tv_order_pay_money">预付金额：</string>
+    <string name="text_view_log_out">退出登录</string>
+
+    <!-- 模拟数据 -->
+    <string name="tv_living_area_name">金电小区</string>
+    <string name="tv_living_area_address">上海长宁区安顺路158号</string>
+    <string name="year_time">2015</string>
+    <string name="month_time">09</string>
+    <string name="bias_line">/</string>
+    <string name="day_time">02</string>
+
+    <string name="car_number2">沪A56789</string>
+    <string name="already_pay">已付费：</string>
+    <string name="money">20</string>
+    <string name="yuan">元</string>
+    <string name="pay_time">20:20</string>
+
+
+    <string name="person_name">王先生</string>
+    <!-- 预定完成后的返回代泊员信息 -->
+    <string name="text_order_servicePerson_area">恒积大厦</string>
+    <string name="text_order_servicePerson_position">高级代泊员</string>
+    <string name="tv_order_servicePerson">代泊员2号</string>
+    <string name="text_order_pay_money">20元</string>
+    <string name="text_order_time">16:40</string>
+    <string name="text_order_takeCar_time">20:30</string>
+    <string name="text_order_takeCar_remainingtime">00:00:20</string>
+    <string name="text_order_car_number">沪E88888</string>
+
+    <string name="text_about_us_phone">400-6868668</string>
+
+    <string name="qr_code_content">(请将左侧二维码拿给代泊员扫描录入)</string>
 
 </resources>
