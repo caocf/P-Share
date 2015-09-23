@@ -6,29 +6,29 @@
     android:padding="@dimen/padding1"
     android:orientation="horizontal" >
     <ImageView
-        android:id="@+id/item_iv" 
+        android:id="@+id/iv_car"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_marginLeft="@dimen/padding2"
         android:layout_centerVertical="true"
         android:src="@drawable/blue_car"/>
     <TextView
-        android:id="@+id/car_number" 
+        android:id="@+id/tv_car_number"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="苏E88888"
         android:textSize="@dimen/text_size3"
-        android:layout_toRightOf="@+id/item_iv"
+        android:layout_toRightOf="@+id/iv_car"
         android:layout_marginLeft="@dimen/padding3"
         android:layout_centerVertical="true"
         android:textColor="#999d9c"/>
      <TextView
-         android:id="@+id/car_brand" 
+         android:id="@+id/tv_car_size"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="奥迪"
         android:textSize="@dimen/text_size3"
-        android:layout_toRightOf="@+id/car_number"
+        android:layout_toRightOf="@+id/tv_car_number"
         android:layout_marginLeft="@dimen/padding3"
         android:layout_centerVertical="true"
         android:textColor="#999d9c"/>

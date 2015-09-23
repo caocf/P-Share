@@ -4,22 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical" >
-    <!--  head actionbar-->
-    <RelativeLayout
-        android:layout_width="match_parent" 
-        android:layout_height="@dimen/padding8"       
-        android:background="@color/bg_action_bar_blue">
-        <Button
-            android:id="@+id/activity_back" 
-            android:layout_height="@dimen/padding8"
-            android:layout_width="@dimen/padding8"
-            android:padding="@dimen/padding2"
-            android:background="@null"
-            android:drawableLeft="@drawable/left_head"/>
-        <TextView 
-            style="@style/text_actionbar"
-            android:text="@string/install_about_us"/>
-    </RelativeLayout>
     <RelativeLayout 
         android:layout_height="match_parent"
         android:layout_width="match_parent"
@@ -61,7 +45,7 @@
 	            android:textSize="@dimen/text_size3"
 	            android:layout_marginTop="@dimen/padding2"
 	            android:textColor="@color/text_light_gray"
-	            android:text="版本："/>
+	            android:text="@string/about_us_version"/>
             <TextView
 	            android:id="@+id/tv_about_us_version" 
 	            android:layout_height="wrap_content"
@@ -71,7 +55,7 @@
 	            android:textSize="@dimen/text_size3"
 	            android:layout_marginTop="@dimen/padding2"
 	            android:textColor="@color/text_light_gray"
-	            android:text="1.0.0"/>
+	            android:text="@string/text_about_us_version"/>
         </LinearLayout>
         <!--  app服务联系方式-->
         <TextView
@@ -98,6 +82,6 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/padding8"
             android:textColor="@color/text_light_gray"
-            android:text="版权标注"/>
+            android:text="@string/about_us1"/>
     </RelativeLayout>
 </LinearLayout>

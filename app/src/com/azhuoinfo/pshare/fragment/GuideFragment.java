@@ -49,6 +49,7 @@ public class GuideFragment extends BaseContentFragment {
         super.onActivityCreated(savedInstanceState);
         findViews(getView());
         initViews(savedInstanceState);
+
     }
 
 

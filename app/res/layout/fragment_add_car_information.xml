@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical" >
-    <RelativeLayout
+    <!--actionbar-->
+    <!--<RelativeLayout
         android:id="@+id/rl_head"
         android:layout_width="match_parent" 
         android:layout_height="@dimen/padding8"       
@@ -19,9 +20,9 @@
         <TextView 
             style="@style/text_actionbar"
             android:text="@string/add_car_information"/>
-    </RelativeLayout>
+    </RelativeLayout>-->
     <TextView
-        android:id="@+id/head_car_number" 
+        android:id="@+id/text_head_car_number"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_marginLeft="@dimen/padding3"
@@ -31,20 +32,20 @@
         android:textSize="@dimen/text_size3"
         android:text="@string/car_number"/>
     <RelativeLayout
-        android:id="@+id/rl_car_address" 
+        android:id="@+id/rl_car_location"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_below="@+id/head_car_number"
-        android:background="#ffffff"
+        android:layout_below="@+id/text_head_car_number"
+        android:background="@color/text_white"
         android:padding="@dimen/padding2">
         <TextView
-            android:id="@+id/tv_car_address"
+            android:id="@+id/tv_car_location"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textSize="@dimen/text_size3"
             android:hint="@string/fill_in_car_address"/>
         <ImageButton
-            android:id="@+id/ib_car_address" 
+            android:id="@+id/ib_car_location"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_alignParentRight="true"
@@ -53,46 +54,39 @@
             android:src="@drawable/big_downhead"/>
     </RelativeLayout>
     <EditText
-        android:id="@+id/EditText_car_number" 
+        android:id="@+id/et_car_number"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/padding10"
-        android:layout_below="@+id/rl_car_address"
+        android:layout_below="@+id/rl_car_location"
         android:padding="@dimen/padding2"
-        android:background="#ffffff"
+        android:background="@color/text_white"
         android:textSize="@dimen/text_size3"
         android:hint="@string/Fill_in_car_number"/>
     <TextView
-        android:id="@+id/head_car_brand" 
+        android:id="@+id/text_head_car_size"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_below="@+id/EditText_car_number"
+        android:layout_below="@+id/et_car_number"
         android:layout_marginLeft="@dimen/padding3"
         android:layout_marginTop="@dimen/padding2"
         android:layout_marginBottom="@dimen/padding2"
         android:textSize="@dimen/text_size3"
         android:text="@string/car_brand"/>
      <EditText
-        android:id="@+id/EditText_car_brand" 
+        android:id="@+id/et_car_size"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_below="@+id/head_car_brand"
+        android:layout_below="@+id/text_head_car_size"
         android:layout_marginTop="@dimen/padding10"
         android:padding="@dimen/padding2"
-        android:background="#ffffff"
+        android:background="@color/text_white"
         android:textSize="@dimen/text_size3"
         android:hint="@string/fill_in_car_brand"/>
      <Button
          android:id="@+id/button_confirm" 
-         android:layout_height="@dimen/padding8"
-         android:layout_width="match_parent"
-         android:layout_alignParentBottom="true"
-         android:background="@drawable/button"
-         android:textSize="@dimen/text_size5"
-         android:textColor="#ffffff"
-         android:text="@string/confirm"
-         android:layout_marginLeft="@dimen/padding8"
-         android:layout_marginRight="@dimen/padding8"
-         android:layout_marginBottom="@dimen/padding11"/>
+         style="@style/button_style"
+         android:layout_below="@+id/et_car_size"
+         android:text="@string/confirm"/>
 
 </RelativeLayout>

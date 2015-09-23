@@ -6,6 +6,8 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="exit_toast">再按一次退出</string>
+    <string name="confirm">确定</string>
+
     <string name="homepage_search"> 我想停在哪里附近？</string>
     <string name="homelistmenu_text">附近的停车场</string>
     <string name="login">登录</string>
@@ -13,7 +15,7 @@
     <string name="next_step">下一步</string>
     <string name="retrieve_password">找回密码</string>
     <string name="reset_password">重置密码</string>
-    <string name="submit">提交</string>
+
     <string name="remember_password">记住密码</string>
     <string name="forget_password">忘记密码？</string>
     <string name="get_code">获取验证码</string>
@@ -23,17 +25,17 @@
     <string name="confrim_newpassword">确认新密码</string>
     <string name="existing_account">已有账号</string>
     <string name="yard_details">代泊区详情</string>
-    <string name="integration">优惠/积分</string>
+
     <string name="order">我的预约/订单</string>
-    <string name="mine_carList">我的车列表</string>
+
     <string name="install">设置</string>
     <string name="install_version_update">版本更新</string>
-    <string name="install_suggestion_feedback">意见反馈</string>
+
     <string name="install_score_cheer">评分打气</string>
     <string name="install_about_us">关于我们</string>
     <string name="install_push">推送</string>
     <string name="suggestion_content">"  非常感谢你的意见......"</string>
-    <string name="personal_center">个人中心</string>
+
     <string name="appointment">预约</string>
     <string name="destination">目的地</string>
     <string name="distance2">距离</string>
@@ -48,14 +50,7 @@
     <string name="address">"地址： "</string>
     <string name="parking_area">代泊区</string>
     <string name="monthly_rent">我的月租列表</string>
-    <string name="add">添加</string>
-    <string name="add_car_information">增加车辆信息</string>
-    <string name="car_number">车牌号码</string>
-    <string name="car_brand">车型</string>
-    <string name="fill_in_car_brand">请填写车型</string>
-    <string name="Fill_in_car_number">请填写车牌车牌号</string>
-    <string name="fill_in_car_address">请选择车牌归属地</string>
-    <string name="confirm">确定</string>
+
     <string name="iv_about_us">泊享P-share</string>
     <string name="add1">点击添加车辆信息可缴纳</string>
     <string name="add2">产权/月租管理费</string>
@@ -87,7 +82,30 @@
     <string name="minehome">我的家列表</string>
 
     <!-- 设置中关于我们 -->
+    <string name="about_us_title">关于我们</string>
+    <string name="about_us_version">版本：</string>
+    <string name="about_us1">版权标注</string>
     <string name="about_us">我们致力于帮助千万用户解决找停车位难的问题，客服联系方式：</string>
+
+    <!--意见反馈-->
+    <string name="install_suggestion_feedback">意见反馈</string>
+    <string name="submit">提交</string>
+
+    <!--个人中心-->
+    <string name="user_center">个人中心</string>
+
+    <!--我的车列表-->
+    <string name="add">添加</string>
+    <string name="add_car_information">增加车辆信息</string>
+    <string name="car_number">车牌号码</string>
+    <string name="car_brand">车型</string>
+    <string name="fill_in_car_brand">请填写车型</string>
+    <string name="Fill_in_car_number">请填写车牌车牌号</string>
+    <string name="fill_in_car_address">请选择车牌归属地</string>
+    <string name="mine_carList">我的车列表</string>
+
+    <!--优惠积分-->
+    <string name="integration">优惠/积分</string>
 
     <!-- 预定完成后的返回代泊员信息 -->
     <string name="tv_order_servicePerson_area">负责代泊区域：</string>
@@ -104,6 +122,9 @@
     <string name="text_view_log_out">退出登录</string>
 
     <!-- 模拟数据 -->
+    <!--关于我们-->
+    <string name="text_about_us_version">1.0.0</string>
+
     <string name="tv_living_area_name">金电小区</string>
     <string name="tv_living_area_address">上海长宁区安顺路158号</string>
     <string name="year_time">2015</string>

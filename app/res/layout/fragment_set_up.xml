@@ -4,26 +4,9 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical">
-    
+    <!--版本更新-->
     <RelativeLayout
-        android:layout_width="match_parent" 
-        android:layout_height="@dimen/padding8"       
-        android:background="@color/bg_action_bar_blue"
-        >
-        <ImageView
-            android:id="@+id/activity_back"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/padding2"
-            android:contentDescription="@android:string/cancel"
-			android:src="@drawable/left_head"/>
-        <TextView 
-            style="@style/text_actionbar"
-            android:text="@string/install"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/install_version_update" 
+        android:id="@+id/rl_version_update"
 	    android:layout_width="match_parent"
 	    android:layout_height="@dimen/padding8"
 	    android:background="@color/text_white">
@@ -43,7 +26,7 @@
 	        android:layout_marginLeft="@dimen/padding2"
 	        android:text="@string/install_version_update"/>
 	    <TextView
-	        android:id="@+id/new_version_number" 
+	        android:id="@+id/tv_new_version_number"
 	        android:layout_height="wrap_content"
 	        android:layout_width="wrap_content"
 	        android:layout_centerVertical="true"
@@ -65,8 +48,9 @@
             android:layout_alignParentEnd="true"
 	        android:src="@drawable/black_right_head"/>
 	</RelativeLayout>
+    <!--意见反馈-->
     <RelativeLayout
-        android:id="@+id/install_suggestion_feedback" 
+        android:id="@+id/rl_suggestion_feedback"
         android:layout_width="match_parent"
         android:layout_height="@dimen/padding8"
         android:layout_marginTop="@dimen/padding4"
@@ -94,13 +78,13 @@
             android:layout_alignParentRight="true"
             android:src="@drawable/black_right_head"/>
     </RelativeLayout>
+    <!--评分打气-->
     <RelativeLayout
-       android:id="@+id/install_score_cheer"  
+       android:id="@+id/rl__cheer_score"
        android:layout_width="match_parent"
        android:layout_height="@dimen/padding8"
        android:layout_marginTop="@dimen/padding9"
-       android:background="@color/text_white"
-       >
+       android:background="@color/text_white">
        <ImageView
            android:id="@+id/install_iv3" 
            android:layout_width="wrap_content"
@@ -124,13 +108,13 @@
            android:layout_alignParentRight="true"
            android:src="@drawable/black_right_head"/>
    	</RelativeLayout>
+    <!--关于我们-->
    	<RelativeLayout
-   	  android:id="@+id/install_about_us" 
+   	  android:id="@+id/rl_about_us"
       android:layout_width="match_parent"
       android:layout_height="@dimen/padding8"
       android:layout_marginTop="@dimen/padding9"
-      android:background="@color/text_white"
-      >
+      android:background="@color/text_white">
       <ImageView
           android:id="@+id/install_iv4" 
           android:layout_width="wrap_content"
@@ -155,13 +139,13 @@
           android:src="@drawable/black_right_head"
           />
   	</RelativeLayout>
+    <!-- 推送-->
   	<RelativeLayout
-  	     android:id="@+id/install_push" 
+  	     android:id="@+id/rl_push"
 	     android:layout_width="match_parent"
 	     android:layout_height="@dimen/padding8"
 	     android:layout_marginTop="@dimen/padding9"
-	     android:background="@color/text_white"
-	     >
+	     android:background="@color/text_white">
 	     <ImageView
 	         android:id="@+id/install_iv5" 
 	         android:layout_width="wrap_content"
@@ -185,6 +169,7 @@
 	         android:layout_alignParentRight="true"
 	         android:src="@drawable/black_right_head"/>
 	</RelativeLayout>
+    <!--退出登录-->
 	<Button
 	    android:id="@+id/button_log_out" 
 	    android:layout_height="wrap_content"

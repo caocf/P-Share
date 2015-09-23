@@ -4,11 +4,10 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical" >
-    <RelativeLayout
+    <!--<RelativeLayout
         android:layout_width="match_parent" 
         android:layout_height="@dimen/padding8"       
-        android:background="@color/bg_action_bar_blue"
-        >
+        android:background="@color/bg_action_bar_blue">
         <ImageView
             android:id="@+id/activity_back"
             android:layout_height="wrap_content"
@@ -19,7 +18,7 @@
         <TextView 
             style="@style/text_actionbar" 
             android:text="@string/mine_carList"/>
-    </RelativeLayout>
+    </RelativeLayout>-->
     <ScrollView
      	android:layout_height="wrap_content"
      	android:layout_width="match_parent"
@@ -28,31 +27,31 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="vertical">
-            <com.azhuoinfo.parking.view.MyListView
-		       android:id="@+id/list_car" 
+           <ListView
+		       android:id="@+id/lv_list_car"
 		       android:layout_height="wrap_content"
 		       android:layout_width="match_parent"
-		       android:background="#ffffff"/>
+		       android:background="@color/text_white"/>
 		   <RelativeLayout
-		       android:id="@+id/rl_addcar" 
+		       android:id="@+id/rl_add_car_list"
 		       android:layout_height="wrap_content"
 		       android:layout_width="match_parent"
-		       android:background="#ffffff"
+		       android:background="@color/text_white"
 		       android:layout_gravity="center_horizontal"
 		       android:paddingTop="@dimen/padding1"
 		       android:paddingBottom="@dimen/padding1"
 		       android:layout_marginTop="@dimen/padding4"
 		       android:layout_marginBottom="@dimen/padding4">
 		       <ImageView
-		           android:id="@+id/iv_add" 
+		           android:id="@+id/iv_add_car_list"
 		           android:layout_height="wrap_content"
 		           android:layout_width="wrap_content"
 		           android:layout_centerVertical="true"
-		           android:layout_toLeftOf="@+id/tv_add"
+		           android:layout_toLeftOf="@+id/tv_add_car_list"
 		           android:layout_marginRight="@dimen/padding2"		     
 		           android:src="@drawable/add"/>
 		       <TextView
-		           android:id="@+id/tv_add" 
+		           android:id="@+id/tv_add_car_list"
 		           android:layout_height="wrap_content"
 		           android:layout_width="wrap_content"
 		           android:textSize="@dimen/text_size3"

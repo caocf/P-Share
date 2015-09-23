@@ -5,8 +5,259 @@
         android:layout_height="match_parent"
         android:background="@color/menu_bg"
         android:orientation="vertical">
-
+        <ImageView
+            android:id="@+id/iv_install"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding2"
+            android:layout_marginTop="@dimen/padding2"
+            android:src="@drawable/iv_slidingmenu_install"
+            android:gravity="center"/>
+        <LinearLayout
+            android:id="@+id/ll_personal_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:orientation="vertical" >
+            <ImageView
+                android:id="@+id/iv_customer_head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="@dimen/padding2"
+                android:src="@drawable/userhead"/>
+            <TextView
+                android:id="@+id/tv_customer_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:text="车先生"
+                android:textSize="@dimen/text_size3"/>
+            <TextView
+                android:id="@+id/tv_customer_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/padding1"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:text="ID:1234444444"
+                android:textSize="@dimen/text_size3"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/padding1"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="@dimen/padding1"
+                    android:gravity="center"
+                    android:textColor="@color/text_points_yellow"
+                    android:text="积分："
+                    android:textSize="@dimen/text_size3"/>
+                <TextView
+                    android:id="@+id/tv_customer_points"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="@dimen/padding1"
+                    android:gravity="center"
+                    android:textColor="@color/text_points_yellow"
+                    android:text="0"
+                    android:textSize="@dimen/text_size3"/>
+            </LinearLayout>
+        </LinearLayout>
+        <!--  分割线-->
         <TextView
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/padding4"
+            android:background="#f8f8ff"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!--  代泊区-->
+                <RelativeLayout
+                    android:id="@+id/rl_parkingArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding2"
+                    android:layout_marginBottom="@dimen/padding2" >
+                    <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/parking_area"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/padding4"
+                        />
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_toRightOf="@+id/imageView1"
+                        android:layout_marginLeft="@dimen/padding2"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/text_white"
+                        android:textSize="@dimen/text_size4"
+                        android:text="@string/parking_area"/>
+                    <ImageView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/padding4"
+                        android:src="@drawable/iv_slidingmenu_righthead"/>
+                </RelativeLayout>
+                <!--  分割线-->
+                <View style="@style/view_line"/>
+                <!--  我的预约/订单-->
+                <RelativeLayout
+                    android:id="@+id/rl_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding2"
+                    android:layout_marginBottom="@dimen/padding2" >
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/order"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/padding4"
+                        />
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_toRightOf="@+id/imageView3"
+                        android:layout_marginLeft="@dimen/padding2"
+                        android:textColor="@color/text_white"
+                        android:layout_centerVertical="true"
+                        android:textSize="@dimen/text_size4"
+                        android:text="@string/order" />
+                    <ImageView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/padding4"
+                        android:src="@drawable/iv_slidingmenu_righthead"/>
+                </RelativeLayout>
+                <!--  分割线-->
+                <View style="@style/view_line"/>
+                <!--  我的车列表-->
+                <RelativeLayout
+                    android:id="@+id/rl_car_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding2"
+                    android:layout_marginBottom="@dimen/padding2" >
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/car_list"
+                        android:layout_marginLeft="@dimen/padding4"/>
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_toRightOf="@+id/imageView4"
+                        android:layout_marginLeft="@dimen/padding2"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/text_white"
+                        android:textSize="@dimen/text_size4"
+                        android:text="@string/mine_carList" />
+                    <ImageView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/padding4"
+                        android:src="@drawable/iv_slidingmenu_righthead"/>
+                </RelativeLayout>
+                <!--  分割线-->
+                <View style="@style/view_line"/>
+                <!--  我的月租列表-->
+                <RelativeLayout
+                    android:id="@+id/rl_monthlyRent_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding2"
+                    android:layout_marginBottom="@dimen/padding2" >
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/monthly_rent"
+                        android:layout_marginLeft="@dimen/padding4"/>
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_toRightOf="@+id/imageView5"
+                        android:layout_marginLeft="@dimen/padding2"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/text_white"
+                        android:textSize="@dimen/text_size4"
+                        android:text="@string/monthly_rent" />
+                    <ImageView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/padding4"
+                        android:src="@drawable/iv_slidingmenu_righthead"/>
+                </RelativeLayout>
+                <!--  分割线-->
+                <View style="@style/view_line"/>
+                <!--  优惠/积分-->
+                <RelativeLayout
+                    android:id="@+id/rl_points"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding2"
+                    android:layout_marginBottom="@dimen/padding2" >
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/points"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/padding4"
+                        />
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_toRightOf="@+id/imageView2"
+                        android:layout_marginLeft="@dimen/padding2"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/text_white"
+                        android:textSize="@dimen/text_size4"
+                        android:text="@string/integration"/>
+                    <ImageView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/padding4"
+                        android:src="@drawable/iv_slidingmenu_righthead"/>
+                </RelativeLayout>
+                <!--  分割线-->
+                <View style="@style/view_line"/>
+            </LinearLayout>
+        </ScrollView>
+
+
+        <!--<TextView
             android:id="@+id/textview_menu_activity"
             style="@style/Menu_Item"
             android:layout_width="match_parent"
@@ -28,6 +279,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title_mine"
-            android:drawableTop="@drawable/ic_image_error" />
+            android:drawableTop="@drawable/ic_image_error" />-->
 
 </LinearLayout>
