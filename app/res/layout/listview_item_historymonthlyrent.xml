@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="180dp" 
-    android:padding="10dp">
+    android:layout_height="wrap_content"
+
+    android:padding="@dimen/padding1">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -14,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_living_area_name"
-            android:textSize="12sp" />
+            android:textSize="@dimen/text_size3" />
 
         <TextView
             android:id="@+id/tv_living_area_address"
@@ -94,7 +95,7 @@
             android:layout_height="wrap_content"
             android:text="@string/car_number2"
             android:textColor="@color/text_green"
-            android:textSize="12sp" />
+            android:textSize="@dimen/text_size3" />
 
         <LinearLayout
             android:layout_width="wrap_content"

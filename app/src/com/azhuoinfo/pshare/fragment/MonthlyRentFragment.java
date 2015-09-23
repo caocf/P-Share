@@ -1,17 +1,25 @@
 package com.azhuoinfo.pshare.fragment;
 
+import android.app.FragmentManager;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
-import com.azhuoinfo.pshare.fragment.UserCenterEditorFragment;
+import com.azhuoinfo.pshare.fragment.adapter.MyPagerAdapter;
+
+import java.util.ArrayList;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
@@ -20,23 +28,21 @@ import mobi.cangol.mobile.base.FragmentInfo;
  * Created by Azhuo on 2015/9/22.
  */
 public class MonthlyRentFragment extends BaseContentFragment{
+    //返回上一个页面
+    private ImageView activity_back;
 
-    //用户的头像设置
-    private ImageView mCustomerHeadImageView;
-    //用户名
-    private TextView mCustomerNicknameTextView;
-    //用户Id
-    private TextView mCustomerIdTextView;
-    //用户积分
-    private TextView mCustomerPointsTextView;
-    //用户诚信分(余)
-    private TextView mCustomerFaithPoints1TextView;
-    //用户诚信分(满)
-    private TextView mCustomerFaithPoints2TextView;
-    //到个人中心详情
-    private LinearLayout mEditorInformationLinearLayout;
-    //生成的二维码图片
-    private ImageView mQRCodeImageView;
+    private ViewPager mMonthlyRentViewPager;
+    ArrayList<Fragment> fragments = new ArrayList<Fragment>();
+
+    //用于存储所有选择按钮的集合对象
+    private ArrayList<RadioButton> mButtons = new ArrayList<RadioButton>();
+
+    private ArrayList<LinearLayout> mLayouts=new ArrayList<LinearLayout>();
+
+    //用于切换预/定和历史订单的radiogroup
+    private RadioGroup mMonthlyRentRadioGroup;
+    private LinearLayout mlinesLinearLayout;
+    private FragmentManager mFragmentManager;
     private AccountVerify mAccountVerify;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +53,7 @@ public class MonthlyRentFragment extends BaseContentFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_user_centerr,container,false);
+        return inflater.inflate(R.layout.fragment_monthly_rent,container,false);
     }
 
     @Override
@@ -65,23 +71,71 @@ public class MonthlyRentFragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
-        mCustomerHeadImageView=(ImageView) view.findViewById(R.id.iv_customer_head);
-        mCustomerNicknameTextView=(TextView) view.findViewById(R.id.tv_customer_nickname);
-        mCustomerIdTextView=(TextView) view.findViewById(R.id.tv_customer_id);
-        mCustomerPointsTextView=(TextView) view.findViewById(R.id.tv_customer_points);
-        mCustomerFaithPoints1TextView=(TextView) view.findViewById(R.id.tv_customer_faith_points1);
-        mCustomerFaithPoints2TextView=(TextView) view.findViewById(R.id.tv_customer_faith_points2);
-        mEditorInformationLinearLayout=(LinearLayout) view.findViewById(R.id.ll_user_center);
-        mQRCodeImageView=(ImageView) view.findViewById(R.id.iv_QR_code);
+        //找控件
+        //activity_back=(ImageView) findViewById(R.id.activity_back);
+        mMonthlyRentRadioGroup=(RadioGroup) view.findViewById(R.id.rg_monthlyRent_group);
+        mMonthlyRentViewPager=(ViewPager) view.findViewById(R.id.monthlyRent_pager);
+        mlinesLinearLayout=(LinearLayout) view.findViewById(R.id.ll_monthlyRent_line);
+        for (int i=0;i<2;i++){
+            RadioButton mButton = (RadioButton) mMonthlyRentRadioGroup.getChildAt(i);
+            mButton.setTag(i);
+            mButtons.add(mButton);
+        }
     }
 
     @Override
     protected void initViews(Bundle bundle) {
-        this.setTitle(R.string.user_center);
-        mEditorInformationLinearLayout.setOnClickListener(new View.OnClickListener() {
+        this.setTitle(R.string.rent);
+        //获取所有的radiobutton
+
+        //设置radiogroup的改变监听
+        mMonthlyRentRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
             @Override
-            public void onClick(View v) {
-                setContentFragment(UserCenterEditorFragment.class, "UserCenterEditorFragment", null, ModuleMenuIDS.MODULE_HOME);
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // TODO Auto-generated method stub
+                //循环遍历所有的radiobutton，看看哪一个处于选中状态
+                for (int i=0;i<mButtons.size();i++) {
+                    RadioButton mButton = mButtons.get(i);
+                    //将选中状态的radiobutton上的文字改为白色，未选中的改为蓝色
+                    if (mButton.getId() == checkedId) {
+                        mButton.setTextColor(Color.rgb(70, 130, 180));
+                        mlinesLinearLayout.getChildAt(i).setVisibility(View.VISIBLE);
+                        //设置下方的viewpager显示相应的item
+                        mMonthlyRentViewPager.setCurrentItem(Integer.parseInt(mButton.getTag().toString()));
+                    } else {
+                        mButton.setTextColor(Color.rgb(220, 220, 220));
+                        mlinesLinearLayout.getChildAt(i).setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+        });
+        //初始化list要显示的数据源
+        fragments.add(new MonthlyRentListFragment());
+        fragments.add(new MonthlyRentHistoryListFragment());
+        mMonthlyRentViewPager.setAdapter(new MyPagerAdapter(getChildFragmentManager(), fragments));
+        //设置viewpager改变的监听事件
+        mMonthlyRentViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int arg0) {
+                // TODO Auto-generated method stub
+				/*
+				 * 通过monthlyRent_group的check方法选中相应的radiobutton
+				 * 只不过该方法的参数是要选中的raidobutton的id值，而不是index索引位置值
+				 * 因此
+				 * 需要通过monthlyRent_group的getChildAt方法先获得对应位置的raidobutton对象
+				 * 然后在获取该对象的id值
+				 * */
+                mMonthlyRentRadioGroup.check(mMonthlyRentRadioGroup.getChildAt(arg0).getId());
+            }
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+                // TODO Auto-generated method stub
+
+            }
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+                // TODO Auto-generated method stub
             }
         });
     }

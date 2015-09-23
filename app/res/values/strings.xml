@@ -53,23 +53,7 @@
 
     <string name="iv_about_us">泊享P-share</string>
     <string name="add1">点击添加车辆信息可缴纳</string>
-    <string name="add2">产权/月租管理费</string>
-    <string name="monthlyRent_list">我的月租列表</string>
-    <string name="rb_monthlyRent_historylist">历史缴费记录</string>
-    <string name="rb_monthlyRent_list">月租列表</string>
-    <string name="add_rent">添加产权/月租</string>
-    <string name="tv_city">国、省、市:</string>
-    <string name="tv_area">区:</string>
-    <string name="tv_living_area">小区:</string>
-    <string name="tv_time_frame">时间段:</string>
-    <string name="tv_start_time">开始时间:</string>
-    <string name="tv_finish_time">结束时间:</string>
-    <string name="tv_price">单价:</string>
-    <string name="tv_name">姓名:</string>
-    <string name="tv_car_brand">车牌:</string>
-    <string name="rent">产权/月租</string>
-    <string name="pay_money">金额：</string>
-    <string name="pay1">支付</string>
+
     <string name="delete">删除此条信息</string>
     <string name="agency_stop_car">代泊员</string>
     <string name="already_receiving">已接单</string>
@@ -93,7 +77,6 @@
 
     <!--个人中心-->
     <string name="user_center">个人中心</string>
-
     <!--我的车列表-->
     <string name="add">添加</string>
     <string name="add_car_information">增加车辆信息</string>
@@ -104,6 +87,25 @@
     <string name="fill_in_car_address">请选择车牌归属地</string>
     <string name="mine_carList">我的车列表</string>
 
+    <!--我的月租列表-->
+    <string name="monthlyRent_list">我的月租列表</string>
+    <string name="rb_monthlyRent_list">月租列表</string>
+    <string name="rent">产权/月租</string>
+    <string name="rb_monthlyRent_historylist">历史缴费记录</string>
+    <string name="add2">产权/月租管理费</string>
+    <string name="add_rent">添加产权/月租</string>
+    <string name="tv_city">国、省、市:</string>
+    <string name="tv_area">区:</string>
+    <string name="tv_living_area">小区:</string>
+    <string name="tv_time_frame">时间段:</string>
+    <string name="tv_start_time">开始时间:</string>
+    <string name="tv_finish_time">结束时间:</string>
+    <string name="tv_price">单价:</string>
+    <string name="tv_name">姓名:</string>
+    <string name="tv_car_brand">车牌:</string>
+
+    <string name="pay_money">金额：</string>
+    <string name="pay1">支付</string>
     <!--优惠积分-->
     <string name="integration">优惠/积分</string>
 

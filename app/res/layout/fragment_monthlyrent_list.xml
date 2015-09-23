@@ -8,28 +8,29 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical">
-        <com.azhuoinfo.parking.view.MyListView
-	        android:id="@+id/rent_list" 
+        <ListView
+	        android:id="@+id/lv_monthlyRent_list"
 	        android:layout_height="wrap_content"
 	        android:layout_width="match_parent"
-	        android:background="#ffffff">       
-	    </com.azhuoinfo.parking.view.MyListView>
+			android:layout_marginTop="@dimen/padding1"
+	        android:background="@color/text_white">
+	    </ListView>
 	    <RelativeLayout
-	        android:id="@+id/add_rent_car" 
+	        android:id="@+id/rl_add_monthlyRent"
 	        android:layout_height="wrap_content"
 	        android:layout_width="match_parent"
 	        android:padding="@dimen/padding2"
 	        android:layout_marginTop="@dimen/padding1"
-	        android:background="#ffffff">
+	        android:background="@color/text_white">
 	        <ImageView 
 	            android:layout_height="wrap_content"
 	            android:layout_width="wrap_content"
-	            android:layout_toLeftOf="@+id/tv_add"
+	            android:layout_toLeftOf="@+id/tv_add_monthlyRent"
 	            android:layout_centerVertical="true"
 	            android:layout_marginRight="@dimen/padding2"
 	            android:src="@drawable/add"/>
 	        <TextView
-	            android:id="@+id/tv_add" 
+	            android:id="@+id/tv_add_monthlyRent"
 	            android:layout_height="wrap_content"
 	            android:layout_width="wrap_content"
 	            android:layout_centerInParent="true"

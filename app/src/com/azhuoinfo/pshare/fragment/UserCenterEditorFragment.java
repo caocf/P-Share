@@ -1,5 +1,7 @@
 package com.azhuoinfo.pshare.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
+
+import java.util.logging.Handler;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
@@ -65,12 +69,14 @@ public class UserCenterEditorFragment extends BaseContentFragment{
     private ImageView mCustomerRegionImageView;
     //设置用户邮箱
     private EditText mCustomerEmailEditText;
+    private String[] sex=new String[]{"男","女"};
 
     private AccountVerify mAccountVerify;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAccountVerify = AccountVerify.getInstance(getActivity());
+
     }
 
     @Override
@@ -156,6 +162,19 @@ public class UserCenterEditorFragment extends BaseContentFragment{
                 }
             }
         });
+        mCustomerSexRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSexListDialog();
+            }
+        });
+        mCustomerRegionRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRegionListDialog();
+            }
+        });
+
 
     }
 
@@ -174,6 +193,32 @@ public class UserCenterEditorFragment extends BaseContentFragment{
         return true;
     }
 
+    private void showSexListDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+
+        builder.setTitle("请选择性别");
+
+        builder.setItems(sex, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mCustomerSexTextView.setText(sex[which]);
+            }
+        });
+        builder.show();
+    }
+    private void showRegionListDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+
+        builder.setTitle("请您的选择家乡");
+
+        builder.setItems(sex, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mCustomerSexTextView.setText(sex[which]);
+            }
+        });
+        builder.show();
+    }
     /*虚拟键盘的处理*//*
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -213,4 +258,4 @@ public class UserCenterEditorFragment extends BaseContentFragment{
         }
         return false;
     }*/
-}
+    }
