@@ -9,119 +9,120 @@
 	    android:layout_height="match_parent"
 	    android:background="@color/bg_color"
 	    android:orientation="vertical" >
-	    <TextView
-	        android:id="@+id/tv_you_servicePerson" 
-	        android:layout_height="wrap_content"
-	        android:layout_width="wrap_content"
-	        android:padding="@dimen/padding2"
-	        android:textSize="@dimen/text_size4"
-	        android:textColor="@color/rb_text_color_gray"
-	        android:text="@string/tv_you_servicePerson"/>
-	    <RelativeLayout         
-	        android:layout_height="wrap_content"
-	        android:layout_width="match_parent"
-	        android:layout_below="@+id/tv_you_servicePerson"
-	        android:background="@color/text_white">
-	        <ImageView
-		        android:id="@+id/imageView1"
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_marginTop="@dimen/padding4"
-		        android:background="@drawable/order_car_bg"/>
-	        <!-- 代泊员头像  -->
-	        <ImageView
-	            android:id="@+id/iv_order_servicePerson"
-	            android:layout_height="wrap_content"
-	            android:layout_width="wrap_content"
-	            android:layout_centerHorizontal="true"
-	            android:layout_marginTop="@dimen/padding1"
-	            android:src="@drawable/userhead"/> 
-	        <!-- 代泊员号  -->
-	        <TextView
-	            android:id="@+id/tv_order_servicePerson" 
-	            android:layout_height="wrap_content"
-	            android:layout_width="wrap_content"
-	            android:layout_centerHorizontal="true"
-	            android:layout_marginTop="@dimen/padding2"
-	            android:textSize="@dimen/text_size3"
-	            android:layout_below="@+id/iv_order_servicePerson"
-	            android:text="@string/tv_order_servicePerson"/>
-	        <!-- 代泊员的职务 -->
-	        <LinearLayout
-	            android:id="@+id/ll_order_servicePerson_position" 
-	            android:layout_height="wrap_content"
-	            android:layout_width="wrap_content"
-	            android:layout_centerHorizontal="true"
-	            android:layout_marginTop="@dimen/padding1"
-	            android:layout_below="@+id/tv_order_servicePerson"
-	            android:orientation="horizontal">
-	            <TextView
-	                android:layout_height="wrap_content"
-	                android:layout_width="wrap_content"
-	                android:textSize="@dimen/text_size3"
-	                android:text="@string/tv_order_servicePerson_position"/>
-	            <TextView
-	                android:id="@+id/tv_order_servicePerson_position"
-	                android:layout_height="wrap_content"
-	                android:layout_width="wrap_content"
-	                android:textSize="@dimen/text_size3"
-	                android:text="@string/text_order_servicePerson_position"/>            
-	        </LinearLayout>
-	        <!-- 代泊员负责的区域地点 -->
-	        <LinearLayout
-	            android:id="@+id/ll_order_servicePerson_area" 
-	            android:layout_height="wrap_content"
-	            android:layout_width="wrap_content"
-	            android:layout_centerHorizontal="true"
-	            android:layout_marginTop="@dimen/padding1"
-	            android:layout_below="@+id/ll_order_servicePerson_position"
-	            android:orientation="horizontal">
-	            <TextView                
-	                android:layout_height="wrap_content"
-	                android:layout_width="wrap_content"
-	                android:textSize="@dimen/text_size3"
-	                android:text="@string/tv_order_servicePerson_area"/>
-	            <TextView
-	                android:id="@+id/tv_order_servicePerson_area"
-	                android:layout_height="wrap_content"
-	                android:layout_width="wrap_content"
-	                android:textSize="@dimen/text_size3"
-	                android:text="@string/text_order_servicePerson_area"/>            
-	        </LinearLayout>
-	        <!-- 拨打代泊员号码 -->
-	        <RelativeLayout
-	            android:id="@+id/rl_order_servicePerson_phone" 
-	            android:layout_height="wrap_content"
-	            android:layout_width="wrap_content"
-	            android:layout_centerHorizontal="true"
-	            android:layout_marginTop="@dimen/padding1"           
-	            android:layout_below="@+id/ll_order_servicePerson_area">
-	            <LinearLayout
-	                android:id="@+id/ll_order_servicePerson_phone" 
-	                android:layout_height="wrap_content"
-	                android:layout_width="wrap_content"
-	                android:orientation="horizontal">
-	                <ImageView 
-		                android:layout_height="wrap_content"
-		                android:layout_width="wrap_content"
-		                android:src="@drawable/ic_launcher"/>
-		            <TextView
-		                android:id="@+id/tv_order_servicePerson_phone" 
-		                android:layout_height="wrap_content"
-		                android:layout_width="wrap_content"
-		                android:layout_gravity="center_vertical"
-		                android:textColor="@color/text_phone"
-		                android:text="18301969764"/>
-	            </LinearLayout>
-	            <View 
-	                android:layout_height="1dp"
-	                android:layout_width="match_parent"
-	                android:layout_alignParentLeft="@+id/ll_order_servicePerson_phone"
-	                android:layout_alignRight="@+id/ll_order_servicePerson_phone"
-	                android:background="@color/text_phone"
-	                android:layout_marginTop="@dimen/padding1"
-	                android:layout_below="@+id/ll_order_servicePerson_phone"/>
-	        </RelativeLayout>              
+		<TextView
+			android:id="@+id/tv_you_servicePerson"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:padding="@dimen/padding2"
+			android:textSize="@dimen/text_size4"
+			android:textColor="@color/rb_text_color_gray"
+			android:text="@string/tv_you_servicePerson"/>
+		<RelativeLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:layout_below="@+id/tv_you_servicePerson"
+			android:background="@color/text_white">
+			<ImageView
+				android:id="@+id/imageView1"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/padding4"
+				android:background="@drawable/order_car_bg"/>
+			<!-- 代泊员头像  -->
+			<ImageView
+				android:id="@+id/iv_parker_head"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_centerHorizontal="true"
+				android:layout_marginTop="@dimen/padding1"
+				android:src="@drawable/userhead"/>
+			<!-- 代泊员号  -->
+			<TextView
+				android:id="@+id/tv_parker_id"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_centerHorizontal="true"
+				android:layout_marginTop="@dimen/padding2"
+				android:textSize="@dimen/text_size3"
+				android:layout_below="@+id/iv_parker_head"
+				android:text="@string/tv_order_servicePerson"/>
+			<!-- 代泊员的职务 -->
+			<LinearLayout
+				android:id="@+id/ll_parker_position"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_centerHorizontal="true"
+				android:layout_marginTop="@dimen/padding1"
+				android:layout_below="@+id/tv_parker_id"
+				android:orientation="horizontal">
+				<TextView
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:textSize="@dimen/text_size3"
+					android:text="@string/tv_order_servicePerson_position"/>
+				<TextView
+					android:id="@+id/tv_parker_position"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:textSize="@dimen/text_size3"
+					android:text="@string/text_order_servicePerson_position"/>
+			</LinearLayout>
+			<!-- 代泊员负责的区域地点 -->
+			<LinearLayout
+				android:id="@+id/ll_parker_area"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_centerHorizontal="true"
+				android:layout_marginTop="@dimen/padding1"
+				android:layout_below="@+id/ll_parker_position"
+				android:orientation="horizontal">
+				<TextView
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:textSize="@dimen/text_size3"
+					android:text="@string/tv_order_servicePerson_area"/>
+				<TextView
+					android:id="@+id/tv_parker_area"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:textSize="@dimen/text_size3"
+					android:text="@string/text_order_servicePerson_area"/>
+			</LinearLayout>
+			<!-- 拨打代泊员号码 -->
+			<RelativeLayout
+				android:id="@+id/rl_parker_mobile"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_centerHorizontal="true"
+				android:layout_marginTop="@dimen/padding1"
+				android:layout_below="@+id/ll_parker_area">
+				<LinearLayout
+					android:id="@+id/ll_parker_mobile"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:orientation="horizontal">
+					<ImageView
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content"
+						android:src="@drawable/call_phone"/>
+					<TextView
+						android:id="@+id/tv_parker_mobile"
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content"
+						android:layout_gravity="center_vertical"
+						android:layout_marginLeft="@dimen/padding1"
+						android:textColor="@color/text_phone"
+						android:text="18301969764"/>
+				</LinearLayout>
+				<View
+					android:layout_height="1dp"
+					android:layout_width="match_parent"
+					android:layout_alignParentLeft="@+id/ll_parker_mobile"
+					android:layout_alignRight="@+id/ll_parker_mobile"
+					android:background="@color/text_phone"
+					android:layout_marginTop="@dimen/padding1"
+					android:layout_below="@+id/ll_parker_mobile"/>
+			</RelativeLayout>
 	    </RelativeLayout>
 	    <!-- 停车状态 -->
 	     <TextView
@@ -134,7 +135,7 @@
 	        android:text="@string/tv_user_stop_state"/>
 	     <!-- 预付金额 -->
 	     <LinearLayout
-	         android:id="@+id/ll_order_pay_money" 
+	         android:id="@+id/ll_appointment_pay_money"
 	         android:layout_height="wrap_content"
 	         android:layout_width="match_parent"
 	         android:padding="@dimen/padding2"
@@ -145,7 +146,7 @@
 	             android:textSize="@dimen/text_size3"
 	             android:text="@string/tv_order_pay_money"/>
 	         <TextView
-	             android:id="@+id/tv_order_pay_money" 
+	             android:id="@+id/tv_appointment_pay_money"
 	             android:layout_height="wrap_content"
 	             android:layout_width="wrap_content"
 	             android:textColor="@color/text_color_red"
@@ -154,7 +155,7 @@
 	     </LinearLayout>
 	     <!-- 预约时间 -->
 	     <LinearLayout
-	         android:id="@+id/ll_order_time" 
+	         android:id="@+id/ll_appointment_time"
 	         android:layout_height="wrap_content"
 	         android:layout_width="match_parent"
 	         android:padding="@dimen/padding2"	        
@@ -165,7 +166,7 @@
 	             android:textSize="@dimen/text_size3"
 	             android:text="@string/tv_order_time"/>
 	         <TextView
-	             android:id="@+id/tv_order_time" 
+	             android:id="@+id/tv_appointment_time"
 	             android:layout_height="wrap_content"
 	             android:layout_width="wrap_content"
 	             android:textSize="@dimen/text_size3"
@@ -173,7 +174,7 @@
 	     </LinearLayout>
 	     <!--  预约取车时间-->
 	     <LinearLayout
-	         android:id="@+id/ll_order_takeCar_time" 
+	         android:id="@+id/ll_appointment_make_car_time"
 	         android:layout_height="wrap_content"
 	         android:layout_width="match_parent"
 	         android:padding="@dimen/padding2"	        
@@ -184,7 +185,7 @@
 	             android:textSize="@dimen/text_size3"
 	             android:text="@string/tv_order_takeCar_time"/>
 	         <TextView
-	             android:id="@+id/tv_order_takeCar_time" 
+	             android:id="@+id/tv_appointment_make_car_time"
 	             android:layout_height="wrap_content"
 	             android:layout_width="wrap_content"
 	             android:textSize="@dimen/text_size3"
@@ -192,7 +193,7 @@
 	     </LinearLayout>
 	     <!--  停车计时-->
 	     <LinearLayout
-	         android:id="@+id/ll_order_takeCar_remainingtime" 
+	         android:id="@+id/ll_countdown_time"
 	         android:layout_height="wrap_content"
 	         android:layout_width="match_parent"
 	         android:padding="@dimen/padding2"	        
@@ -203,7 +204,7 @@
 	             android:textSize="@dimen/text_size3"
 	             android:text="@string/tv_order_takeCar_remainingtime"/>
 	         <TextView
-	             android:id="@+id/tv_order_takeCar_remainingtime" 
+	             android:id="@+id/tv_countdown_time"
 	             android:layout_height="wrap_content"
 	             android:layout_width="wrap_content"
 	             android:textSize="@dimen/text_size3"
@@ -212,7 +213,7 @@
 	     </LinearLayout>
 	     <!--  车牌号-->
 	     <LinearLayout
-	         android:id="@+id/ll_order_order_car_number" 
+	         android:id="@+id/ll_car_number"
 	         android:layout_height="wrap_content"
 	         android:layout_width="match_parent"
 	         android:padding="@dimen/padding2"	        
@@ -223,7 +224,7 @@
 	             android:textSize="@dimen/text_size3"
 	             android:text="@string/tv_order_car_number"/>
 	         <TextView
-	             android:id="@+id/tv_order_car_number" 
+	             android:id="@+id/tv_car_number"
 	             android:layout_height="wrap_content"
 	             android:layout_width="wrap_content"
 	             android:textSize="@dimen/text_size3"
@@ -234,7 +235,8 @@
 	         android:layout_width="match_parent"
 	         android:background="#ff00ff">	         
 	     </RelativeLayout>
-	     <Button 
+	     <Button
+			 android:id="@+id/button_finish_order_pay"
 	         style="@style/button_style"
 	         android:text="@string/button_payfinish"/>
 	</LinearLayout>

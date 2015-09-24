@@ -45,6 +45,7 @@ public class MonthlyRentListAdapter extends BaseAdapter<String>{
     }
 
     class ViewHolder{
+        View layout;
         private TextView mCarNumberTextView;
         private TextView mLivingAreaTextView;
         private TextView mRentTimeTextView;

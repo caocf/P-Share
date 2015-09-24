@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical" >
-    <RelativeLayout
+	<!--actionbar-->
+    <!--<RelativeLayout
         android:layout_width="match_parent" 
         android:layout_height="@dimen/padding8"       
-        android:background="@color/bg_action_bar_blue"
-        >
+        android:background="@color/bg_action_bar_blue">
         <ImageView
             android:id="@+id/activity_back"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
            	android:layout_centerInParent="true"
            	android:textSize="@dimen/text_size5" 
             android:text="@string/rent"/>
-    </RelativeLayout>
+    </RelativeLayout>-->
     <ScrollView 
         android:layout_height="wrap_content"
         android:layout_width="wrap_content">
@@ -32,29 +32,46 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:orientation="vertical">
-            <RelativeLayout
-                android:id="@+id/rl_city" 
-	            android:layout_height="@dimen/padding7"
-	            android:layout_width="match_parent"       
-	            android:background="@color/text_white">
-	            <TextView 
-	                android:layout_height="wrap_content"
-	                android:layout_width="wrap_content"
-	                android:layout_marginLeft="@dimen/padding2"
-	                android:textSize="@dimen/text_size3"
-	                android:layout_centerVertical="true"
-	                android:text="@string/tv_city"/>
-	            <TextView
-	                android:id="@+id/tv_city" 
-	                android:layout_height="wrap_content"
-	                android:layout_width="wrap_content"
-	                android:layout_toLeftOf="@+id/iv_city"
-	                android:layout_centerVertical="true"
-	                android:layout_alignParentRight="true"
-	                android:textColor="#999d9c"
-	                android:layout_marginRight="@dimen/padding1"
-	                android:text="中国  上海  上海"/>	           
-        	</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/rl_CPC"
+				android:layout_height="@dimen/padding7"
+				android:layout_width="match_parent"
+				android:background="@color/text_white">
+				<TextView
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:layout_marginLeft="@dimen/padding2"
+					android:textSize="@dimen/text_size3"
+					android:layout_centerVertical="true"
+					android:text="@string/tv_city"/>
+				<TextView
+					android:id="@+id/tv_country"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:layout_toLeftOf="@+id/tv_province"
+					android:layout_centerVertical="true"
+					android:textColor="@color/text_light_gray"
+					android:layout_marginRight="@dimen/padding1"
+					android:text="中国"/>
+				<TextView
+					android:id="@+id/tv_province"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:layout_toLeftOf="@+id/tv_city"
+					android:layout_centerVertical="true"
+					android:textColor="@color/text_light_gray"
+					android:layout_marginRight="@dimen/padding1"
+					android:text="上海"/>
+				<TextView
+					android:id="@+id/tv_city"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:layout_centerVertical="true"
+					android:layout_alignParentRight="true"
+					android:textColor="@color/text_light_gray"
+					android:layout_marginRight="@dimen/padding1"
+					android:text="上海"/>
+			</RelativeLayout>
         	<RelativeLayout
         	    android:id="@+id/rl_area" 
 	            android:layout_height="@dimen/padding7"
@@ -126,7 +143,7 @@
 	                android:layout_marginRight="@dimen/padding1"/>	           
         	</RelativeLayout>
         	<RelativeLayout
-        	    android:id="@+id/rl_start_time" 
+        	    android:id="@+id/rl_monthlyrent_begint_time"
 	            android:layout_height="@dimen/padding7"
 	            android:layout_width="match_parent"
 	            android:layout_marginTop="@dimen/padding10"        
@@ -139,17 +156,16 @@
 	                android:layout_centerVertical="true"
 	                android:text="@string/tv_start_time"/>
 	            <TextView
-	                android:id="@+id/tv_start_time" 
+	                android:id="@+id/tv_monthlyrent_begint_time"
 	                android:layout_height="wrap_content"
 	                android:layout_width="wrap_content"
-	                android:layout_toLeftOf="@+id/iv_start_time"
 	                android:textColor="@color/text_light_gray"
 	                android:layout_alignParentRight="true"
 	                android:layout_centerVertical="true"
 	                android:layout_marginRight="@dimen/padding1"/>	           
         	</RelativeLayout>
         	<RelativeLayout
-        	    android:id="@+id/rl_finish_time" 
+        	    android:id="@+id/rl_monthlyrent_end_time"
 	            android:layout_height="@dimen/padding7"
 	            android:layout_width="match_parent"
 	            android:layout_marginTop="@dimen/padding10"        
@@ -162,7 +178,7 @@
 	                android:layout_centerVertical="true"
 	                android:text="@string/tv_finish_time"/>
 	            <TextView
-	                android:id="@+id/tv_finish_time" 
+	                android:id="@+id/tv_monthlyrent_end_time"
 	                android:layout_height="wrap_content"
 	                android:layout_width="wrap_content"
 	                android:layout_alignParentRight="true"
@@ -170,7 +186,7 @@
 	                android:layout_marginRight="@dimen/padding5"/>
         	</RelativeLayout>
         	<RelativeLayout
-        	    android:id="@+id/rl_tv_price" 
+        	    android:id="@+id/rl_monthlyrent_price"
 	            android:layout_height="@dimen/padding7"
 	            android:layout_width="match_parent"
 	            android:layout_marginTop="@dimen/padding10"        
@@ -183,7 +199,7 @@
 	                android:layout_centerVertical="true"
 	                android:text="@string/tv_price"/>
 	            <TextView
-	                android:id="@+id/tv_price" 
+	                android:id="@+id/tv_monthlyrent_price"
 	                android:layout_height="wrap_content"
 	                android:layout_width="wrap_content"
 	                android:layout_alignParentRight="true"
@@ -192,7 +208,7 @@
 	                android:text="100元/月"/>
         	</RelativeLayout>
         	<RelativeLayout
-        	    android:id="@+id/rl_name" 
+        	    android:id="@+id/rl_customer_name"
 	            android:layout_height="@dimen/padding7"
 	            android:layout_width="match_parent"
 	            android:layout_marginTop="@dimen/padding10"        
@@ -205,7 +221,7 @@
 	                android:layout_centerVertical="true"
 	                android:text="@string/tv_name"/>
 	            <TextView
-	                android:id="@+id/tv_name"
+	                android:id="@+id/tv_customer_name"
 	                android:layout_height="wrap_content"
 	                android:layout_width="wrap_content"
 	                android:layout_alignParentRight="true"
@@ -218,7 +234,7 @@
 	                android:layout_marginRight="@dimen/padding5"/>
         	</RelativeLayout>
         	<RelativeLayout
-        	    android:id="@+id/rl_tv_car_brand" 
+        	    android:id="@+id/rl_tv_car_number"
 	            android:layout_height="@dimen/padding7"
 	            android:layout_width="match_parent"
 	            android:layout_marginTop="@dimen/padding10"        
@@ -231,7 +247,7 @@
 	                android:layout_centerVertical="true"
 	                android:text="@string/tv_car_brand"/>
 	            <TextView
-	                android:id="@+id/tv_car_brand" 
+	                android:id="@+id/tv_car_number"
 	                android:layout_height="wrap_content"
 	                android:layout_width="wrap_content"	                
 	                android:layout_alignParentRight="true"
@@ -239,10 +255,10 @@
 	                android:layout_marginRight="@dimen/padding1"/>	            
         	</RelativeLayout>
         	<Button
-        	    android:id="@+id/button_finishpay" 
+        	    android:id="@+id/button_finish_pay"
         	    android:layout_height="@dimen/padding7"
         	    android:layout_width="match_parent"
-        	    android:background="@color/text_light_gray"
+        	    android:background="@drawable/finish_button"
         	    android:textSize="@dimen/text_size5"
         	    android:layout_margin="@dimen/padding4"
         	    android:textColor="@color/text_white"

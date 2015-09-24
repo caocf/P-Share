@@ -61,9 +61,9 @@ public class MonthlyRentListFragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
-        mMonthlyRentListView=(ListView) view.findViewById(R.id.lv_monthlyRent_list);
+        mMonthlyRentListView=(ListView) findViewById(R.id.lv_monthlyRent_list);
         mAddMonthlyRentCarRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_add_monthlyRent);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 4; i++) {
             list.add(""+i);
         }
         mMonthlyRentListView.setAdapter(new MonthlyRentListAdapter(this.getActivity(), list));
@@ -74,14 +74,14 @@ public class MonthlyRentListFragment extends BaseContentFragment{
         mAddMonthlyRentCarRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentFragment(SuggestionFeedbackFragment.class, "SuggestionFeedbackFragment", null, ModuleMenuIDS.MODULE_HOME);
+                replaceParentFragment(AddMonthlyRentCarFragment.class, "AddMonthlyRentCarFragment", null);
             }
         });
 
         mMonthlyRentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                replaceParentFragment(MonthlyRentCarPayFragment.class,"MonthlyRentCarPayFragment",null);
             }
         });
     }

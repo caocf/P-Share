@@ -120,7 +120,7 @@ public class MenuFragment extends BaseMenuFragment {
 		mOrderRelativeLayout.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setContentFragment(OrderFragment.class, "OrderFragment", null, ModuleMenuIDS.MODULE_HOME);
+				setContentFragment(MineOrderFragment.class, "MineOrderFragment", null, ModuleMenuIDS.MODULE_HOME);
 				showMenu(false);
 			}
 		});

@@ -13,36 +13,42 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mobi.cangol.mobile.utils.StringUtils;
 import mobi.cangol.mobile.utils.TimeUtils;
 
 public class CarListAdapter extends BaseAdapter<String> {
 
-	private ArrayList<String> list;
+	private List<String> list;
+	private Context context;
 
 	public CarListAdapter(Context context) {
 		super(context);
 	}
-	public CarListAdapter(Context context,ArrayList<String> list) {
-		super(context);
-		this.list=list;
+
+	public CarListAdapter(Context context, List<String> items) {
+		super(context, items);
+		this.context=context;
+		this.list=items;
 	}
+
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder=null;
-		if(null!=convertView){
-			holder=(ViewHolder)convertView.getTag();
-		}else{
+		if(convertView==null){
 			convertView = this.mInflater.inflate(R.layout.listview_item_car, parent, false);
 			holder=new ViewHolder();
 			holder.mCarImageView=(ImageView) convertView.findViewById(R.id.iv_car);
 			holder.mCarNumberTextView=(TextView) convertView.findViewById(R.id.tv_car_number);
 			holder.mCarSizeTextView=(TextView) convertView.findViewById(R.id.tv_car_size);
 			convertView.setTag(holder);
+
+		}else{
+			holder=(ViewHolder)convertView.getTag();
 		}
-		holder.mCarNumberTextView.setText(list.get(position).toString());
+		//holder.mCarNumberTextView.setText(list.get(position).toString());
 		return convertView;
 	}
 	static class ViewHolder{

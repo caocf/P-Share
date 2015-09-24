@@ -59,7 +59,7 @@
     <string name="already_receiving">已接单</string>
     <string name="pay_way">支付方式：</string>
     <string name="pay">去支付</string>
-    <string name="my_reserve">我的预约/订单</string>
+
     <string name="your_agency_stop_car">您的代泊员:</string>
     <string name="rb_historylist">历史订单</string>
     <string name="rb_reserve">预/订</string>
@@ -77,6 +77,9 @@
 
     <!--个人中心-->
     <string name="user_center">个人中心</string>
+
+    <!--我的预约/订单-->
+    <string name="my_reserve">我的预约/订单</string>
     <!--我的车列表-->
     <string name="add">添加</string>
     <string name="add_car_information">增加车辆信息</string>
@@ -103,7 +106,6 @@
     <string name="tv_price">单价:</string>
     <string name="tv_name">姓名:</string>
     <string name="tv_car_brand">车牌:</string>
-
     <string name="pay_money">金额：</string>
     <string name="pay1">支付</string>
     <!--优惠积分-->

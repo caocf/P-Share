@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f8f8ff"
+    android:background="@color/text_white"
     android:orientation="horizontal" >
     <LinearLayout
         android:id="@+id/LinearLayout"
@@ -12,22 +12,22 @@
         android:orientation="vertical"
         android:layout_marginLeft="@dimen/padding2">
         <TextView
-            android:id="@+id/listitem_historyorder_fm_destination"
+            android:id="@+id/tv_parking_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size3"
             android:singleLine="true"
-            android:text="合计"/> 
+            android:text="恒基大厦地下停车场"/>
         <TextView
-            android:id="@+id/listitem_fm_historyorder_address" 
+            android:id="@+id/tv_parking_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size2"
             android:textColor="#999d9c"
             android:singleLine="true"
-            android:text="2568"/>
+            android:text="上海黄浦区淮海东路99号"/>
          <TextView
-            android:id="@+id/listitem_fm_historyorder_time" 
+            android:id="@+id/tv_order_pay_time"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textColor="#999d9c"
@@ -39,23 +39,27 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_marginRight="@dimen/padding2"
+        android:paddingTop="@dimen/padding1"
+        android:paddingBottom="@dimen/padding1"
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
         android:layout_toLeftOf="@+id/iv_back">
         <TextView
-            android:id="@+id/listitem_fm_historyorder_payment" 
+            android:id="@+id/tv_or_finish"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"         
             android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/padding1"
             android:textColor="#999d9c"
             android:textSize="@dimen/text_size3"            
             android:text="已完成"/>
         <TextView
-            android:id="@+id/listitem_fm_historyorder_paymentmoney" 
+            android:id="@+id/tv_order_pay_money"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_marginTop="@dimen/padding3"
-            android:layout_below="@+id/listitem_fm_historyorder_payment"
+            android:layout_marginTop="@dimen/padding2"
+            android:layout_marginBottom="@dimen/padding1"
+            android:layout_below="@+id/tv_or_finish"
             android:layout_alignParentRight="true"
             android:textColor="#999d9c"
             android:textSize="@dimen/text_size3"
@@ -68,6 +72,5 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/padding3"
         android:layout_alignParentRight="true"
-        android:src="@drawable/black_right_head"
-        />
+        android:src="@drawable/black_right_head"/>
 </RelativeLayout>

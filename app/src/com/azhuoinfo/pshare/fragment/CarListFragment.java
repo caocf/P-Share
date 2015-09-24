@@ -73,7 +73,7 @@ public class CarListFragment extends BaseContentFragment{
                 setContentFragment(AddCarInformationFragment.class, "AddCarInformationFragment", null, ModuleMenuIDS.MODULE_HOME);
             }
         });
-        for(int i=0;i<10;i++){
+        for(int i=0;i<4;i++){
             list.add(""+i);
         }
         mCarListView.setAdapter(new CarListAdapter(this.getActivity(), list));

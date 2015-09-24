@@ -6,16 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.azhuoinfo.pshare.AccountVerify;
-import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
-import com.azhuoinfo.pshare.fragment.adapter.MonthlyRentHistoryListAdapter;
+import com.azhuoinfo.pshare.fragment.adapter.MonthlyRentListAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
@@ -23,12 +23,26 @@ import mobi.cangol.mobile.base.FragmentInfo;
 /**
  * Created by Azhuo on 2015/9/22.
  */
-public class MonthlyRentHistoryListFragment extends BaseContentFragment{
+public class Order3Fragment extends BaseContentFragment{
 
-    //月租历史缴费列表
-    private ListView mMonthlyRentHistoryListView;
-    private ArrayList<String> list=new ArrayList<String>();
+    //代泊员头像
+    private ImageView mParkerHeadImageView;
+    //代泊员ID
+    private TextView mParkerIDTextView;
+    //代泊员职务
+    private TextView mParkerPositionTextView;
+    //代泊员负责区域
+    private TextView mParkerAreaTextView;
+    //代泊员联系方式
+    private TextView mParkerMobileTextView;
+    //预付金额
+    private TextView mAppointmentPayMoneyTextView;
+    //预约时间
+    private TextView mAppointmentTimeTextView;
+    //取消预约
+    private RelativeLayout mCancelAppointmentRelativeLayout;
 
+    private List<String> list=new ArrayList<String>();
     private AccountVerify mAccountVerify;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +53,7 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_monthlyrent_historylist,container,false);
+        return inflater.inflate(R.layout.fragment_order3,container,false);
     }
 
     @Override
@@ -57,21 +71,19 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
-        mMonthlyRentHistoryListView=(ListView) view.findViewById(R.id.lv_monthlyrnet_history);
-        for (int i = 0; i < 4; i++) {
-            list.add(""+i);
-        }
-        mMonthlyRentHistoryListView.setAdapter(new MonthlyRentHistoryListAdapter(this.getActivity(),list));
+        mParkerHeadImageView=(ImageView) view.findViewById(R.id.iv_parker_head);
+        mParkerIDTextView=(TextView) view.findViewById(R.id.tv_parker_id);
+        mParkerPositionTextView=(TextView) view.findViewById(R.id.tv_parker_position);
+        mParkerAreaTextView=(TextView) view.findViewById(R.id.tv_parker_area);
+        mParkerMobileTextView=(TextView) view.findViewById(R.id.tv_parker_mobile);
+        mAppointmentPayMoneyTextView=(TextView) view.findViewById(R.id.tv_appointment_pay_money);
+        mAppointmentTimeTextView=(TextView) view.findViewById(R.id.tv_appointment_time);
+        mCancelAppointmentRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_unselect_order);
     }
 
     @Override
     protected void initViews(Bundle bundle) {
-        mMonthlyRentHistoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                replaceParentFragment(MonthlyRentCarFinishPayFragment.class,"MonthlyRentCarFinishPayFragment",null);
-            }
-        });
+
     }
 
     @Override
