@@ -28,6 +28,7 @@ public class GuideFragment extends BaseContentFragment {
     private GuideAdapter mGuideAdapter;
     private GlobalData mGlobalData;
     private boolean isDisplay = false;//在设置里展示
+    private boolean isLogin=false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,9 +103,14 @@ public class GuideFragment extends BaseContentFragment {
             public void onClick(View v) {
                 popBackStack();
                 mGlobalData.save("newVersion", DeviceInfo.getAppVersion(getActivity()));
-                if (!isDisplay)
+                if (!isDisplay) {
+                    /*if (isLogin) {
+                        toMain();
+                    }else {
+                        toLogin();
+                    }*/
                     toMain();
-
+                }
             }
 
         });
@@ -114,16 +120,17 @@ public class GuideFragment extends BaseContentFragment {
             public void onClick(View v) {
                 popBackStack();
                 mGlobalData.save("newVersion", DeviceInfo.getAppVersion(getActivity()));
-                if (!isDisplay)
+                if (!isDisplay) {
                     toMain();
-            }
+                }
 
+            }
         });
     }
-
     private void toMain() {
         ((SplashActivity) this.getActivity()).toMain();
     }
+
 
     @Override
     public void onDestroyView() {

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical">  
-    <RelativeLayout
+    <!--<RelativeLayout
 	    android:layout_height="@dimen/padding8"
 	    android:layout_width="match_parent"
 	    android:background="@color/bg_action_bar_blue">     
@@ -16,9 +16,9 @@
 	       android:background="@null"	       
 	       android:src="@drawable/left_head"/>      
 	   	<TextView 
-	   	   style="@style/text_actionbar"  
-	   	   android:text="@string/yard_details"/>   
-	 </RelativeLayout>
+	   	   style="@style/text_actionbar"
+	   	   android:text="@string/yard_details"/>
+	 </RelativeLayout>-->
 	 <ScrollView 
 	     android:layout_height="wrap_content"
 	     android:layout_width="match_parent">
@@ -66,7 +66,7 @@
 				       android:layout_width="wrap_content"
 				       android:layout_gravity="center_vertical"
 				       android:textSize="@dimen/text_size3"
-				       android:text="上海黄浦区  淮海东路99号"/>              
+				       android:text="上海黄浦区淮海东路99号"/>
 			    </LinearLayout>
 			    <TextView 
 			        android:layout_height="@dimen/padding10"
@@ -168,7 +168,7 @@
 		            android:layout_height="wrap_content"
 		            android:layout_width="match_parent"
 		            android:layout_centerVertical="true"
-		            android:layout_toLeftOf="@+id/rl_imageview_appointmentTime"
+		            android:layout_toLeftOf="@+id/iv_parking_appointment_time"
 		            android:background="@drawable/edittext_time"
 		            android:textSize="@dimen/text_size3"
 		            android:hint="@string/selection_time"/>

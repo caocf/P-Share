@@ -3,6 +3,7 @@ package com.azhuoinfo.pshare.activity;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -17,6 +18,8 @@ import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.db.MessageService;
 import com.azhuoinfo.pshare.fragment.HomeFragment;
+import com.azhuoinfo.pshare.fragment.LoginAndRegister;
+import com.azhuoinfo.pshare.fragment.LoginAndRegisterActivity;
 import com.azhuoinfo.pshare.fragment.MenuFragment;
 import com.azhuoinfo.pshare.model.Upgrade;
 import com.azhuoinfo.pshare.model.User;
@@ -43,6 +46,7 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 	private GlobalData mGlobalData;
 	private UpgradeService mUpgradeService;
 	private ApiContants mApiContants;
+	private boolean isLogin=false;
 	private MessageService mMessageService;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +59,12 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 			// 启用动画
 			this.getCustomFragmentManager().setDefaultAnimation(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
 			this.setMenuFragment(MenuFragment.class, null);
-			this.setContentFragment(HomeFragment.class, "HomeFragment", null, ModuleMenuIDS.MODULE_HOME);
+			//if(isLogin){
+				this.setContentFragment(HomeFragment.class, "HomeFragment", null, ModuleMenuIDS.MODULE_HOME);
+			//}else{
+				//this.setContentFragment(LoginAndRegister.class,"LoginAndRegister",null);
+			//}
+
 			if (mGlobalData.get(Constants.KEY_CHECK_UPGRADE) == null || !TimeUtils.getCurrentDate().equals(mGlobalData.get(Constants.KEY_CHECK_UPGRADE))) {
 				// 判断升级提示是否检测过，每天只检测一次
 				checkUpgrade();
@@ -129,7 +138,6 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 		}
 
 	}
-
 	@Override
 	public void onBack() {
 		if (back_pressed + 2000 > System.currentTimeMillis()) {
@@ -292,6 +300,7 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 
 	}
 	private void showLoginDialog() {
+		startActivity(new Intent(this,LoginAndRegisterActivity.class));
 		
 	}
 	@Override

@@ -91,8 +91,7 @@ public class SuggestionFeedbackFragment extends BaseContentFragment {
 
 	@Override
 	public boolean isCleanStack() {
-		return true;
+		return false;
 	}
-
 
 }

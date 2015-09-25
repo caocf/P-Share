@@ -10,18 +10,17 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:orientation="vertical"
-        android:layout_toLeftOf="@+id/listitem_homelistmenu"
-        android:layout_marginLeft="@dimen/padding2"
-        >
+        android:layout_toLeftOf="@+id/tv_parking_status"
+        android:layout_marginLeft="@dimen/padding2">
         <TextView
-            android:id="@+id/listitem_homelistmenu_destination"
+            android:id="@+id/tv_parking_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size3"
             android:singleLine="true"
             android:text="恒积大厦地下停车场"/> 
         <TextView
-            android:id="@+id/listitem_homelistmenu_address"
+            android:id="@+id/tv_parking_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size2"
@@ -31,34 +30,34 @@
             android:text="上海黄浦区淮海东路99号"/>      
     </LinearLayout>
     <TextView
-        android:id="@+id/listitem_homelistmenu"  
+        android:id="@+id/tv_parking_status"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_marginLeft="@dimen/padding2"
-        android:layout_toLeftOf="@+id/remain_number"        
+        android:layout_toLeftOf="@+id/tv_parking_can_use"
         android:layout_centerVertical="true"     
         android:textSize="@dimen/text_size3"
         android:text="空:"/>
     <TextView
-        android:id="@+id/remain_number" 
+        android:id="@+id/tv_parking_can_use"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"        
         android:layout_marginRight="@dimen/padding4"
-        android:layout_toLeftOf="@+id/listitem_homelistmenu_price"
+        android:layout_toLeftOf="@+id/tv_parking_price"
         android:layout_centerVertical="true" 
         android:text="20"/>    
     <TextView
-        android:id="@+id/listitem_homelistmenu_price"  
+        android:id="@+id/tv_parking_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/padding4"
-        android:layout_toLeftOf="@+id/listitem_homelistmenu_distance"
+        android:layout_toLeftOf="@+id/tv_parking_distance"
          android:layout_centerVertical="true"
         android:textColor="#f05b72"
         android:textSize="@dimen/text_size3"
         android:text="20"/>
     <TextView
-        android:id="@+id/listitem_homelistmenu_distance"  
+        android:id="@+id/tv_parking_distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/padding2"
@@ -74,6 +73,5 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/padding3"
         android:layout_alignParentRight="true"
-        android:src="@drawable/black_right_head"
-        />
+        android:src="@drawable/black_right_head" />
 </RelativeLayout>

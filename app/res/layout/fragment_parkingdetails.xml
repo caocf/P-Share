@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical" >
-    <RelativeLayout 
+  <!--<RelativeLayout
        android:layout_height="@dimen/padding8"
        android:layout_width="match_parent"
        android:background="@color/bg_action_bar_blue">     
@@ -43,8 +43,8 @@
        	       android:layout_centerVertical="true"
        	       android:layout_marginRight="@dimen/padding1"	 
        	       android:layout_alignRight="@+id/et_search"/>	           
-       </RelativeLayout>			       
-       s<ImageButton
+       </RelativeLayout>
+       <ImageButton
          android:id="@+id/ib_home_ge"
          android:layout_width="@dimen/padding5"
          android:layout_height="@dimen/padding5"
@@ -53,9 +53,7 @@
          android:layout_alignParentRight="true"        
          android:layout_centerVertical="true"
          android:src="@drawable/car_list_right"/>
-
-
-    </RelativeLayout>   
+    </RelativeLayout>  -->
     <RelativeLayout 
         android:layout_height="wrap_content"
         android:padding="@dimen/padding2"

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/ib_user_center"
+        android:layout_toLeftOf="@+id/ib_parking_details"
+        android:layout_marginLeft="@dimen/padding2"
+        android:layout_marginRight="@dimen/padding2">
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/padding6"
+            android:layout_centerVertical="true"
+            android:hint="@string/homepage_search"
+            android:layout_weight="1"
+            android:background="@drawable/homepage_search_bg"
+            android:paddingLeft="@dimen/padding1"
+            android:ems="10" >
+        </EditText>
+        <ImageView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:src="@drawable/search1"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/padding1"
+            android:layout_alignRight="@+id/et_search"/>
+    </RelativeLayout>
+
+</LinearLayout>

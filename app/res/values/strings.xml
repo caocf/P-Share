@@ -64,6 +64,7 @@
     <string name="rb_historylist">历史订单</string>
     <string name="rb_reserve">预/订</string>
     <string name="minehome">我的家列表</string>
+    <string name="parking_details">附近的代泊区</string>
 
     <!-- 设置中关于我们 -->
     <string name="about_us_title">关于我们</string>

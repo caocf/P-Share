@@ -190,7 +190,7 @@ public class UserCenterEditorFragment extends BaseContentFragment{
 
     @Override
     public boolean isCleanStack() {
-        return true;
+        return false;
     }
 
     private void showSexListDialog() {
