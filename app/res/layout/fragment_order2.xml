@@ -18,7 +18,7 @@
         android:layout_alignTop="@+id/imageView1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/padding11"
-        android:text="您已预约 "
+        android:text="@string/tv1_order2"
         android:textSize="@dimen/text_size4"
         android:textColor="#c88400" />
 
@@ -28,8 +28,33 @@
          android:layout_below="@+id/tv1"
          android:layout_centerHorizontal="true"
          android:layout_marginTop="@dimen/padding1"
-         android:text="正在等待代泊员接单"
+         android:text="@string/tv2_order2"
          android:textColor="#c88400"
          android:textSize="@dimen/text_size4" />
+    <RelativeLayout
+        android:id="@+id/rl_unselect_order"
+        android:layout_height="@dimen/padding8"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/padding4"
+        android:layout_marginRight="@dimen/padding4"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button"
+        android:layout_marginBottom="@dimen/padding8">
+        <TextView
+            android:id="@+id/tv_unselect_order"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/text_size3"
+            android:layout_centerInParent="true"
+            android:text="@string/tv_unselect_order"/>
+        <ImageView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_toLeftOf="@+id/tv_unselect_order"
+            android:src="@drawable/iv_button_order"
+            android:layout_marginRight="@dimen/padding1"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
 
 </RelativeLayout>

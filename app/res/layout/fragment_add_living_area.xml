@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="match_parent"
+	android:background="#f8f8ff"
+	android:orientation="vertical">
+	<EditText
+		android:id="@+id/et_search"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/padding6"
+		android:layout_marginLeft="@dimen/padding2"
+		android:layout_marginRight="@dimen/padding2"
+		android:layout_marginTop="@dimen/padding1"
+		android:hint="搜索您要选择的小区、泊车区"
+		android:paddingLeft="@dimen/padding1"
+		android:drawableRight="@drawable/search_black"
+		android:paddingRight="@dimen/padding1"
+		android:background="@drawable/homepage_search_bg"/>
+	<ListView
+		android:id="@+id/lv_parking_address"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:layout_marginTop="@dimen/padding1"
+		android:background="@color/text_white">
+	</ListView>
+</LinearLayout>

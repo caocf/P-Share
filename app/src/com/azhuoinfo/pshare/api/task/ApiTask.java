@@ -17,7 +17,7 @@ public class ApiTask {
 	private ApiClient mApiClient;
 	private boolean mCache;
 	private long mCachePeroid;
-	private ApiTask(Context context, String tag) {
+	public ApiTask(Context context, String tag) {
 		mContext = context;
 		mParams = new HashMap<String, Object>();
 		mTag = tag;

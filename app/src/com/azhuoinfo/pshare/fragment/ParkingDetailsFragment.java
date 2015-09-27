@@ -74,10 +74,29 @@ public class ParkingDetailsFragment extends BaseContentFragment{
         mParkingDetailsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                replaceFragment(ParkingDetailsItemFragment.class,"ParkingDetailsItemFragment",null);
+                replaceFragment(ParkingDetailsItemFragment.class, "ParkingDetailsItemFragment", null);
             }
         });
 
+    }
+    @Override
+    protected boolean onMenuActionCreated(ActionMenu actionMenu) {
+        super.onMenuActionCreated(actionMenu);
+        actionMenu.add(new ActionMenuItem(1, "搜索", R.drawable.search1, 1));
+        actionMenu.add(new ActionMenuItem(2, "地图首页", R.drawable.list_car, 2));
+        return true;
+    }
+    @Override
+    public boolean onMenuActionSelected(ActionMenuItem action) {
+        switch(action.getId()){
+            case 1:
+                this.getCustomActionBar().startSearchMode();
+                break;
+            case 2:
+                replaceFragment(HomeFragment.class,"HomeFragment",null);
+                break;
+        }
+        return super.onMenuActionSelected(action);
     }
 
     @Override
@@ -93,6 +112,6 @@ public class ParkingDetailsFragment extends BaseContentFragment{
 
     @Override
     public boolean isCleanStack() {
-        return true;
+        return false;
     }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
@@ -26,6 +27,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 public class Order1Fragment extends BaseContentFragment{
 
     private AccountVerify mAccountVerify;
+    private TextView tv;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +55,17 @@ public class Order1Fragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
-
+        tv=(TextView) view.findViewById(R.id.text);
     }
 
     @Override
     protected void initViews(Bundle bundle) {
-
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // replaceParentFragment(Order2Fragment.class,"Order2Fragment",null);
+            }
+        });
     }
 
     @Override

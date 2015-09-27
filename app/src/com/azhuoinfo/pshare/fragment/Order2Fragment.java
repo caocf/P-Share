@@ -22,6 +22,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
  * Created by Azhuo on 2015/9/22.
  */
 public class Order2Fragment extends BaseContentFragment{
+    private RelativeLayout mRelativeLayout;
 
     private AccountVerify mAccountVerify;
     @Override
@@ -51,12 +52,18 @@ public class Order2Fragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
+        mRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_unselect_order);
 
     }
 
     @Override
     protected void initViews(Bundle bundle) {
+        mRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
     }
 
     @Override

@@ -1,11 +1,55 @@
 <?xml version="1.0"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/fragment_background"
               android:orientation="vertical">
+    <Button
+        android:id="@+id/button_mine_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/mine_home"
+        android:layout_marginLeft="@dimen/padding2"
+        android:text="12"
+        android:layout_marginBottom="@dimen/padding13"/>
+    <LinearLayout
+        android:id="@+id/ll_mine_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding3"
+        android:background="#66ffffff"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-100dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_parking_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="恒基大厦停车场"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/padding4"
+            android:text="空位数:"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/padding2"
+            android:text="12"/>
+        <Button
+            android:id="@+id/button_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding4"
+            android:background="#66ffffff"
+            android:textColor="@color/actionbar_background"
+            android:text="更改>>"/>
+    </LinearLayout>
 
-
-</LinearLayout>
+</RelativeLayout>

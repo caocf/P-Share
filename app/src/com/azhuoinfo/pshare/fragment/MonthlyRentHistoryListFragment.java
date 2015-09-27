@@ -58,6 +58,7 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
     @Override
     protected void findViews(View view) {
         mMonthlyRentHistoryListView=(ListView) view.findViewById(R.id.lv_monthlyrnet_history);
+        list.clear();
         for (int i = 0; i < 4; i++) {
             list.add(""+i);
         }

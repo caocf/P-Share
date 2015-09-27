@@ -81,7 +81,7 @@ public class Order4Fragment extends BaseContentFragment{
         mParkerPositionTextView=(TextView) view.findViewById(R.id.tv_parker_position);
         mParkerAreaTextView=(TextView) view.findViewById(R.id.tv_parker_area);
         mParkerMobileTextView=(TextView) view.findViewById(R.id.tv_parker_mobile);
-        mAppointmentPayMoneyTextView=(TextView) view.findViewById(R.id.tv_appointment_pay_money);
+        
         mAppointmentTimeTextView=(TextView) view.findViewById(R.id.tv_appointment_time);
         mAppointmentMakeCarTimeTextView=(TextView) view.findViewById(R.id.tv_appointment_make_car_time);
         mCountdownTimeTextView=(TextView) view.findViewById(R.id.tv_countdown_time);

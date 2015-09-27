@@ -3,6 +3,6 @@
     
     
     <item android:state_checked="true" android:drawable="@drawable/finish"/>
-    <item  android:drawable="@drawable/personal_center_editor"/>
+    <item  android:state_checked="false" android:drawable="@drawable/personal_center_editor"/>
 
 </selector>

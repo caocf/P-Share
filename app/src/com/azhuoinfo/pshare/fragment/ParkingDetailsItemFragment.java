@@ -59,6 +59,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     protected void initViews(Bundle bundle) {
         this.setTitle(R.string.yard_details);
         for(int i=0;i<4;i++){
+            list.clear();
             list.add(""+i);
         }
     }
@@ -66,25 +67,6 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     @Override
     protected void initData(Bundle bundle) {
 
-    }
-    @Override
-    protected boolean onMenuActionCreated(ActionMenu actionMenu) {
-        super.onMenuActionCreated(actionMenu);
-        actionMenu.add(new ActionMenuItem(1, "搜索", R.drawable.search1, 1));
-        actionMenu.add(new ActionMenuItem(2, "地图首页", R.drawable.list_car, 2));
-        return true;
-    }
-    @Override
-    public boolean onMenuActionSelected(ActionMenuItem action) {
-        switch(action.getId()){
-            case 1:
-                this.getCustomActionBar().startSearchMode();
-                break;
-            case 2:
-                replaceFragment(HomeFragment.class,"HomeFragment",null);
-                break;
-        }
-        return super.onMenuActionSelected(action);
     }
 
     @Override

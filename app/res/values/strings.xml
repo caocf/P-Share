@@ -52,7 +52,7 @@
     <string name="monthly_rent">我的月租列表</string>
 
     <string name="iv_about_us">泊享P-share</string>
-    <string name="add1">点击添加车辆信息可缴纳</string>
+    <string name="add1">点击添加车辆信息</string>
 
     <string name="delete">删除此条信息</string>
     <string name="agency_stop_car">代泊员</string>
@@ -65,6 +65,10 @@
     <string name="rb_reserve">预/订</string>
     <string name="minehome">我的家列表</string>
     <string name="parking_details">附近的代泊区</string>
+    <!--主界面-->
+    <string name="tv_mine_home">我的家列表</string>
+    <string name="tv_add_address">添加收藏</string>
+    <string name="tv_add_living_area">选择小区/代泊区</string>
 
     <!-- 设置中关于我们 -->
     <string name="about_us_title">关于我们</string>
@@ -115,8 +119,8 @@
     <!-- 预定完成后的返回代泊员信息 -->
     <string name="tv_order_servicePerson_area">负责代泊区域：</string>
     <string name="tv_order_servicePerson_position">职务：</string>
-    <string name="tv_you_servicePerson">你的代泊员：</string>
-    <string name="tv_user_stop_state">你的停车状态：</string>
+    <string name="tv_you_servicePerson">您的代泊员：</string>
+    <string name="tv_user_stop_state">您的停车状态：</string>
     <string name="tv_order_car_number">车牌号:</string>
     <string name="button_payfinish">完成订单支付</string>
     <string name="tv_order_takeCar_remainingtime">停车计时：</string>
@@ -125,6 +129,15 @@
     <string name="tv_order_time">预约时间：</string>
     <string name="tv_order_pay_money">预付金额：</string>
     <string name="text_view_log_out">退出登录</string>
+    <string name="tv1_order2">请您稍等片</string>
+    <string name="tv2_order2">正在为您搭配代泊员</string>
+
+
+    <!--预定历史订单-->
+    <string name="tv_history_order_time">订单日期：</string>
+    <string name="tv_stop_car_time">停车时长：</string>
+    <string name="tv_pay_money">支付金额：</string>
+
 
     <!-- 模拟数据 -->
     <!--关于我们-->
@@ -154,8 +167,12 @@
     <string name="text_order_takeCar_time">20:30</string>
     <string name="text_order_takeCar_remainingtime">00:00:20</string>
     <string name="text_order_car_number">沪E88888</string>
-
     <string name="text_about_us_phone">400-6868668</string>
+
+    <!--预定历史订单-->
+    <string name="text_history_order_time">2015/11/11</string>
+    <string name="text_stop_car_time">02:10</string>
+    <string name="text_pay_money">30元</string>
 
     <string name="qr_code_content">(请将左侧二维码拿给代泊员扫描录入)</string>
 

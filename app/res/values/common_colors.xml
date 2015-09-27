@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- three color style -->
- 	<color name="common_color_normal">#1376ca</color>
+ 	<color name="common_color_normal">#37b69d</color>
  	<color name="common_color_disable">#D5D5D5</color>
   	<color name="common_color_dark">#0277BD</color>
    	<color name="common_color_light">#E3F2FD</color>

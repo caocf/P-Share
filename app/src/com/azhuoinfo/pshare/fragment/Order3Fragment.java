@@ -35,8 +35,6 @@ public class Order3Fragment extends BaseContentFragment{
     private TextView mParkerAreaTextView;
     //代泊员联系方式
     private TextView mParkerMobileTextView;
-    //预付金额
-    private TextView mAppointmentPayMoneyTextView;
     //预约时间
     private TextView mAppointmentTimeTextView;
     //取消预约
@@ -61,7 +59,6 @@ public class Order3Fragment extends BaseContentFragment{
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
     }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -76,14 +73,18 @@ public class Order3Fragment extends BaseContentFragment{
         mParkerPositionTextView=(TextView) view.findViewById(R.id.tv_parker_position);
         mParkerAreaTextView=(TextView) view.findViewById(R.id.tv_parker_area);
         mParkerMobileTextView=(TextView) view.findViewById(R.id.tv_parker_mobile);
-        mAppointmentPayMoneyTextView=(TextView) view.findViewById(R.id.tv_appointment_pay_money);
         mAppointmentTimeTextView=(TextView) view.findViewById(R.id.tv_appointment_time);
         mCancelAppointmentRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_unselect_order);
     }
 
     @Override
     protected void initViews(Bundle bundle) {
+        mCancelAppointmentRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
     }
 
     @Override

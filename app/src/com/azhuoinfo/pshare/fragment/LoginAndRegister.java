@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
@@ -13,7 +15,17 @@ import mobi.cangol.mobile.base.FragmentInfo;
 /**
  * Created by Azhuo on 2015/9/25.
  */
-public class LoginAndRegister extends BaseContentFragment{
+public class LoginAndRegister extends BaseContentFragment {
+
+    private Button mLoginButton;
+    private Button mRegisterButton;
+    private AccountVerify mAccountVerify;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mAccountVerify = AccountVerify.getInstance(getActivity());
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -21,13 +33,38 @@ public class LoginAndRegister extends BaseContentFragment{
     }
 
     @Override
-    protected void findViews(View view) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        findViews(view);
+    }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initViews(savedInstanceState);
+        initData(savedInstanceState);
+    }
+
+    @Override
+    protected void findViews(View view) {
+        mLoginButton=(Button) view.findViewById(R.id.button_login);
+        mRegisterButton=(Button)view.findViewById(R.id.button_register);
     }
 
     @Override
     protected void initViews(Bundle bundle) {
-
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(LoginFragment.class,"LoginFragment",null);
+            }
+        });
+        mRegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(RegisterFragment.class,"RegisterFragment",null);
+            }
+        });
     }
 
     @Override
@@ -38,5 +75,10 @@ public class LoginAndRegister extends BaseContentFragment{
     @Override
     protected FragmentInfo getNavigtionUpToFragment() {
         return null;
+    }
+
+    @Override
+    public boolean isCleanStack() {
+        return true;
     }
 }

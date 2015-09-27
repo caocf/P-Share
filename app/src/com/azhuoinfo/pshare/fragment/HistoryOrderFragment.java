@@ -65,12 +65,12 @@ public class HistoryOrderFragment extends BaseContentFragment{
 
     @Override
     protected void initViews(Bundle bundle) {
-       /* mHistoryOrderListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mHistoryOrderListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                replaceParentFragment(MonthlyRentCarPayFragment.class,"MonthlyRentCarPayFragment",null);
+                replaceParentFragment(HistoryOrderDetailsFragment.class,"HistoryOrderDetailsFragment",null);
             }
-        });*/
+        });
     }
 
     @Override

@@ -28,6 +28,7 @@
 		   android:layout_height="wrap_content"
 		   android:layout_width="match_parent"
 		   android:layout_marginTop="@dimen/padding1"
+		   android:fastScrollEnabled="true"
 		   android:background="@color/text_white"/>
 	   <RelativeLayout
 		   android:id="@+id/rl_add_car_list"
@@ -40,7 +41,7 @@
 		   android:layout_marginTop="@dimen/padding4"
 		   android:layout_marginBottom="@dimen/padding4">
 		   <ImageView
-			   android:id="@+id/iv_add_car_list"
+			   android:id="@+id/iv_add_address"
 			   android:layout_height="wrap_content"
 			   android:layout_width="wrap_content"
 			   android:layout_centerVertical="true"
@@ -57,18 +58,5 @@
 			   android:textColor="#999d9c"
 			   android:text="@string/add"/>
 	   </RelativeLayout>
-	   <TextView
-		   android:layout_height="wrap_content"
-		   android:layout_width="wrap_content"
-		   android:textSize="@dimen/text_size2"
-		   android:layout_gravity="center_horizontal"
-		   android:hint="@string/add1"/>
-	   <TextView
-		   android:layout_height="wrap_content"
-		   android:layout_width="wrap_content"
-		   android:textSize="@dimen/text_size2"
-		   android:layout_marginTop="@dimen/padding1"
-		   android:layout_gravity="center_horizontal"
-		   android:hint="@string/add2"/>
 	</LinearLayout>
 </LinearLayout>

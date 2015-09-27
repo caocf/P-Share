@@ -133,26 +133,6 @@
 	        android:textSize="@dimen/text_size4"
 	        android:textColor="@color/rb_text_color_gray"
 	        android:text="@string/tv_user_stop_state"/>
-	     <!-- 预付金额 -->
-	     <LinearLayout
-	         android:id="@+id/ll_appointment_pay_money"
-	         android:layout_height="wrap_content"
-	         android:layout_width="match_parent"
-	         android:padding="@dimen/padding2"
-	         android:background="@color/text_white">
-	         <TextView 
-	             android:layout_height="wrap_content"
-	             android:layout_width="wrap_content"
-	             android:textSize="@dimen/text_size3"
-	             android:text="@string/tv_order_pay_money"/>
-	         <TextView
-	             android:id="@+id/tv_appointment_pay_money"
-	             android:layout_height="wrap_content"
-	             android:layout_width="wrap_content"
-	             android:textColor="@color/text_color_red"
-	             android:textSize="@dimen/text_size3"
-	             android:text="@string/text_order_pay_money"/>
-	     </LinearLayout>
 	     <!-- 预约时间 -->
 	     <LinearLayout
 	         android:id="@+id/ll_appointment_time"

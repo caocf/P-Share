@@ -7,7 +7,7 @@ import android.os.Handler;
 
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.fragment.GuideFragment;
-import com.azhuoinfo.pshare.fragment.LoginAndRegisterActivity;
+//import com.azhuoinfo.pshare.fragment.LoginAndRegisterActivity;
 import com.azhuoinfo.pshare.utils.Constants;
 
 import mobi.cangol.mobile.base.BaseActionBarActivity;
@@ -72,11 +72,7 @@ public class SplashActivity extends BaseActionBarActivity {
     	startActivity(new Intent(SplashActivity.this, MainActivity.class));
     	finish();
     }
-	public void toLogin(){
-		startActivity(new Intent(SplashActivity.this,LoginAndRegisterActivity.class));
-		isLogin=true;
-		finish();
-	}
+	
 	private void sendLaunch(){
 		String exitCode="";
 		String exitVersion="";

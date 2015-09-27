@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -36,6 +37,7 @@ public class CarListFragment extends BaseContentFragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.left_head,R.drawable.left_head);
         mAccountVerify = AccountVerify.getInstance(getActivity());
     }
 
@@ -73,10 +75,17 @@ public class CarListFragment extends BaseContentFragment{
                 setContentFragment(AddCarInformationFragment.class, "AddCarInformationFragment", null, ModuleMenuIDS.MODULE_HOME);
             }
         });
-        for(int i=0;i<4;i++){
+        list.clear();
+        for(int i=0;i<5;i++){
             list.add(""+i);
         }
         mCarListView.setAdapter(new CarListAdapter(this.getActivity(), list));
+        mCarListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                replaceParentFragment(MonthlyRentCarFinishPayFragment.class,"MonthlyRentCarFinishPayFragment",null);
+            }
+        });
     }
 
     @Override

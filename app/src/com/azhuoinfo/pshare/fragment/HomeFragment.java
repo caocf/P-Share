@@ -4,9 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.TranslateAnimation;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.view.ListViewUtils;
 
 import mobi.cangol.mobile.actionbar.ActionMenu;
 import mobi.cangol.mobile.actionbar.ActionMenuItem;
@@ -14,6 +20,11 @@ import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 
 public class HomeFragment extends BaseContentFragment {
+	private Button mMineHomeButton;
+	private boolean isFrist=true;
+	private int mOnClick=0;
+	private LinearLayout mMineHomeButtonLinearLayout;
+	private Button mChangeButton;
 	private AccountVerify mAccountVerify;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,11 +56,46 @@ public class HomeFragment extends BaseContentFragment {
 
 	@Override
 	protected void findViews(View view) {
+		mMineHomeButton=(Button) view.findViewById(R.id.button_mine_home);
+		mChangeButton=(Button) view.findViewById(R.id.button_change);
+		mMineHomeButtonLinearLayout=(LinearLayout) view.findViewById(R.id.ll_mine_home);
 	}
 	
 	@Override
 	protected void initViews(Bundle savedInstanceState) {
 		this.setTitle(R.string.title_home);
+		mChangeButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				replaceFragment(MineHomeFragment.class,"MineHomeFragment",null);
+			}
+		});
+		mMineHomeButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mOnClick++;
+				if(mOnClick%2==1){
+					AnimationSet set = new AnimationSet(true);
+					TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_PARENT,0,Animation.RELATIVE_TO_PARENT,0,
+							Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0);
+					set.addAnimation(translate);
+					set.setDuration(500);
+					set.setFillAfter(true);
+					mMineHomeButtonLinearLayout.offsetTopAndBottom(-mMineHomeButtonLinearLayout.getHeight());
+					mMineHomeButtonLinearLayout.startAnimation(set);
+				}
+				else{
+					AnimationSet set = new AnimationSet(true);
+					TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_PARENT,0,Animation.RELATIVE_TO_PARENT,0,
+							Animation.RELATIVE_TO_SELF, -0.5f, Animation.RELATIVE_TO_SELF, 0);
+					set.addAnimation(translate);
+					set.setDuration(500);
+					set.setFillAfter(true);
+					mMineHomeButtonLinearLayout.offsetTopAndBottom(mMineHomeButtonLinearLayout.getHeight());
+					mMineHomeButtonLinearLayout.startAnimation(set);
+				}
+			}
+		});
 		
 	}
 

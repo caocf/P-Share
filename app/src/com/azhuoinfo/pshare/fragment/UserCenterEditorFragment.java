@@ -20,6 +20,8 @@ import com.azhuoinfo.pshare.R;
 
 import java.util.logging.Handler;
 
+import mobi.cangol.mobile.actionbar.ActionMenu;
+import mobi.cangol.mobile.actionbar.ActionMenuItem;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 
@@ -31,12 +33,7 @@ public class UserCenterEditorFragment extends BaseContentFragment{
     *actionbar
     * */
     //个人中心是否显示可编辑状态
-    private boolean isEditor=true;
-    //返回到上个页面
-    private Button mBackButton;
-    //完成个人信息内容的编辑保存到FinishActivity中
-    private ImageView mEditorFinishImageView;
-
+    private boolean isEditor=false;
     //用户的头像设置
     private ImageView mCustomerHeadImageView;
     //用户名
@@ -70,6 +67,8 @@ public class UserCenterEditorFragment extends BaseContentFragment{
     //设置用户邮箱
     private EditText mCustomerEmailEditText;
     private String[] sex=new String[]{"男","女"};
+    private String[] homes=new String[]{"山东","上海","江苏"};
+    private int isFinish=R.drawable.editor;
 
     private AccountVerify mAccountVerify;
     @Override
@@ -78,7 +77,6 @@ public class UserCenterEditorFragment extends BaseContentFragment{
         mAccountVerify = AccountVerify.getInstance(getActivity());
 
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -100,9 +98,6 @@ public class UserCenterEditorFragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
-        mBackButton=(Button) view.findViewById(R.id.activity_back);
-        mEditorFinishImageView=(ImageView) view.findViewById(R.id.iv_editor_finish);
-
         mCustomerHeadImageView=(ImageView) view.findViewById(R.id.iv_customer_head);
         mCustomerNicknameTextView=(TextView) view.findViewById(R.id.tv_customer_nickname);
         mCustomerIdTextView=(TextView) view.findViewById(R.id.tv_customer_id);
@@ -132,36 +127,6 @@ public class UserCenterEditorFragment extends BaseContentFragment{
     protected void initViews(Bundle bundle) {
 
         this.setTitle(R.string.user_center);
-        mBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setContentFragment(UserCenterFragment.class, "UserCenterFragment", null, ModuleMenuIDS.MODULE_HOME);
-            }
-        });
-        mEditorFinishImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isEditor) {
-                    mCustomerNickNameEditText.setEnabled(true);
-                    mCustomerMobileEditText.setEnabled(true);
-                    mCustomerJobEditText.setEnabled(true);
-                    mCustomerEmailEditText.setEnabled(true);
-                    mCustomerSexImageView.setVisibility(View.VISIBLE);
-                    mCustomerRegionImageView.setVisibility(View.VISIBLE);
-                    mEditorFinishImageView.setImageResource(R.drawable.finish);
-                    isEditor = false;
-                } else {
-                    mCustomerNickNameEditText.setEnabled(false);
-                    mCustomerMobileEditText.setEnabled(false);
-                    mCustomerJobEditText.setEnabled(false);
-                    mCustomerEmailEditText.setEnabled(false);
-                    mCustomerSexImageView.setVisibility(View.INVISIBLE);
-                    mCustomerRegionImageView.setVisibility(View.INVISIBLE);
-                    mEditorFinishImageView.setImageResource(R.drawable.editor);
-                    isEditor = true;
-                }
-            }
-        });
         mCustomerSexRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,12 +140,47 @@ public class UserCenterEditorFragment extends BaseContentFragment{
             }
         });
 
-
     }
 
     @Override
     protected void initData(Bundle bundle) {
 
+    }
+    @Override
+    protected boolean onMenuActionCreated(ActionMenu actionMenu) {
+        super.onMenuActionCreated(actionMenu);
+        actionMenu.add(new ActionMenuItem(1, "编辑",R.drawable.editor, 1));
+        return true;
+    }
+    @Override
+    public boolean onMenuActionSelected(ActionMenuItem action) {
+        switch(action.getId()){
+            case 1:
+                if (isEditor) {
+                   // action.setDrawable(R.drawable.editor);
+                    action.setShow(R.drawable.editor);
+                    mCustomerNickNameEditText.setEnabled(true);
+                    mCustomerMobileEditText.setEnabled(false);
+                    mCustomerJobEditText.setEnabled(true);
+                    mCustomerEmailEditText.setEnabled(true);
+                    mCustomerSexImageView.setVisibility(View.VISIBLE);
+                    mCustomerRegionImageView.setVisibility(View.VISIBLE);
+                    isFinish=R.drawable.editor;
+                    isEditor = false;
+                } else {
+                    action.setShow(R.drawable.finish);
+                   // action.setDrawable(R.drawable.finish);
+                    mCustomerNickNameEditText.setEnabled(false);
+                    mCustomerMobileEditText.setEnabled(false);
+                    mCustomerJobEditText.setEnabled(false);
+                    mCustomerEmailEditText.setEnabled(false);
+                    mCustomerSexImageView.setVisibility(View.INVISIBLE);
+                    mCustomerRegionImageView.setVisibility(View.INVISIBLE);
+                    isEditor = true;
+                }
+                break;
+        }
+        return super.onMenuActionSelected(action);
     }
 
     @Override
@@ -211,7 +211,7 @@ public class UserCenterEditorFragment extends BaseContentFragment{
 
         builder.setTitle("请您的选择家乡");
 
-        builder.setItems(sex, new DialogInterface.OnClickListener() {
+        builder.setItems(homes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mCustomerSexTextView.setText(sex[which]);

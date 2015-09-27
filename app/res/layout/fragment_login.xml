@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical" >
-    <RelativeLayout
+    <!--actionbar-->
+   <!-- <RelativeLayout
         android:layout_width="match_parent" 
         android:layout_height="@dimen/padding8"
         android:layout_marginBottom="@dimen/padding1"
@@ -21,7 +22,7 @@
         <TextView 
            style="@style/text_actionbar"
             android:text="@string/login"/>
-    </RelativeLayout>
+    </RelativeLayout>-->
      <LinearLayout 
         android:layout_height="wrap_content"
         android:layout_width="match_parent"

@@ -21,6 +21,7 @@
     <dimen name="padding10">1dp</dimen>
     <dimen name="padding11">100dp</dimen>
     <dimen name="padding12">150dp</dimen>
+    <dimen name="padding13">60dp</dimen>
     
 
 </resources>

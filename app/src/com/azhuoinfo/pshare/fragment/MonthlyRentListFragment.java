@@ -61,9 +61,9 @@ public class MonthlyRentListFragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
-        mMonthlyRentListView=(ListView) findViewById(R.id.lv_monthlyRent_list);
+        mMonthlyRentListView=(ListView) view.findViewById(R.id.lv_monthlyRent_list);
+        list.clear();
         for (int i = 0; i < 4; i++) {
-            list.clear();
             list.add(""+i);
         }
         mMonthlyRentListView.setAdapter(new MonthlyRentListAdapter(this.getActivity(), list));
@@ -83,7 +83,7 @@ public class MonthlyRentListFragment extends BaseContentFragment{
         mMonthlyRentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                replaceParentFragment(MonthlyRentCarPayFragment.class,"MonthlyRentCarPayFragment",null);
+                replaceParentFragment(MonthlyRentCarFinishPayFragment.class,"MonthlyRentCarFinishPayFragment",null);
             }
         });
     }
