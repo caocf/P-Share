@@ -57,6 +57,7 @@ public class HistoryOrderFragment extends BaseContentFragment{
     @Override
     protected void findViews(View view) {
         mHistoryOrderListView=(ListView) findViewById(R.id.lv_history_order);
+        list.clear();
         for (int i = 0; i < 4; i++) {
             list.add(""+i);
         }

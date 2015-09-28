@@ -214,7 +214,7 @@ public class UserCenterEditorFragment extends BaseContentFragment{
         builder.setItems(homes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mCustomerSexTextView.setText(sex[which]);
+                mCustomerRegionTextView.setText(homes[which]);
             }
         });
         builder.show();

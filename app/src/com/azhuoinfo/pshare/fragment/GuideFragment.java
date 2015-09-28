@@ -103,14 +103,8 @@ public class GuideFragment extends BaseContentFragment {
             public void onClick(View v) {
                 popBackStack();
                 mGlobalData.save("newVersion", DeviceInfo.getAppVersion(getActivity()));
-                if (!isDisplay) {
-                    /*if (isLogin) {
-                        toMain();
-                    }else {
-                        toLogin();
-                    }*/
+                if (!isDisplay)
                     toMain();
-                }
             }
 
         });

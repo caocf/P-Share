@@ -56,20 +56,18 @@ public class MineOrderFragment extends BaseContentFragment{
         initViews(savedInstanceState);
         initData(savedInstanceState);
     }
-
     @Override
     protected void findViews(View view) {
         mTabHost = (TabHost)view.findViewById(android.R.id.tabhost);
         mTabHost.setup();
         mViewPager = (ViewPager)view.findViewById(R.id.pager);
         mTabPageManager=new TabPageManager(this.getChildFragmentManager(),mTabHost,mViewPager);
-        mTabPageManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator("预/订"), Order1Fragment.class, new Bundle());
+        mTabPageManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator("预/订"), Order4Fragment.class, new Bundle());
         mTabPageManager.addTab(mTabHost.newTabSpec("ItemFragment2").setIndicator("历史订单"), HistoryOrderFragment.class, new Bundle());
     }
     @Override
     protected void initViews(Bundle bundle) {
         this.setTitle(R.string.my_reserve);
-
     }
 
     @Override

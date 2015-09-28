@@ -5,6 +5,7 @@ dependencies {
     compile 'mobi.cangol.mobile:uiframe:1.0.0@aar'
     compile fileTree(dir: 'libs', include: '*.jar')
     compile 'mobi.cangol.mobile:appcore:1.0.0'
+    compile files('libs/BaiduLBS_Android.jar')
 }
 
 android {

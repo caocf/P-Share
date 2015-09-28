@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_half_transparency">
-
     <LinearLayout
         android:layout_width="240dp"
         android:layout_height="240dp"
@@ -11,64 +10,56 @@
         android:background="@android:color/white"
         android:orientation="vertical"
         android:padding="15dp" >
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:background="@drawable/circle_rectangle" />
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
-
             <TextView
+                android:id="@+id/text_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="总金额：" />
-
             <TextView
+                android:id="@+id/tv_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/text_money"
                 android:textColor="@color/text_color_red"
                 android:text="200元" />
-        </LinearLayout>
-
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/circle_rectangle"/>
+        </RelativeLayout>
         <View
             android:layout_width="240dp"
             android:layout_height="0.5dp"
             android:layout_marginTop="5dp"
             android:background="@color/text_light_gray" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/pay_way" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding2"
             android:orientation="horizontal" >
-
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/zhifubao"
-                android:drawableRight="@drawable/zhifubao"
-                android:background="@drawable/shape_1"/>
-
+                android:drawableRight="@drawable/zhifubao" />
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/weixin"
-                android:drawableRight="@drawable/weixin"
-                android:background="@drawable/shape_1"/>
-            
+                android:drawableRight="@drawable/weixin" />
         </LinearLayout>
-
         <Button
             android:id="@+id/btn_pay"
             android:layout_width="190dp"
@@ -78,5 +69,4 @@
             android:background="@drawable/button" 
             android:text="@string/pay"/>
     </LinearLayout>
-
 </RelativeLayout>

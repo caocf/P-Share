@@ -70,7 +70,7 @@ public class RegisterFragment extends BaseContentFragment {
 		register.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//doRegister(null);
+				replaceFragment(LoginFragment.class,"LoginFragment",null);
 			}
 		});
 		rl_registerActivity_backLoginActivity.setOnClickListener(new View.OnClickListener() {

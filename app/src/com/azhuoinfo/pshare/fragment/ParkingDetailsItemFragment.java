@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
@@ -21,7 +23,19 @@ import mobi.cangol.mobile.base.FragmentInfo;
  * Created by Azhuo on 2015/9/22.
  */
 public class ParkingDetailsItemFragment extends BaseContentFragment{
-
+    //名称
+    private TextView mParkingNameTextView;
+    //地址
+    private TextView mParkingAddressTextView;
+    //距离
+    private TextView mParkingDistanceTextView;
+    //剩余车辆
+    private TextView mParkingCanUseTextView;
+    //价格
+    private TextView mParkingPriceTextView;
+    //预约
+    private RelativeLayout mAppointmentRelativeLayout;
+    private TextView mAppointmentTextView;
 
     private AccountVerify mAccountVerify;
     private ArrayList<String> list=new ArrayList<String>();
@@ -52,16 +66,25 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
+        mParkingNameTextView=(TextView) view.findViewById(R.id.tv_parking_name);
+        mParkingAddressTextView=(TextView) view.findViewById(R.id.tv_parking_address);
+        mParkingDistanceTextView=(TextView) view.findViewById(R.id.tv_parking_distance);
+        mParkingCanUseTextView=(TextView) view.findViewById(R.id.tv_parking_can_use);
+        mParkingPriceTextView=(TextView) view.findViewById(R.id.tv_parking_price);
 
+        mAppointmentRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_appointment);
+        mAppointmentTextView=(TextView) view.findViewById(R.id.tv_appointment);
     }
 
     @Override
     protected void initViews(Bundle bundle) {
         this.setTitle(R.string.yard_details);
-        for(int i=0;i<4;i++){
-            list.clear();
-            list.add(""+i);
-        }
+        mAppointmentRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAppointmentTextView.setText(R.string.tv_unselect_order);
+            }
+        });
     }
 
     @Override

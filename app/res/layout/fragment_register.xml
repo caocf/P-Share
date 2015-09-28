@@ -4,28 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical" >
-    <!--actionbar-->
-   <!-- <RelativeLayout
-        android:layout_width="match_parent" 
-        android:layout_height="@dimen/padding8"
-        android:background="@color/bg_action_bar_blue"
-        >
-        <ImageView
-            android:id="@+id/activity_back"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="@dimen/padding2"
-            android:layout_centerVertical="true"          
-            android:src="@drawable/left_head"
-            />
-        <TextView 
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textColor="@color/text_white"
-           	android:layout_centerInParent="true"
-           	android:textSize="@dimen/text_size5" 
-            android:text="@string/registered"/>
-    </RelativeLayout>-->
     <LinearLayout 
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -166,8 +144,7 @@
 	    android:id="@+id/rl_registerActivity_backLoginActivity" 
 	    android:layout_height="wrap_content"
 	    android:layout_width="match_parent"
-	    android:layout_marginTop="@dimen/padding2"
-	    >
+	    android:layout_marginTop="@dimen/padding2">
 	    <TextView 
 	        android:layout_height="wrap_content"
 	        android:layout_width="wrap_content"

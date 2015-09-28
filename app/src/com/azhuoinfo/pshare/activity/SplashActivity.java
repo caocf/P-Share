@@ -24,7 +24,7 @@ public class SplashActivity extends BaseActionBarActivity {
 	//SharedPreferences对象
 	private SharedPreferences mSharedPreferences;
 	private GlobalData mGlobalData;
-	private boolean isGuide=true;//为测试guide提供方便开启guide
+	private boolean isGuide=false;//为测试guide提供方便开启guide
 	private boolean isLogin=false;//是否登录
     @Override
     public void onCreate(Bundle savedInstanceState) {

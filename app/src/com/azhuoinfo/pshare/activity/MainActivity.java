@@ -61,6 +61,7 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 			if(isLogin){
 				this.setContentFragment(HomeFragment.class, "HomeFragment", null, ModuleMenuIDS.MODULE_HOME);
 			}else{
+				//startActivity(new Intent(MainActivity.this,LoginAndRegisterActivity.class));
 				this.setContentFragment(LoginAndRegister.class,"LoginAndRegister",null);
 			}
 			if (mGlobalData.get(Constants.KEY_CHECK_UPGRADE) == null || !TimeUtils.getCurrentDate().equals(mGlobalData.get(Constants.KEY_CHECK_UPGRADE))) {
