@@ -41,7 +41,7 @@
         <!--svnv  -->
         <meta-data android:name="BUILD_SVNV" android:value="r67"/>
 		<!-- OpenUDID -->
-        <service android:name="org.OpenUDID.OpenUDID_service" android:exported="false">
+		<service android:name="org.openudid.OpenUDID_service" android:exported="false">
 		    <intent-filter>
 		        <action android:name="org.openudid.GETUDID" />
 		    </intent-filter>
@@ -57,6 +57,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|keyboardHidden"

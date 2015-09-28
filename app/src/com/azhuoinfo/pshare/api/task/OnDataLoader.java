@@ -3,10 +3,23 @@ package com.azhuoinfo.pshare.api.task;
 
 public interface OnDataLoader<T>{
 
+    /**
+     * 开始
+     */
 	void onStart();
 
-	void onSuccess(int totalPage,T t);
+    /**
+     *
+     * @param page 是否有下一页
+     * @param t
+     */
+	void onSuccess(boolean page,T t);
 
-	void onFailure(String errorCode,String errorResponse) ;
+    /**
+     * 失败
+     * @param code
+     * @param message
+     */
+	void onFailure(String code,String message) ;
 	 
 }

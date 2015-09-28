@@ -1,7 +1,10 @@
 package com.azhuoinfo.pshare.model;
 
 
+import mobi.cangol.mobile.parser.Element;
+
 public class UserAuth {
+    @Element("customer_id")
 	private String userId;
 	private String token;
 	public UserAuth(){
@@ -11,7 +14,7 @@ public class UserAuth {
 		this.userId = userId;
 		this.token = token;
 	}
-	
+
 
 
 	public String getUserId() {
