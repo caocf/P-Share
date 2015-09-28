@@ -15,8 +15,7 @@ public class ApiTask {
 	private String mTag;
 	private boolean mRunning = false;
 	private ApiClient mApiClient;
-	private boolean mCache;
-	private long mCachePeroid;
+    private String mRoot;
 	private ApiTask(Context context, String tag) {
 		mContext = context;
 		mParams = new HashMap<String, Object>();
@@ -26,12 +25,6 @@ public class ApiTask {
 	}
 	public static ApiTask build(Context context, String tag){
 		return new ApiTask(context,tag);
-	}
-	public void setCache(boolean cache) {
-		this.mCache = cache;
-	}
-	public void setCachePeroid(long peroid) {
-		this.mCachePeroid = peroid;
 	}
 	public boolean IsRunning() {
 		return mRunning;
@@ -55,29 +48,37 @@ public class ApiTask {
 			mParams.put(entry.getKey(), entry.getValue());
 		}
 	}
-	
-	public HashMap<String, Object> getParams() {
+
+    public String getRoot() {
+        return mRoot;
+    }
+
+    public void setRoot(String root) {
+        this.mRoot = root;
+    }
+
+    public HashMap<String, Object> getParams() {
 		return mParams;
 	}
 	@SuppressLint("DefaultLocale")
 	public <T> void execute(final OnDataLoader<T> onDataLoader) {
 		if ("GET".equals(mMethod.toUpperCase())) {
-			mApiClient.execute(mTag, ApiClient.Method.GET, mUrl, mParams,
+			mApiClient.execute(mTag, ApiClient.Method.GET, mUrl, mParams,mRoot,
 					onDataLoader);
 		} else {
-			mApiClient.execute(mTag, ApiClient.Method.POST, mUrl, mParams,
+			mApiClient.execute(mTag, ApiClient.Method.POST, mUrl, mParams,mRoot,
 					onDataLoader);
 		}
 	}
-	public <T> void execute(String method,String url,HashMap<String, Object> params,final OnDataLoader<T> onDataLoader) {
+	public <T> void execute(String method,String url,HashMap<String, Object> params,String root,final OnDataLoader<T> onDataLoader) {
 		this.mMethod=method;
 		this.mUrl=url;
 		this.mParams=params;
 		if ("GET".equals(mMethod.toUpperCase())) {
-			mApiClient.execute(mTag, ApiClient.Method.GET, mUrl, mParams,
+			mApiClient.execute(mTag, ApiClient.Method.GET, mUrl, mParams,root,
 					onDataLoader);
 		} else {
-			mApiClient.execute(mTag, ApiClient.Method.POST, mUrl, mParams,
+			mApiClient.execute(mTag, ApiClient.Method.POST, mUrl, mParams,root,
 					onDataLoader);
 		}
 	}

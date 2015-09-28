@@ -198,66 +198,66 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 
 	// 检测升级
 	private void checkUpgrade() {
-		ApiTask apiTask = ApiTask.build(this, "checkUpgrade");
-		apiTask.setUrl(mApiContants.getActionUrl(ApiContants.API_COMMON_UPGRADE));
-		apiTask.setParams(mApiContants.upgrade());
-		apiTask.execute(new OnDataLoader<Upgrade>() {
-			@Override
-			public void onStart() {
-			}
-
-			@Override
-			public void onSuccess(int totalPage, Upgrade upgrade) {
-				try {
-					Log.e("upgrade=" + upgrade);
-					if (DeviceInfo.getAppVersion(MainActivity.this).compareTo(upgrade.getVersion()) < 0) {
-						showUpgradeDialog(upgrade);
-						if (DeviceInfo.getAppVersion(MainActivity.this).compareTo(upgrade.getMinVersion()) >= 0)
-							// 记录更新提示日期
-							mGlobalData.save(Constants.KEY_CHECK_UPGRADE, TimeUtils.getCurrentDate());
-					}
-
-				} catch (Exception e) {
-					Log.d(TAG, "Exception", e);
-				}
-			}
-
-			@Override
-			public void onFailure(String errorCode, String errorResponse) {
-				Log.d(TAG, "errorCode:" + errorCode + "," + errorResponse);
-			}
-
-		});
+//		ApiTask apiTask = ApiTask.build(this, "checkUpgrade");
+//		apiTask.setUrl(mApiContants.getActionUrl(ApiContants.API_COMMON_UPGRADE));
+//		apiTask.setParams(mApiContants.upgrade());
+//		apiTask.execute(new OnDataLoader<Upgrade>() {
+//			@Override
+//			public void onStart() {
+//			}
+//
+//			@Override
+//			public void onSuccess(int totalPage, Upgrade upgrade) {
+//				try {
+//					Log.e("upgrade=" + upgrade);
+//					if (DeviceInfo.getAppVersion(MainActivity.this).compareTo(upgrade.getVersion()) < 0) {
+//						showUpgradeDialog(upgrade);
+//						if (DeviceInfo.getAppVersion(MainActivity.this).compareTo(upgrade.getMinVersion()) >= 0)
+//							// 记录更新提示日期
+//							mGlobalData.save(Constants.KEY_CHECK_UPGRADE, TimeUtils.getCurrentDate());
+//					}
+//
+//				} catch (Exception e) {
+//					Log.d(TAG, "Exception", e);
+//				}
+//			}
+//
+//			@Override
+//			public void onFailure(String errorCode, String errorResponse) {
+//				Log.d(TAG, "errorCode:" + errorCode + "," + errorResponse);
+//			}
+//
+//		});
 
 	}
 	private void getUserInfo(String userId, String userToken) {
-		ApiTask apiTask = ApiTask.build(this, "getUserInfo");
-		apiTask.setUrl(mApiContants.getActionUrl(ApiContants.API_USER_PROFILE));
-		apiTask.setParams(mApiContants.userProfile(userId, userToken));
-		apiTask.execute(new OnDataLoader<User>() {
-			@Override
-			public void onStart() {
-			}
-
-			@Override
-			public void onSuccess(int totalPage, User user) {
-				try {
-					if (user != null) {
-						mAccountVerify.setUser(user);
-					} else {
-						showToast(R.string.common_error);
-					}
-				} catch (Exception e) {
-					Log.d(TAG, "Exception", e);
-				}
-			}
-
-			@Override
-			public void onFailure(String errorCode, String errorResponse) {
-				Log.d(TAG, "errorCode:" + errorCode + "," + errorResponse);
-			}
-
-		});
+//		ApiTask apiTask = ApiTask.build(this, "getUserInfo");
+//		apiTask.setUrl(mApiContants.getActionUrl(ApiContants.API_USER_PROFILE));
+//		apiTask.setParams(mApiContants.userProfile(userId, userToken));
+//		apiTask.execute(new OnDataLoader<User>() {
+//			@Override
+//			public void onStart() {
+//			}
+//
+//			@Override
+//			public void onSuccess(int totalPage, User user) {
+//				try {
+//					if (user != null) {
+//						mAccountVerify.setUser(user);
+//					} else {
+//						showToast(R.string.common_error);
+//					}
+//				} catch (Exception e) {
+//					Log.d(TAG, "Exception", e);
+//				}
+//			}
+//
+//			@Override
+//			public void onFailure(String errorCode, String errorResponse) {
+//				Log.d(TAG, "errorCode:" + errorCode + "," + errorResponse);
+//			}
+//
+//		});
 
 	}
 

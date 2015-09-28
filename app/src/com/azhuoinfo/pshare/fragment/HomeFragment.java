@@ -7,12 +7,18 @@ import android.view.ViewGroup;
 
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.api.ApiContants;
+import com.azhuoinfo.pshare.api.task.ApiTask;
+import com.azhuoinfo.pshare.api.task.OnDataLoader;
+import com.azhuoinfo.pshare.model.UserAuth;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
+import mobi.cangol.mobile.logging.Log;
 
 public class HomeFragment extends BaseContentFragment {
 	private AccountVerify mAccountVerify;
+    private ApiContants mApiContants;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mAccountVerify = AccountVerify.getInstance(getActivity());
@@ -50,10 +56,41 @@ public class HomeFragment extends BaseContentFragment {
 
 	@Override
 	protected void initData(Bundle savedInstanceState) {
-		
+		initCustomer("18201952413","111111");
 	}
 
-	@Override
+    private void initCustomer(String mobile,String password) {
+        ApiTask apiTask=ApiTask.build(this.getActivity(),TAG);
+        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_REGISTER));
+        apiTask.setParams(ApiContants.instance(getActivity()).register(mobile, password));
+        apiTask.execute(new OnDataLoader<UserAuth>() {
+
+            @Override
+            public void onStart() {
+                if (getActivity() != null){
+
+                }
+            }
+
+            @Override
+            public void onSuccess(boolean page, UserAuth auth) {
+                if (getActivity() != null) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(String code, String message) {
+                Log.d(TAG, "code=:" + code + ",message=" + message);
+                if (getActivity() != null) {
+                }
+
+            }
+
+        });
+    }
+
+    @Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 	}

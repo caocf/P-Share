@@ -53,7 +53,7 @@ public  class ApiClient {
 	public  void cancel(Object tag,boolean mayInterruptIfRunning){
 		mAsyncHttpClient.cancelRequests(tag, mayInterruptIfRunning);
 	}
-	public <E, T> void execute(Object tag,Method method,final String url,HashMap<String, Object> params,final OnDataLoader<T> onDataLoader){
+	public <E, T> void execute(Object tag,Method method,final String url,HashMap<String, Object> params,String root,final OnDataLoader<T> onDataLoader){
 		RequestParams requestParams=new RequestParams();
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			if(entry.getValue() instanceof File){
@@ -76,9 +76,9 @@ public  class ApiClient {
 			return;
 		}
 		if(method==Method.GET){
-			executeGet(tag,url,requestParams, onDataLoader);
+			executeGet(tag,url,requestParams, root,onDataLoader);
 		}else{
-			executePost(tag,url,requestParams, onDataLoader);
+			executePost(tag,url,requestParams, root,onDataLoader);
 		}
 	}
 	/**深度递归获取泛型**/
@@ -95,8 +95,7 @@ public  class ApiClient {
 		action=action.substring(0,action.contains("?")?action.indexOf("?"):action.length());
 		return action;
 	}
-	private <T> void executeGet(Object tag,final String url,RequestParams params,final OnDataLoader<T> onDataLoader){
-		final String action=getAction(url);
+	private <T> void executeGet(Object tag,final String url,RequestParams params,final String root,final OnDataLoader<T> onDataLoader){
 		mAsyncHttpClient.get(tag,url,params, new JsonHttpResponseHandler() {
 			long lasttime=0;
 			@Override
@@ -111,22 +110,19 @@ public  class ApiClient {
 				if(DEBUG)Log.d("Success response:"+response);
 				Class<?> c=getGenericClass(onDataLoader.getClass().getGenericInterfaces()[0]);
 			    if(DEBUG)Log.d("Parser class:"+c);
-				ApiResult<T> result=(ApiResult<T>) ApiResult.parserObject(c, response);
+				ApiResult<T> result=(ApiResult<T>) ApiResult.parserObject(c, response,root);
 				if(result.isSuccess()){
-					int totalPage=0;
-					if(result.getPage()!=null)
-						totalPage=(int) result.getPage().getTotalPageCount();
 					if(result.getObject()!=null){
-						if(onDataLoader!=null)onDataLoader.onSuccess(totalPage,result.getObject());
+						if(onDataLoader!=null)onDataLoader.onSuccess(result.getPage(),result.getObject());
 					}else{
-						if(onDataLoader!=null)onDataLoader.onSuccess(totalPage,(T) result.getList());
+						if(onDataLoader!=null)onDataLoader.onSuccess(result.getPage(),(T) result.getList());
 					}
 				}else{
-					//用户token验证错误
-					if(TOKEN_ERROR.equals(result.getErrorCode())){
-						mAccountVerify.notifyExpire();
-					}
-					if(onDataLoader!=null)onDataLoader.onFailure(result.getErrorCode(),result.getError());
+                    //用户token验证错误
+                    if(TOKEN_ERROR.equals(result.getCode())){
+                        mAccountVerify.notifyExpire();
+                    }
+                    if(onDataLoader!=null)onDataLoader.onFailure(result.getCode(),result.getMessage());
 				}
 			}
 
@@ -139,8 +135,7 @@ public  class ApiClient {
 		});
 	}
 	
-	private <E, T> void executePost(Object tag,final String url,RequestParams params,final OnDataLoader<T> onDataLoader){
-		final String action=getAction(url);
+	private <E, T> void executePost(Object tag,final String url,RequestParams params,final String root,final OnDataLoader<T> onDataLoader){
 		mAsyncHttpClient.post(tag,url,params, new JsonHttpResponseHandler() {
 			long lasttime=0;
 			@Override
@@ -155,22 +150,19 @@ public  class ApiClient {
 				if(DEBUG)Log.d( "Success response:"+response);
 				Class<?> c=getGenericClass(onDataLoader.getClass().getGenericInterfaces()[0]);
 			    if(DEBUG)Log.d("Parser class:"+c);
-				ApiResult<T> result=(ApiResult<T>) ApiResult.parserObject(c, response);
+				ApiResult<T> result=(ApiResult<T>) ApiResult.parserObject(c, response,root);
 				if(result.isSuccess()){
-					int totalPage=0;
-					if(result.getPage()!=null)
-						totalPage=(int) result.getPage().getTotalPageCount();
 					if(result.getObject()!=null){
-						if(onDataLoader!=null)onDataLoader.onSuccess(totalPage,result.getObject());
+						if(onDataLoader!=null)onDataLoader.onSuccess(result.getPage(),result.getObject());
 					}else{
-						if(onDataLoader!=null)onDataLoader.onSuccess(totalPage,(T) result.getList());
+						if(onDataLoader!=null)onDataLoader.onSuccess(result.getPage(),(T) result.getList());
 					}
 				}else{
 					//用户token验证错误
-					if(TOKEN_ERROR.equals(result.getErrorCode())){
+					if(TOKEN_ERROR.equals(result.getCode())){
 						mAccountVerify.notifyExpire();
 					}
-					if(onDataLoader!=null)onDataLoader.onFailure(result.getErrorCode(),result.getError());
+					if(onDataLoader!=null)onDataLoader.onFailure(result.getCode(),result.getMessage());
 				}
 			}
 

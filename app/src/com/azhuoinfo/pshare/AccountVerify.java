@@ -135,30 +135,30 @@ public class AccountVerify {
 	 */
 	public void deviceRegister() {
 		String registrationId=sp.getString(KEY_REGISTRATION_ID, null);
-		Log.d("registrationId ="+registrationId);
-		if(!TextUtils.isEmpty(registrationId)/*&&!getUsername().equals(registrationIdUserID)*/){
-			ApiTask apiTask =ApiTask.build(application, "deviceRegister");
-			apiTask.setParams(apiContants.deviceRegister(registrationId));
-			apiTask.setUrl(apiContants.getActionUrl(ApiContants.API_COMMON_DEVICEREGISTER));
-			apiTask.setMethod("POST");
-			apiTask.execute(new OnDataLoader<Object>() {
-
-						@Override	
-						public void onStart() {
-						}
-
-						@Override
-						public void onSuccess(int totalPage,Object t) {
-							Log.d(TAG,"pushReg success!");
-							sp.edit().putString(REGISTRATION_ID_USERID, ""+getUserId()).commit();
-						}
-
-						@Override
-						public void onFailure(String errorCode, String errorResponse) {
-							Log.d(TAG, "pushReg:"+errorCode+","+errorResponse);
-						}
-					});
-		}
+//		Log.d("registrationId ="+registrationId);
+//		if(!TextUtils.isEmpty(registrationId)/*&&!getUsername().equals(registrationIdUserID)*/){
+//			ApiTask apiTask =ApiTask.build(application, "deviceRegister");
+//			apiTask.setParams(apiContants.deviceRegister(registrationId));
+//			apiTask.setUrl(apiContants.getActionUrl(ApiContants.API_COMMON_DEVICEREGISTER));
+//			apiTask.setMethod("POST");
+//			apiTask.execute(new OnDataLoader<Object>() {
+//
+//						@Override
+//						public void onStart() {
+//						}
+//
+//						@Override
+//						public void onSuccess(int totalPage,Object t) {
+//							Log.d(TAG,"pushReg success!");
+//							sp.edit().putString(REGISTRATION_ID_USERID, ""+getUserId()).commit();
+//						}
+//
+//						@Override
+//						public void onFailure(String errorCode, String errorResponse) {
+//							Log.d(TAG, "pushReg:"+errorCode+","+errorResponse);
+//						}
+//					});
+//		}
 	}
 	/**
 	 * 自动登录
@@ -166,32 +166,32 @@ public class AccountVerify {
 	public void verifyToken() {
 		Log.d("getUsername "+getUserId());
 		Log.d("getUserToken "+getUserToken());
-		if(StringUtils.isNotBlank(getUserId())&&StringUtils.isNotBlank(getUserToken())){
-			ApiTask apiTask =ApiTask.build(application, "verifyToken");
-			apiTask.setParams(apiContants.userAuth(getUserId(), getUserToken()));
-			apiTask.setUrl(apiContants.getActionUrl(ApiContants.API_USER_AUTH));
-			apiTask.execute(new OnDataLoader<UserAuth>() {
-
-						@Override
-						public void onStart() {
-							
-						}
-
-						@Override
-						public void onSuccess(int totalPage,UserAuth userAuth) {
-							Log.d(TAG,"autoLogin success!");
-							login(userAuth);
-						}
-
-						@Override
-						public void onFailure(String errorCode, String errorResponse) {
-							Log.d(TAG, "errorCode:"+errorCode+","+errorResponse);
-							Log.d(TAG,"autoLogin fail!");
-						}
-					});
-		}else{
-			Log.d(TAG,"userId|token ==null,not autoLogin");
-		}
+//		if(StringUtils.isNotBlank(getUserId())&&StringUtils.isNotBlank(getUserToken())){
+//			ApiTask apiTask =ApiTask.build(application, "verifyToken");
+//			apiTask.setParams(apiContants.userAuth(getUserId(), getUserToken()));
+//			apiTask.setUrl(apiContants.getActionUrl(ApiContants.API_USER_AUTH));
+//			apiTask.execute(new OnDataLoader<UserAuth>() {
+//
+//						@Override
+//						public void onStart() {
+//
+//						}
+//
+//						@Override
+//						public void onSuccess(int totalPage,UserAuth userAuth) {
+//							Log.d(TAG,"autoLogin success!");
+//							login(userAuth);
+//						}
+//
+//						@Override
+//						public void onFailure(String errorCode, String errorResponse) {
+//							Log.d(TAG, "errorCode:"+errorCode+","+errorResponse);
+//							Log.d(TAG,"autoLogin fail!");
+//						}
+//					});
+//		}else{
+//			Log.d(TAG,"userId|token ==null,not autoLogin");
+//		}
 	}
 	
 	protected ArrayList<OnLoginListener> listeners = new ArrayList<OnLoginListener>();  
