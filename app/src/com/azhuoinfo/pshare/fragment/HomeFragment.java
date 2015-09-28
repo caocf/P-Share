@@ -56,13 +56,14 @@ public class HomeFragment extends BaseContentFragment {
 
 	@Override
 	protected void initData(Bundle savedInstanceState) {
-		initCustomer("18201952413","111111");
+        postRegister("18201952413", "111111");
 	}
 
-    private void initCustomer(String mobile,String password) {
+    private void postRegister(String mobile,String password) {
         ApiTask apiTask=ApiTask.build(this.getActivity(),TAG);
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_REGISTER));
         apiTask.setParams(ApiContants.instance(getActivity()).register(mobile, password));
+        apiTask.setRoot(null);
         apiTask.execute(new OnDataLoader<UserAuth>() {
 
             @Override
@@ -83,6 +84,7 @@ public class HomeFragment extends BaseContentFragment {
             public void onFailure(String code, String message) {
                 Log.d(TAG, "code=:" + code + ",message=" + message);
                 if (getActivity() != null) {
+
                 }
 
             }
