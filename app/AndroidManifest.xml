@@ -41,14 +41,14 @@
         <!--svnv  -->
         <meta-data android:name="BUILD_SVNV" android:value="r67"/>
 		<!-- OpenUDID -->
-		<service android:name="org.openudid.OpenUDID_service" android:exported="false">
+		<service android:name="org.OpenUDID.OpenUDID_service" android:exported="false">
 		    <intent-filter>
 		        <action android:name="org.openudid.GETUDID" />
 		    </intent-filter>
 		</service>
         <activity
             android:name=".activity.SplashActivity"
-            android:theme="@style/spashing_theme"
+            android:theme="@style/splashing_theme"
             android:label="@string/app_name"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustResize|stateHidden" >

@@ -5,10 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.api.ApiContants;
+import com.azhuoinfo.pshare.api.task.ApiTask;
+import com.azhuoinfo.pshare.api.task.OnDataLoader;
+import com.azhuoinfo.pshare.model.UserLogin;
 
+import java.util.List;
+
+import mobi.cangol.mobile.actionbar.ActionBarActivity;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 
@@ -19,13 +25,13 @@ public class LoginAndRegister extends BaseContentFragment {
 
     private Button mLoginButton;
     private Button mRegisterButton;
+    private List<UserLogin> list;
     private AccountVerify mAccountVerify;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAccountVerify = AccountVerify.getInstance(getActivity());
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -53,6 +59,8 @@ public class LoginAndRegister extends BaseContentFragment {
 
     @Override
     protected void initViews(Bundle bundle) {
+        ((ActionBarActivity)this.getActivity()).setActionbarShow(false);
+
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,12 +74,10 @@ public class LoginAndRegister extends BaseContentFragment {
             }
         });
     }
-
     @Override
     protected void initData(Bundle bundle) {
-
+        this.setMenuEnable(false);
     }
-
     @Override
     protected FragmentInfo getNavigtionUpToFragment() {
         return null;
@@ -79,6 +85,13 @@ public class LoginAndRegister extends BaseContentFragment {
 
     @Override
     public boolean isCleanStack() {
-        return true;
+        return false;
     }
+
+    @Override
+    public void onDestroyView() {
+        ((ActionBarActivity)this.getActivity()).setActionbarShow(true);
+        super.onDestroy();
+    }
+
 }

@@ -14,6 +14,12 @@ import android.widget.Toast;
 
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.api.ApiContants;
+import com.azhuoinfo.pshare.api.task.ApiTask;
+import com.azhuoinfo.pshare.api.task.OnDataLoader;
+import com.azhuoinfo.pshare.model.UserLogin;
+
+import java.util.List;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
@@ -21,11 +27,11 @@ import mobi.cangol.mobile.base.FragmentInfo;
 public class LoginFragment extends BaseContentFragment {
 
 	//定义填写手机号码的控件
-	private EditText loginActivity_editText_Phone;
+	private EditText mMobileEditText;
 	//定义登录密码的控件
-	private EditText loginActivity_editText_Password;
+	private EditText mPasswordEditText;
 	//定义登录账号的控件
-	private Button login;
+	private Button mLoginButton;
 	//定义返回到注册页面的控件
 	private LinearLayout ll_LoginActivity_back_registerActivity;
 	//定义跳转到忘记密码页面的控件
@@ -57,26 +63,12 @@ public class LoginFragment extends BaseContentFragment {
 		initViews(savedInstanceState);
 		initData(savedInstanceState);
 	}
-	/*url:http://cgi.shangan.com/{client_type}/{version}/customer/register
-	method:POST
-	request:
-	customer_mobile  手机号
-	customer_password  密码
 
-	response:
-	{
-		"code": "返回码",
-			"msg": "返回信息",
-			"timestamp": "时间戳",
-			"datas": {
-		"token":"令牌"
-	}
-	}*/
 	@Override
 	protected void findViews(View view) {
-		loginActivity_editText_Phone=(EditText) view.findViewById(R.id.loginActivity_editText_Phone);
-		loginActivity_editText_Password=(EditText) view.findViewById(R.id.loginActivity_editText_Password);
-		login=(Button) view.findViewById(R.id.login);
+		mMobileEditText=(EditText) view.findViewById(R.id.loginActivity_editText_Phone);
+		mPasswordEditText=(EditText) view.findViewById(R.id.loginActivity_editText_Password);
+		mLoginButton=(Button) view.findViewById(R.id.login);
 		ll_LoginActivity_back_registerActivity=(LinearLayout) view.findViewById(R.id.ll_LoginActivity_back_registerActivity);
 		loginActivity_forget_password=(TextView) view.findViewById(R.id.loginActivity_forget_password);
 	}
@@ -84,10 +76,12 @@ public class LoginFragment extends BaseContentFragment {
 	@Override
 	protected void initViews(Bundle bundle) {
 		this.setTitle(R.string.login);
-		login.setOnClickListener(new View.OnClickListener() {
+		mLoginButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				replaceFragment(HomeFragment.class,"HomeFragment",null);
+				if(mMobileEditText.getText().toString()!=null&&mPasswordEditText.getText().toString()!=null){
+					postLogin(mMobileEditText.getText().toString(), mPasswordEditText.getText().toString());
+				}
 			}
 		});
 		loginActivity_forget_password.setOnClickListener(new View.OnClickListener() {
@@ -107,33 +101,12 @@ public class LoginFragment extends BaseContentFragment {
 
 	@Override
 	protected void initData(Bundle bundle) {
-		if(!checkEdit()){
-			return;
-		}
-		/*RequestParams params=new RequestParams();
-		params.addBodyParameter("customer_mobile",loginActivity_editText_Phone.getText().toString());
-		params.addBodyParameter("customer_password",loginActivity_editText_Password.getText().toString());
-			// TODO Auto-generated method stub
-		String httpUrl="http://cgi.shangan.com/{client_type}/{version}/customer/register";
-		HttpUtils http=new HttpUtils();
-		http.send(HttpRequest.HttpMethod.POST,
-				httpUrl,
-				params,
-				new RequestCallBack<String>() {
-					@Override
-					public void onSuccess(ResponseInfo<String> responseInfo) {
-						replaceFragment(LoginFragment.class, "LoginFragment", null);
-					}
-					@Override
-					public void onFailure(HttpException e, String s) {
-						Log.i(TAG, "请求失败");
-					}
-				});*/
-				}
+
+	}
 	private boolean checkEdit(){
-		if(loginActivity_editText_Phone.getText().toString().trim().equals("")){
+		if(mMobileEditText.getText().toString().trim().equals("")){
 			Toast.makeText(this.getActivity(), "用户名不能为空", Toast.LENGTH_SHORT).show();
-		}else if(loginActivity_editText_Password.getText().toString().trim().equals("")){
+		}else if(mPasswordEditText.getText().toString().trim().equals("")){
 			Toast.makeText(this.getActivity(), "密码不能为空", Toast.LENGTH_SHORT).show();
 		}else{
 			return true;
@@ -144,5 +117,28 @@ public class LoginFragment extends BaseContentFragment {
 	@Override
 	protected FragmentInfo getNavigtionUpToFragment() {
 		return null;
+	}
+	public void postLogin(String mobile,String password){
+		ApiTask apiTask=ApiTask.build(this.getActivity(),TAG);
+		apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_LOGIN));
+		apiTask.setParams(ApiContants.instance(getActivity()).login(mobile, password));
+		apiTask.setRoot("customerInfo");
+		apiTask.execute(new OnDataLoader<List<UserLogin>>() {
+			@Override
+			public void onStart() {
+
+			}
+
+			@Override
+			public void onSuccess(boolean page, List<UserLogin> userLogins) {
+
+				replaceFragment(HomeFragment.class, "HomeFragment", null);
+			}
+
+			@Override
+			public void onFailure(String code, String message) {
+
+			}
+		});
 	}
 }

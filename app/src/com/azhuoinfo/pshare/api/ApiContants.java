@@ -2,6 +2,8 @@ package com.azhuoinfo.pshare.api;
 
 import android.content.Context;
 
+import com.azhuoinfo.pshare.view.touchgallery.GalleryViewPager;
+
 import org.OpenUDID.OpenUDID_manager;
 
 import java.util.ArrayList;
@@ -48,6 +50,7 @@ public class ApiContants {
 	}
     public String getServerUrl(String client_type,String version) {
         return (DEBUG ? TEST_SERVER_URI : RELEASE_SERVER_URI)+client_type+"/"+version;
+
     }
 	/**
 	 * 签名 暂时不使用
@@ -105,6 +108,18 @@ public class ApiContants {
         params.put("customer_password", password);
         return params;
     }
+	public static String API_CUSTOMER_LOGIN="/customer/login";
+	/**
+	 *
+	 * @return
+	 */
+	public HashMap<String, String> login(String mobile,String password) {
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("customer_mobile", mobile);
+		params.put("customer_password", password);
+		return params;
+	}
+
 
 
 }

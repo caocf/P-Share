@@ -26,9 +26,9 @@ public class RegisterFragment extends BaseContentFragment {
 	//定义返回到上个页面的控件
 	private ImageView activity_back;
 	//定义填写手机号码的控件
-	private EditText registerActivity_editText_Phone;
+	private EditText mMobileEditText;
 	//定义注册密码的控件
-	private EditText registerActivity_editText_Password;
+	private EditText mPasswordEditText;
 	//获取验证码
 	private TextView get_code;
 	//定义输入验证码的控件
@@ -62,8 +62,8 @@ public class RegisterFragment extends BaseContentFragment {
 	}
 	@Override
 	protected void findViews(View view) {
-		registerActivity_editText_Phone=(EditText) view.findViewById(R.id.registerActivity_editText_Phone);
-		registerActivity_editText_Password=(EditText) view.findViewById(R.id.registerActivity_editText_Password);
+		mMobileEditText=(EditText) view.findViewById(R.id.registerActivity_editText_Phone);
+		mPasswordEditText=(EditText) view.findViewById(R.id.registerActivity_editText_Password);
 		get_code=(TextView) view.findViewById(R.id.get_code);
 		registerActivity_editText_Code=(EditText) view.findViewById(R.id.registerActivity_editText_Code);
 		register=(Button) view.findViewById(R.id.register);
@@ -76,19 +76,23 @@ public class RegisterFragment extends BaseContentFragment {
 		register.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				replaceFragment(LoginFragment.class,"LoginFragment",null);
+				if (mMobileEditText.getText()!=null&&mPasswordEditText.getText()!=null) {
+					postRegister(mMobileEditText.getText().toString(), mPasswordEditText.getText().toString());
+					replaceFragment(LoginFragment.class,"LoginFragment",null);
+				}
+
 			}
 		});
 		rl_registerActivity_backLoginActivity.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				replaceFragment(LoginFragment.class,"LoginFragment",null);
+				replaceFragment(LoginFragment.class, "LoginFragment", null);
 			}
 		});
 	}
 	@Override
 	protected void initData(Bundle bundle) {
-
+		//postRegister("18301969766","222222");
 	}
 	@Override
 	protected FragmentInfo getNavigtionUpToFragment() {
@@ -111,23 +115,19 @@ public class RegisterFragment extends BaseContentFragment {
 
 				}
 			}
-
 			@Override
 			public void onSuccess(boolean page, UserAuth auth) {
 				if (getActivity() != null) {
 
 				}
 			}
-
 			@Override
 			public void onFailure(String code, String message) {
 				Log.d(TAG, "code=:" + code + ",message=" + message);
 				if (getActivity() != null) {
 
 				}
-
 			}
-
 		});
 	}
 }
