@@ -3,6 +3,7 @@ package com.azhuoinfo.pshare.fragment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,9 +18,14 @@ import android.widget.TextView;
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.api.ApiContants;
+import com.azhuoinfo.pshare.api.task.ApiTask;
+import com.azhuoinfo.pshare.api.task.OnDataLoader;
+import com.azhuoinfo.pshare.model.CustomerInfo;
 
 import java.util.logging.Handler;
 
+import mobi.cangol.mobile.Session;
 import mobi.cangol.mobile.actionbar.ActionMenu;
 import mobi.cangol.mobile.actionbar.ActionMenuItem;
 import mobi.cangol.mobile.base.BaseContentFragment;
@@ -219,43 +225,28 @@ public class UserCenterEditorFragment extends BaseContentFragment{
         });
         builder.show();
     }
-    /*虚拟键盘的处理*//*
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (isShouldHideInput(v, ev)) {
+    public void postUserInfo(String customerId,String customerNickmane,
+                             String customerHead,String customerSex,String customerJob,
+                             String customerRegion,String customerMobile,String customerEmail ){
+        ApiTask apiTask=ApiTask.build(this.getActivity(),TAG);
+        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_SETUSERINFO));
+        apiTask.setParams(ApiContants.instance(getActivity()).setUserInfo(customerId,customerNickmane,
+                customerHead,customerSex,customerJob,customerRegion,customerMobile,customerEmail));
+        apiTask.setRoot("customerInfo");
+        apiTask.execute(new OnDataLoader<CustomerInfo>() {
+            @Override
+            public void onStart() {
 
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
             }
-            return super.dispatchTouchEvent(ev);
-        }
-        // 必不可少，否则所有的组件都不会有TouchEvent了
-        if (getWindow().superDispatchTouchEvent(ev)) {
-            return true;
-        }
-        return onTouchEvent(ev);
-    }
-    public  boolean isShouldHideInput(View v, MotionEvent event) {
-        if (v != null && (v instanceof EditText)) {
-            int[] leftTop = { 0, 0 };
-            //获取输入框当前的location位置
-            v.getLocationInWindow(leftTop);
-            int left = leftTop[0];
-            int top = leftTop[1];
-            int bottom = top + v.getHeight();
-            int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击的是输入框区域，保留点击EditText的事件
-                return false;
-            } else {
-                return true;
+            @Override
+            public void onSuccess(boolean page, CustomerInfo customerInfos) {
+
             }
-        }
-        return false;
-    }*/
+
+            @Override
+            public void onFailure(String code, String message) {
+
+            }
+        });
     }
+}

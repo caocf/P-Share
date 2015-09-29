@@ -1,5 +1,8 @@
 package com.azhuoinfo.pshare.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageInstaller;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,14 +16,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.azhuoinfo.pshare.AccountVerify;
+import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.activity.MainActivity;
 import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
+import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.UserLogin;
 
 import java.util.List;
 
+import mobi.cangol.mobile.Session;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 
@@ -38,11 +45,16 @@ public class LoginFragment extends BaseContentFragment {
 	private TextView loginActivity_forget_password;
 
 	private AccountVerify mAccountVerify;
-	private static final String TAG = "LoginFragment";
+	//private static final String TAG = "LoginFragment";
+	private List<UserLogin> userLogin;
+	private Bundle bundle;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		bundle=new Bundle();
+
+		app.getSession();
 		this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.left_head, R.drawable.left_head);
 		mAccountVerify = AccountVerify.getInstance(getActivity());
 	}
@@ -79,9 +91,7 @@ public class LoginFragment extends BaseContentFragment {
 		mLoginButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(mMobileEditText.getText().toString()!=null&&mPasswordEditText.getText().toString()!=null){
-					postLogin(mMobileEditText.getText().toString(), mPasswordEditText.getText().toString());
-				}
+				checkEdit();
 			}
 		});
 		loginActivity_forget_password.setOnClickListener(new View.OnClickListener() {
@@ -103,42 +113,58 @@ public class LoginFragment extends BaseContentFragment {
 	protected void initData(Bundle bundle) {
 
 	}
+	@Override
+	protected FragmentInfo getNavigtionUpToFragment() {
+		return null;
+	}
+
 	private boolean checkEdit(){
 		if(mMobileEditText.getText().toString().trim().equals("")){
 			Toast.makeText(this.getActivity(), "用户名不能为空", Toast.LENGTH_SHORT).show();
 		}else if(mPasswordEditText.getText().toString().trim().equals("")){
 			Toast.makeText(this.getActivity(), "密码不能为空", Toast.LENGTH_SHORT).show();
 		}else{
-			return true;
+			postLogin(mMobileEditText.getText().toString(), mPasswordEditText.getText().toString());
 		}
 		return false;
 	}
 
-	@Override
-	protected FragmentInfo getNavigtionUpToFragment() {
-		return null;
-	}
-	public void postLogin(String mobile,String password){
-		ApiTask apiTask=ApiTask.build(this.getActivity(),TAG);
+	public void postLogin(String mobile,String password) {
+		ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
 		apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_LOGIN));
 		apiTask.setParams(ApiContants.instance(getActivity()).login(mobile, password));
 		apiTask.setRoot("customerInfo");
-		apiTask.execute(new OnDataLoader<List<UserLogin>>() {
+		apiTask.execute(new OnDataLoader<CustomerInfo>() {
 			@Override
 			public void onStart() {
 
 			}
-
 			@Override
-			public void onSuccess(boolean page, List<UserLogin> userLogins) {
-
-				replaceFragment(HomeFragment.class, "HomeFragment", null);
+			public void onSuccess(boolean page, CustomerInfo customerInfos) {
+				//Toast.makeText(getActivity(),customerInfos.getCustomer_mobile(),Toast.LENGTH_SHORT);
+				if(customerInfos!=null){
+					Log.e(TAG,customerInfos.toString());
+					Session session =getSession();
+					//Log.d(TAG, customerInfos.getCustomer_mobile().toString());
+					//Log.d("iodjp",customerInfos.getCustomer_mobile());
+					session.put("customerInfo", customerInfos);
+					session.put("isLogin", true);
+					replaceFragment(HomeFragment.class, "HomeFragment",null );
+				}else{
+					showToast("无数据");
+				}
 			}
-
 			@Override
 			public void onFailure(String code, String message) {
 
 			}
 		});
 	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+
+	}
+
 }

@@ -124,13 +124,14 @@ public class ApiResult<T> implements Serializable {
                         resultObject=JsonUtils.getObject(JsonUtils.getJSONObject(json,DATA), root);
                         if (resultObject instanceof JSONObject) {
                             result.setObject(JsonUtils.parserToObjectByAnnotation(
-                                    c, JsonUtils.getJSONObject(json, DATA)));
+                                    c, JsonUtils.getJSONObject(JsonUtils.getJSONObject(json,DATA), root)));
                         } else if (resultObject instanceof JSONArray) {
                             result.setList(JsonUtils.parserToList(c,
-                                    JsonUtils.getJSONArray(json, DATA), true));
+                                    JsonUtils.getJSONArray(JsonUtils.getJSONObject(json,DATA), root), true));
                         } else {
                             result.setObject((T) resultObject);
                         }
+
                     }
 
 

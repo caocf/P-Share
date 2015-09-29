@@ -1,6 +1,7 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,7 @@ import android.widget.LinearLayout;
 
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
-import com.azhuoinfo.pshare.view.ListViewUtils;
-
+import com.azhuoinfo.pshare.model.CustomerInfo;
 import mobi.cangol.mobile.actionbar.ActionMenu;
 import mobi.cangol.mobile.actionbar.ActionMenuItem;
 import mobi.cangol.mobile.base.BaseContentFragment;
@@ -26,9 +26,15 @@ public class HomeFragment extends BaseContentFragment {
 	private LinearLayout mMineHomeButtonLinearLayout;
 	private Button mChangeButton;
 	private AccountVerify mAccountVerify;
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//this.getCustomActionBar().setDisplayShowHomeEnabled(false);
+		//Bundle bundle=this.getArguments();
+
+		//Log.d("wela",this.getArguments().get("customer_id").toString());
+		CustomerInfo customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
+		Log.e("www", customerInfo.getCustomer_Id().toString());
 		this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.homepager_user, R.drawable.homepager_user);
 
 		mAccountVerify = AccountVerify.getInstance(getActivity());

@@ -119,6 +119,44 @@ public class ApiContants {
 		params.put("customer_password", password);
 		return params;
 	}
+	/*customer_ nickname  昵称
+	customer_head  头像
+	customer_sex  性别
+	customer_job  职业
+	customer_region  地区
+	customer_mobile  手机号
+	customer_email  邮箱*/
+	public static  String API_CUSTOMER_SETUSERINFO="customer/setUserInfo";
+	/**
+	 *
+	 * @return
+	 */
+	public HashMap<String, String> setUserInfo(String customerId,String customerNickmane,
+												   String customerHead,String customerSex,String customerJob,
+												   String customerRegion,String customerMobile,String customerEmail) {
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("customer_id ", customerId );
+		params.put("customer_ nickname",customerNickmane);
+		params.put("customer_head ",customerHead);
+		params.put("customer_sex ",customerSex);
+		params.put("customer_job ",customerJob);
+		params.put("customer_region ",customerRegion);
+		params.put("customer_mobile ",customerMobile);
+		params.put("customer_email ",customerEmail);
+		return params;
+	}
+	public static String API_CUSTOMER_CREATEORDER="customer/createOrder";
+	/**
+	 *
+	 * @return
+	 */
+	public HashMap<String, String> userCreateOrder(String customerId,String parkingId,String orderPlanBegin) {
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("customer_id ", customerId );
+		params.put("parking_id",parkingId);
+		params.put("order_plan_begin ",orderPlanBegin);
+		return params;
+	}
 
 
 

@@ -1,6 +1,7 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.model.CustomerInfo;
+import com.azhuoinfo.pshare.model.UserLogin;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
@@ -39,13 +42,16 @@ public class UserCenterFragment extends BaseContentFragment{
     //生成的二维码图片
     private ImageView mQRCodeImageView;
     private AccountVerify mAccountVerify;
+    private CustomerInfo customerInfo;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
+        Log.e(TAG, customerInfo.getCustomer_Id().toString());
         this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.left_head, R.drawable.left_head);
         mAccountVerify = AccountVerify.getInstance(getActivity());
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -86,6 +92,7 @@ public class UserCenterFragment extends BaseContentFragment{
                 setContentFragment(UserCenterEditorFragment.class, "UserCenterEditorFragment", null, ModuleMenuIDS.MODULE_HOME);
             }
         });
+        mCustomerIdTextView.setText(customerInfo.getCustomer_Id().toString());
     }
 
     @Override

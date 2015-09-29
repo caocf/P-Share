@@ -10,7 +10,6 @@ import android.widget.ImageView;
 
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
-import com.azhuoinfo.pshare.activity.BaseActivity;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;

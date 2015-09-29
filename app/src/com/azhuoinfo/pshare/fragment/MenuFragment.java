@@ -1,6 +1,7 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +15,7 @@ import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.ModuleMenuIDS;
 
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.model.CustomerInfo;
 
 import mobi.cangol.mobile.base.BaseMenuFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
@@ -49,8 +51,15 @@ public class MenuFragment extends BaseMenuFragment {
 
 	private AccountVerify mAccountVerify;
 	private GlobalData mGlobalData;
+
+	private CustomerInfo customerInfo;
+	private String customerId;
+	private String customerNickName;
+	private String customerPoints;
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		mAccountVerify = AccountVerify.getInstance(getActivity());
 	}
 
@@ -145,6 +154,10 @@ public class MenuFragment extends BaseMenuFragment {
 				showMenu(false);
 			}
 		});
+		mCustomerIdTextView.setText(customerId);
+		mCustomerNicknameTextView.setText(customerNickName);
+		mCustomerPointsTextView.setText(customerPoints);
+
 
        /* mActivityTextView.setOnClickListener(new OnClickListener(){
 
@@ -218,6 +231,11 @@ public class MenuFragment extends BaseMenuFragment {
 
 	@Override
 	protected void onOpen() {
-
+		customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
+		customerId= customerInfo.getCustomer_Id().toString();
+		customerNickName=customerInfo.getCustomer_nickname();
+		customerPoints=customerInfo.getCustomer_point();
+		Log.e("www", customerInfo.getCustomer_Id().toString());
 	}
+
 }
