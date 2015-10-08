@@ -86,7 +86,7 @@ public class UserCenterFragment extends BaseContentFragment{
         mEditorInformationLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentFragment(UserCenterEditorFragment.class, "UserCenterEditorFragment", null, ModuleMenuIDS.MODULE_HOME);
+                setContentFragment(UserCenterFinishFragment.class, "UserCenterFinishFragment", null, ModuleMenuIDS.MODULE_HOME);
             }
         });
         mCustomerIdTextView.setText(customerInfo.getCustomer_Id().toString());

@@ -59,7 +59,7 @@ public class MenuFragment extends BaseMenuFragment {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		//customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
 		mAccountVerify = AccountVerify.getInstance(getActivity());
 	}
 
@@ -105,6 +105,10 @@ public class MenuFragment extends BaseMenuFragment {
 
 	@Override
 	protected void initViews(Bundle savedInstanceState) {
+
+		mCustomerIdTextView.setText(customerId);
+		mCustomerNicknameTextView.setText(customerNickName);
+		mCustomerPointsTextView.setText(customerPoints);
 		mInstallImageView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -154,9 +158,7 @@ public class MenuFragment extends BaseMenuFragment {
 				showMenu(false);
 			}
 		});
-		mCustomerIdTextView.setText(customerId);
-		mCustomerNicknameTextView.setText(customerNickName);
-		mCustomerPointsTextView.setText(customerPoints);
+
 
 
        /* mActivityTextView.setOnClickListener(new OnClickListener(){
@@ -199,7 +201,6 @@ public class MenuFragment extends BaseMenuFragment {
 			updateFocus(moduleId);
 		}
 	}
-	
 	protected void updateFocus(int moduleId) {
 		switch (moduleId) {
 		case ModuleMenuIDS.MODULE_HOME:
@@ -232,10 +233,11 @@ public class MenuFragment extends BaseMenuFragment {
 	@Override
 	protected void onOpen() {
 		customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
-		customerId= customerInfo.getCustomer_Id().toString();
-		customerNickName=customerInfo.getCustomer_nickname();
-		customerPoints=customerInfo.getCustomer_point();
-		Log.e("www", customerInfo.getCustomer_Id().toString());
+		if(customerInfo!=null){
+			customerId= customerInfo.getCustomer_Id().toString();
+			customerNickName=customerInfo.getCustomer_nickname();
+			customerPoints=customerInfo.getCustomer_point();
+		}
 	}
 
 }

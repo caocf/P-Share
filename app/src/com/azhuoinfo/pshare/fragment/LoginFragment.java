@@ -120,7 +120,6 @@ public class LoginFragment extends BaseContentFragment {
 		}
 		return false;
 	}
-
 	public void postLogin(String mobile,String password) {
 		ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
 		apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_LOGIN));
@@ -155,7 +154,6 @@ public class LoginFragment extends BaseContentFragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-
 	}
 
 }

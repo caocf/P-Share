@@ -82,11 +82,13 @@ public class UserCenterEditorFragment extends BaseContentFragment{
 
     private AccountVerify mAccountVerify;
     private CustomerInfo customerInfo;
+    private SetUserInfo setUserInfo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
+        setUserInfo=(SetUserInfo)this.app.getSession().get("setUserInfo");
         //Log.e(TAG, customerInfo.getCustomer_Id().toString());
         mAccountVerify = AccountVerify.getInstance(getActivity());
     }
@@ -112,7 +114,7 @@ public class UserCenterEditorFragment extends BaseContentFragment{
     @Override
     protected void findViews(View view) {
         mCustomerHeadImageView=(ImageView) view.findViewById(R.id.iv_customer_head);
-        mCustomerNicknameTextView=(TextView) view.findViewById(R.id.tv_customer_nickname);
+        mCustomerNickNameEditText=(EditText) view.findViewById(R.id.et_customer_nickname);
         mCustomerIdTextView=(TextView) view.findViewById(R.id.tv_customer_id);
         mCustomerPointsTextView=(TextView) view.findViewById(R.id.tv_customer_points);
         mCustomerFaithPoints1TextView=(TextView) view.findViewById(R.id.tv_customer_faith_points1);
@@ -135,8 +137,19 @@ public class UserCenterEditorFragment extends BaseContentFragment{
     @Override
     protected void initViews(Bundle bundle) {
         this.setTitle(R.string.user_center);
-
-        mCustomerIdTextView.setText(customerInfo.getCustomer_Id().toString());
+        mCustomerSexRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSexListDialog();
+            }
+        });
+        mCustomerRegionRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRegionListDialog();
+            }
+        });
+        mCustomerNickNameEditText.setText(customerInfo.getCustomer_nickname().toString());
         mCustomerIdTextView.setText(customerInfo.getCustomer_Id().toString());
         mCustomerMobileEditText.setText(customerInfo.getCustomer_mobile().toString());
         if(customerInfo.getCustomer_sex().equals("3")){
@@ -157,60 +170,28 @@ public class UserCenterEditorFragment extends BaseContentFragment{
 
     }
     @Override
-    protected boolean onMenuActionCreated(ActionMenu actionMenu) {
+    protected boolean onMenuActionCreated(final ActionMenu actionMenu) {
         super.onMenuActionCreated(actionMenu);
-        actionMenu.add(new ActionMenuItem(1, "编辑", isFinish, 1));
+        actionMenu.add(new ActionMenuItem(1, "编辑", R.drawable.finish, 1));
         return true;
     }
     @Override
-    public boolean onMenuActionSelected(ActionMenuItem action){
+    public boolean onMenuActionSelected(final ActionMenuItem action){
+        int intSex=3;
         switch(action.getId()){
             case 1:
-                count++;
-                if (count%2==1) {
-                    mCustomerNickNameEditText.setEnabled(true);
-                    mCustomerMobileEditText.setEnabled(false);
-                    mCustomerJobEditText.setEnabled(true);
-                    mCustomerEmailEditText.setEnabled(true);
-                    mCustomerSexImageView.setVisibility(View.VISIBLE);
-                    mCustomerRegionImageView.setVisibility(View.VISIBLE);
-                    mCustomerSexRelativeLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            showSexListDialog();
-                        }
-                    });
-                    mCustomerRegionRelativeLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            showRegionListDialog();
-                        }
-                    });
-                } else {
-                    // action.setShow(R.drawable.editor);
-                    this.getCustomActionBar().getActionMenu().getActionMenuItemView(R.drawable.editor);
-                    action.setDrawable(R.drawable.editor);
-                    mCustomerNickNameEditText.setEnabled(false);
-                    mCustomerMobileEditText.setEnabled(false);
-                    mCustomerJobEditText.setEnabled(false);
-                    mCustomerEmailEditText.setEnabled(false);
-                    mCustomerSexImageView.setVisibility(View.INVISIBLE);
-                    mCustomerRegionImageView.setVisibility(View.INVISIBLE);
-                    postSetUserInfo(customerInfo.getCustomer_Id().toString(),mCustomerNickNameEditText.getText().toString(),
-                            1+"",mCustomerJobEditText.getText().toString(),
-                            mCustomerRegionTextView.getText().toString(),
-                            customerInfo.getCustomer_mobile().toString(),mCustomerEmailEditText.getText().toString(),20+"");
+                if(mCustomerSexTextView.getText().toString().equals("")){
+                    intSex=3;
+                }else if(mCustomerSexTextView.getText().toString().equals("男")){
+                    intSex=1;
+                }else if(mCustomerSexTextView.getText().toString().equals("女")){
+                    intSex=2;
                 }
-                this.getCustomActionBar().getActionMenu().getActionMenuItemView(1).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(count%2==1){
-                            isFinish=R.drawable.finish;
-                        }else {
-                            isFinish=R.drawable.editor;
-                        }
-                    }
-                });
+                postSetUserInfo(customerInfo.getCustomer_Id().toString(),mCustomerNickNameEditText.getText().toString(),
+                        intSex+"",mCustomerJobEditText.getText().toString(),
+                        mCustomerRegionTextView.getText().toString(),
+                        customerInfo.getCustomer_mobile().toString(),mCustomerEmailEditText.getText().toString(),20+"");
+                replaceFragment(UserCenterFinishFragment.class,"UserCenterFinishFragment",null);
                 break;
         }
         return super.onMenuActionSelected(action);
@@ -255,18 +236,18 @@ public class UserCenterEditorFragment extends BaseContentFragment{
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_SETUSERINFO));
         apiTask.setParams(ApiContants.instance(getActivity()).setUserInfo(customerId, customerNickmane,
                 customerSex, customerJob, customerRegion, customerMobile, customerEmail, customerAge));
-        apiTask.setRoot("customerInfo");
-        apiTask.execute(new OnDataLoader<SetUserInfo>() {
+        //apiTask.setRoot("customerInfo");
+        apiTask.execute(new OnDataLoader<CustomerInfo>() {
             @Override
             public void onStart() {
 
             }
-
             @Override
-            public void onSuccess(boolean page, SetUserInfo setUserInfo) {
-                Log.e(TAG, setUserInfo.toString());
+            public void onSuccess(boolean page, CustomerInfo customerInfo) {
+                Session session =getSession();
+                session.put("customerInfo", customerInfo);
+                Log.e(TAG, "" + customerInfo);
             }
-
             @Override
             public void onFailure(String code, String message){
                 Log.e(TAG,"请求失败");

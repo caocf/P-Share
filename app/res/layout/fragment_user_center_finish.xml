@@ -142,7 +142,6 @@
 				android:textSize="@dimen/text_size3"
 				android:textColor="#999d9c"
 				android:gravity="right"
-				android:editable="false"
 				android:background="@drawable/edittext_time"
 				android:layout_alignParentRight="true"/>
 		</RelativeLayout>

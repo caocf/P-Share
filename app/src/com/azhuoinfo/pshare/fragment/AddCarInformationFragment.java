@@ -19,6 +19,11 @@ import android.widget.TextView;
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.api.ApiContants;
+import com.azhuoinfo.pshare.api.task.ApiTask;
+import com.azhuoinfo.pshare.api.task.OnDataLoader;
+import com.azhuoinfo.pshare.model.AddCarInfo;
+import com.azhuoinfo.pshare.model.CustomerInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,11 +65,13 @@ public class AddCarInformationFragment extends BaseContentFragment{
     private String[] carArea2={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T",
             "U","V","W","X","Y","Z"};
     private List<Map<String,String>> carList2;
+    private CustomerInfo customerInfo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAccountVerify = AccountVerify.getInstance(getActivity());
+        customerInfo=(CustomerInfo) this.app.getSession().get("customerInfo");
         carList1=new ArrayList<Map<String,String>>();
         carList2=new ArrayList<Map<String,String>>();
         for (int i=0;i<carArea1.length;i++){
@@ -152,6 +159,7 @@ public class AddCarInformationFragment extends BaseContentFragment{
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                postAddcar(customerInfo.getCustomer_Id().toString(),"奥迪","黑色","222","1234","苏E66666");
             }
         });
     }
@@ -169,5 +177,24 @@ public class AddCarInformationFragment extends BaseContentFragment{
     @Override
     public boolean isCleanStack() {
         return false;
+    }
+    public void postAddcar(String customerId,String carBrand,String carColor,String carSize,String ownerIdNumber,String carNumber){
+        ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
+        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_ADDCAR));
+        apiTask.setParams(ApiContants.instance(getActivity()).useAddCar(customerId, carBrand, carColor, carSize, ownerIdNumber,carNumber));
+        apiTask.execute(new OnDataLoader<AddCarInfo>(){
+            @Override
+            public void onStart(){
+
+            }
+            @Override
+            public void onSuccess(boolean page, AddCarInfo addCarInfo) {
+
+            }
+            @Override
+            public void onFailure(String code, String message) {
+
+            }
+        });
     }
 }

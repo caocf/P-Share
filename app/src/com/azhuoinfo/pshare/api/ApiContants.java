@@ -157,6 +157,7 @@ customer_age*/
 		return params;
 	}
 	public static String API_CUSTOMER_CREATEORDER="/customer/createOrder";
+
 	/**
 	 *
 	 * @return
@@ -168,7 +169,20 @@ customer_age*/
 		params.put("order_plan_begin",orderPlanBegin);
 		return params;
 	}
-
-
-
+	public static String API_CUSTOMER_ADDCAR="/customer/addCar";
+	/**
+	 *customer_id，car_brand，car_number，car_color，car_size，owner_id_number（未确定是否需
+	 * @return
+	 */
+	public HashMap<String, String> useAddCar(String customerId,String carBrand,String carColor,
+											 String carSize,String ownerIdNumber,String carNumber){
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("customer_id", customerId );
+		params.put("car_brand",carBrand);
+		params.put("car_color",carColor);
+		params.put("car_size",carSize);
+		params.put("owner_id_number",ownerIdNumber);
+		params.put("car_number",carNumber);
+		return params;
+	}
 }

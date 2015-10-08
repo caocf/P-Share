@@ -51,6 +51,7 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		//isLogin=(boolean)this.app.getSession().get("isLogin");
         this.setFloatActionBarEnabled(true);
 		this.getCustomActionBar().setTitleGravity(Gravity.CENTER);
 		initStatus();
@@ -60,8 +61,10 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 			this.setMenuFragment(MenuFragment.class, null);
 			if(isLogin){
 				this.setContentFragment(HomeFragment.class, "HomeFragment", null, ModuleMenuIDS.MODULE_HOME);
+				isLogin=false;
 			}else{
 				this.setContentFragment(LoginAndRegister.class,"LoginAndRegister",null);
+				isLogin=true;
 			}
 			if (mGlobalData.get(Constants.KEY_CHECK_UPGRADE) == null || !TimeUtils.getCurrentDate().equals(mGlobalData.get(Constants.KEY_CHECK_UPGRADE))) {
 				// 判断升级提示是否检测过，每天只检测一次
@@ -98,7 +101,6 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 	public void initViews(Bundle savedInstanceState) {
 
 	}
-
 	@Override
 	public void initData(Bundle savedInstanceState) {
 		StatusService statusService = (StatusService) getAppService(AppService.STATUS_SERVICE);
