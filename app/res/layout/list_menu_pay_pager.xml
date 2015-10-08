@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/weixin"
-                android:drawableRight="@drawable/weixin" />
+                android:drawableRight="@drawable/weixin"/>
         </LinearLayout>
         <Button
             android:id="@+id/btn_pay"

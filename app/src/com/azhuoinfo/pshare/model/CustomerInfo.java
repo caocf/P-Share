@@ -6,17 +6,12 @@ import mobi.cangol.mobile.parser.Element;
  * Created by Azhuo on 2015/9/29.
  */
 public class CustomerInfo {
-    /**
-     *
-     */
+
     private String token;
     private String customer_id;
     private String customer_point;
     private String customer_nickname;
     private String customer_head;
-
-
-
     private String customer_sex;
     //注册时间
     private String created_at;

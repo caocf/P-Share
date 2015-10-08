@@ -33,7 +33,7 @@ public class ApiTask {
 		mApiClient.cancel(mTag, mayInterruptIfRunning);
 	}
 	public static void  cancel(Context context,String tag) {
-		ApiClient.getInstance(context).cancel(tag,true);
+		ApiClient.getInstance(context).cancel(tag, true);
 	}
 	public void setUrl(String url) {
 		this.mUrl = url;
@@ -48,7 +48,11 @@ public class ApiTask {
 			mParams.put(entry.getKey(), entry.getValue());
 		}
 	}
-
+	public void setParams2(HashMap<String, Object> params) {
+		for (Map.Entry<String, Object> entry : params.entrySet()) {
+			mParams.put(entry.getKey(), entry.getValue());
+		}
+	}
 	public String getRoot() {
 		return mRoot;
 	}

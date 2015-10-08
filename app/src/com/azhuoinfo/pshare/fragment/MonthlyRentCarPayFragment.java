@@ -137,6 +137,6 @@ public class MonthlyRentCarPayFragment extends BaseContentFragment{
 
     @Override
     public boolean isCleanStack() {
-        return true;
+        return false;
     }
 }

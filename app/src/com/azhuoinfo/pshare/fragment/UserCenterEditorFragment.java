@@ -1,7 +1,9 @@
 package com.azhuoinfo.pshare.fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.model.CustomerInfo;
+import com.azhuoinfo.pshare.model.SetUserInfo;
 
 import java.util.logging.Handler;
 
@@ -39,6 +42,7 @@ public class UserCenterEditorFragment extends BaseContentFragment{
     *actionbar
     * */
     //个人中心是否显示可编辑状态
+    private int count=0;
     private boolean isEditor=false;
     //用户的头像设置
     private ImageView mCustomerHeadImageView;
@@ -77,11 +81,14 @@ public class UserCenterEditorFragment extends BaseContentFragment{
     private int isFinish=R.drawable.editor;
 
     private AccountVerify mAccountVerify;
+    private CustomerInfo customerInfo;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
+        //Log.e(TAG, customerInfo.getCustomer_Id().toString());
         mAccountVerify = AccountVerify.getInstance(getActivity());
-
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -119,32 +126,29 @@ public class UserCenterEditorFragment extends BaseContentFragment{
         mCustomerSexImageView=(ImageView) view.findViewById(R.id.iv_customer_sex);
 
         mCustomerJobEditText=(EditText) view.findViewById(R.id.et_customer_job);
-
         mCustomerRegionRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_customer_region);
         mCustomerRegionTextView=(TextView) view.findViewById(R.id.tv_customer_region);
         mCustomerRegionImageView=(ImageView) view.findViewById(R.id.iv_customer_region);
-
         mCustomerEmailEditText=(EditText) view.findViewById(R.id.et_customer_email);
-
-
     }
 
     @Override
     protected void initViews(Bundle bundle) {
-
         this.setTitle(R.string.user_center);
-        mCustomerSexRelativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSexListDialog();
-            }
-        });
-        mCustomerRegionRelativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showRegionListDialog();
-            }
-        });
+
+        mCustomerIdTextView.setText(customerInfo.getCustomer_Id().toString());
+        mCustomerIdTextView.setText(customerInfo.getCustomer_Id().toString());
+        mCustomerMobileEditText.setText(customerInfo.getCustomer_mobile().toString());
+        if(customerInfo.getCustomer_sex().equals("3")){
+            mCustomerSexTextView.setText("");
+        }else if (customerInfo.getCustomer_sex().equals("1")){
+            mCustomerSexTextView.setText("男");
+        }else{
+            mCustomerSexTextView.setText("女");
+        }
+        mCustomerJobEditText.setText(customerInfo.getCustomer_job().toString());
+        mCustomerRegionTextView.setText(customerInfo.getCustomer_region().toString());
+        mCustomerEmailEditText.setText(customerInfo.getCustomer_email().toString());
 
     }
 
@@ -155,35 +159,58 @@ public class UserCenterEditorFragment extends BaseContentFragment{
     @Override
     protected boolean onMenuActionCreated(ActionMenu actionMenu) {
         super.onMenuActionCreated(actionMenu);
-        actionMenu.add(new ActionMenuItem(1, "编辑",R.drawable.editor, 1));
+        actionMenu.add(new ActionMenuItem(1, "编辑", isFinish, 1));
         return true;
     }
     @Override
-    public boolean onMenuActionSelected(ActionMenuItem action) {
+    public boolean onMenuActionSelected(ActionMenuItem action){
         switch(action.getId()){
             case 1:
-                if (isEditor) {
-                   // action.setDrawable(R.drawable.editor);
-                    action.setShow(R.drawable.editor);
+                count++;
+                if (count%2==1) {
                     mCustomerNickNameEditText.setEnabled(true);
                     mCustomerMobileEditText.setEnabled(false);
                     mCustomerJobEditText.setEnabled(true);
                     mCustomerEmailEditText.setEnabled(true);
                     mCustomerSexImageView.setVisibility(View.VISIBLE);
                     mCustomerRegionImageView.setVisibility(View.VISIBLE);
-                    isFinish=R.drawable.editor;
-                    isEditor = false;
+                    mCustomerSexRelativeLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            showSexListDialog();
+                        }
+                    });
+                    mCustomerRegionRelativeLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            showRegionListDialog();
+                        }
+                    });
                 } else {
-                    action.setShow(R.drawable.finish);
-                   // action.setDrawable(R.drawable.finish);
+                    // action.setShow(R.drawable.editor);
+                    this.getCustomActionBar().getActionMenu().getActionMenuItemView(R.drawable.editor);
+                    action.setDrawable(R.drawable.editor);
                     mCustomerNickNameEditText.setEnabled(false);
                     mCustomerMobileEditText.setEnabled(false);
                     mCustomerJobEditText.setEnabled(false);
                     mCustomerEmailEditText.setEnabled(false);
                     mCustomerSexImageView.setVisibility(View.INVISIBLE);
                     mCustomerRegionImageView.setVisibility(View.INVISIBLE);
-                    isEditor = true;
+                    postSetUserInfo(customerInfo.getCustomer_Id().toString(),mCustomerNickNameEditText.getText().toString(),
+                            1+"",mCustomerJobEditText.getText().toString(),
+                            mCustomerRegionTextView.getText().toString(),
+                            customerInfo.getCustomer_mobile().toString(),mCustomerEmailEditText.getText().toString(),20+"");
                 }
+                this.getCustomActionBar().getActionMenu().getActionMenuItemView(1).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(count%2==1){
+                            isFinish=R.drawable.finish;
+                        }else {
+                            isFinish=R.drawable.editor;
+                        }
+                    }
+                });
                 break;
         }
         return super.onMenuActionSelected(action);
@@ -198,12 +225,9 @@ public class UserCenterEditorFragment extends BaseContentFragment{
     public boolean isCleanStack() {
         return false;
     }
-
     private void showSexListDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-
         builder.setTitle("请选择性别");
-
         builder.setItems(sex, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -214,9 +238,7 @@ public class UserCenterEditorFragment extends BaseContentFragment{
     }
     private void showRegionListDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-
         builder.setTitle("请您的选择家乡");
-
         builder.setItems(homes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -225,28 +247,35 @@ public class UserCenterEditorFragment extends BaseContentFragment{
         });
         builder.show();
     }
-    public void postUserInfo(String customerId,String customerNickmane,
-                             String customerHead,String customerSex,String customerJob,
-                             String customerRegion,String customerMobile,String customerEmail ){
-        ApiTask apiTask=ApiTask.build(this.getActivity(),TAG);
+    public void postSetUserInfo(String customerId,String customerNickmane,
+                                String customerSex,String customerJob,
+                                String customerRegion,String customerMobile,String customerEmail,String customerAge) {
+        ApiTask apiTask = ApiTask.build(this.getActivity(),TAG);
+        apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_SETUSERINFO));
-        apiTask.setParams(ApiContants.instance(getActivity()).setUserInfo(customerId,customerNickmane,
-                customerHead,customerSex,customerJob,customerRegion,customerMobile,customerEmail));
+        apiTask.setParams(ApiContants.instance(getActivity()).setUserInfo(customerId, customerNickmane,
+                customerSex, customerJob, customerRegion, customerMobile, customerEmail, customerAge));
         apiTask.setRoot("customerInfo");
-        apiTask.execute(new OnDataLoader<CustomerInfo>() {
+        apiTask.execute(new OnDataLoader<SetUserInfo>() {
             @Override
             public void onStart() {
 
             }
-            @Override
-            public void onSuccess(boolean page, CustomerInfo customerInfos) {
 
+            @Override
+            public void onSuccess(boolean page, SetUserInfo setUserInfo) {
+                Log.e(TAG, setUserInfo.toString());
             }
 
             @Override
-            public void onFailure(String code, String message) {
-
+            public void onFailure(String code, String message){
+                Log.e(TAG,"请求失败");
             }
         });
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
 }

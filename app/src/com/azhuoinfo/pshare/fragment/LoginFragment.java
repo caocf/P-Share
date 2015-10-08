@@ -1,8 +1,6 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.PackageInstaller;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,20 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.azhuoinfo.pshare.AccountVerify;
-import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
-import com.azhuoinfo.pshare.activity.MainActivity;
 import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.model.CustomerInfo;
-import com.azhuoinfo.pshare.model.UserLogin;
 
 import java.util.List;
 
@@ -46,14 +40,12 @@ public class LoginFragment extends BaseContentFragment {
 
 	private AccountVerify mAccountVerify;
 	//private static final String TAG = "LoginFragment";
-	private List<UserLogin> userLogin;
 	private Bundle bundle;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		bundle=new Bundle();
-
 		app.getSession();
 		this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.left_head, R.drawable.left_head);
 		mAccountVerify = AccountVerify.getInstance(getActivity());
@@ -137,7 +129,6 @@ public class LoginFragment extends BaseContentFragment {
 		apiTask.execute(new OnDataLoader<CustomerInfo>() {
 			@Override
 			public void onStart() {
-
 			}
 			@Override
 			public void onSuccess(boolean page, CustomerInfo customerInfos) {

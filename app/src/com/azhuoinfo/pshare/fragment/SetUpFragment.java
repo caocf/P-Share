@@ -12,6 +12,8 @@ import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
 
+import java.security.spec.EncodedKeySpec;
+
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 

@@ -100,6 +100,6 @@ public class MonthlyRentListFragment extends BaseContentFragment{
 
     @Override
     public boolean isCleanStack() {
-        return true;
+        return false;
     }
 }

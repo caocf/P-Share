@@ -9,34 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical">
-		<!--<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="@dimen/padding8"
-			android:background="#1376ca">
-			<Button
-				android:id="@+id/activity_back"
-				android:layout_height="@dimen/padding8"
-				android:layout_width="@dimen/padding8"
-				android:padding="@dimen/padding2"
-				android:background="@null"
-				android:drawableLeft="@drawable/left_head"/>
-			<TextView
-				android:layout_height="wrap_content"
-				android:layout_width="wrap_content"
-				android:textColor="#ffffff"
-				android:layout_centerInParent="true"
-				android:textSize="@dimen/text_size5"
-				android:text="@string/user_center"/>
-			<ImageView
-				android:id="@+id/iv_editor_finish"
-				android:layout_height="wrap_content"
-				android:layout_width="wrap_content"
-				android:layout_centerVertical="true"
-				android:layout_gravity="center"
-				android:layout_alignParentRight="true"
-				android:layout_marginRight="@dimen/padding2"
-				android:src="@drawable/btn_selector" />
-		</RelativeLayout>-->
+
         <LinearLayout
             android:id="@+id/personal_center"
 	        android:layout_width="match_parent"
@@ -150,8 +123,8 @@
 		<RelativeLayout
 			android:layout_height="match_parent"
 			android:layout_width="wrap_content"
-			android:layout_marginTop="@dimen/padding1"
-			android:layout_marginBottom="@dimen/padding1">
+			android:layout_marginTop="@dimen/padding2"
+			android:layout_marginBottom="@dimen/padding2">
 			<TextView
 				android:id="@+id/tv1_nickName"
 				android:layout_height="wrap_content"
@@ -167,9 +140,9 @@
 				android:layout_toRightOf="@+id/tv1_nickName"
 				android:layout_marginRight="@dimen/padding3"
 				android:textSize="@dimen/text_size3"
-				android:hint="车先生"
 				android:textColor="#999d9c"
 				android:gravity="right"
+				android:editable="false"
 				android:background="@drawable/edittext_time"
 				android:layout_alignParentRight="true"/>
 		</RelativeLayout>
@@ -182,8 +155,8 @@
 		<RelativeLayout
 			android:layout_height="match_parent"
 			android:layout_width="wrap_content"
-			android:layout_marginTop="@dimen/padding1"
-			android:layout_marginBottom="@dimen/padding1">
+			android:layout_marginTop="@dimen/padding2"
+			android:layout_marginBottom="@dimen/padding2">
 			<TextView
 				android:id="@+id/tv1_MobilePhone"
 				android:layout_height="wrap_content"
@@ -199,11 +172,10 @@
 				android:layout_toRightOf="@+id/tv1_MobilePhone"
 				android:layout_marginRight="@dimen/padding3"
 				android:textSize="@dimen/text_size3"
-				android:hint="18301969764"
 				android:textColor="#999d9c"
 				android:gravity="right"
-				android:numeric="integer"
 				android:editable="false"
+
 				android:background="@drawable/edittext_time"
 				android:layout_alignParentRight="true"/>
 		</RelativeLayout>
@@ -217,8 +189,8 @@
 			android:id="@+id/rl_customer_sex"
 			android:layout_height="match_parent"
 			android:layout_width="wrap_content"
-			android:layout_marginTop="@dimen/padding1"
-			android:layout_marginBottom="@dimen/padding1">
+			android:layout_marginTop="@dimen/padding2"
+			android:layout_marginBottom="@dimen/padding2">
 			<TextView
 				android:id="@+id/tv1_customer_sex"
 				android:layout_height="wrap_content"
@@ -245,8 +217,8 @@
 				android:layout_width="wrap_content"
 				android:layout_centerVertical="true"
 				android:layout_marginRight="@dimen/padding2"
+				android:visibility="invisible"
 				android:layout_alignParentRight="true"
-
 				android:src="@drawable/down_head"/>
 		</RelativeLayout>
 		<TextView
@@ -258,8 +230,8 @@
 		<RelativeLayout
 			android:layout_height="match_parent"
 			android:layout_width="wrap_content"
-			android:layout_marginTop="@dimen/padding1"
-			android:layout_marginBottom="@dimen/padding1">
+			android:layout_marginTop="@dimen/padding2"
+			android:layout_marginBottom="@dimen/padding2">
 			<TextView
 				android:id="@+id/tv1_customer_job"
 				android:layout_height="wrap_content"
@@ -278,7 +250,7 @@
 				android:hint="工程师"
 				android:textColor="#999d9c"
 				android:gravity="right"
-
+				android:editable="false"
 				android:background="@drawable/edittext_time"
 				android:layout_alignParentRight="true"/>
 		</RelativeLayout>
@@ -292,8 +264,8 @@
 			android:id="@+id/rl_customer_region"
 			android:layout_height="match_parent"
 			android:layout_width="wrap_content"
-			android:layout_marginTop="@dimen/padding1"
-			android:layout_marginBottom="@dimen/padding1">
+			android:layout_marginTop="@dimen/padding2"
+			android:layout_marginBottom="@dimen/padding2">
 			<TextView
 				android:id="@+id/tv1_customer_region"
 				android:layout_height="wrap_content"
@@ -319,7 +291,7 @@
 				android:layout_width="wrap_content"
 				android:layout_centerVertical="true"
 				android:layout_marginRight="@dimen/padding2"
-
+				android:visibility="invisible"
 				android:layout_alignParentRight="true"
 				android:src="@drawable/down_head"/>
 		</RelativeLayout>
@@ -332,8 +304,8 @@
 		<RelativeLayout
 			android:layout_height="match_parent"
 			android:layout_width="wrap_content"
-			android:layout_marginTop="@dimen/padding1"
-			android:layout_marginBottom="@dimen/padding1">
+			android:layout_marginTop="@dimen/padding2"
+			android:layout_marginBottom="@dimen/padding2">
 			<TextView
 				android:id="@+id/tv1_customer_email"
 				android:layout_height="wrap_content"
@@ -352,7 +324,7 @@
 				android:hint="2323458666@qq.com"
 				android:textColor="#999d9c"
 				android:gravity="right"
-
+				android:editable="false"
 				android:background="@drawable/edittext_time"
 				android:layout_alignParentRight="true"/>
 		</RelativeLayout>

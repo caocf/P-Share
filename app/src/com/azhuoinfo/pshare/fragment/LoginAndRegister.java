@@ -7,10 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
-import com.azhuoinfo.pshare.api.ApiContants;
-import com.azhuoinfo.pshare.api.task.ApiTask;
-import com.azhuoinfo.pshare.api.task.OnDataLoader;
-import com.azhuoinfo.pshare.model.UserLogin;
 
 import java.util.List;
 
@@ -25,7 +21,6 @@ public class LoginAndRegister extends BaseContentFragment {
 
     private Button mLoginButton;
     private Button mRegisterButton;
-    private List<UserLogin> list;
     private AccountVerify mAccountVerify;
     @Override
     public void onCreate(Bundle savedInstanceState) {

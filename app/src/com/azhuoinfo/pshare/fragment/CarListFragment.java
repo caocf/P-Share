@@ -83,7 +83,7 @@ public class CarListFragment extends BaseContentFragment{
         mCarListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                replaceParentFragment(MonthlyRentCarFinishPayFragment.class,"MonthlyRentCarFinishPayFragment",null);
+                replaceFragment(MonthlyRentCarFinishPayFragment.class,"MonthlyRentCarFinishPayFragment",null);
             }
         });
     }

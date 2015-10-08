@@ -85,7 +85,7 @@ public class HomeFragment extends BaseContentFragment {
 					TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_PARENT,0,Animation.RELATIVE_TO_PARENT,0,
 							Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0);
 					set.addAnimation(translate);
-					set.setDuration(500);
+					set.setDuration(300);
 					set.setFillAfter(true);
 					mMineHomeButtonLinearLayout.offsetTopAndBottom(-mMineHomeButtonLinearLayout.getHeight());
 					mMineHomeButtonLinearLayout.startAnimation(set);
@@ -95,7 +95,7 @@ public class HomeFragment extends BaseContentFragment {
 					TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_PARENT,0,Animation.RELATIVE_TO_PARENT,0,
 							Animation.RELATIVE_TO_SELF, -0.5f, Animation.RELATIVE_TO_SELF, 0);
 					set.addAnimation(translate);
-					set.setDuration(500);
+					set.setDuration(300);
 					set.setFillAfter(true);
 					mMineHomeButtonLinearLayout.offsetTopAndBottom(mMineHomeButtonLinearLayout.getHeight());
 					mMineHomeButtonLinearLayout.startAnimation(set);

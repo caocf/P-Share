@@ -20,7 +20,7 @@ public class RetrievePassWordFragment extends BaseContentFragment {
 	//定义返回到上个页面的控件
 	private ImageView activity_back;
 	//定义填写手机号码的控件
-	private EditText retrieveActivity_editText_Phone;
+	private EditText mCustomerMobileEditText;
 	//获取验证码
 	private TextView get_code;
 	//定义输入验证码的控件
@@ -59,22 +59,23 @@ public class RetrievePassWordFragment extends BaseContentFragment {
 	@Override
 	protected void findViews(View view) {
 		this.setTitle(R.string.retrieve_password);
-		retrieveActivity_editText_Phone=(EditText) view.findViewById(R.id.retrieveActivity_editText_Phone);
+		mCustomerMobileEditText=(EditText) view.findViewById(R.id.retrieveActivity_editText_Phone);
 		get_code=(TextView) view.findViewById(R.id.get_code);
 		retrieveActivity_editText_Password=(EditText) view.findViewById(R.id.retrieveActivity_editText_Code);
 		next_step=(Button) view.findViewById(R.id.next_step);
 	}
 
 	@Override
-	protected void initViews(Bundle bundle) {
+	protected void initViews(final Bundle bundle) {
 		next_step.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				replaceFragment(ResetPassWordFragment.class,"ResetPassWordFragment",null);
+				Bundle bundle=new Bundle();
+				bundle.putString("customer_mobile",mCustomerMobileEditText.getText().toString());
+				replaceFragment(ResetPassWordFragment.class, "ResetPassWordFragment",bundle);
 			}
 		});
 	}
-
 
 	@Override
 	protected void initData(Bundle bundle) {
