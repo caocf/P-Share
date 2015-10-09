@@ -164,7 +164,7 @@ public class UserCenterFinishFragment extends BaseContentFragment{
 
     @Override
     public boolean isCleanStack() {
-        return false;
+        return true;
     }
     @Override
     public void onDestroy() {

@@ -6,6 +6,11 @@
               android:layout_height="match_parent"
               android:background="@color/fragment_background"
               android:orientation="vertical">
+   <!--<com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true" />-->
     <Button
         android:id="@+id/button_mine_home"
         android:layout_width="wrap_content"

@@ -185,4 +185,14 @@ customer_age*/
 		params.put("car_number",carNumber);
 		return params;
 	}
+	public static String API_CUSTOMER_UNFINISHEDORDER="/customer/unfinishedOrder";
+	/**
+	 *customer_id，car_brand，car_number，car_color，car_size，owner_id_number（未确定是否需
+	 * @return
+	 */
+	public HashMap<String, String> unFinishedOrder(String customerId){
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("customer_id", customerId );
+		return params;
+	}
 }

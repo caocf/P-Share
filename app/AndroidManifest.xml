@@ -14,15 +14,22 @@
         android:resizeable="true"
         android:smallScreens="true"
         android:xlargeScreens="true" />
+
      
 	<uses-feature android:name="android.hardware.telephony" android:required="false" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- gps
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> -->
@@ -40,7 +47,10 @@
         <meta-data android:name="BUILD_DATE" android:value="20150518"/>
         <!--svnv  -->
         <meta-data android:name="BUILD_SVNV" android:value="r67"/>
-		<!-- OpenUDID -->
+        <!--百度地图-->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY" android:value="GIBUKPKreK7bbReiNlrPz8y8" />
+        <!-- OpenUDID -->
 		<service android:name="org.OpenUDID.OpenUDID_service" android:exported="false">
 		    <intent-filter>
 		        <action android:name="org.openudid.GETUDID" />

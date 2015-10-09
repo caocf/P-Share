@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/actionbar_background"
+    android:background="@drawable/launch_screen_image"
     android:orientation="vertical" >
      <Button
         android:id="@+id/button_login"
@@ -15,7 +15,7 @@
         android:textSize="@dimen/text_size5"
         android:text="@string/login"
         android:textColor="@color/text_white"
-        android:background="@color/actionbar_background"/>
+        android:background="@null"/>
     <Button
         android:id="@+id/button_register"
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
         android:textSize="@dimen/text_size5"
         android:text="@string/registered"
         android:textColor="@color/text_white"
-        android:background="@color/actionbar_background" />
+        android:background="@null" />
     
 
 </RelativeLayout>

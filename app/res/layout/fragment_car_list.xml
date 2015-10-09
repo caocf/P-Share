@@ -4,26 +4,11 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical" >
-    <!--<RelativeLayout
-        android:layout_width="match_parent" 
-        android:layout_height="@dimen/padding8"       
-        android:background="@color/bg_action_bar_blue">
-        <ImageView
-            android:id="@+id/activity_back"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/padding2"          
-			android:src="@drawable/left_head"/>
-        <TextView 
-            style="@style/text_actionbar" 
-            android:text="@string/mine_carList"/>
-    </RelativeLayout>-->
 	<LinearLayout
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:orientation="vertical">
-	   <ListView
+	   <com.azhuoinfo.pshare.view.listview.MyListView
 		   android:id="@+id/lv_list_car"
 		   android:layout_height="wrap_content"
 		   android:layout_width="match_parent"

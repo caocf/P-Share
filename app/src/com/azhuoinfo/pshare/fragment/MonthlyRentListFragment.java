@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +16,7 @@ import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.fragment.adapter.MonthlyRentListAdapter;
+import com.azhuoinfo.pshare.view.listview.MyListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,16 +30,20 @@ import mobi.cangol.mobile.base.FragmentInfo;
 public class MonthlyRentListFragment extends BaseContentFragment{
 
     //月租车列表
-    private ListView mMonthlyRentListView;
+    private MyListView mMonthlyRentListView;
     //添加月租车
     private RelativeLayout mAddMonthlyRentCarRelativeLayout;
 
     private List<String> list=new ArrayList<String>();
     private AccountVerify mAccountVerify;
+    //屏幕高度
+    private int height;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAccountVerify = AccountVerify.getInstance(getActivity());
+        WindowManager wm = getActivity().getWindowManager();
+        height = wm.getDefaultDisplay().getHeight();
     }
 
     @Override
@@ -61,11 +67,11 @@ public class MonthlyRentListFragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
-        mMonthlyRentListView=(ListView) view.findViewById(R.id.lv_monthlyRent_list);
-        list.clear();
+        mMonthlyRentListView=(MyListView) view.findViewById(R.id.lv_monthlyRent_list);
         for (int i = 0; i < 4; i++) {
             list.add(""+i);
         }
+        mMonthlyRentListView.setMaxHeight(height/5*3);
         mMonthlyRentListView.setAdapter(new MonthlyRentListAdapter(this.getActivity(), list));
         mAddMonthlyRentCarRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_add_monthlyRent);
 
@@ -83,7 +89,7 @@ public class MonthlyRentListFragment extends BaseContentFragment{
         mMonthlyRentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                replaceParentFragment(MonthlyRentCarFinishPayFragment.class,"MonthlyRentCarFinishPayFragment",null);
+                replaceParentFragment(MonthlyRentCarPayFragment.class,"MonthlyRentCarPayFragment",null);
             }
         });
     }

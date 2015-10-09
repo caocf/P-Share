@@ -159,7 +159,7 @@ public class AddCarInformationFragment extends BaseContentFragment{
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postAddcar(customerInfo.getCustomer_Id().toString(),"奥迪","黑色","222","1234","苏E66666");
+                postAddcar(customerInfo.getCustomer_Id().toString(),"奥迪","1","222","1234","苏E66666");
             }
         });
     }

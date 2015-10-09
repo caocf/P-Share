@@ -36,7 +36,7 @@
     <string name="install_push">推送</string>
     <string name="suggestion_content">"  非常感谢你的意见......"</string>
 
-    <string name="appointment">预约</string>
+
     <string name="destination">目的地</string>
     <string name="distance2">距离</string>
     <string name="price2">价格</string>
@@ -124,6 +124,7 @@
     <string name="tv_order_car_number">车牌号:</string>
     <string name="button_payfinish">完成订单支付</string>
     <string name="tv_order_takeCar_remainingtime">停车计时：</string>
+    <string name="appointment">预约</string>
     <string name="tv_unselect_order">取消预约</string>
     <string name="tv_order_takeCar_time">预约取车时间：</string>
     <string name="tv_order_time">预约时间：</string>

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.activity.SplashActivity;
@@ -27,6 +28,7 @@ public class GuideFragment extends BaseContentFragment {
     private CirclePageIndicator mCirclePageIndicator;
     private GuideAdapter mGuideAdapter;
     private GlobalData mGlobalData;
+    private LinearLayout mLinearLayout;
     private boolean isDisplay = false;//在设置里展示
     private boolean isLogin=false;
 
@@ -63,6 +65,7 @@ public class GuideFragment extends BaseContentFragment {
     protected void findViews(View view) {
         mViewPager = (ViewPager) findViewById(R.id.settings_userGuide_viewPager);
         mCirclePageIndicator = (CirclePageIndicator) findViewById(R.id.setting_userGuide_indicator_dot);
+        mLinearLayout=(LinearLayout) findViewById(R.id.ll_setting_userGuide_start);
     }
 
     @Override
@@ -73,7 +76,7 @@ public class GuideFragment extends BaseContentFragment {
         } else {
             ((ActionBarActivity) this.getActivity()).setFullScreen(true);
         }
-        int[] guides = {R.drawable.ic_guide1, R.drawable.ic_guide2, R.drawable.ic_guide3, R.drawable.ic_guide4};
+        int[] guides = {R.drawable.guide1, R.drawable.guide2, R.drawable.guide3};
         mGuideAdapter = new GuideAdapter(this.getActivity(), guides);
         mViewPager.setAdapter(mGuideAdapter);
         mCirclePageIndicator.setViewPager(mViewPager);
@@ -81,10 +84,10 @@ public class GuideFragment extends BaseContentFragment {
 
             @Override
             public void onPageSelected(int pos) {
-                if (pos == 3 && !isDisplay)
-                    findViewById(R.id.setting_userGuide_start).setVisibility(View.VISIBLE);
+                if (pos == 2 && !isDisplay)
+                    findViewById(R.id.ll_setting_userGuide_start).setVisibility(View.VISIBLE);
                 else
-                    findViewById(R.id.setting_userGuide_start).setVisibility(View.GONE);
+                    findViewById(R.id.ll_setting_userGuide_start).setVisibility(View.GONE);
             }
 
             @Override
@@ -117,15 +120,12 @@ public class GuideFragment extends BaseContentFragment {
                 if (!isDisplay) {
                     toMain();
                 }
-
             }
         });
     }
     private void toMain() {
         ((SplashActivity) this.getActivity()).toMain();
     }
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -225,7 +225,21 @@
 		                android:src="@drawable/iv_button_order"
 		                android:layout_marginRight="@dimen/padding1"
 		                android:layout_centerVertical="true"/>	            
-		        </RelativeLayout>	       
+		        </RelativeLayout>
+			 <LinearLayout
+				 android:layout_width="wrap_content"
+				 android:layout_height="wrap_content"
+				 android:layout_marginLeft="@dimen/padding8"
+				 android:id="@+id/ll_order_text"
+				 android:layout_marginBottom="@dimen/padding8"
+				 android:visibility="invisible">
+				 <TextView
+					 android:layout_width="wrap_content"
+					 android:layout_height="wrap_content"
+					 android:textColor="@color/actionbar_background"
+					 android:textSize="@dimen/text_size3"
+					 android:text="正在为你搭配代泊员..."/>
+			 </LinearLayout>
 		    </LinearLayout>
 	</ScrollView>		    		      		          
 </LinearLayout>  

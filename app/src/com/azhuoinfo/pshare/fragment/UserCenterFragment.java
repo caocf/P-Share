@@ -40,11 +40,13 @@ public class UserCenterFragment extends BaseContentFragment{
     private ImageView mQRCodeImageView;
     private AccountVerify mAccountVerify;
     private CustomerInfo customerInfo;
+    private String customer_nickname;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
+        customer_nickname=customerInfo.getCustomer_nickname();
         Log.e(TAG, customerInfo.getCustomer_Id().toString());
         this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.left_head, R.drawable.left_head);
         mAccountVerify = AccountVerify.getInstance(getActivity());
@@ -90,6 +92,7 @@ public class UserCenterFragment extends BaseContentFragment{
             }
         });
         mCustomerIdTextView.setText(customerInfo.getCustomer_Id().toString());
+        mCustomerNicknameTextView.setText(customer_nickname);
     }
 
     @Override

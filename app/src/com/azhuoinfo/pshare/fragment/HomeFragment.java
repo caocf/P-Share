@@ -14,6 +14,9 @@ import android.widget.LinearLayout;
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.model.CustomerInfo;
+/*import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.MapView;*/
+
 import mobi.cangol.mobile.actionbar.ActionMenu;
 import mobi.cangol.mobile.actionbar.ActionMenuItem;
 import mobi.cangol.mobile.base.BaseContentFragment;
@@ -27,6 +30,8 @@ public class HomeFragment extends BaseContentFragment {
 	private Button mChangeButton;
 	private AccountVerify mAccountVerify;
 
+	//private MapView mMapView = null;
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//this.getCustomActionBar().setDisplayShowHomeEnabled(false);
@@ -36,8 +41,8 @@ public class HomeFragment extends BaseContentFragment {
 		CustomerInfo customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
 		Log.e("www", customerInfo.getCustomer_Id().toString());
 		this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.homepager_user, R.drawable.homepager_user);
-
 		mAccountVerify = AccountVerify.getInstance(getActivity());
+		//SDKInitializer.initialize(getActivity().getApplicationContext());
 	}
 
 	@Override
@@ -62,6 +67,7 @@ public class HomeFragment extends BaseContentFragment {
 
 	@Override
 	protected void findViews(View view) {
+		//mMapView = (MapView) findViewById(R.id.bmapView);
 		mMineHomeButton=(Button) view.findViewById(R.id.button_mine_home);
 		mChangeButton=(Button) view.findViewById(R.id.button_change);
 		mMineHomeButtonLinearLayout=(LinearLayout) view.findViewById(R.id.ll_mine_home);
@@ -146,4 +152,21 @@ public class HomeFragment extends BaseContentFragment {
 		return true;
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		//mMapView.onDestroy();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		//mMapView.onResume();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		//mMapView.onPause();
+	}
 }

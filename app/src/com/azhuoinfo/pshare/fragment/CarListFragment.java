@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +16,7 @@ import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.fragment.adapter.CarListAdapter;
+import com.azhuoinfo.pshare.view.listview.MyListView;
 
 import java.util.ArrayList;
 
@@ -29,16 +31,20 @@ public class CarListFragment extends BaseContentFragment{
     //返回到上个页面
     //private ImageView activity_back;
     //添加进入的车列表
-    private ListView mCarListView;
+    private MyListView mCarListView;
     //添加车
     private RelativeLayout mAddCarRelativeLayout;
     private AccountVerify mAccountVerify;
     private ArrayList<String> list=new ArrayList<String>();
+    private int height;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.left_head,R.drawable.left_head);
+        this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.left_head, R.drawable.left_head);
         mAccountVerify = AccountVerify.getInstance(getActivity());
+        WindowManager wm = getActivity().getWindowManager();
+        height = wm.getDefaultDisplay().getHeight();
     }
 
     @Override
@@ -62,7 +68,7 @@ public class CarListFragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
-        mCarListView=(ListView) findViewById(R.id.lv_list_car);
+        mCarListView=(MyListView) findViewById(R.id.lv_list_car);
         mAddCarRelativeLayout=(RelativeLayout) findViewById(R.id.rl_add_car_list);
     }
 
@@ -75,10 +81,10 @@ public class CarListFragment extends BaseContentFragment{
                 setContentFragment(AddCarInformationFragment.class, "AddCarInformationFragment", null, ModuleMenuIDS.MODULE_HOME);
             }
         });
-        list.clear();
         for(int i=0;i<5;i++){
             list.add(""+i);
         }
+        mCarListView.setMaxHeight(height/3*2);
         mCarListView.setAdapter(new CarListAdapter(this.getActivity(), list));
         mCarListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -87,7 +93,6 @@ public class CarListFragment extends BaseContentFragment{
             }
         });
     }
-
     @Override
     protected void initData(Bundle bundle) {
 

@@ -7,6 +7,7 @@
         android:id="@+id/lv_monthlyrnet_history"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/padding1"
         android:background="@color/text_white">
     </ListView>
 
