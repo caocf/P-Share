@@ -5,8 +5,7 @@ dependencies {
     compile 'mobi.cangol.mobile:uiframe:1.0.0@aar'
     compile fileTree(dir: 'libs', include: '*.jar')
     compile 'mobi.cangol.mobile:appcore:1.0.0'
-    compile files('libs/BaiduLBS_Android.jar')
-    compile files('libs/IndoorscapeAlbumPlugin.jar')
+    compile project(':commons-zxing')
 }
 
 android {
@@ -16,7 +15,6 @@ android {
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
-            jniLibs.srcDirs = ['libs']
             java.srcDirs = ['src']
             resources.srcDirs = ['src']
             aidl.srcDirs = ['src']

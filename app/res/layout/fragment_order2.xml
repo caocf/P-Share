@@ -23,6 +23,7 @@
         android:textColor="#c88400" />
 
      <TextView
+         android:id="@+id/tv2"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_below="@+id/tv1"
@@ -31,6 +32,14 @@
          android:text="@string/tv2_order2"
          android:textColor="#c88400"
          android:textSize="@dimen/text_size4" />
+    <ImageView
+        android:id="@+id/iv_in_order"
+        android:layout_width="@dimen/padding12"
+        android:layout_height="@dimen/padding12"
+        android:layout_below="@+id/tv2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/padding4"
+        android:background="@drawable/animation_in_order2"/>
     <RelativeLayout
         android:id="@+id/rl_unselect_order"
         android:layout_height="@dimen/padding8"

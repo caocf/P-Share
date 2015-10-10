@@ -195,4 +195,15 @@ customer_age*/
 		params.put("customer_id", customerId );
 		return params;
 	}
+	public static String API_CUSTOMER_CANCELORDER="/customer/cancelOrder";
+	/**
+	 *customer_id，car_brand，car_number，car_color，car_size，owner_id_number（未确定是否需
+	 * @return
+	 */
+	public HashMap<String, String> userCancelOrder(String customerId,String orderSn){
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("customer_id", customerId );
+		params.put("order_sn",orderSn);
+		return params;
+	}
 }

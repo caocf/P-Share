@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -22,11 +23,13 @@ import com.azhuoinfo.pshare.fragment.adapter.ParkingDetailsAdapter;
 import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.OrderInfo;
 import com.azhuoinfo.pshare.model.UnfinishedOrderInfo;
+import com.azhuoinfo.pshare.model.UserAuth;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import mobi.cangol.mobile.Session;
 import mobi.cangol.mobile.actionbar.ActionMenu;
@@ -51,9 +54,17 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     //时间
     private RelativeLayout mAppointmentTimeRelativeLayout;
     private TextView mAppointmentTimeTextView;
-    //预约
+    /*//预约
     private RelativeLayout mAppointmentRelativeLayout;
-    private TextView mAppointmentTextView;
+    private TextView mAppointmentTextView;*/
+    //代泊
+    private LinearLayout mStopLinearLayout;
+    //立即代泊
+    private Button mImmediateButton;
+    //预约代泊
+    private Button mAppointmentButton;
+    //取消代泊
+    private Button mCancelButton;
 
     private LinearLayout mOrderTextLinearLayout;
 
@@ -62,9 +73,14 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     private TimePickerDialog mTimeDialog;
     private int year,monthOfYear,dayOfMonth,hourOfDay,minute;
     private String customer_id;
+    //预约代泊时间
     private String mTimeText;
+    //立即代泊时间
+    private String mImmediateTimeText;
     private ArrayList<String> list=new ArrayList<String>();
     private CustomerInfo customerInfo;
+    private int listSize;
+    private String order_sn;
     private int count=0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,8 +124,13 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mAppointmentTimeRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_parking_appointment_time);
         mAppointmentTimeTextView=(TextView) view.findViewById(R.id.tv_parking_appointment_time);
 
-        mAppointmentRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_appointment);
-        mAppointmentTextView=(TextView) view.findViewById(R.id.tv_appointment);
+        mStopLinearLayout=(LinearLayout) view.findViewById(R.id.ll_stop_button);
+        mImmediateButton=(Button) view.findViewById(R.id.immediate_stop);
+        mAppointmentButton=(Button) view.findViewById(R.id.appointment_stop);
+        mCancelButton=(Button) view.findViewById(R.id.cancel_stop);
+
+        /*mAppointmentRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_appointment);
+        mAppointmentTextView=(TextView) view.findViewById(R.id.tv_appointment);*/
 
         mOrderTextLinearLayout=(LinearLayout) view.findViewById(R.id.ll_order_text);
     }
@@ -117,6 +138,13 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     @Override
     protected void initViews(Bundle bundle) {
         this.setTitle(R.string.yard_details);
+        if(listSize>0){
+            mStopLinearLayout.setVisibility(View.GONE);
+            mCancelButton.setVisibility(View.VISIBLE);
+        }else{
+            mStopLinearLayout.setVisibility(View.VISIBLE);
+            mCancelButton.setVisibility(View.GONE);
+        }
         mAppointmentTimeRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +154,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
                 hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
                 minute = calendar.get(Calendar.MINUTE);
+                mImmediateTimeText = year + "/" + (monthOfYear + 1) % 12 + "/" + dayOfMonth + " " + hourOfDay + ":" + minute;
                 mTimeDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -144,20 +173,34 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 mTimeDialog.show();
             }
         });
-        mAppointmentRelativeLayout.setOnClickListener(new View.OnClickListener() {
+        mImmediateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count++;
-                if (count % 2 == 1) {
-                    if (mTimeText == null) {
-                        Toast.makeText(getActivity(), "时间不能为空", Toast.LENGTH_SHORT).show();
+                if (listSize > 0) {
+                    Toast.makeText(getActivity(), "已有订单", Toast.LENGTH_SHORT).show();
+                } else {
+                    postCreateOrder(customer_id, "3", mImmediateTimeText);
+                }
+            }
+        });
+        mAppointmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mTimeText == null) {
+                    Toast.makeText(getActivity(), "时间不能为空", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (listSize > 0) {
+                        Toast.makeText(getActivity(), "已有订单", Toast.LENGTH_SHORT).show();
                     } else {
                         postCreateOrder(customer_id, "3", mTimeText);
                     }
-                } else {
-                    mAppointmentTextView.setText(R.string.appointment);
-                    mOrderTextLinearLayout.setVisibility(View.INVISIBLE);
                 }
+            }
+        });
+        mCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postCancelOrder(customer_id, order_sn);
             }
         });
     }
@@ -166,7 +209,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
 
     }
     @Override
-    protected FragmentInfo getNavigtionUpToFragment() {
+    protected FragmentInfo getNavigtionUpToFragment(){
         return null;
     }
 
@@ -179,15 +222,21 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_UNFINISHEDORDER));
         apiTask.setParams(ApiContants.instance(getActivity()).unFinishedOrder(customerId));
-        //apiTask.setRoot("orderInfo");
-        apiTask.execute(new OnDataLoader<UnfinishedOrderInfo>() {
+        apiTask.setRoot("orderInfo");
+        apiTask.execute(new OnDataLoader<List<UnfinishedOrderInfo>>() {
             @Override
             public void onStart() {
 
             }
             @Override
-            public void onSuccess(boolean page, UnfinishedOrderInfo unfinishedOrderInfo) {
-                Log.e(TAG,unfinishedOrderInfo+"");
+            public void onSuccess(boolean page, List<UnfinishedOrderInfo> unfinishedOrderInfos) {
+                Log.e(TAG,unfinishedOrderInfos.size()+"");
+                listSize=unfinishedOrderInfos.size();
+                Session session=getSession();
+                session.put("unfinishedOrderInfos",unfinishedOrderInfos);
+                /*for(int i=0;i<unfinishedOrderInfos.size();i++){
+
+                }*/
             }
             @Override
             public void onFailure(String code, String message) {
@@ -199,21 +248,47 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_CREATEORDER));
-        apiTask.setParams(ApiContants.instance(getActivity()).userCreateOrder(customerId, parkingId,orderPlanBegin));
+        apiTask.setParams(ApiContants.instance(getActivity()).userCreateOrder(customerId, parkingId, orderPlanBegin));
         apiTask.setRoot("orderInfo");
         apiTask.execute(new OnDataLoader<OrderInfo>(){
             @Override
-            public void onStart() {
+            public void onStart(){
 
             }
             @Override
             public void onSuccess(boolean page, OrderInfo orderInfos) {
-                mAppointmentTextView.setText(R.string.tv_unselect_order);
+                order_sn=orderInfos.getOrder_sn();
+                mStopLinearLayout.setVisibility(View.GONE);
+                mCancelButton.setVisibility(View.VISIBLE);
                 mOrderTextLinearLayout.setVisibility(View.VISIBLE);
             }
             @Override
             public void onFailure(String code, String message) {
                 Log.e(TAG,"请求数据失败");
+            }
+        });
+    }
+    public void postCancelOrder(String customerId,String orderSn){
+        ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
+        apiTask.setMethod("GET");
+        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_CANCELORDER));
+        apiTask.setParams(ApiContants.instance(getActivity()).userCancelOrder(customerId, orderSn));
+        apiTask.execute(new OnDataLoader<UserAuth>() {
+            @Override
+            public void onStart() {
+                if (getActivity() != null){
+                }
+            }
+            @Override
+            public void onSuccess(boolean page, UserAuth auth) {
+
+            }
+            @Override
+            public void onFailure(String code, String message) {
+                mobi.cangol.mobile.logging.Log.d(TAG, "code=:" + code + ",message=" + message);
+                if (getActivity() != null) {
+
+                }
             }
         });
     }

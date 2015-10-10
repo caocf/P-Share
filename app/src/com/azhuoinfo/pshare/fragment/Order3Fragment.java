@@ -75,8 +75,8 @@ public class Order3Fragment extends BaseContentFragment{
         mParkerMobileTextView=(TextView) view.findViewById(R.id.tv_parker_mobile);
         mAppointmentTimeTextView=(TextView) view.findViewById(R.id.tv_appointment_time);
         mCancelAppointmentRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_unselect_order);
-    }
 
+    }
     @Override
     protected void initViews(Bundle bundle) {
         mCancelAppointmentRelativeLayout.setOnClickListener(new View.OnClickListener() {

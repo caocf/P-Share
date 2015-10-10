@@ -1,10 +1,12 @@
 package com.azhuoinfo.pshare.fragment;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -24,7 +26,10 @@ import mobi.cangol.mobile.base.FragmentInfo;
 public class Order2Fragment extends BaseContentFragment{
     private RelativeLayout mRelativeLayout;
 
+    private ImageView mImageView;
+
     private AccountVerify mAccountVerify;
+    private AnimationDrawable animationDrawable;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +58,13 @@ public class Order2Fragment extends BaseContentFragment{
     @Override
     protected void findViews(View view) {
         mRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_unselect_order);
+        mImageView=(ImageView) view.findViewById(R.id.iv_in_order);
 
     }
 
     @Override
     protected void initViews(Bundle bundle) {
+        ((AnimationDrawable)mImageView.getBackground()).start();
         mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

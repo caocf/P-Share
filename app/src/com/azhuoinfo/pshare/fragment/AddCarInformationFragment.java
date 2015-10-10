@@ -145,7 +145,7 @@ public class AddCarInformationFragment extends BaseContentFragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 HashMap<String, String> item = (HashMap<String, String>) parent.getItemAtPosition(position);
                 Log.e(TAG, (String) item.get("area1"));
-                setTitle(item.get("area1"));
+                //setTitle(item.get("area1"));
                 mCarLocation1TextView.setText(item.get("area1").toString());
                 //replaceFragment(MonthlyRentCarFinishPayFragment.class, "MonthlyRentCarFinishPayFragment", null);
             }

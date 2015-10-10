@@ -83,6 +83,7 @@
         android:orientation="vertical"
         android:visibility="gone"
         android:padding="@dimen/padding10"
+        android:focusable="false"
         android:background="@color/bg_half_transparency"
         android:layout_alignParentBottom="true">
         <GridView
