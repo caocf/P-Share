@@ -5,7 +5,7 @@ package com.azhuoinfo.pshare.model;
  */
 public class OrderInfo {
 
-    private String order_sn;
+    private String order_id;
     private String order_unit_fee;
     private String order_paid_amount;
     private String order_total_fee;
@@ -42,50 +42,50 @@ public class OrderInfo {
     private String car_color;
     private String car_buy_date;
 
-    @Override
-    public String toString() {
-        return "OrderInfo{" +
-                "order_sn='" + order_sn + '\'' +
-                ", order_unit_fee='" + order_unit_fee + '\'' +
-                ", order_paid_amount='" + order_paid_amount + '\'' +
-                ", order_total_fee='" + order_total_fee + '\'' +
-                ", order_plan_begin='" + order_plan_begin + '\'' +
-                ", order_plan_end='" + order_plan_end + '\'' +
-                ", order_actual_begin='" + order_actual_begin + '\'' +
-                ", order_actual_end='" + order_actual_end + '\'' +
-                ", order_path='" + order_path + '\'' +
-                ", order_state='" + order_state + '\'' +
-                ", create_at='" + create_at + '\'' +
-                ", customer_id='" + customer_id + '\'' +
-                ", customer_nickname='" + customer_nickname + '\'' +
-                ", customer_head='" + customer_head + '\'' +
-                ", customer_sex='" + customer_sex + '\'' +
-                ", customer_name='" + customer_name + '\'' +
-                ", customer_age='" + customer_age + '\'' +
-                ", customer_mobile='" + customer_mobile + '\'' +
-                ", customer_email='" + customer_email + '\'' +
-                ", parking_id='" + parking_id + '\'' +
-                ", parking_name='" + parking_name + '\'' +
-                ", parking_region='" + parking_region + '\'' +
-                ", parking_latitude='" + parking_latitude + '\'' +
-                ", parking_longitude='" + parking_longitude + '\'' +
-                ", parker_id='" + parker_id + '\'' +
-                ", parker_name='" + parker_name + '\'' +
-                ", parker_mobile='" + parker_mobile + '\'' +
-                ", parker_cardid='" + parker_cardid + '\'' +
-                ", car_number='" + car_number + '\'' +
-                ", car_brand='" + car_brand + '\'' +
-                ", car_color='" + car_color + '\'' +
-                ", car_buy_date='" + car_buy_date + '\'' +
-                '}';
+    public OrderInfo() {
     }
 
-    public String getOrder_sn() {
-        return order_sn;
+    public OrderInfo(String order_id, String order_unit_fee, String order_paid_amount, String order_total_fee, String order_plan_begin, String order_plan_end, String order_actual_begin, String order_actual_end, String order_path, String order_state, String create_at, String customer_id, String customer_nickname, String customer_head, String customer_sex, String customer_name, String customer_age, String customer_mobile, String customer_email, String parking_id, String parking_name, String parking_region, String parking_latitude, String parking_longitude, String parker_id, String parker_name, String parker_mobile, String parker_cardid, String car_number, String car_brand, String car_color, String car_buy_date) {
+        this.order_id = order_id;
+        this.order_unit_fee = order_unit_fee;
+        this.order_paid_amount = order_paid_amount;
+        this.order_total_fee = order_total_fee;
+        this.order_plan_begin = order_plan_begin;
+        this.order_plan_end = order_plan_end;
+        this.order_actual_begin = order_actual_begin;
+        this.order_actual_end = order_actual_end;
+        this.order_path = order_path;
+        this.order_state = order_state;
+        this.create_at = create_at;
+        this.customer_id = customer_id;
+        this.customer_nickname = customer_nickname;
+        this.customer_head = customer_head;
+        this.customer_sex = customer_sex;
+        this.customer_name = customer_name;
+        this.customer_age = customer_age;
+        this.customer_mobile = customer_mobile;
+        this.customer_email = customer_email;
+        this.parking_id = parking_id;
+        this.parking_name = parking_name;
+        this.parking_region = parking_region;
+        this.parking_latitude = parking_latitude;
+        this.parking_longitude = parking_longitude;
+        this.parker_id = parker_id;
+        this.parker_name = parker_name;
+        this.parker_mobile = parker_mobile;
+        this.parker_cardid = parker_cardid;
+        this.car_number = car_number;
+        this.car_brand = car_brand;
+        this.car_color = car_color;
+        this.car_buy_date = car_buy_date;
     }
 
-    public void setOrder_sn(String order_sn) {
-        this.order_sn = order_sn;
+    public String getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
     }
 
     public String getOrder_unit_fee() {
@@ -99,33 +99,43 @@ public class OrderInfo {
     public String getOrder_paid_amount() {
         return order_paid_amount;
     }
+
     public void setOrder_paid_amount(String order_paid_amount) {
         this.order_paid_amount = order_paid_amount;
     }
+
     public String getOrder_total_fee() {
         return order_total_fee;
     }
+
     public void setOrder_total_fee(String order_total_fee) {
         this.order_total_fee = order_total_fee;
     }
+
     public String getOrder_plan_begin() {
         return order_plan_begin;
     }
+
     public void setOrder_plan_begin(String order_plan_begin) {
         this.order_plan_begin = order_plan_begin;
     }
+
     public String getOrder_plan_end() {
         return order_plan_end;
     }
+
     public void setOrder_plan_end(String order_plan_end) {
         this.order_plan_end = order_plan_end;
     }
+
     public String getOrder_actual_begin() {
         return order_actual_begin;
     }
+
     public void setOrder_actual_begin(String order_actual_begin) {
         this.order_actual_begin = order_actual_begin;
     }
+
     public String getOrder_actual_end() {
         return order_actual_end;
     }
@@ -309,47 +319,58 @@ public class OrderInfo {
     public void setCar_brand(String car_brand) {
         this.car_brand = car_brand;
     }
-    public OrderInfo(String order_sn, String order_unit_fee, String order_paid_amount,
-                     String order_total_fee, String order_plan_begin, String order_plan_end,
-                     String order_actual_begin, String order_actual_end, String order_path,
-                     String order_state, String create_at, String customer_id, String customer_nickname,
-                     String customer_head, String customer_sex, String customer_name, String customer_age,
-                     String customer_mobile, String customer_email, String parking_id, String parking_name,
-                     String parking_region, String parking_latitude, String parking_longitude, String parker_id,
-                     String parker_name, String parker_mobile, String parker_cardid, String car_number, String car_brand,
-                     String car_color, String car_buy_date) {
-        this.order_sn = order_sn;
-        this.order_unit_fee = order_unit_fee;
-        this.order_paid_amount = order_paid_amount;
-        this.order_total_fee = order_total_fee;
-        this.order_plan_begin = order_plan_begin;
-        this.order_plan_end = order_plan_end;
-        this.order_actual_begin = order_actual_begin;
-        this.order_actual_end = order_actual_end;
-        this.order_path = order_path;
-        this.order_state = order_state;
-        this.create_at = create_at;
-        this.customer_id = customer_id;
-        this.customer_nickname = customer_nickname;
-        this.customer_head = customer_head;
-        this.customer_sex = customer_sex;
-        this.customer_name = customer_name;
-        this.customer_age = customer_age;
-        this.customer_mobile = customer_mobile;
-        this.customer_email = customer_email;
-        this.parking_id = parking_id;
-        this.parking_name = parking_name;
-        this.parking_region = parking_region;
-        this.parking_latitude = parking_latitude;
-        this.parking_longitude = parking_longitude;
-        this.parker_id = parker_id;
-        this.parker_name = parker_name;
-        this.parker_mobile = parker_mobile;
-        this.parker_cardid = parker_cardid;
-        this.car_number = car_number;
-        this.car_brand = car_brand;
+
+    public String getCar_color() {
+        return car_color;
+    }
+
+    public void setCar_color(String car_color) {
         this.car_color = car_color;
+    }
+
+    public String getCar_buy_date() {
+        return car_buy_date;
+    }
+
+    public void setCar_buy_date(String car_buy_date) {
         this.car_buy_date = car_buy_date;
     }
 
+    @Override
+    public String toString() {
+        return "OrderInfo{" +
+                "order_id='" + order_id + '\'' +
+                ", order_unit_fee='" + order_unit_fee + '\'' +
+                ", order_paid_amount='" + order_paid_amount + '\'' +
+                ", order_total_fee='" + order_total_fee + '\'' +
+                ", order_plan_begin='" + order_plan_begin + '\'' +
+                ", order_plan_end='" + order_plan_end + '\'' +
+                ", order_actual_begin='" + order_actual_begin + '\'' +
+                ", order_actual_end='" + order_actual_end + '\'' +
+                ", order_path='" + order_path + '\'' +
+                ", order_state='" + order_state + '\'' +
+                ", create_at='" + create_at + '\'' +
+                ", customer_id='" + customer_id + '\'' +
+                ", customer_nickname='" + customer_nickname + '\'' +
+                ", customer_head='" + customer_head + '\'' +
+                ", customer_sex='" + customer_sex + '\'' +
+                ", customer_name='" + customer_name + '\'' +
+                ", customer_age='" + customer_age + '\'' +
+                ", customer_mobile='" + customer_mobile + '\'' +
+                ", customer_email='" + customer_email + '\'' +
+                ", parking_id='" + parking_id + '\'' +
+                ", parking_name='" + parking_name + '\'' +
+                ", parking_region='" + parking_region + '\'' +
+                ", parking_latitude='" + parking_latitude + '\'' +
+                ", parking_longitude='" + parking_longitude + '\'' +
+                ", parker_id='" + parker_id + '\'' +
+                ", parker_name='" + parker_name + '\'' +
+                ", parker_mobile='" + parker_mobile + '\'' +
+                ", parker_cardid='" + parker_cardid + '\'' +
+                ", car_number='" + car_number + '\'' +
+                ", car_brand='" + car_brand + '\'' +
+                ", car_color='" + car_color + '\'' +
+                ", car_buy_date='" + car_buy_date + '\'' +
+                '}';
+    }
 }

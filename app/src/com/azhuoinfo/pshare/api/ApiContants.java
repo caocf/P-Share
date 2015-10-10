@@ -200,10 +200,21 @@ customer_age*/
 	 *customer_id，car_brand，car_number，car_color，car_size，owner_id_number（未确定是否需
 	 * @return
 	 */
-	public HashMap<String, String> userCancelOrder(String customerId,String orderSn){
+	public HashMap<String, String> userCancelOrder(String orderId){
+		HashMap<String, String> params = new HashMap<String, String>();
+		//params.put("customer_id", customerId );
+		params.put("order_id",orderId);
+		return params;
+	}
+	public static String API_CUSTOMER_CARLIST="/customer/carList";
+	/**
+	 *customer_id，car_brand，car_number，car_color，car_size，owner_id_number（未确定是否需
+	 * @return
+	 */
+	public HashMap<String, String> userCarList(String customerId){
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("customer_id", customerId );
-		params.put("order_sn",orderSn);
+		//params.put("order_id",orderId);
 		return params;
 	}
 }

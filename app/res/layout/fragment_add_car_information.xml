@@ -62,7 +62,7 @@
         android:textSize="@dimen/text_size3"
         android:text="@string/car_brand"/>
      <EditText
-        android:id="@+id/et_car_size"
+        android:id="@+id/et_car_brand"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_below="@+id/text_head_car_size"
@@ -74,7 +74,7 @@
      <Button
          android:id="@+id/button_confirm" 
          style="@style/button_style"
-         android:layout_below="@+id/et_car_size"
+         android:layout_below="@+id/et_car_brand"
          android:text="@string/confirm"/>
     <LinearLayout
         android:id="@+id/ll_car_area"

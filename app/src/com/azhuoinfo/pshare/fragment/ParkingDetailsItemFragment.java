@@ -67,6 +67,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     private Button mCancelButton;
 
     private LinearLayout mOrderTextLinearLayout;
+    private TextView mOrderTextView;
 
     private AccountVerify mAccountVerify;
     private Calendar calendar;
@@ -80,7 +81,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     private ArrayList<String> list=new ArrayList<String>();
     private CustomerInfo customerInfo;
     private int listSize;
-    private String order_sn;
+    private String order_id;
     private int count=0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -133,18 +134,12 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mAppointmentTextView=(TextView) view.findViewById(R.id.tv_appointment);*/
 
         mOrderTextLinearLayout=(LinearLayout) view.findViewById(R.id.ll_order_text);
+        mOrderTextView=(TextView) view.findViewById(R.id.tv_order_text);
     }
 
     @Override
     protected void initViews(Bundle bundle) {
         this.setTitle(R.string.yard_details);
-        if(listSize>0){
-            mStopLinearLayout.setVisibility(View.GONE);
-            mCancelButton.setVisibility(View.VISIBLE);
-        }else{
-            mStopLinearLayout.setVisibility(View.VISIBLE);
-            mCancelButton.setVisibility(View.GONE);
-        }
         mAppointmentTimeRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,6 +171,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mImmediateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                postUnfinishedOrder(customer_id);
                 if (listSize > 0) {
                     Toast.makeText(getActivity(), "已有订单", Toast.LENGTH_SHORT).show();
                 } else {
@@ -186,13 +182,14 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mAppointmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                postUnfinishedOrder(customer_id);
                 if (mTimeText == null) {
                     Toast.makeText(getActivity(), "时间不能为空", Toast.LENGTH_SHORT).show();
                 } else {
                     if (listSize > 0) {
                         Toast.makeText(getActivity(), "已有订单", Toast.LENGTH_SHORT).show();
                     } else {
-                        postCreateOrder(customer_id, "3", mTimeText);
+                        postCreateOrder(customer_id, "4", mTimeText);
                     }
                 }
             }
@@ -200,7 +197,8 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postCancelOrder(customer_id, order_sn);
+                postUnfinishedOrder(customer_id);
+                postCancelOrder(order_id);
             }
         });
     }
@@ -217,6 +215,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     public boolean isCleanStack() {
         return false;
     }
+
     public void postUnfinishedOrder(String customerId){
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
@@ -234,6 +233,25 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 listSize=unfinishedOrderInfos.size();
                 Session session=getSession();
                 session.put("unfinishedOrderInfos",unfinishedOrderInfos);
+                if(listSize>0){
+                    for (int i=0;i<listSize;i++){
+                        UnfinishedOrderInfo unfinishedOrderInfo=unfinishedOrderInfos.get(i);
+                        order_id=unfinishedOrderInfo.getOrder_id();
+                        String order_state=unfinishedOrderInfo.getOrder_state();
+                        if(order_state.equals("1")){
+                            mOrderTextLinearLayout.setVisibility(View.VISIBLE);
+                        }else if(order_state.equals("2")){
+                            mOrderTextLinearLayout.setVisibility(View.VISIBLE);
+                            mOrderTextView.setText("代泊员已接单");
+                        }
+                    }
+                    mStopLinearLayout.setVisibility(View.GONE);
+                    mCancelButton.setVisibility(View.VISIBLE);
+                }else{
+                    mStopLinearLayout.setVisibility(View.VISIBLE);
+                    mCancelButton.setVisibility(View.GONE);
+                    mOrderTextLinearLayout.setVisibility(View.GONE);
+                }
                 /*for(int i=0;i<unfinishedOrderInfos.size();i++){
 
                 }*/
@@ -257,7 +275,6 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
             }
             @Override
             public void onSuccess(boolean page, OrderInfo orderInfos) {
-                order_sn=orderInfos.getOrder_sn();
                 mStopLinearLayout.setVisibility(View.GONE);
                 mCancelButton.setVisibility(View.VISIBLE);
                 mOrderTextLinearLayout.setVisibility(View.VISIBLE);
@@ -268,19 +285,23 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
             }
         });
     }
-    public void postCancelOrder(String customerId,String orderSn){
+    public void postCancelOrder(String orderSn){
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_CANCELORDER));
-        apiTask.setParams(ApiContants.instance(getActivity()).userCancelOrder(customerId, orderSn));
+        apiTask.setParams(ApiContants.instance(getActivity()).userCancelOrder(orderSn));
         apiTask.execute(new OnDataLoader<UserAuth>() {
             @Override
             public void onStart() {
                 if (getActivity() != null){
+
                 }
             }
             @Override
             public void onSuccess(boolean page, UserAuth auth) {
+                mStopLinearLayout.setVisibility(View.VISIBLE);
+                mCancelButton.setVisibility(View.GONE);
+                mOrderTextLinearLayout.setVisibility(View.GONE);
 
             }
             @Override

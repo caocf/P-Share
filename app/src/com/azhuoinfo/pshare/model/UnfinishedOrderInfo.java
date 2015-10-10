@@ -45,7 +45,7 @@ package com.azhuoinfo.pshare.model;
         "customer_mobile": "客户手机号 ",
         "customer_email": "客户邮箱 "*/
 public class UnfinishedOrderInfo {
-    private String order_sn;
+    private String order_id;
     private String order_unit_fee;
     private String order_paid_amount;
     private String order_total_fee;
@@ -85,8 +85,8 @@ public class UnfinishedOrderInfo {
     public UnfinishedOrderInfo() {
     }
 
-    public UnfinishedOrderInfo(String order_sn, String order_unit_fee, String order_paid_amount, String order_total_fee, String order_plan_begin, String order_plan_end, String order_actual_begin, String order_actual_end, String order_path, String order_state, String create_at, String customer_id, String customer_nickname, String customer_head, String customer_sex, String customer_name, String customer_age, String customer_mobile, String customer_email, String parking_id, String parking_name, String parking_region, String parking_latitude, String parking_longitude, String parker_id, String parker_name, String parker_mobile, String parker_cardid, String car_number, String car_brand, String car_color, String car_buy_date) {
-        this.order_sn = order_sn;
+    public UnfinishedOrderInfo(String order_id, String order_unit_fee, String order_paid_amount, String order_total_fee, String order_plan_begin, String order_plan_end, String order_actual_begin, String order_actual_end, String order_path, String order_state, String create_at, String customer_id, String customer_nickname, String customer_head, String customer_sex, String customer_name, String customer_age, String customer_mobile, String customer_email, String parking_id, String parking_name, String parking_region, String parking_latitude, String parking_longitude, String parker_id, String parker_name, String parker_mobile, String parker_cardid, String car_number, String car_brand, String car_color, String car_buy_date) {
+        this.order_id = order_id;
         this.order_unit_fee = order_unit_fee;
         this.order_paid_amount = order_paid_amount;
         this.order_total_fee = order_total_fee;
@@ -120,12 +120,12 @@ public class UnfinishedOrderInfo {
         this.car_buy_date = car_buy_date;
     }
 
-    public String getOrder_sn() {
-        return order_sn;
+    public String getOrder_id() {
+        return order_id;
     }
 
-    public void setOrder_sn(String order_sn) {
-        this.order_sn = order_sn;
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
     }
 
     public String getOrder_unit_fee() {
@@ -379,7 +379,7 @@ public class UnfinishedOrderInfo {
     @Override
     public String toString() {
         return "UnfinishedOrderInfo{" +
-                "order_sn='" + order_sn + '\'' +
+                "order_id='" + order_id + '\'' +
                 ", order_unit_fee='" + order_unit_fee + '\'' +
                 ", order_paid_amount='" + order_paid_amount + '\'' +
                 ", order_total_fee='" + order_total_fee + '\'' +

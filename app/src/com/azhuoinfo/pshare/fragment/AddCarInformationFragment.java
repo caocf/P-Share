@@ -52,7 +52,7 @@ public class AddCarInformationFragment extends BaseContentFragment{
     //设置车牌号
     private EditText mCarNumbrEditText;
     //设置车型
-    private EditText mCarSizeEditText;
+    private EditText mCarBrandEditText;
     //确定信息携带数据跳转到车列表界面将信息添加到其list中
     private Button mConfirmButton;
 
@@ -66,6 +66,9 @@ public class AddCarInformationFragment extends BaseContentFragment{
             "U","V","W","X","Y","Z"};
     private List<Map<String,String>> carList2;
     private CustomerInfo customerInfo;
+    //得到的输入数据车牌和车型
+    private String mCarNumber,mCarBrand;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,11 +114,12 @@ public class AddCarInformationFragment extends BaseContentFragment{
         mCarLocationLinearLayout=(LinearLayout) view.findViewById(R.id.ll_car_area);
         mCarArea1GridView=(GridView) view.findViewById(R.id.gv_car_area1);
         mCarArea2GridView=(GridView) view.findViewById(R.id.gv_car_area2);
+
         mCarLocationTextView=(TextView) view.findViewById(R.id.tv_car_location);
         mCarLocation1TextView=(TextView) view.findViewById(R.id.tv_car_location1);
 
         mCarNumbrEditText=(EditText) view.findViewById(R.id.et_car_number);
-        mCarSizeEditText=(EditText) view.findViewById(R.id.et_car_size);
+        mCarBrandEditText=(EditText) view.findViewById(R.id.et_car_brand);
 
         mConfirmButton=(Button) view.findViewById(R.id.button_confirm);
     }
@@ -127,6 +131,8 @@ public class AddCarInformationFragment extends BaseContentFragment{
         final SimpleAdapter adapter1=new SimpleAdapter(getActivity(),carList1,R.layout.list_item_car_area,
                 new String[]{"area1"},new int[]{R.id.button_car_area});
         mCarArea1GridView.setAdapter(adapter1);
+
+
         Log.e(TAG, carList1.size() + "");
         Log.e(TAG, carList1.get(1).toString());
 
@@ -159,7 +165,10 @@ public class AddCarInformationFragment extends BaseContentFragment{
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postAddcar(customerInfo.getCustomer_Id().toString(),"奥迪","1","222","1234","苏E66666");
+                //需要改动
+                mCarNumber=mCarNumbrEditText.getText().toString();
+                mCarBrand=mCarBrandEditText.getText().toString();
+                postAddcar(customerInfo.getCustomer_Id().toString(),mCarBrand,"1","222","1234","苏E"+mCarNumber);
             }
         });
     }
@@ -189,7 +198,7 @@ public class AddCarInformationFragment extends BaseContentFragment{
             }
             @Override
             public void onSuccess(boolean page, AddCarInfo addCarInfo) {
-
+                replaceFragment(CarListFragment.class,"CarListFragment",null);
             }
             @Override
             public void onFailure(String code, String message) {

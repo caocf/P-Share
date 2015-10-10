@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.model.CarList;
 import com.azhuoinfo.pshare.model.Message;
 import com.azhuoinfo.pshare.view.listview.BaseAdapter;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -18,16 +19,16 @@ import java.util.List;
 import mobi.cangol.mobile.utils.StringUtils;
 import mobi.cangol.mobile.utils.TimeUtils;
 
-public class CarListAdapter extends BaseAdapter<String> {
+public class CarListAdapter extends BaseAdapter<CarList> {
 
-	private List<String> list;
+	private List<CarList> list;
 	private Context context;
 
 	public CarListAdapter(Context context) {
 		super(context);
 	}
 
-	public CarListAdapter(Context context, List<String> items) {
+	public CarListAdapter(Context context, List<CarList> items) {
 		super(context, items);
 		this.context=context;
 		this.list=items;
@@ -42,19 +43,20 @@ public class CarListAdapter extends BaseAdapter<String> {
 			holder=new ViewHolder();
 			holder.mCarImageView=(ImageView) convertView.findViewById(R.id.iv_car);
 			holder.mCarNumberTextView=(TextView) convertView.findViewById(R.id.tv_car_number);
-			holder.mCarSizeTextView=(TextView) convertView.findViewById(R.id.tv_car_size);
+			holder.mCarBrandTextView=(TextView) convertView.findViewById(R.id.tv_car_brand);
 			convertView.setTag(holder);
 
 		}else{
 			holder=(ViewHolder)convertView.getTag();
 		}
-		//holder.mCarNumberTextView.setText(list.get(position).toString());
+		holder.mCarNumberTextView.setText(list.get(position).getCar_number());
+		holder.mCarBrandTextView.setText(list.get(position).getCar_brand());
 		return convertView;
 	}
-	static class ViewHolder{
+	static class ViewHolder {
 		View layout;
 		private ImageView mCarImageView;
 		private TextView mCarNumberTextView;
-		private TextView mCarSizeTextView;
+		private TextView mCarBrandTextView;
 	}
 }

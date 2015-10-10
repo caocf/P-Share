@@ -236,9 +236,10 @@
 				 android:layout_width="wrap_content"
 				 android:layout_height="wrap_content"
 				 android:layout_gravity="center"
-				 android:textColor="@color/actionbar_background"
+				 android:layout_marginTop="@dimen/padding2"
+				 android:textColor="@color/text_white"
+				 android:background="@drawable/button"
 				 android:padding="@dimen/padding1"
-				 android:visibility="gone"
 				 android:text="取消代泊"/>
 		        <!--<RelativeLayout
 		            android:id="@+id/rl_appointment"  
@@ -267,6 +268,7 @@
 				 android:layout_marginBottom="@dimen/padding8"
 				 android:visibility="invisible">
 				 <TextView
+					 android:id="@+id/tv_order_text"
 					 android:layout_width="wrap_content"
 					 android:layout_height="wrap_content"
 					 android:textColor="@color/actionbar_background"

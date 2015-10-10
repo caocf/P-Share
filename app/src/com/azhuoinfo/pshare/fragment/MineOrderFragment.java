@@ -51,6 +51,7 @@ public class MineOrderFragment extends BaseContentFragment{
         mAccountVerify = AccountVerify.getInstance(getActivity());
         customerInfo=(CustomerInfo) this.app.getSession().get("customerInfo");
         customer_Id=customerInfo.getCustomer_Id();
+        postUnfinishedOrder(customer_Id);
         //unfinishedOrderInfos=(List<UnfinishedOrderInfo>)this.app.getSession().get("unfinishedOrderInfos");
         // listSize=unfinishedOrderInfos.size();
        /* for(int i=0;i<unfinishedOrderInfos.size();i++){
@@ -79,12 +80,10 @@ public class MineOrderFragment extends BaseContentFragment{
     }
     @Override
     protected void findViews(View view) {
-        postUnfinishedOrder(customer_Id);
         mTabHost = (TabHost)view.findViewById(android.R.id.tabhost);
         mTabHost.setup();
         Log.e(TAG,order_state+"order_state");
         mTabManager=new TabManager(this.getChildFragmentManager(),mTabHost,R.id.realtabcontent);
-
         //mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator("预/订"), Order4Fragment.class, new Bundle());
 
     }
@@ -111,7 +110,7 @@ public class MineOrderFragment extends BaseContentFragment{
             mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator("预/订"), Order1Fragment.class, new Bundle());
         }else if(listSize!=0&&order_state.equals("1")){
             mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator("预/订"), Order2Fragment.class, new Bundle());
-        }else if(order_state.equals("2")){
+        }else if(listSize!=0&&order_state.equals("2")){
             mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator("预/订"), Order3Fragment.class, new Bundle());
         }
         mTabManager.addTab(mTabHost.newTabSpec("ItemFragment2").setIndicator("历史订单"), HistoryOrderFragment.class, new Bundle());
@@ -134,10 +133,10 @@ public class MineOrderFragment extends BaseContentFragment{
                     for(int i=0;i<unfinishedOrderInfos.size();i++){
                         UnfinishedOrderInfo unfinishedOrderInfo=unfinishedOrderInfos.get(i);
                         order_state=unfinishedOrderInfo.getOrder_state();
-                        Log.e(TAG,order_state);
-                       initTable();
+                        Log.e(TAG, order_state);
                     }
                 }
+                initTable();
             }
             @Override
             public void onFailure(String code, String message) {
