@@ -53,11 +53,11 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
+		/*customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
 		Bundle bundle=new Bundle();
 		bundle.putString("customer_point",customerInfo.getCustomer_point());
 		bundle.putString("customer_head",customerInfo.getCustomer_head());
-		bundle.putString("customer_nickname",customerInfo.getCustomer_nickname());
+		bundle.putString("customer_nickname",customerInfo.getCustomer_nickname());*/
 		//isLogin=(boolean)this.app.getSession().get("isLogin");
         this.setFloatActionBarEnabled(true);
 		this.getCustomActionBar().setTitleGravity(Gravity.CENTER);
