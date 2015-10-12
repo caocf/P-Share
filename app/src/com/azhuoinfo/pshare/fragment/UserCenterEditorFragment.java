@@ -401,7 +401,6 @@ public class UserCenterEditorFragment extends BaseContentFragment {
             bos.close();
         } catch (Exception e) {
             e.printStackTrace();
-
         }
     }
 }

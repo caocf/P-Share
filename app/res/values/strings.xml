@@ -40,9 +40,9 @@
     <string name="install_score_cheer">评分打气</string>
     <string name="install_about_us">关于我们</string>
     <string name="install_push">推送</string>
-    <string name="suggestion_content">"  非常感谢你的意见......"</string>
+    <string name="suggestion_content">非常感谢你的意见......</string>
 
-
+    <String name="mine_stop">我要停车</String>
     <string name="destination">目的地</string>
     <string name="distance2">距离</string>
     <string name="price2">价格</string>
