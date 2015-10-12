@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.activity.MainActivity;
+import com.azhuoinfo.pshare.view.CommonDialog;
 
 import java.security.spec.EncodedKeySpec;
 
@@ -89,8 +91,34 @@ public class SetUpFragment extends BaseContentFragment{
                 setContentFragment(SuggestionFeedbackFragment.class, "SuggestionFeedbackFragment", null, ModuleMenuIDS.MODULE_HOME);
             }
         });
+        mLogOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLogoutDialog();
+            }
+        });
     }
+    public void showLogoutDialog(){
+        CommonDialog mDialog = CommonDialog.creatDialog(getActivity());
+        mDialog.setTitle(R.string.dialog_logout_title);
+        mDialog.setMessage(R.string.dialog_logout_content);
+        mDialog.setLeftButtonInfo(getString(R.string.common_dialog_confirm), new CommonDialog.OnButtonClickListener() {
 
+            @Override
+            public void onClick(View view) {
+                mAccountVerify.logout();
+                replaceFragment(LoginAndRegister.class,"LoginAndRegister",null);
+            }
+
+        });
+        mDialog.setRightButtonInfo(getString(R.string.common_dialog_cancel), new CommonDialog.OnButtonClickListener() {
+            @Override
+            public void onClick(View view) {
+                // do nothing
+            }
+        });
+        mDialog.show();
+    }
     @Override
     protected void initData(Bundle bundle) {
 

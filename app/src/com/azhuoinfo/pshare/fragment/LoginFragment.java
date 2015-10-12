@@ -18,12 +18,15 @@ import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.model.CustomerInfo;
+import com.azhuoinfo.pshare.view.LoadingDialog;
 
 import java.util.List;
 
 import mobi.cangol.mobile.Session;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
+import mobi.cangol.mobile.service.AppService;
+import mobi.cangol.mobile.service.global.GlobalData;
 
 public class LoginFragment extends BaseContentFragment {
 
@@ -39,16 +42,13 @@ public class LoginFragment extends BaseContentFragment {
 	private TextView loginActivity_forget_password;
 
 	private AccountVerify mAccountVerify;
-	//private static final String TAG = "LoginFragment";
-	private Bundle bundle;
-
+    private GlobalData mGlobalData;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		bundle=new Bundle();
-		app.getSession();
 		this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.left_head, R.drawable.left_head);
 		mAccountVerify = AccountVerify.getInstance(getActivity());
+        mGlobalData= (GlobalData) this.getAppService(AppService.GLOBAL_DATA);
 	}
 
 	@Override
@@ -126,34 +126,35 @@ public class LoginFragment extends BaseContentFragment {
 		apiTask.setParams(ApiContants.instance(getActivity()).login(mobile, password));
 		apiTask.setRoot("customerInfo");
 		apiTask.execute(new OnDataLoader<CustomerInfo>() {
-			@Override
-			public void onStart() {
-			}
-			@Override
-			public void onSuccess(boolean page, CustomerInfo customerInfos) {
-				//Toast.makeText(getActivity(),customerInfos.getCustomer_mobile(),Toast.LENGTH_SHORT);
-				if(customerInfos!=null){
-					Log.e(TAG,customerInfos.toString());
-					Session session =getSession();
-					//Log.d(TAG, customerInfos.getCustomer_mobile().toString());
-					//Log.d("iodjp",customerInfos.getCustomer_mobile());
-					session.put("customerInfo", customerInfos);
-					session.put("isLogin", true);
-					replaceFragment(HomeFragment.class, "HomeFragment",null );
-				}else{
-					showToast("无数据");
-				}
-			}
-			@Override
-			public void onFailure(String code, String message) {
+            LoadingDialog mLoadingDialog;
 
+            @Override
+            public void onStart() {
+                if (mLoadingDialog == null) mLoadingDialog = LoadingDialog.show(getActivity());
+            }
+
+            @Override
+            public void onSuccess(boolean page, CustomerInfo customerInfos) {
+                if (isEnable()) {
+                    if (mLoadingDialog != null) mLoadingDialog.dismiss();
+                    if (customerInfos != null) {
+                        Log.d(TAG, "" + customerInfos);
+                        mAccountVerify.login(customerInfos);
+                        replaceFragment(HomeFragment.class, "HomeFragment", null);
+                    } else {
+                        showToast("无数据");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String code, String message) {
+                if (isEnable()) {
+                    if (mLoadingDialog != null) mLoadingDialog.dismiss();
+                    showToast(message);
+                }
 			}
 		});
-	}
-
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
 	}
 
 }

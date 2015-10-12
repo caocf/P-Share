@@ -1,11 +1,13 @@
 package com.azhuoinfo.pshare.model;
 
+import java.io.Serializable;
+
 import mobi.cangol.mobile.parser.Element;
 
 /**
  * Created by Azhuo on 2015/9/29.
  */
-public class CustomerInfo {
+public class CustomerInfo implements Serializable{
 
     private String token;
     private String customer_id;

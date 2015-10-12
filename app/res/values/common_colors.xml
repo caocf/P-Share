@@ -30,7 +30,7 @@
 	<color name="common_dialog_title">#ffffff</color>
 	<color name="common_dialog_title_background">@color/common_color_normal</color>
 	<color name="common_dialog_content">#666666</color>
-	<color name="common_dialog_line">@color/common_color_dark</color>
+	<color name="common_dialog_line">@color/common_color_normal</color>
 	<color name="common_dialog_background">#ffffff</color>
 	<color name="common_dialog_button">#666666</color>
 	<color name="common_dialog_button_line">#cecece</color>

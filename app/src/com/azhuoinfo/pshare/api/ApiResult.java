@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.List;
 
+import mobi.cangol.mobile.logging.Log;
 import mobi.cangol.mobile.parser.JSONParserException;
 import mobi.cangol.mobile.parser.JsonUtils;
 
@@ -104,10 +105,11 @@ public class ApiResult<T> implements Serializable {
         ApiResult<T> result = new ApiResult<T>();
         try {
             result.setSource(json.toString());
-            result.setSuccess(SUCCESS_CODE.equals(JsonUtils.getString(json,CODE)));
+            result.setSuccess(SUCCESS_CODE.equals(JsonUtils.getString(json, CODE)));
             if (result.isSuccess() && c != null) {
                 Object resultObject = JsonUtils.getObject(json, DATA);
-                if (resultObject != null) {
+                Log.d("resultObject="+resultObject+"--"+(resultObject != null));
+                if (resultObject != null&&resultObject!=JSONObject.NULL) {
 
                     if(root==null){
                         if (resultObject instanceof JSONObject) {
@@ -122,20 +124,23 @@ public class ApiResult<T> implements Serializable {
                         }
                     }else{
                         resultObject=JsonUtils.getObject(JsonUtils.getJSONObject(json,DATA), root);
-                        if (resultObject instanceof JSONObject) {
-                            result.setObject(JsonUtils.parserToObjectByAnnotation(
-                                    c, JsonUtils.getJSONObject(JsonUtils.getJSONObject(json,DATA), root)));
-                        } else if (resultObject instanceof JSONArray) {
-                            result.setList(JsonUtils.parserToList(c,
-                                    JsonUtils.getJSONArray(JsonUtils.getJSONObject(json,DATA), root), true));
-                        } else {
-                            result.setObject((T) resultObject);
+                        if (resultObject != null&&resultObject!=JSONObject.NULL) {
+                            if (resultObject instanceof JSONObject) {
+                                result.setObject(JsonUtils.parserToObjectByAnnotation(
+                                        c, JsonUtils.getJSONObject(JsonUtils.getJSONObject(json,DATA), root)));
+                            } else if (resultObject instanceof JSONArray) {
+                                result.setList(JsonUtils.parserToList(c,
+                                        JsonUtils.getJSONArray(JsonUtils.getJSONObject(json,DATA), root), true));
+                            } else {
+                                result.setObject((T) resultObject);
+                            }
+                        }else{
+                            result.setSuccess(false);
+                            result.setObject(null);
                         }
-
                     }
-
-
                 } else {
+                    result.setSuccess(false);
                     result.setObject(null);
                 }
                 result.setMessage(JsonUtils.getString(json, MESSAGE));

@@ -33,8 +33,7 @@ public class Constants {
 	public static final String URL_SERVICES = "http://vote.cangol.mobi/service.html";
 	
 	public static final String URL_PRIVATE = "http://vote.cangol.mobi/private.html";
-	
-	
+
 	public static final String KEY_MESSAGE_LAST_TIME="message_last_time_";
 	public static final String KEY_USED_VERSION="is_new_version";
 	public static final String KEY_EXIT_CODE="exit_code";

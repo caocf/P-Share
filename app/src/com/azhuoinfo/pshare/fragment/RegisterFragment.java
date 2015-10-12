@@ -165,7 +165,7 @@ public class RegisterFragment extends BaseContentFragment {
 			public void onFailure(String code, String message) {
 				Log.d(TAG, "code=:" + code + ",message=" + message);
 				if (getActivity() != null) {
-					Toast.makeText(getActivity(),"验证码不正确",Toast.LENGTH_SHORT);
+                    showToast(message);
 				}
 			}
 		});
@@ -185,14 +185,14 @@ public class RegisterFragment extends BaseContentFragment {
 			@Override
 			public void onSuccess(boolean page, UserAuth auth) {
 				if (getActivity() != null) {
-					replaceFragment(LoginFragment.class, "LoginFragment", null);
+					replaceFragment(LoginAndRegister.class, "LoginAndRegister", null);
 				}
 			}
 			@Override
 			public void onFailure(String code, String message) {
 				Log.d(TAG, "code=:" + code + ",message=" + message);
 				if (getActivity() != null) {
-
+                    showToast(message);
 				}
 			}
 		});

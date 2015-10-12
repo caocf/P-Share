@@ -67,7 +67,7 @@
     <string name="dialog_login_content">您需要登录后才能进行操作</string>
     <string name="dialog_logout_title">提示</string>
     <string name="dialog_logout_nopw_content">当前帐号未设置密码,切换帐号后将无法恢复</string>
-    <string name="dialog_logout_content">请确认再次退出账号吗?</string>
+    <string name="dialog_logout_content">请确认要退出账号吗?</string>
     <string name="dialog_expire_title">提示</string>
     <string name="dialog_expire_content">账号过期，请重新登录</string>
     <string name="dialog_cache_content">您确定要清除应用缓存吗？</string>

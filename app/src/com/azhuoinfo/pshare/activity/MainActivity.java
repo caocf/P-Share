@@ -3,7 +3,6 @@ package com.azhuoinfo.pshare.activity;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -14,15 +13,12 @@ import com.azhuoinfo.pshare.AccountVerify.OnLoginListener;
 import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.api.ApiContants;
-import com.azhuoinfo.pshare.api.task.ApiTask;
-import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.db.MessageService;
 import com.azhuoinfo.pshare.fragment.HomeFragment;
 import com.azhuoinfo.pshare.fragment.LoginAndRegister;
 import com.azhuoinfo.pshare.fragment.MenuFragment;
 import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.Upgrade;
-import com.azhuoinfo.pshare.model.User;
 import com.azhuoinfo.pshare.utils.Constants;
 import com.azhuoinfo.pshare.view.CommonDialog;
 
@@ -46,19 +42,12 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 	private GlobalData mGlobalData;
 	private UpgradeService mUpgradeService;
 	private ApiContants mApiContants;
-	private boolean isLogin=false;
 	private MessageService mMessageService;
 	private CustomerInfo customerInfo;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		/*customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
-		Bundle bundle=new Bundle();
-		bundle.putString("customer_point",customerInfo.getCustomer_point());
-		bundle.putString("customer_head",customerInfo.getCustomer_head());
-		bundle.putString("customer_nickname",customerInfo.getCustomer_nickname());*/
-		//isLogin=(boolean)this.app.getSession().get("isLogin");
         this.setFloatActionBarEnabled(true);
         //this.setStatusBarTintColor(getResources().getColor(R.color.actionbar_background));
 		this.getCustomActionBar().setTitleGravity(Gravity.CENTER);
@@ -67,12 +56,10 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 			// 启用动画
 			this.getCustomFragmentManager().setDefaultAnimation(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
 			this.setMenuFragment(MenuFragment.class, null);
-			if(isLogin){
+			if(mAccountVerify.getUser() != null){
 				this.setContentFragment(HomeFragment.class, "HomeFragment", null, ModuleMenuIDS.MODULE_HOME);
-				isLogin=false;
 			}else{
 				this.setContentFragment(LoginAndRegister.class,"LoginAndRegister",null);
-				isLogin=true;
 			}
 			if (mGlobalData.get(Constants.KEY_CHECK_UPGRADE) == null || !TimeUtils.getCurrentDate().equals(mGlobalData.get(Constants.KEY_CHECK_UPGRADE))) {
 				// 判断升级提示是否检测过，每天只检测一次
@@ -97,7 +84,7 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 	}
 	@Override
 	public void findViews() {
-		Log.d("getMD5Fingerprint=" + DeviceInfo.getMD5Fingerprint(this));
+        Log.d("getMD5Fingerprint=" + DeviceInfo.getMD5Fingerprint(this));
 	}
 
 	@Override
@@ -119,9 +106,6 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 		} else {
 
 		}
-		if (!mAccountVerify.isLogin()) {
-			mAccountVerify.verifyToken();
-		}
 	}
 	private void initStatus() {
 
@@ -141,7 +125,7 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 		mGlobalData.save(Constants.KEY_EXIT_VERSION, DeviceInfo.getAppVersion(this));
 		super.onDestroy();
 		if (isBackPressed) {
-			Log.e("app.exit");
+            Log.e("app.exit");
 			app.exit();
 		}
 
@@ -152,11 +136,11 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 			isBackPressed = true;
 			super.onBack();
 		} else {
-			showToast(R.string.app_exit, 2000);
+            showToast(R.string.app_exit, 2000);
 			back_pressed = System.currentTimeMillis();
 		}
 	}
-	
+
 	private void showUpgradeDialog(final Upgrade upgrade) {
 		CommonDialog dialog = CommonDialog.creatDialog(this);
 		dialog.setTitle(R.string.dialog_upgrade_title);
@@ -246,49 +230,9 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 //		});
 
 	}
-	private void getUserInfo(String userId, String userToken) {
-//		ApiTask apiTask = ApiTask.build(this, "getUserInfo");
-//		apiTask.setUrl(mApiContants.getActionUrl(ApiContants.API_USER_PROFILE));
-//		apiTask.setParams(mApiContants.userProfile(userId, userToken));
-//		apiTask.execute(new OnDataLoader<User>() {
-//			@Override
-//			public void onStart() {
-//			}
-//
-//			@Override
-//			public void onSuccess(int totalPage, User user) {
-//				try {
-//					if (user != null) {
-//						mAccountVerify.setUser(user);
-//					} else {
-//						showToast(R.string.common_error);
-//					}
-//				} catch (Exception e) {
-//					Log.d(TAG, "Exception", e);
-//				}
-//			}
-//
-//			@Override
-//			public void onFailure(String errorCode, String errorResponse) {
-//				Log.d(TAG, "errorCode:" + errorCode + "," + errorResponse);
-//			}
-//
-//		});
-
-	}
 
 	@Override
 	public void login() {
-		// 获取用户信息
-		getUserInfo(mAccountVerify.getUserId(), mAccountVerify.getUserToken());
-		// 每天第一次登录
-		String date = (String) mGlobalData.get(Constants.KEY_LAST_LOGIN_DATE);
-		Log.d("last_login_date:" + date);
-		if (!StringUtils.isEmpty(date) && !TimeUtils.getCurrentDate().equals(date)) {
-			Log.d("loginPerDay");
-			showToast("欢迎回来！");
-		}
-		mGlobalData.save(Constants.KEY_LAST_LOGIN_DATE, TimeUtils.getCurrentDate());
 	}
 
 	@Override
@@ -309,7 +253,7 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 	}
 	private void showLoginDialog() {
 		//startActivity(new Intent(this,LoginAndRegisterActivity.class));
-		
+
 	}
 	@Override
 	public void callStateIdle() {
@@ -326,11 +270,6 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 	@Override
 	public void networkConnect(Context arg0) {
 		Log.d("networkConnect");
-		if (!mAccountVerify.isLogin()) {
-			if (StringUtils.isNotBlank(mAccountVerify.getUserId()) && StringUtils.isNotBlank(mAccountVerify.getUserToken())) {
-				mAccountVerify.verifyToken();
-			}
-		}
 	}
 
 	@Override

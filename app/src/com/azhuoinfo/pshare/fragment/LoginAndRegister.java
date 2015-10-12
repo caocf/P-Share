@@ -80,7 +80,7 @@ public class LoginAndRegister extends BaseContentFragment {
 
     @Override
     public boolean isCleanStack() {
-        return false;
+        return true;
     }
 
     @Override
