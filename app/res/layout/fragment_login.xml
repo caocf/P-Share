@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color"
+    android:background="@color/fragment_background"
     android:orientation="vertical" >
     <!--actionbar-->
    <!-- <RelativeLayout
@@ -67,8 +67,7 @@
 		        android:ems="10"
 		        android:background="@drawable/registeractivity_search_bg"
 		        android:layout_gravity="center_vertical"
-		        android:hint="@string/phone_number"
-                android:text="18301969761">
+		        android:hint="@string/phone_number" >
 				<requestFocus />	       
 		    </EditText>
 		    <ImageView 
@@ -86,8 +85,7 @@
             android:layout_marginRight="@dimen/padding2"
             android:background="#999d9c"
             android:layout_marginTop="@dimen/padding1"
-            android:layout_marginBottom="@dimen/padding1"
-            />       
+            android:layout_marginBottom="@dimen/padding1" />
 	    <LinearLayout 
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -99,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/password"/>
-            <TextView 
+            <TextView
                 android:layout_height="@dimen/padding4"
                 android:layout_width="@dimen/padding10"
                 android:layout_marginLeft="@dimen/padding2"
@@ -114,8 +112,7 @@
 		        android:background="@drawable/registeractivity_search_bg"
 		        android:layout_gravity="center_vertical"
 				android:inputType="textPassword" 
-		        android:hint="@string/password"
-                android:text="111111">
+		        android:hint="@string/password">
 				<requestFocus />	       
 		    </EditText>
         </LinearLayout>       

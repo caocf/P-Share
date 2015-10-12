@@ -12,6 +12,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -62,13 +63,12 @@ public class AddCarInformationFragment extends BaseContentFragment{
             "闽","滇","琼","川","粤","甘","青", "渝","沪","津","京","宁","蒙","藏","新","贵", "港","澳"};
     private List<Map<String,String>> carList1;
 
-   /* private String[] carArea2={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T",
-            "U","V","W","X","Y","Z"};*/
+   private String[] carArea2={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T",
+            "U","V","W","X","Y","Z"};
     private List<Map<String,String>> carList2;
     private CustomerInfo customerInfo;
     //得到的输入数据车牌和车型
     private String mCarNumber,mCarBrand;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

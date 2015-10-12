@@ -144,7 +144,7 @@
     <string name="tv_history_order_time">订单日期：</string>
     <string name="tv_stop_car_time">停车时长：</string>
     <string name="tv_pay_money">支付金额：</string>
-
+    <string name="change_phone">修改手机号后将作为下一次的登录账号</string>
 
     <!-- 模拟数据 -->
     <!--关于我们-->

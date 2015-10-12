@@ -84,7 +84,7 @@
         android:visibility="gone"
         android:padding="@dimen/padding10"
         android:focusable="false"
-        android:background="@color/bg_half_transparency"
+        android:background="@color/fragment_background"
         android:layout_alignParentBottom="true">
         <GridView
             android:id="@+id/gv_car_area1"

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color"
+    android:background="@color/fragment_background"
     android:orientation="vertical" >
     <LinearLayout 
         android:layout_height="wrap_content"
@@ -44,6 +44,7 @@
 		        android:layout_height="wrap_content"
 		        android:layout_marginLeft="@dimen/padding2"
 		        android:ems="10"
+                 android:singleLine="true"
 		        android:background="@drawable/registeractivity_search_bg"
 		        android:layout_gravity="center_vertical"
 		        android:hint="@string/phone_number"
@@ -83,6 +84,7 @@
 		        android:layout_height="wrap_content"
 		        android:layout_marginLeft="@dimen/padding2"
 		        android:ems="10"
+                 android:singleLine="true"
 		        android:background="@drawable/registeractivity_search_bg"
 		        android:layout_gravity="center_vertical"
 				android:inputType="textPassword" 
@@ -114,6 +116,7 @@
 	            android:layout_alignParentRight="true"
 	            android:layout_marginLeft="@dimen/padding2"
 	            android:layout_marginRight="@dimen/padding2"
+                android:singleLine="true"
 	            android:layout_toLeftOf="@+id/get_code_line"	            
 	            android:background="@drawable/registeractivity_search_bg"
 	            android:ems="10" >

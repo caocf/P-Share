@@ -6,7 +6,7 @@
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-		android:background="#f8f8ff"
+		android:background="@color/fragment_background"
         android:orientation="vertical">
         <com.azhuoinfo.pshare.view.listview.MyListView
 	        android:id="@+id/lv_monthlyRent_list"
