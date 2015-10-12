@@ -34,7 +34,7 @@
                 android:textColor="#ffffff"
                 android:text="车先生"
                 android:textSize="@dimen/text_size3"/>
-            <LinearLayout
+           <!-- <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -57,7 +57,7 @@
                     android:gravity="center"
                     android:textColor="#ffffff"
                     android:textSize="@dimen/text_size3"/>
-            </LinearLayout>
+            </LinearLayout>-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:textColor="@color/text_points_yellow"
+                    android:textColor="@color/actionbar_background"
                     android:text="积分："
                     android:textSize="@dimen/text_size3"/>
                 <TextView
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:textColor="@color/text_points_yellow"
+                    android:textColor="@color/actionbar_background"
                     android:text="0"
                     android:textSize="@dimen/text_size3"/>
             </LinearLayout>
@@ -110,8 +110,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/parking_area"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/padding4"
-                        />
+                        android:layout_marginLeft="@dimen/padding4" />
                     <TextView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"

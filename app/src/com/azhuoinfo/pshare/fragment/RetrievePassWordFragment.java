@@ -8,12 +8,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.api.ApiContants;
+import com.azhuoinfo.pshare.api.task.ApiTask;
+import com.azhuoinfo.pshare.api.task.OnDataLoader;
+import com.azhuoinfo.pshare.model.UserAuth;
+import com.azhuoinfo.pshare.model.UserCode;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
+import mobi.cangol.mobile.logging.Log;
 
 
 public class RetrievePassWordFragment extends BaseContentFragment {
@@ -22,9 +29,9 @@ public class RetrievePassWordFragment extends BaseContentFragment {
 	//定义填写手机号码的控件
 	private EditText mCustomerMobileEditText;
 	//获取验证码
-	private TextView get_code;
+	private TextView mCodeTextView;
 	//定义输入验证码的控件
-	private EditText retrieveActivity_editText_Password;
+	private EditText mCodeEditText;
 	//下一步
 	private Button next_step;
 
@@ -54,25 +61,36 @@ public class RetrievePassWordFragment extends BaseContentFragment {
 		initViews(savedInstanceState);
 		initData(savedInstanceState);
 	}
-
-
 	@Override
 	protected void findViews(View view) {
-		this.setTitle(R.string.retrieve_password);
+		this.setTitle(R.string.reset_password);
 		mCustomerMobileEditText=(EditText) view.findViewById(R.id.retrieveActivity_editText_Phone);
-		get_code=(TextView) view.findViewById(R.id.get_code);
-		retrieveActivity_editText_Password=(EditText) view.findViewById(R.id.retrieveActivity_editText_Code);
+		mCodeTextView=(TextView) view.findViewById(R.id.get_code);
+		mCodeEditText=(EditText) view.findViewById(R.id.retrieveActivity_editText_Code);
 		next_step=(Button) view.findViewById(R.id.next_step);
 	}
 
 	@Override
 	protected void initViews(final Bundle bundle) {
+		mCodeTextView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				postSendSmsCode(mCustomerMobileEditText.getText().toString());
+			}
+		});
 		next_step.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Bundle bundle=new Bundle();
-				bundle.putString("customer_mobile",mCustomerMobileEditText.getText().toString());
-				replaceFragment(ResetPassWordFragment.class, "ResetPassWordFragment",bundle);
+				Log.e(TAG, "mCodeEditText:" + mCodeEditText.getText().toString());
+				if (!mCustomerMobileEditText.getText().toString().equals("")) {
+					if (!mCodeEditText.getText().toString().equals("")) {
+						postVerifySmsCode(mCustomerMobileEditText.getText().toString(), mCodeEditText.getText().toString());
+					} else {
+						Toast.makeText(getActivity(),"验证码未输入",Toast.LENGTH_SHORT).show();
+					}
+				} else {
+					Toast.makeText(getActivity(),"手机号不能为空",Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}
@@ -90,5 +108,58 @@ public class RetrievePassWordFragment extends BaseContentFragment {
 	@Override
 	public boolean isCleanStack() {
 		return false;
+	}
+	public void postSendSmsCode(String mobile){
+		ApiTask apiTask=ApiTask.build(this.getActivity(),TAG);
+		apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_SENDSMSCODE));
+		apiTask.setParams(ApiContants.instance(getActivity()).userSendSmsCode(mobile));
+		apiTask.setRoot(null);
+		apiTask.execute(new OnDataLoader<UserCode>() {
+			@Override
+			public void onStart() {
+
+			}
+
+			@Override
+			public void onSuccess(boolean page, UserCode userAuth) {
+				Log.e(TAG,userAuth+"");
+			}
+
+			@Override
+			public void onFailure(String code, String message) {
+
+			}
+		});
+	}
+	public void postVerifySmsCode(String mobile,String smsCode){
+		ApiTask apiTask=ApiTask.build(this.getActivity(),TAG);
+		apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_VERIFYSMSCODE));
+		apiTask.setParams(ApiContants.instance(getActivity()).userVerifySmsCode(mobile, smsCode));
+		apiTask.setRoot(null);
+		apiTask.execute(new OnDataLoader<UserCode>() {
+			@Override
+			public void onStart() {
+				if (getActivity() != null) {
+
+				}
+			}
+			@Override
+			public void onSuccess(boolean page, UserCode auth) {
+				Log.e(TAG,"vCode:"+auth);
+				Bundle bundle = new Bundle();
+				bundle.putString("customer_mobile", mCustomerMobileEditText.getText().toString());
+				if(mCustomerMobileEditText.getText()!=null){
+					replaceFragment(ResetPassWordFragment.class, "ResetPassWordFragment", bundle);
+				}
+			}
+			@Override
+			public void onFailure(String code, String message) {
+				Log.d(TAG, "code=:" + code + ",message=" + message);
+				if (getActivity() != null) {
+					Toast.makeText(getActivity(), "验证码不正确", Toast.LENGTH_SHORT);
+				}
+			}
+		});
+
 	}
 }

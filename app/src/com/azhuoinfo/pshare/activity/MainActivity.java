@@ -20,6 +20,7 @@ import com.azhuoinfo.pshare.db.MessageService;
 import com.azhuoinfo.pshare.fragment.HomeFragment;
 import com.azhuoinfo.pshare.fragment.LoginAndRegister;
 import com.azhuoinfo.pshare.fragment.MenuFragment;
+import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.Upgrade;
 import com.azhuoinfo.pshare.model.User;
 import com.azhuoinfo.pshare.utils.Constants;
@@ -47,10 +48,16 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 	private ApiContants mApiContants;
 	private boolean isLogin=false;
 	private MessageService mMessageService;
+	private CustomerInfo customerInfo;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
+		Bundle bundle=new Bundle();
+		bundle.putString("customer_point",customerInfo.getCustomer_point());
+		bundle.putString("customer_head",customerInfo.getCustomer_head());
+		bundle.putString("customer_nickname",customerInfo.getCustomer_nickname());
 		//isLogin=(boolean)this.app.getSession().get("isLogin");
         this.setFloatActionBarEnabled(true);
 		this.getCustomActionBar().setTitleGravity(Gravity.CENTER);
@@ -346,4 +353,5 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 	public void update() {
 
 	}
+
 }

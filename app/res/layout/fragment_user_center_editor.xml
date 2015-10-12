@@ -270,7 +270,7 @@
 				android:textSize="@dimen/text_size3"
 				android:layout_centerVertical="true"
 				android:layout_marginLeft="@dimen/padding3"
-				android:text="家乡："/>
+				android:text="城市："/>
 			<TextView
 				android:id="@+id/tv_customer_region"
 				android:layout_height="wrap_content"

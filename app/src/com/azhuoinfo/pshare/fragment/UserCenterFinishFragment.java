@@ -127,9 +127,9 @@ public class UserCenterFinishFragment extends BaseContentFragment{
         if(customerInfo.getCustomer_sex().equals("3")){
             mCustomerSexTextView.setText("");
         }else if (customerInfo.getCustomer_sex().equals("1")){
-            mCustomerSexTextView.setText("男");
+            mCustomerSexTextView.setText("先生");
         }else{
-            mCustomerSexTextView.setText("女");
+            mCustomerSexTextView.setText("女士");
         }
         mCustomerJobTextView.setText(customerInfo.getCustomer_job().toString());
         mCustomerRegionTextView.setText(customerInfo.getCustomer_region().toString());

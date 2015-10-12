@@ -239,6 +239,7 @@
 				 android:layout_marginTop="@dimen/padding2"
 				 android:textColor="@color/text_white"
 				 android:background="@drawable/button"
+
 				 android:padding="@dimen/padding1"
 				 android:text="取消代泊"/>
 		        <!--<RelativeLayout

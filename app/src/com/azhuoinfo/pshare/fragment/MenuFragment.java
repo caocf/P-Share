@@ -106,9 +106,9 @@ public class MenuFragment extends BaseMenuFragment {
 	@Override
 	protected void initViews(Bundle savedInstanceState) {
 
-		mCustomerIdTextView.setText(customerId);
-		mCustomerNicknameTextView.setText(customerNickName);
-		mCustomerPointsTextView.setText(customerPoints);
+		//mCustomerIdTextView.setText(customerId);
+		//mCustomerNicknameTextView.setText(customerNickName);
+		//mCustomerPointsTextView.setText(customerPoints);
 		mInstallImageView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

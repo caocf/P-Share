@@ -59,11 +59,11 @@ public class AddCarInformationFragment extends BaseContentFragment{
     private AccountVerify mAccountVerify;
 
     private String[] carArea1={"辽","吉","黑","冀","晋","陕","鲁","皖","苏","浙","豫","鄂","湘","赣","台",
-            "闽","滇","琼","川","黔","粤","甘","青", "渝","沪","津","京","宁","蒙","藏","新","贵", "港","澳"};
+            "闽","滇","琼","川","粤","甘","青", "渝","沪","津","京","宁","蒙","藏","新","贵", "港","澳"};
     private List<Map<String,String>> carList1;
 
-    private String[] carArea2={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T",
-            "U","V","W","X","Y","Z"};
+   /* private String[] carArea2={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T",
+            "U","V","W","X","Y","Z"};*/
     private List<Map<String,String>> carList2;
     private CustomerInfo customerInfo;
     //得到的输入数据车牌和车型
@@ -82,11 +82,11 @@ public class AddCarInformationFragment extends BaseContentFragment{
             map.put("area1",carArea1[i]);
             carList1.add(map);
         }
-        for (int i=0;i<carArea2.length;i++){
+       /* for (int i=0;i<carArea2.length;i++){
             HashMap<String,String> map=new HashMap<String,String>();
             map.put("area2",carArea2[i]);
             carList2.add(map);
-        }
+        }*/
     }
 
     @Override
@@ -159,7 +159,7 @@ public class AddCarInformationFragment extends BaseContentFragment{
         mCarArea2GridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mCarLocationTextView.setText(carList2.get(1).toString());
+               // mCarLocationTextView.setText(carList2.get(1).toString());
             }
         });
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
@@ -172,10 +172,8 @@ public class AddCarInformationFragment extends BaseContentFragment{
             }
         });
     }
-
     @Override
     protected void initData(Bundle bundle) {
-
     }
 
     @Override

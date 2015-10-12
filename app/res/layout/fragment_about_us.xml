@@ -12,10 +12,10 @@
         <!--  app图标-->
         <ImageView
             android:id="@+id/iv_about_us" 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_width="100dp"
+	        android:layout_height="100dp"
 	        android:background="@color/text_white"
-	        android:src="@drawable/about_us"
+	        android:src="@drawable/icon"
 	       	android:layout_centerHorizontal="true"
 	        android:layout_marginTop="@dimen/padding8"/>
         <!--  app名称-->

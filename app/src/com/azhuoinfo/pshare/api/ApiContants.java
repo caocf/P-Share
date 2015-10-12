@@ -102,10 +102,11 @@ public class ApiContants {
      *
      * @return
      */
-    public HashMap<String, String> register(String mobile,String password) {
+    public HashMap<String, String> register(String mobile,String password,String smsCode) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("customer_mobile", mobile);
         params.put("customer_password", password);
+		params.put("smsCode",smsCode);
         return params;
     }
 
@@ -214,6 +215,29 @@ customer_age*/
 	public HashMap<String, String> userCarList(String customerId){
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("customer_id", customerId );
+		//params.put("order_id",orderId);
+		return params;
+	}
+	public static String API_CUSTOMER_SENDSMSCODE="/customer/sendSmsCode";
+	/**
+	 *customer_id，car_brand，car_number，car_color，car_size，owner_id_number（未确定是否需
+	 * @return
+	 */
+	public HashMap<String, String> userSendSmsCode(String customMerobile){
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("customer_mobile", customMerobile );
+		//params.put("order_id",orderId);
+		return params;
+	}
+	public static String API_CUSTOMER_VERIFYSMSCODE="/customer/verifySmsCode";
+	/**
+	 *customer_id，car_brand，car_number，car_color，car_size，owner_id_number（未确定是否需
+	 * @return
+	 */
+	public HashMap<String, String> userVerifySmsCode(String customMerobile,String smsCode){
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("customer_mobile", customMerobile );
+		params.put("smsCode",smsCode);
 		//params.put("order_id",orderId);
 		return params;
 	}

@@ -86,11 +86,11 @@ public class ResetPassWordFragment extends BaseContentFragment {
 	protected void initData(Bundle bundle) {
 
 	}
-
 	@Override
 	protected FragmentInfo getNavigtionUpToFragment() {
 		return null;
 	}
+
 	public void getResetPwd(String mobile,String password){
 		ApiTask apiTask=ApiTask.build(this.getActivity(),TAG);
 		apiTask.setMethod("GET");
@@ -117,6 +117,5 @@ public class ResetPassWordFragment extends BaseContentFragment {
 			}
 		});
 	}
-
 
 }

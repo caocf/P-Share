@@ -155,9 +155,9 @@ public class UserCenterEditorFragment extends BaseContentFragment{
         if(customerInfo.getCustomer_sex().equals("3")){
             mCustomerSexTextView.setText("");
         }else if (customerInfo.getCustomer_sex().equals("1")){
-            mCustomerSexTextView.setText("男");
+            mCustomerSexTextView.setText("先生");
         }else{
-            mCustomerSexTextView.setText("女");
+            mCustomerSexTextView.setText("女士");
         }
         mCustomerJobEditText.setText(customerInfo.getCustomer_job().toString());
         mCustomerRegionTextView.setText(customerInfo.getCustomer_region().toString());
@@ -182,9 +182,9 @@ public class UserCenterEditorFragment extends BaseContentFragment{
             case 1:
                 if(mCustomerSexTextView.getText().toString().equals("")){
                     intSex=3;
-                }else if(mCustomerSexTextView.getText().toString().equals("男")){
+                }else if(mCustomerSexTextView.getText().toString().equals("先生")){
                     intSex=1;
-                }else if(mCustomerSexTextView.getText().toString().equals("女")){
+                }else if(mCustomerSexTextView.getText().toString().equals("女士")){
                     intSex=2;
                 }
                 postSetUserInfo(customerInfo.getCustomer_Id().toString(),mCustomerNickNameEditText.getText().toString(),
