@@ -118,8 +118,8 @@ public class HomeFragment extends BaseContentFragment {
 	@Override
 	protected boolean onMenuActionCreated(ActionMenu actionMenu) {
 		super.onMenuActionCreated(actionMenu);
-		actionMenu.add(new ActionMenuItem(1, "搜索", R.drawable.search1, 1));
-		actionMenu.add(new ActionMenuItem(2,"代伯区详情",R.drawable.list_car,2));
+		actionMenu.addMenu(1,R.string.menu_search, R.drawable.search1, 1);
+		actionMenu.addMenu(2,R.string.menu_list_car, R.drawable.list_car,2);
 		return true;
 	}
 	@Override

@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile 'mobi.cangol.mobile:actionbar:1.0.0@aar'
-    compile 'mobi.cangol.mobile:uiframe:1.0.0@aar'
-    compile fileTree(dir: 'libs', include: '*.jar')
-    compile 'mobi.cangol.mobile:appcore:1.0.0'
+    compile fileTree(include: '*.jar', dir: 'libs')
     compile project(':commons-zxing')
+    compile project(':actionbar-1.0.0')
+    compile project(':uiframe-1.0.0')
+    compile project(':appcore-1.0.0')
 }
 
 android {

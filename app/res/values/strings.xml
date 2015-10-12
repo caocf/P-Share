@@ -8,6 +8,12 @@
     <string name="exit_toast">再按一次退出</string>
     <string name="confirm">确定</string>
 
+    <string name="menu_search">搜索</string>
+    <string name="menu_list_car">代伯区详情</string>
+    <string name="menu_maps">地图首页</string>
+    <string name="menu_edit">编辑</string>
+
+
     <string name="homepage_search"> 我想停在哪里附近？</string>
     <string name="homelistmenu_text">附近的停车场</string>
     <string name="login">登录</string>

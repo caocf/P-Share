@@ -144,7 +144,7 @@ public class UserCenterFinishFragment extends BaseContentFragment{
     @Override
     protected boolean onMenuActionCreated(final ActionMenu actionMenu) {
         super.onMenuActionCreated(actionMenu);
-        actionMenu.add(new ActionMenuItem(1, "编辑", R.drawable.editor, 1));
+        actionMenu.addMenu(1, R.string.menu_edit, R.drawable.editor, 1);
         return true;
     }
     @Override
