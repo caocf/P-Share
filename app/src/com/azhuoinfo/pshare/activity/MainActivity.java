@@ -60,6 +60,7 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 		bundle.putString("customer_nickname",customerInfo.getCustomer_nickname());*/
 		//isLogin=(boolean)this.app.getSession().get("isLogin");
         this.setFloatActionBarEnabled(true);
+        //this.setStatusBarTintColor(getResources().getColor(R.color.actionbar_background));
 		this.getCustomActionBar().setTitleGravity(Gravity.CENTER);
 		initStatus();
 		if (savedInstanceState == null) {

@@ -17,11 +17,11 @@
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
-        <item name="android:windowBackground">@drawable/ic_splashing</item>
+        <item name="android:windowBackground">@drawable/launch_screen_image</item>
     </style>
-    <style name="splashing_theme" parent="android:Theme.Black.NoTitleBar.Fullscreen">
+    <style name="splashing_theme" parent="android:Theme.Black.NoTitleBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-     	<item name="android:windowBackground">@drawable/ic_splashing</item>
+     	<item name="android:windowBackground">@drawable/launch_screen_image</item>
     </style>
     <!-- ActionBar theme. -->
     <style name="ActionBar">
