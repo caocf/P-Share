@@ -257,4 +257,19 @@ customer_age*/
         params.put("parking_longitude",parking_longitude);
         return params;
     }
+
+
+
+    public static String API_CUSTOMER_SEARCHPARKLISTBYNAME="/customer/searchParkListbyName";
+
+    /**
+     * 搜索停车场列表
+     * @param name
+     * @return
+     */
+    public HashMap<String, String> searchParkListbyName(String name){
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("name", name );
+        return params;
+    }
 }

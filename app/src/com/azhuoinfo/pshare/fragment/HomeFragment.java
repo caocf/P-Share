@@ -3,7 +3,6 @@ package com.azhuoinfo.pshare.fragment;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,17 +32,15 @@ import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.Parking;
-import com.azhuoinfo.pshare.view.LoadingDialog;
-/*import com.baidu.mapapi.SDKInitializer;
-import com.baidu.mapapi.map.MapView;*/
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mobi.cangol.mobile.actionbar.ActionMenu;
 import mobi.cangol.mobile.actionbar.ActionMenuItem;
+import mobi.cangol.mobile.actionbar.view.SearchView;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
+
 
 public class HomeFragment extends BaseContentFragment implements LocationSource, AMapLocationListener ,AMap.OnInfoWindowClickListener,AMap.OnMarkerClickListener {
 	private Button mMineHomeButton;
@@ -153,7 +150,14 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
     public boolean onMenuActionSelected(ActionMenuItem action) {
         switch(action.getId()){
             case 1:
-                this.getCustomActionBar().startSearchMode();
+                SearchView searchView=this.getCustomActionBar().startSearchMode();
+                searchView.setOnSearchTextListener(new SearchView.OnSearchTextListener() {
+                    @Override
+                    public boolean onSearchText(String s) {
+                        getSearchParkListbyName(s);
+                        return true;
+                    }
+                });
                 break;
             case 2:
                 replaceFragment(ParkingDetailsFragment.class,"ParkingDetailsFragment",null);
@@ -183,7 +187,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         mAmap.setOnMarkerClickListener(this);// 设置点击marker事件监听器
         mAmap.setOnInfoWindowClickListener(this);// 设置点击infoWindow事件监听器
         //mAmap.setInfoWindowAdapter(this);// 设置自定义InfoWindow样式
-        mAmap.setInfoWindowAdapter(new AMap.InfoWindowAdapter(){
+        mAmap.setInfoWindowAdapter(new AMap.InfoWindowAdapter() {
 
             @Override
             public View getInfoWindow(Marker marker) {
@@ -193,23 +197,23 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             @Override
             public View getInfoContents(Marker marker) {
                 LayoutInflater mInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View view=mInflater.inflate(R.layout.view_mark_content, null, false);
-                Parking parking= (Parking) marker.getObject();
-                TextView name= (TextView) view.findViewById(R.id.view_marker_name);
-                TextView num= (TextView) view.findViewById(R.id.view_marker_num);
-                TextView distance= (TextView) view.findViewById(R.id.view_marker_distance);
-                TextView address= (TextView) view.findViewById(R.id.view_marker_address);
+                View view = mInflater.inflate(R.layout.view_mark_content, null, false);
+                Parking parking = (Parking) marker.getObject();
+                TextView name = (TextView) view.findViewById(R.id.view_marker_name);
+                TextView num = (TextView) view.findViewById(R.id.view_marker_num);
+                TextView distance = (TextView) view.findViewById(R.id.view_marker_distance);
+                TextView address = (TextView) view.findViewById(R.id.view_marker_address);
 
-                name.setText(""+parking.getParking_name());
-                if(parking.getParking_can_use()>0){
-                    num.setText("空："+parking.getParking_can_use());
-                }else{
-                    num.setText("满："+parking.getParking_can_use());
+                name.setText("" + parking.getParking_name());
+                if (parking.getParking_can_use() > 0) {
+                    num.setText("空:" + parking.getParking_can_use());
+                } else {
+                    num.setText("满:" + parking.getParking_can_use());
                 }
                 address.setText("" + parking.getParking_address());
-                float s=AMapUtils.calculateLineDistance(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())),
-                        new LatLng(mAMapLocation.getLatitude(),mAMapLocation.getLongitude()));
-                distance.setText(s+"米");
+                int s = (int) AMapUtils.calculateLineDistance(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())),
+                        new LatLng(mAMapLocation.getLatitude(), mAMapLocation.getLongitude()));
+                distance.setText(s + "米");
                 return view;
             }
         });
@@ -295,6 +299,36 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
     public void onProviderDisabled(String provider) {
 
     }
+    public void getSearchParkListbyName(String name) {
+        ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
+        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_SEARCHPARKLISTBYNAME));
+        apiTask.setParams(ApiContants.instance(getActivity()).searchParkListbyName(name));
+        apiTask.setRoot("parkingList");
+        apiTask.execute(new OnDataLoader<List<Parking>>() {
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onSuccess(boolean page, List<Parking> list) {
+                if (isEnable()) {
+                    if(list!=null&&list.size()>0){
+                        drawMarker(list);
+                    }else{
+                        showToast("没有搜索停车场");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String code, String message) {
+                if (isEnable()) {
+                    showToast(message);
+                }
+            }
+        });
+    }
 
     public void getSearchParkListByLL(String latitude,String longitude) {
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
@@ -327,6 +361,9 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         });
     }
     public void drawMarker(List<Parking> list){
+        //mAmap.clear();
+        if(mListener!=null&&mAMapLocation!=null)
+            mListener.onLocationChanged(mAMapLocation);// 显示系统小蓝点
         MarkerOptions markerOption=null;
         Parking parking=null;
         Marker marker=null;

@@ -68,7 +68,7 @@
 		        android:background="@drawable/registeractivity_search_bg"
 		        android:layout_gravity="center_vertical"
 		        android:hint="@string/phone_number"
-                android:text="18210952413">
+                android:text="18201952413">
 				<requestFocus />	       
 		    </EditText>
 		    <ImageView 
