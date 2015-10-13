@@ -90,12 +90,10 @@ public class CarListFragment extends BaseContentFragment{
         mAddCarRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentFragment(AddCarInformationFragment.class, "AddCarInformationFragment", null, ModuleMenuIDS.MODULE_HOME);
+                //setContentFragment(AddCarInformationFragment.class, "AddCarInformationFragment", null, ModuleMenuIDS.MODULE_HOME);
             }
         });
-        /*for(int i=0;i<5;i++){
-            list.add(""+i);
-        }*/
+
         mCarListView.setMaxHeight(height / 3 * 2);
         mCarListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
