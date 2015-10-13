@@ -185,7 +185,7 @@ public class RegisterFragment extends BaseContentFragment {
 			@Override
 			public void onSuccess(boolean page, UserAuth auth) {
 				if (getActivity() != null) {
-					replaceFragment(LoginAndRegister.class, "LoginAndRegister", null);
+					replaceFragment(LoginFragment.class, "LoginFragment", null);
 				}
 			}
 			@Override

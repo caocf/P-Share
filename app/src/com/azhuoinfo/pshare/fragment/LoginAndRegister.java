@@ -11,6 +11,7 @@ import com.azhuoinfo.pshare.R;
 import java.util.List;
 
 import mobi.cangol.mobile.actionbar.ActionBarActivity;
+import mobi.cangol.mobile.base.BaseActionBarActivity;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 
@@ -48,6 +49,7 @@ public class LoginAndRegister extends BaseContentFragment {
 
     @Override
     protected void findViews(View view) {
+      //  ( (BaseActionBarActivity)this.getActivity()).setWindowBackground(R.drawable.launch_screen_image);
         mLoginButton=(Button) view.findViewById(R.id.button_login);
         mRegisterButton=(Button)view.findViewById(R.id.button_register);
     }
@@ -85,7 +87,8 @@ public class LoginAndRegister extends BaseContentFragment {
 
     @Override
     public void onDestroyView() {
-        ((ActionBarActivity)this.getActivity()).setActionbarShow(true);
+       ((ActionBarActivity)this.getActivity()).setActionbarShow(true);
+      //  ( (BaseActionBarActivity)this.getActivity()).setWindowBackground(R.color.activity_background);
         super.onDestroy();
     }
 

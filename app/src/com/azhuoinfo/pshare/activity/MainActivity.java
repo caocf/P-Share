@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -46,6 +47,7 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 	private CustomerInfo customerInfo;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+        getWindow().setFormat(PixelFormat.TRANSLUCENT);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
         this.setFloatActionBarEnabled(true);
@@ -68,8 +70,6 @@ public class MainActivity extends SlidingNavigationFragmentActivity implements O
 		} else {
 			Log.d("savedInstanceState=" + savedInstanceState);
 		}
-		// 替换背景
-		// this.getWindow().setBackgroundDrawableResource(R.drawable.activity_bg);
 		findViews();
 		initViews(savedInstanceState);
 		initData(savedInstanceState);

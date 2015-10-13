@@ -95,7 +95,7 @@
                         android:layout_centerVertical="true"
                         android:textColor="@color/text_white"
                         android:textSize="@dimen/text_size4"
-                        android:text="@string/mine"/>
+                        android:text="@string/mine_stop"/>
                     <ImageView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"

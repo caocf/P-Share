@@ -36,7 +36,6 @@ public class ParkingDetailsFragment extends BaseContentFragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.left_head,R.drawable.left_head);
         mAccountVerify = AccountVerify.getInstance(getActivity());
     }
 
@@ -83,7 +82,7 @@ public class ParkingDetailsFragment extends BaseContentFragment{
     protected boolean onMenuActionCreated(ActionMenu actionMenu) {
         super.onMenuActionCreated(actionMenu);
         actionMenu.addMenu(1, R.string.menu_search, R.drawable.search1, 1);
-        actionMenu.addMenu(2, R.string.menu_maps, R.drawable.list_car, 2);
+        actionMenu.addMenu(2, R.string.menu_maps, R.drawable.car_list_right, 1);
         return true;
     }
     @Override
@@ -93,7 +92,7 @@ public class ParkingDetailsFragment extends BaseContentFragment{
                 this.getCustomActionBar().startSearchMode();
                 break;
             case 2:
-                replaceFragment(HomeFragment.class,"HomeFragment",null);
+                popBackStack();
                 break;
         }
         return super.onMenuActionSelected(action);

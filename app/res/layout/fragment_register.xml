@@ -47,6 +47,7 @@
                  android:singleLine="true"
 		        android:background="@drawable/registeractivity_search_bg"
 		        android:layout_gravity="center_vertical"
+                android:inputType="phone"
 		        android:hint="@string/phone_number"
                 android:text="">
 				<requestFocus />	       
