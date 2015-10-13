@@ -129,7 +129,7 @@
                         android:textColor="@color/text_white"
                         android:layout_centerVertical="true"
                         android:textSize="@dimen/text_size4"
-                        android:text="@string/order" />
+                        android:text="订单" />
                     <ImageView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
@@ -162,7 +162,7 @@
                         android:layout_centerVertical="true"
                         android:textColor="@color/text_white"
                         android:textSize="@dimen/text_size4"
-                        android:text="@string/mine_carList" />
+                        android:text="我的车辆" />
                     <ImageView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
@@ -195,7 +195,7 @@
                         android:layout_centerVertical="true"
                         android:textColor="@color/text_white"
                         android:textSize="@dimen/text_size4"
-                        android:text="@string/monthly_rent" />
+                        android:text="缴费" />
                     <ImageView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
