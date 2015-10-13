@@ -81,7 +81,7 @@ public class ApiContants {
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("token", "");
 		params.put("client",
-				OpenUDID_manager.isInitialized() ? OpenUDID_manager.getOpenUDID() : DeviceInfo.getDeviceId(context));
+                OpenUDID_manager.isInitialized() ? OpenUDID_manager.getOpenUDID() : DeviceInfo.getDeviceId(context));
 		params.put("time", ""+System.currentTimeMillis());
 		return params;
 	}
@@ -241,4 +241,20 @@ customer_age*/
 		//params.put("order_id",orderId);
 		return params;
 	}
+
+    public static String API_CUSTOMER_SEARCHPARKLISTBYLL="/customer/searchParkListByLL";
+
+    /**
+     * 某停车场附近的停车场列表
+     * parking_latitude
+     * @param parking_latitude
+     * @param parking_longitude
+     * @return
+     */
+    public HashMap<String, String> searchParkListByLL(String parking_latitude,String parking_longitude){
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("parking_latitude", parking_latitude );
+        params.put("parking_longitude",parking_longitude);
+        return params;
+    }
 }

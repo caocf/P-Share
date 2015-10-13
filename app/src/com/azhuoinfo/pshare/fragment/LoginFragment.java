@@ -152,6 +152,7 @@ public class LoginFragment extends BaseContentFragment {
                 if (isEnable()) {
                     if (mLoadingDialog != null) mLoadingDialog.dismiss();
                     showToast(message);
+                    //replaceFragment(HomeFragment.class, "HomeFragment", null);
                 }
 			}
 		});

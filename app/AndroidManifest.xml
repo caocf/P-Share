@@ -17,20 +17,14 @@
 
 	<uses-feature android:name="android.hardware.telephony" android:required="false" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--悬浮窗口-->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
     <!-- gps
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> -->
@@ -40,17 +34,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-         <!-- 应用ID  -->
-        <meta-data android:name="APP_ID" android:value="\ 103"/>
-        <!-- 渠道ID -->
-        <meta-data android:name="CHANNEL_ID" android:value="\ test"/>
-        <!--build日期  -->
-        <meta-data android:name="BUILD_DATE" android:value="20150518"/>
-        <!--svnv  -->
-        <meta-data android:name="BUILD_SVNV" android:value="r67"/>
-        <!--百度地图-->
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY" android:value="GIBUKPKreK7bbReiNlrPz8y8" />
         <!-- OpenUDID -->
 		<service android:name="org.OpenUDID.OpenUDID_service" android:exported="false">
 		    <intent-filter>
@@ -60,6 +43,7 @@
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/splashing_theme"
+            android:screenOrientation="portrait"
             android:label="@string/app_name"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustResize|stateHidden" >
@@ -71,8 +55,17 @@
         
         <activity
             android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-    </application>
+        <!--高德地图 <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="71198b844b5aa4103fa2d9ebb7ec231e" />-->
+        <!--高德地图 debug证书的-->
+       <meta-data
+           android:name="com.amap.api.v2.apikey"
+           android:value="5eb10c04d258624b72ebf85d90017a72" />
+
+   </application>
 
 </manifest>

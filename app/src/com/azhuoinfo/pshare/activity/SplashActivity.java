@@ -34,7 +34,7 @@ public class SplashActivity extends BaseActionBarActivity {
 			public void run() {
 				toMain();
 			}
-		}, 200L);
+		}, 100L);
     }
     public void toMain(){
     	startActivity(new Intent(SplashActivity.this, MainActivity.class));
