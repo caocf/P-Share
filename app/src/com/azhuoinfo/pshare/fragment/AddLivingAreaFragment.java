@@ -36,7 +36,6 @@ public class AddLivingAreaFragment extends BaseContentFragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.left_head,R.drawable.left_head);
         mAccountVerify = AccountVerify.getInstance(getActivity());
     }
 

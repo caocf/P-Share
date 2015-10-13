@@ -35,7 +35,6 @@ public class ResetPassWordFragment extends BaseContentFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.left_head, R.drawable.left_head);
 		Bundle bundle=this.getArguments();
 		customerMobile=bundle.get("customer_mobile").toString();
 		mAccountVerify = AccountVerify.getInstance(getActivity());

@@ -64,7 +64,6 @@ public class UserCenterFragment extends BaseContentFragment {
         mQRCodeText="customer:"+customer_Id+" "+customer_mobile;
 
         Log.e(TAG, customerInfo.getCustomer_Id().toString());
-        this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.left_head, R.drawable.left_head);
         mAccountVerify = AccountVerify.getInstance(getActivity());
     }
 

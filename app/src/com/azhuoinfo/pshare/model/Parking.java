@@ -24,6 +24,8 @@ public class Parking implements Parcelable {
     private String parking_path; //0
     private String parking_province; //上海
     private String parking_status; //0
+    private String parking_distance;
+
     public Parking() {
     }
     protected Parking(Parcel in) {
@@ -43,6 +45,7 @@ public class Parking implements Parcelable {
         parking_path = in.readString();
         parking_province = in.readString();
         parking_status = in.readString();
+        parking_distance = in.readString();
     }
 
     public static final Creator<Parking> CREATOR = new Creator<Parking>() {
@@ -56,6 +59,14 @@ public class Parking implements Parcelable {
             return new Parking[size];
         }
     };
+
+    public String getParking_distance() {
+        return parking_distance;
+    }
+
+    public void setParking_distance(String parking_distance) {
+        this.parking_distance = parking_distance;
+    }
 
     public String getParking_address() {
         return parking_address;
@@ -210,5 +221,6 @@ public class Parking implements Parcelable {
         dest.writeString(parking_path);
         dest.writeString(parking_province);
         dest.writeString(parking_status);
+        dest.writeString(parking_distance);
     }
 }
