@@ -20,8 +20,11 @@ import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.fragment.adapter.CarListAdapter;
+import com.azhuoinfo.pshare.fragment.adapter.ParkingDetailsAdapter;
 import com.azhuoinfo.pshare.model.CarList;
 import com.azhuoinfo.pshare.model.CustomerInfo;
+import com.azhuoinfo.pshare.model.Parking;
+import com.azhuoinfo.pshare.view.PromptView;
 import com.azhuoinfo.pshare.view.listview.MyListView;
 
 import java.util.ArrayList;
@@ -35,28 +38,17 @@ import mobi.cangol.mobile.base.FragmentInfo;
  */
 public class CarListFragment extends BaseContentFragment{
 
-    //返回到上个页面
-    //private ImageView activity_back;
-    //添加进入的车列表
-    private MyListView mCarListView;
-    //添加车
+    private PromptView mPromptView;
+    private ListView mListView;
+    private CarListAdapter mDataAdapter;
     private RelativeLayout mAddCarRelativeLayout;
     private AccountVerify mAccountVerify;
-    private ArrayList<String> list=new ArrayList<String>();
     private CustomerInfo customerInfo;
-    private String customer_Id;
-    private int height;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.left_head, R.drawable.left_head);
         mAccountVerify = AccountVerify.getInstance(getActivity());
-        customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
-        customer_Id=customerInfo.getCustomer_Id();
-        postCarList(customer_Id);
-        WindowManager wm = getActivity().getWindowManager();
-        height = wm.getDefaultDisplay().getHeight();
     }
 
     @Override
@@ -80,24 +72,23 @@ public class CarListFragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
-        mCarListView=(MyListView) findViewById(R.id.lv_list_car);
+        mListView=(ListView) findViewById(R.id.lv_list_car);
+        mPromptView=(PromptView) findViewById(R.id.promptView);
         mAddCarRelativeLayout=(RelativeLayout) findViewById(R.id.rl_add_car_list);
     }
 
     @Override
     protected void initViews(Bundle bundle) {
         this.setTitle(R.string.mine_carList);
+        mDataAdapter=new CarListAdapter(this.getActivity());
+        mListView.setAdapter(mDataAdapter);
         mAddCarRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setContentFragment(AddCarInformationFragment.class, "AddCarInformationFragment", null, ModuleMenuIDS.MODULE_HOME);
             }
         });
-        /*for(int i=0;i<5;i++){
-            list.add(""+i);
-        }*/
-        mCarListView.setMaxHeight(height / 3 * 2);
-        mCarListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 replaceFragment(MonthlyRentCarFinishPayFragment.class,"MonthlyRentCarFinishPayFragment",null);
@@ -106,7 +97,7 @@ public class CarListFragment extends BaseContentFragment{
     }
     @Override
     protected void initData(Bundle bundle) {
-
+        postCarList(mAccountVerify.getCustomer_Id());
     }
 
     @Override
@@ -118,6 +109,19 @@ public class CarListFragment extends BaseContentFragment{
     public boolean isCleanStack() {
         return true;
     }
+    protected void updateViews(List<CarList> list) {
+        if(list!=null&&list.size()>0){
+            mDataAdapter.clear();
+            mDataAdapter.addAll(list);
+            if(mDataAdapter.getCount()>0){
+                mPromptView.showContent();
+            }else{
+                mPromptView.showPrompt(R.string.common_empty);
+            }
+        }else{
+            mPromptView.showPrompt(R.string.common_empty);
+        }
+    }
     public void postCarList(String customerId){
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
@@ -125,21 +129,22 @@ public class CarListFragment extends BaseContentFragment{
         apiTask.setParams(ApiContants.instance(getActivity()).userCarList(customerId));
         apiTask.setRoot("orderInfo");
         apiTask.execute(new OnDataLoader<List<CarList>>() {
-            @Override
             public void onStart() {
-
+                if (isEnable())
+                    mPromptView.showLoading();
             }
+
             @Override
-            public void onSuccess(boolean page, List<CarList> carLists) {
-                for (int i=0;i<carLists.size();i++){
-                    CarList carList=carLists.get(i);
-                    Log.e(TAG,carList+"");
-                    mCarListView.setAdapter(new CarListAdapter(getActivity(), carLists));
+            public void onSuccess(boolean page, List<CarList> list) {
+                if (isEnable()) {
+                    updateViews(list);
                 }
             }
+
             @Override
             public void onFailure(String code, String message) {
-
+                if (isEnable())
+                    mPromptView.showEmpty();
             }
         });
     }

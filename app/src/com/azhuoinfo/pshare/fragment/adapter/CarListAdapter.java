@@ -21,20 +21,10 @@ import mobi.cangol.mobile.utils.TimeUtils;
 
 public class CarListAdapter extends BaseAdapter<CarList> {
 
-	private List<CarList> list;
-	private Context context;
 
 	public CarListAdapter(Context context) {
 		super(context);
 	}
-
-	public CarListAdapter(Context context, List<CarList> items) {
-		super(context, items);
-		this.context=context;
-		this.list=items;
-	}
-
-
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder=null;
@@ -45,18 +35,17 @@ public class CarListAdapter extends BaseAdapter<CarList> {
 			holder.mCarNumberTextView=(TextView) convertView.findViewById(R.id.tv_car_number);
 			holder.mCarBrandTextView=(TextView) convertView.findViewById(R.id.tv_car_brand);
 			convertView.setTag(holder);
-
 		}else{
 			holder=(ViewHolder)convertView.getTag();
 		}
-		holder.mCarNumberTextView.setText(list.get(position).getCar_number());
-		holder.mCarBrandTextView.setText(list.get(position).getCar_brand());
+        CarList item=this.getItem(position);
+		holder.mCarNumberTextView.setText(item.getCar_number());
+		holder.mCarBrandTextView.setText(item.getCar_brand());
 		return convertView;
 	}
 	static class ViewHolder {
-		View layout;
-		private ImageView mCarImageView;
-		private TextView mCarNumberTextView;
-		private TextView mCarBrandTextView;
+		 ImageView mCarImageView;
+		 TextView mCarNumberTextView;
+		 TextView mCarBrandTextView;
 	}
 }

@@ -48,7 +48,6 @@ public class SetUpFragment extends BaseContentFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.left_head, R.drawable.left_head);
         return inflater.inflate(R.layout.fragment_set_up,container,false);
     }
 

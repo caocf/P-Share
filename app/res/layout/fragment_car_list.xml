@@ -1,47 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/fragment_background"
-    android:orientation="vertical" >
-	<LinearLayout
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:orientation="vertical">
-	   <com.azhuoinfo.pshare.view.listview.MyListView
-		   android:id="@+id/lv_list_car"
-		   android:layout_height="wrap_content"
-		   android:layout_width="match_parent"
-		   android:layout_marginTop="@dimen/padding1"
-		   android:fastScrollEnabled="true"
-		   android:background="@color/text_white"/>
-	   <RelativeLayout
-		   android:id="@+id/rl_add_car_list"
-		   android:layout_height="wrap_content"
-		   android:layout_width="match_parent"
-		   android:background="@color/text_white"
-		   android:layout_gravity="center_horizontal"
-		   android:paddingTop="@dimen/padding1"
-		   android:paddingBottom="@dimen/padding1"
-		   android:layout_marginTop="@dimen/padding4"
-		   android:layout_marginBottom="@dimen/padding4">
-		   <ImageView
-			   android:id="@+id/iv_add_address"
-			   android:layout_height="wrap_content"
-			   android:layout_width="wrap_content"
-			   android:layout_centerVertical="true"
-			   android:layout_toLeftOf="@+id/tv_add_car_list"
-			   android:layout_marginRight="@dimen/padding2"
-			   android:src="@drawable/add"/>
-		   <TextView
-			   android:id="@+id/tv_add_car_list"
-			   android:layout_height="wrap_content"
-			   android:layout_width="wrap_content"
-			   android:textSize="@dimen/text_size3"
-			   android:layout_marginTop="@dimen/padding1"
-			   android:layout_centerInParent="true"
-			   android:textColor="#999d9c"
-			   android:text="@string/add"/>
-	   </RelativeLayout>
-	</LinearLayout>
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/fragment_background"
+              android:orientation="vertical">
+
+    <com.azhuoinfo.pshare.view.PromptView
+        android:id="@+id/promptView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ListView
+        android:id="@+id/lv_list_car"
+        style="@style/Common_ListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_add_car_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/padding4"
+        android:layout_marginTop="@dimen/padding4"
+        android:background="@color/text_white"
+        android:paddingBottom="@dimen/padding1"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/iv_add_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/padding2"
+            android:layout_toLeftOf="@+id/tv_add_car_list"
+            android:src="@drawable/add"/>
+
+        <TextView
+            android:id="@+id/tv_add_car_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/padding1"
+            android:text="@string/add"
+            android:textColor="#999d9c"
+            android:textSize="@dimen/text_size3"/>
+    </RelativeLayout>
 </LinearLayout>

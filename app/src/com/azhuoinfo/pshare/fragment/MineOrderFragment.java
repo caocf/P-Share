@@ -47,7 +47,6 @@ public class MineOrderFragment extends BaseContentFragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.left_head, R.drawable.left_head);
         mAccountVerify = AccountVerify.getInstance(getActivity());
         customerInfo=(CustomerInfo) this.app.getSession().get("customerInfo");
         customer_Id=customerInfo.getCustomer_Id();
