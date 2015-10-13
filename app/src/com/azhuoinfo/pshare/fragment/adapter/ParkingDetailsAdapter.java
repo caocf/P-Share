@@ -57,7 +57,8 @@ public class ParkingDetailsAdapter extends BaseAdapter<Parking> {
         holder.mParkingPriceTextView.setText(""+item.getParking_charging_standard());
         int s= (int) AMapUtils.calculateLineDistance(new LatLng(Double.parseDouble(item.getParking_latitude()), Double.parseDouble(item.getParking_longitude())),
                 new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()));
-        holder.mParkingDistanceTextView.setText(s+"米");
+        item.setParking_distance(""+s);
+        holder.mParkingDistanceTextView.setText(item.getParking_distance()+"米");
 
         return convertView;
     }

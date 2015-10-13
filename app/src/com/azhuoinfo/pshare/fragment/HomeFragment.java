@@ -186,7 +186,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         mAmap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
         mAmap.setOnMarkerClickListener(this);// 设置点击marker事件监听器
         mAmap.setOnInfoWindowClickListener(this);// 设置点击infoWindow事件监听器
-        //mAmap.setInfoWindowAdapter(this);// 设置自定义InfoWindow样式
+        //// 设置自定义InfoWindow样式
         mAmap.setInfoWindowAdapter(new AMap.InfoWindowAdapter() {
 
             @Override
@@ -211,9 +211,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                     num.setText("满:" + parking.getParking_can_use());
                 }
                 address.setText("" + parking.getParking_address());
-                int s = (int) AMapUtils.calculateLineDistance(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())),
-                        new LatLng(mAMapLocation.getLatitude(), mAMapLocation.getLongitude()));
-                distance.setText(s + "米");
+                distance.setText(parking.getParking_distance() + "米");
                 return view;
             }
         });
@@ -313,11 +311,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             @Override
             public void onSuccess(boolean page, List<Parking> list) {
                 if (isEnable()) {
-                    if(list!=null&&list.size()>0){
                         drawMarker(list);
-                    }else{
-                        showToast("没有搜索停车场");
-                    }
                 }
             }
 
@@ -339,16 +333,13 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 
             @Override
             public void onStart() {
+
             }
 
             @Override
             public void onSuccess(boolean page, List<Parking> list) {
                 if (isEnable()) {
-                    if(list!=null&&list.size()>0){
-                        drawMarker(list);
-                    }else{
-                        showToast("附近没有停车场");
-                    }
+                    drawMarker(list);
                 }
             }
 
@@ -361,21 +352,30 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         });
     }
     public void drawMarker(List<Parking> list){
-        //mAmap.clear();
-        if(mListener!=null&&mAMapLocation!=null)
-            mListener.onLocationChanged(mAMapLocation);// 显示系统小蓝点
-        MarkerOptions markerOption=null;
-        Parking parking=null;
-        Marker marker=null;
-        for (int i=0;i<list.size();i++){
-            parking=list.get(i);
-            markerOption = new MarkerOptions();
-            markerOption.position(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())));
-            markerOption.title(parking.getParking_name()).snippet(parking.getParking_address());
-            markerOption.draggable(true);
-            markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.empty));
-            marker=mAmap.addMarker(markerOption);
-            marker.setObject(parking);
+        if(list!=null&&list.size()>0){
+            mAmap.clear();//清除marker信息，（清除掉了当前位置）
+            mAmap.setLocationSource(this);
+            mAmap.getUiSettings().setMyLocationButtonEnabled(true);
+            mAmap.setMyLocationEnabled(true);
+
+            MarkerOptions markerOption=null;
+            Parking parking=null;
+            Marker marker=null;
+            for (int i=0;i<list.size();i++){
+                parking=list.get(i);
+                int s = (int) AMapUtils.calculateLineDistance(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())),
+                        new LatLng(mAMapLocation.getLatitude(), mAMapLocation.getLongitude()));
+                parking.setParking_distance(""+s);
+                markerOption = new MarkerOptions();
+                markerOption.position(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())));
+                markerOption.title(parking.getParking_name()).snippet(parking.getParking_address());
+                markerOption.draggable(true);
+                markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.empty));
+                marker=mAmap.addMarker(markerOption);
+                marker.setObject(parking);
+            }
+        }else{
+            showToast("附近没有停车场");
         }
     }
 
