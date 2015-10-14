@@ -24,6 +24,7 @@ import com.azhuoinfo.pshare.utils.Constants;
 import com.azhuoinfo.pshare.view.CommonDialog;
 
 import mobi.cangol.mobile.logging.Log;
+import mobi.cangol.mobile.navigation.DrawerNavigationFragmentActivity;
 import mobi.cangol.mobile.navigation.SlidingNavigationFragmentActivity;
 import mobi.cangol.mobile.service.AppService;
 import mobi.cangol.mobile.service.global.GlobalData;
@@ -35,7 +36,7 @@ import mobi.cangol.mobile.utils.StringUtils;
 import mobi.cangol.mobile.utils.TimeUtils;
 
 @SuppressLint("ResourceAsColor")
-public class MainActivity extends SlidingNavigationFragmentActivity implements OnLoginListener, StatusListener {
+public class MainActivity extends DrawerNavigationFragmentActivity implements OnLoginListener, StatusListener {
 	private static long back_pressed;
 	private boolean isBackPressed;
 	private CommonDialog mLoginDialog;

@@ -28,24 +28,24 @@ public class CarListAdapter extends BaseAdapter<CarList> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder=null;
-		if(convertView==null){
-			convertView = this.mInflater.inflate(R.layout.listview_item_car, parent, false);
-			holder=new ViewHolder();
-			holder.mCarImageView=(ImageView) convertView.findViewById(R.id.iv_car);
-			holder.mCarNumberTextView=(TextView) convertView.findViewById(R.id.tv_car_number);
-			holder.mCarBrandTextView=(TextView) convertView.findViewById(R.id.tv_car_brand);
-			convertView.setTag(holder);
-		}else{
-			holder=(ViewHolder)convertView.getTag();
-		}
+        if(convertView==null){
+            convertView = this.mInflater.inflate(R.layout.listview_item_car, parent, false);
+            holder=new ViewHolder();
+            holder.mCarImageView=(ImageView) convertView.findViewById(R.id.iv_car);
+            holder.mCarNumberTextView=(TextView) convertView.findViewById(R.id.tv_car_number);
+            holder.mCarBrandTextView=(TextView) convertView.findViewById(R.id.tv_car_brand);
+            convertView.setTag(holder);
+        }else{
+            holder=(ViewHolder)convertView.getTag();
+        }
         CarList item=this.getItem(position);
-		holder.mCarNumberTextView.setText(item.getCar_number());
-		holder.mCarBrandTextView.setText(item.getCar_brand());
-		return convertView;
-	}
-	static class ViewHolder {
-		 ImageView mCarImageView;
-		 TextView mCarNumberTextView;
+        holder.mCarNumberTextView.setText(item.getCar_number());
+        holder.mCarBrandTextView.setText(item.getCar_brand());
+        return convertView;
+    }
+    static class ViewHolder {
+        ImageView mCarImageView;
+        TextView mCarNumberTextView;
 		 TextView mCarBrandTextView;
 	}
 }

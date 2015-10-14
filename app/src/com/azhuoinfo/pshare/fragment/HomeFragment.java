@@ -19,6 +19,7 @@ import com.amap.api.location.LocationManagerProxy;
 import com.amap.api.location.LocationProviderProxy;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapUtils;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
@@ -94,6 +95,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);// 必须要写
         mAmap = mMapView.getMap();
+        mAmap.moveCamera(CameraUpdateFactory.zoomTo(14));
 
 		mChangeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,6 +179,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         setUpMap();
     }
     private void setUpMap() {
+        showToast("正在定位中....");
         mAmap.setLocationSource(this);// 设置定位监听
         mAmap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
         //mAmap.getUiSettings().setZoomControlsEnabled(false);
@@ -353,7 +356,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
     }
     public void drawMarker(List<Parking> list){
         if(list!=null&&list.size()>0){
-            mAmap.clear();//清除marker信息，（清除掉了当前位置）
+            //mAmap.clear();//清除marker信息，（清除掉了当前位置）
             mAmap.setLocationSource(this);
             mAmap.getUiSettings().setMyLocationButtonEnabled(true);
             mAmap.setMyLocationEnabled(true);
