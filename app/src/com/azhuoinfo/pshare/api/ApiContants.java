@@ -258,7 +258,18 @@ customer_age*/
         return params;
     }
 
+    public static String API_CUSTOMER_SEARCHPARKLISTBYAREA="/customer/searchParkListbyArea";
 
+    /**
+     * 搜索停车场列表
+     * @param parking_area
+     * @return
+     */
+    public HashMap<String, String> searchParkListbyArea(String parking_area){
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("parking_area", parking_area );
+        return params;
+    }
 
     public static String API_CUSTOMER_SEARCHPARKLISTBYNAME="/customer/searchParkListbyName";
 
@@ -270,6 +281,29 @@ customer_age*/
     public HashMap<String, String> searchParkListbyName(String name){
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("name", name );
+        return params;
+    }
+    public static String API_CUSTOMER_SEARCHSAVEPARKLIST="/customer/searchSaveParkList";
+    /**
+     * 停车场收藏清单
+     * @param customer_id
+     * @return
+     */
+    public HashMap<String, String> searchSaveParkList(String customer_id){
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("customer_id", customer_id );
+        return params;
+    }
+    public static String API_CUSTOMER_SAVEPARKING="/customer/saveParking";
+    /**
+     * 收藏停车场
+     * @param customer_id
+     * @return
+     */
+    public HashMap<String, String> saveParking(String customer_id,String parking_id){
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("customer_id", customer_id );
+        params.put("parking_id", parking_id );
         return params;
     }
 }

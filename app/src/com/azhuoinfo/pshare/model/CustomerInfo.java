@@ -9,6 +9,7 @@ import mobi.cangol.mobile.parser.Element;
  */
 public class CustomerInfo implements Serializable{
 
+    private static final long serialVersionUID = 0L;
     private String token;
     private String customer_id;
     private String customer_point;
