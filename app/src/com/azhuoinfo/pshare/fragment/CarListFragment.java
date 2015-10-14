@@ -38,12 +38,10 @@ import mobi.cangol.mobile.base.FragmentInfo;
  */
 public class CarListFragment extends BaseContentFragment{
 
-    private PromptView mPromptView;
     private ListView mListView;
     private CarListAdapter mDataAdapter;
     private RelativeLayout mAddCarRelativeLayout;
     private AccountVerify mAccountVerify;
-    private CustomerInfo customerInfo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,7 +71,6 @@ public class CarListFragment extends BaseContentFragment{
     @Override
     protected void findViews(View view) {
         mListView=(ListView) findViewById(R.id.lv_list_car);
-        mPromptView=(PromptView) findViewById(R.id.promptView);
         mAddCarRelativeLayout=(RelativeLayout) findViewById(R.id.rl_add_car_list);
     }
 
@@ -91,7 +88,7 @@ public class CarListFragment extends BaseContentFragment{
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                replaceFragment(MonthlyRentCarFinishPayFragment.class,"MonthlyRentCarFinishPayFragment",null);
+
             }
         });
     }
@@ -113,13 +110,8 @@ public class CarListFragment extends BaseContentFragment{
         if(list!=null&&list.size()>0){
             mDataAdapter.clear();
             mDataAdapter.addAll(list);
-            if(mDataAdapter.getCount()>0){
-                mPromptView.showContent();
-            }else{
-                mPromptView.showPrompt(R.string.common_empty);
-            }
         }else{
-            mPromptView.showPrompt(R.string.common_empty);
+            showToast(R.string.common_empty);
         }
     }
     public void postCarList(String customerId){
@@ -130,8 +122,6 @@ public class CarListFragment extends BaseContentFragment{
         apiTask.setRoot("orderInfo");
         apiTask.execute(new OnDataLoader<List<CarList>>() {
             public void onStart() {
-                if (isEnable())
-                    mPromptView.showLoading();
             }
 
             @Override
@@ -143,8 +133,7 @@ public class CarListFragment extends BaseContentFragment{
 
             @Override
             public void onFailure(String code, String message) {
-                if (isEnable())
-                    mPromptView.showEmpty();
+                showToast(message);
             }
         });
     }

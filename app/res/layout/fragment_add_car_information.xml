@@ -1,104 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_color"
-    android:orientation="vertical" >
-    <TextView
-        android:id="@+id/text_head_car_number"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginLeft="@dimen/padding3"
-        android:layout_marginTop="@dimen/padding2"
-        android:layout_marginBottom="@dimen/padding2"
-        android:textSize="@dimen/text_size3"
-        android:text="@string/car_number"/>
-    <RelativeLayout
-        android:id="@+id/rl_car_location"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/text_head_car_number"
-        android:background="@color/text_white"
-        android:padding="@dimen/padding3">
-        <TextView
-            android:id="@+id/tv_car_location1"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/text_size3"
-            android:hint="@string/fill_in_car_address"/>
-        <TextView
-            android:id="@+id/tv_car_location"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_toRightOf="@+id/tv_car_location1"
-            android:textSize="@dimen/text_size3"/>
-        <ImageButton
-            android:id="@+id/ib_car_location"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@null"
-            android:layout_centerVertical="true"
-            android:src="@drawable/big_downhead"/>
-    </RelativeLayout>
-    <EditText
-        android:id="@+id/et_car_number"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/padding10"
-        android:layout_below="@+id/rl_car_location"
-        android:padding="@dimen/padding3"
-        android:background="@color/text_white"
-        android:textSize="@dimen/text_size3"
-        android:hint="@string/Fill_in_car_number"/>
-    <TextView
-        android:id="@+id/text_head_car_size"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/et_car_number"
-        android:layout_marginLeft="@dimen/padding3"
-        android:layout_marginTop="@dimen/padding2"
-        android:layout_marginBottom="@dimen/padding2"
-        android:textSize="@dimen/text_size3"
-        android:text="@string/car_brand"/>
-     <EditText
-        android:id="@+id/et_car_brand"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/text_head_car_size"
-        android:layout_marginTop="@dimen/padding10"
-        android:padding="@dimen/padding3"
-        android:background="@color/text_white"
-        android:textSize="@dimen/text_size3"
-        android:hint="@string/fill_in_car_brand"/>
-     <Button
-         android:id="@+id/button_confirm" 
-         style="@style/button_style"
-         android:layout_below="@+id/et_car_brand"
-         android:text="@string/confirm"/>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/fragment_background">
+
     <LinearLayout
-        android:id="@+id/ll_car_area"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone"
-        android:padding="@dimen/padding10"
-        android:focusable="false"
-        android:background="@color/fragment_background"
-        android:layout_alignParentBottom="true">
-        <GridView
-            android:id="@+id/gv_car_area1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding1"
-            android:numColumns="10">
-        </GridView>
-        <GridView
-            android:id="@+id/gv_car_area2"
+            android:layout_margin="12dp"
+            android:text="@string/car_number"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/et_car_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding1"
-            android:numColumns="10">
-        </GridView>
+            android:background="@color/text_white"
+            android:drawableRight="@drawable/big_downhead"
+            android:singleLine="true"
+            android:clickable="true"
+            android:hint="@string/fill_in_car_address"
+            android:padding="12dp"
+            android:textSize="16sp"/>
+
+        <include layout="@layout/common_view_line"></include>
+
+        <EditText
+            android:id="@+id/et_car_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/text_white"
+            android:singleLine="true"
+            android:hint="@string/Fill_in_car_number"
+            android:maxLength="5"
+            android:padding="12dp"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="@string/car_brand"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/et_car_brand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/text_white"
+            android:singleLine="true"
+            android:hint="@string/fill_in_car_brand"
+            android:padding="12dp"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="@string/car_sfzid"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/et_car_sfzid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/text_white"
+            android:singleLine="true"
+            android:hint="@string/fill_in_car_sfzid"
+            android:padding="12dp"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/button_confirm"
+            style="@style/Common_Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="@string/confirm"/>
+
     </LinearLayout>
-</RelativeLayout>
+</ScrollView>

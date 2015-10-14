@@ -5,16 +5,13 @@
               android:background="@color/fragment_background"
               android:orientation="vertical">
 
-    <com.azhuoinfo.pshare.view.PromptView
-        android:id="@+id/promptView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
     <ListView
         android:id="@+id/lv_list_car"
         style="@style/Common_ListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
 
     <RelativeLayout
         android:id="@+id/rl_add_car_list"
