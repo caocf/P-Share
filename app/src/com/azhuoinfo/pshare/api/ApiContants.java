@@ -306,4 +306,17 @@ customer_age*/
         params.put("parking_id", parking_id );
         return params;
     }
+
+
+    public static String API_CUSTOMER_SEARCHPARKBYID="/customer/searchParkbyId";
+    /**
+     * 收藏停车场
+     * @param parking_id
+     * @return
+     */
+    public HashMap<String, String> searchParkbyId(String parking_id){
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("parking_id", parking_id );
+        return params;
+    }
 }
