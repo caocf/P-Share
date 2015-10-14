@@ -7,7 +7,7 @@
     <LinearLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
-	    android:background="@color/bg_color"
+	    android:background="@color/fragment_background"
 	    android:orientation="vertical" >
 		<TextView
 			android:id="@+id/tv_you_servicePerson"
@@ -37,15 +37,38 @@
 				android:layout_marginTop="@dimen/padding1"
 				android:src="@drawable/userhead"/>
 			<!-- 代泊员号  -->
-			<TextView
-				android:id="@+id/tv_parker_id"
+			<LinearLayout
+				android:id="@+id/ll_parker_id"
 				android:layout_height="wrap_content"
 				android:layout_width="wrap_content"
 				android:layout_centerHorizontal="true"
-				android:layout_marginTop="@dimen/padding2"
-				android:textSize="@dimen/text_size3"
+				android:layout_marginTop="@dimen/padding1"
 				android:layout_below="@+id/iv_parker_head"
-				android:text="@string/tv_order_servicePerson"/>
+				android:orientation="horizontal">
+				<TextView
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:layout_centerHorizontal="true"
+					android:layout_marginTop="@dimen/padding2"
+					android:textSize="@dimen/text_size3"
+					android:text="@string/tv_order_servicePerson"
+					/>
+				<TextView
+					android:id="@+id/tv_parker_id"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerHorizontal="true"
+					android:layout_marginTop="@dimen/padding2"
+					android:text="2"
+					android:textSize="@dimen/text_size3" />
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerHorizontal="true"
+					android:layout_marginTop="@dimen/padding2"
+					android:text="号"
+					android:textSize="@dimen/text_size3" />
+			</LinearLayout>
 			<!-- 代泊员的职务 -->
 			<LinearLayout
 				android:id="@+id/ll_parker_position"
@@ -53,7 +76,7 @@
 				android:layout_width="wrap_content"
 				android:layout_centerHorizontal="true"
 				android:layout_marginTop="@dimen/padding1"
-				android:layout_below="@+id/tv_parker_id"
+				android:layout_below="@+id/ll_parker_id"
 				android:orientation="horizontal">
 				<TextView
 					android:layout_height="wrap_content"
@@ -61,7 +84,7 @@
 					android:textSize="@dimen/text_size3"
 					android:text="@string/tv_order_servicePerson_position"/>
 				<TextView
-					android:id="@+id/tv_parker_position"
+					android:id="@+id/tv_parker_Level"
 					android:layout_height="wrap_content"
 					android:layout_width="wrap_content"
 					android:textSize="@dimen/text_size3"
@@ -150,6 +173,7 @@
 	             android:layout_height="wrap_content"
 	             android:layout_width="wrap_content"
 	             android:textSize="@dimen/text_size3"
+				 android:textColor="@color/text_light_gray"
 	             android:text="@string/text_order_time"/>
 	     </LinearLayout>
 	     <!--  预约取车时间-->
@@ -169,6 +193,7 @@
 	             android:layout_height="wrap_content"
 	             android:layout_width="wrap_content"
 	             android:textSize="@dimen/text_size3"
+				 android:textColor="@color/text_light_gray"
 	             android:text="@string/text_order_takeCar_time"/>
 	     </LinearLayout>
 	     <!--  停车计时-->
@@ -208,109 +233,48 @@
 	             android:layout_height="wrap_content"
 	             android:layout_width="wrap_content"
 	             android:textSize="@dimen/text_size3"
+				 android:textColor="@color/text_light_gray"
 	             android:text="@string/text_order_car_number"/>
 	     </LinearLayout>
-		<LinearLayout
+		<RelativeLayout
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/padding11"
 			android:id="@+id/container"
 			android:clipChildren="false"
+			android:gravity="center"
 			android:layerType="software"
 			android:orientation="horizontal" >
-			<android.support.v4.view.ViewPager
-				android:id="@+id/viewPager"
+			<ImageView
+				android:id="@+id/iv_left"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dp"
+				android:layout_centerVertical="true"
+				android:src="@drawable/order_left"/>
+			<GridView
+				android:id="@+id/gridview_photos"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
+				android:layout_toRightOf="@+id/iv_left"
+				android:layout_toLeftOf="@+id/iv_right"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:numColumns="3"
 				android:clipChildren="false">
-			</android.support.v4.view.ViewPager>
-		</LinearLayout>
+			</GridView>
+			<ImageView
+				android:id="@+id/iv_right"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="10dp"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:src="@drawable/order_right"/>
+		</RelativeLayout>
 
-		<!--<com.azhuoinfo.pshare.view.touchgallery.GalleryViewPager
-			android:id="@+id/gallery_picture"
-			android:layout_height="@dimen/padding11"
-			android:layout_width="match_parent">
-		</com.azhuoinfo.pshare.view.touchgallery.GalleryViewPager>-->
-		<!--<RelativeLayout
-             android:layout_height="100dp"
-             android:layout_width="match_parent"
-             android:background="#ff00ff">
-         </RelativeLayout>-->
 	     <Button
 			 android:id="@+id/button_finish_order_pay"
 	         style="@style/button_style"
 	         android:text="@string/button_payfinish"/>
 	</LinearLayout>
-	<!--<RelativeLayout
-		android:id="@+id/rl_to_pay"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:visibility="gone"
-		android:background="@color/bg_half_transparency">
-		<LinearLayout
-			android:layout_width="240dp"
-			android:layout_height="240dp"
-			android:layout_centerInParent="true"
-			android:background="@android:color/white"
-			android:orientation="vertical"
-			android:padding="15dp" >
-			<RelativeLayout
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal" >
-				<TextView
-					android:id="@+id/text_money"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginBottom="5dp"
-					android:text="总金额：" />
-				<TextView
-					android:id="@+id/tv_money"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_toRightOf="@+id/text_money"
-					android:textColor="@color/text_color_red"
-					android:text="200元" />
-				<ImageView
-					android:id="@+id/iv_close"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_alignParentRight="true"
-					android:background="@drawable/circle_rectangle"/>
-			</RelativeLayout>
-			<View
-				android:layout_width="240dp"
-				android:layout_height="0.5dp"
-				android:layout_marginTop="5dp"
-				android:background="@color/text_light_gray" />
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="5dp"
-				android:text="@string/pay_way" />
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/padding2"
-				android:orientation="horizontal" >
-				<CheckBox
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:drawableEnd="@drawable/zhifubao"
-					android:drawableRight="@drawable/zhifubao" />
-				<CheckBox
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:drawableEnd="@drawable/weixin"
-					android:drawableRight="@drawable/weixin" />
-			</LinearLayout>
-			<Button
-				android:id="@+id/btn_pay"
-				android:layout_width="190dp"
-				android:layout_height="40dp"
-				android:layout_marginTop="30dp"
-				android:layout_gravity="center_horizontal"
-				android:background="@drawable/button"
-				android:text="@string/pay"/>
-		</LinearLayout>
-	</RelativeLayout>-->
 </ScrollView>

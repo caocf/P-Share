@@ -91,10 +91,8 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 	@Override
 	protected void findViews(View view) {
 		mMineHomeButton=(Button) view.findViewById(R.id.button_mine_home);
+		mChangeButton=(Button) view.findViewById(R.id.button_change);
 		mMineHomeButtonLinearLayout=(LinearLayout) view.findViewById(R.id.ll_mine_home);
-        mParkNameTextView=(TextView) view.findViewById(R.id.tv_parking_name);
-        mParkNumTextView=(TextView) view.findViewById(R.id.tv_parking_num);
-        mParkChangeTextView=(TextView) view.findViewById(R.id.tv_parking_change);
 	}
 
 	@Override

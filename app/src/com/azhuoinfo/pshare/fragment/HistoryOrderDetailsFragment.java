@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.model.OrderList;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
@@ -39,10 +40,31 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
     private TextView mCarNumberTextView;
 
     private AccountVerify mAccountVerify;
+    private OrderList orderList;
+    private String parakerId;
+    private String parkerLevel;
+    private String parkerMobile;
+    private String orderActualBegin;
+    private String parkerName;
+    private String orderPlanEnd;
+    private String carNumber;
+    private String orderDuration;
+    private String orderTotalFee;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAccountVerify = AccountVerify.getInstance(getActivity());
+        orderList=(OrderList)this.getArguments().get("orderList");
+        parakerId=orderList.getParker_id();
+        parkerLevel=orderList.getParkerLevel();
+        parkerMobile=orderList.getParker_mobile();
+        orderActualBegin=orderList.getOrder_actual_begin();
+        orderDuration=orderList.getOrder_duration();
+        orderTotalFee=orderList.getOrder_total_fee();
+        parkerName=orderList.getParker_name();
+        carNumber=orderList.getCar_number();
+
     }
 
     @Override
@@ -50,7 +72,6 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
         super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_history_order_details,container,false);
     }
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -80,6 +101,16 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
 
     @Override
     protected void initViews(Bundle bundle) {
+        mParkerIDTextView.setText(parakerId);
+        mParkerAreaTextView.setText(parkerName);
+        mParkerMobileTextView.setText(parkerMobile);
+        mParkerPositionTextView.setText(parkerLevel);
+        mPayMoneyTextView.setText(orderTotalFee);
+        mOrderDateTextView.setText(orderActualBegin);
+        mStopCarTimeTextView.setText(orderDuration);
+        mCarNumberTextView.setText(carNumber);
+
+
 
     }
 

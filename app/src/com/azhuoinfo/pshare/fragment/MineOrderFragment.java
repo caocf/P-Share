@@ -1,5 +1,4 @@
 package com.azhuoinfo.pshare.fragment;
-
 import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -50,13 +49,10 @@ public class MineOrderFragment extends BaseContentFragment{
         mAccountVerify = AccountVerify.getInstance(getActivity());
         customerInfo=(CustomerInfo) this.app.getSession().get("customerInfo");
         customer_Id=customerInfo.getCustomer_Id();
+        //AlarmManager am = (AlarmManager)("http://139.196.12.103/1/1.0.0/customer/unfinishedOrder?customer_id="+customer_Id.toString());
+       // am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,0,5*1000,);
         postUnfinishedOrder(customer_Id);
-        //unfinishedOrderInfos=(List<UnfinishedOrderInfo>)this.app.getSession().get("unfinishedOrderInfos");
-        // listSize=unfinishedOrderInfos.size();
-       /* for(int i=0;i<unfinishedOrderInfos.size();i++){
-            UnfinishedOrderInfo unfinishedOrderInfo=unfinishedOrderInfos.get(i);
-            order_state=unfinishedOrderInfo.getOrder_state();
-        }*/
+
     }
 
     @Override
@@ -81,9 +77,11 @@ public class MineOrderFragment extends BaseContentFragment{
     protected void findViews(View view) {
         mTabHost = (TabHost)view.findViewById(android.R.id.tabhost);
         mTabHost.setup();
-        Log.e(TAG,order_state+"order_state");
+        Log.e(TAG, order_state + "order_state");
         mTabManager=new TabManager(this.getChildFragmentManager(),mTabHost,R.id.realtabcontent);
-        //mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator("预/订"), Order4Fragment.class, new Bundle());
+        mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator("预/订"), Order1Fragment.class, new Bundle());
+        mTabManager.addTab(mTabHost.newTabSpec("ItemFragment2").setIndicator("历史订单"), HistoryOrderFragment.class, new Bundle());
+
 
     }
     @Override
@@ -135,7 +133,7 @@ public class MineOrderFragment extends BaseContentFragment{
                         Log.e(TAG, order_state);
                     }
                 }
-                initTable();
+                //initTable();
             }
             @Override
             public void onFailure(String code, String message) {
@@ -143,4 +141,5 @@ public class MineOrderFragment extends BaseContentFragment{
             }
         });
     }
+
 }

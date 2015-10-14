@@ -51,6 +51,8 @@
     <string name="time">"时间 : "</string>
     <string name="make_appointment">"预约代泊 "</string>
     <string name="price">"价格： "</string>
+    <string name="text_price">元/小时</string>
+    <string name="text_distance">米</string>
     <string name="remaining_space">"剩余车位： "</string>
     <string name="distance">"距离： "</string>
     <string name="address">"地址： "</string>
@@ -170,7 +172,7 @@
     <!-- 预定完成后的返回代泊员信息 -->
     <string name="text_order_servicePerson_area">恒积大厦</string>
     <string name="text_order_servicePerson_position">高级代泊员</string>
-    <string name="tv_order_servicePerson">代泊员2号</string>
+    <string name="tv_order_servicePerson">代泊员</string>
     <string name="text_order_pay_money">20元</string>
     <string name="text_order_time">16:40</string>
     <string name="text_order_takeCar_time">20:30</string>
@@ -184,5 +186,11 @@
     <string name="text_pay_money">30元</string>
 
     <string name="qr_code_content">(请将左侧二维码拿给代泊员扫描录入)</string>
+
+
+    <string-array name="user_face_from">
+        <item>从相册选择</item>
+        <item>拍照</item>
+    </string-array>
 
 </resources>

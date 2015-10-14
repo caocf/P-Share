@@ -72,6 +72,8 @@ public class UnfinishedOrderInfo {
     private String parking_region;
     private String parking_latitude;
     private String parking_longitude;
+
+    private String parker_level;
     private String parker_id;
     private String parker_name;
     private String parker_mobile;
@@ -82,10 +84,7 @@ public class UnfinishedOrderInfo {
     private String car_color;
     private String car_buy_date;
 
-    public UnfinishedOrderInfo() {
-    }
-
-    public UnfinishedOrderInfo(String order_id, String order_unit_fee, String order_paid_amount, String order_total_fee, String order_plan_begin, String order_plan_end, String order_actual_begin, String order_actual_end, String order_path, String order_state, String create_at, String customer_id, String customer_nickname, String customer_head, String customer_sex, String customer_name, String customer_age, String customer_mobile, String customer_email, String parking_id, String parking_name, String parking_region, String parking_latitude, String parking_longitude, String parker_id, String parker_name, String parker_mobile, String parker_cardid, String car_number, String car_brand, String car_color, String car_buy_date) {
+    public UnfinishedOrderInfo(String order_id, String order_unit_fee, String order_paid_amount, String order_total_fee, String order_plan_begin, String order_plan_end, String order_actual_begin, String order_actual_end, String order_path, String order_state, String create_at, String customer_id, String customer_nickname, String customer_head, String customer_sex, String customer_name, String customer_age, String customer_mobile, String customer_email, String parking_id, String parking_name, String parking_region, String parking_latitude, String parking_longitude, String parker_level, String parker_id, String parker_name, String parker_mobile, String parker_cardid, String car_number, String car_brand, String car_color, String car_buy_date) {
         this.order_id = order_id;
         this.order_unit_fee = order_unit_fee;
         this.order_paid_amount = order_paid_amount;
@@ -110,6 +109,7 @@ public class UnfinishedOrderInfo {
         this.parking_region = parking_region;
         this.parking_latitude = parking_latitude;
         this.parking_longitude = parking_longitude;
+        this.parker_level = parker_level;
         this.parker_id = parker_id;
         this.parker_name = parker_name;
         this.parker_mobile = parker_mobile;
@@ -118,6 +118,10 @@ public class UnfinishedOrderInfo {
         this.car_brand = car_brand;
         this.car_color = car_color;
         this.car_buy_date = car_buy_date;
+    }
+
+    public UnfinishedOrderInfo() {
+
     }
 
     public String getOrder_id() {
@@ -312,6 +316,14 @@ public class UnfinishedOrderInfo {
         this.parking_longitude = parking_longitude;
     }
 
+    public String getParker_level() {
+        return parker_level;
+    }
+
+    public void setParker_level(String parker_level) {
+        this.parker_level = parker_level;
+    }
+
     public String getParker_id() {
         return parker_id;
     }
@@ -403,6 +415,7 @@ public class UnfinishedOrderInfo {
                 ", parking_region='" + parking_region + '\'' +
                 ", parking_latitude='" + parking_latitude + '\'' +
                 ", parking_longitude='" + parking_longitude + '\'' +
+                ", parker_level='" + parker_level + '\'' +
                 ", parker_id='" + parker_id + '\'' +
                 ", parker_name='" + parker_name + '\'' +
                 ", parker_mobile='" + parker_mobile + '\'' +

@@ -6,19 +6,22 @@ import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,11 +39,14 @@ import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.SetUserInfo;
+import com.azhuoinfo.pshare.utils.GalleryUtils;
+import com.azhuoinfo.pshare.view.CommonDialog;
 import com.azhuoinfo.pshare.view.imageview.round.RoundedImageView;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.logging.Handler;
 
 import mobi.cangol.mobile.Session;
@@ -48,6 +54,7 @@ import mobi.cangol.mobile.actionbar.ActionMenu;
 import mobi.cangol.mobile.actionbar.ActionMenuItem;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
+import mobi.cangol.mobile.logging.Log;
 
 /**
  * Created by Azhuo on 2015/9/22.
@@ -102,6 +109,16 @@ public class UserCenterEditorFragment extends BaseContentFragment {
     private PopupWindow menuWindow;
     private String path;
     private final int IMAGE_CODE = 0;
+
+    //对相册回调的处理
+    private static final String IMAGE_UNSPECIFIED = "image/*";
+    private static final String TEMP_IMAGE_CAMERA = "temp_camera.jpg";
+    private static final String TEMP_IMAGE_CROP = "temp_crop.jpg";
+    private static final int CROP_AVATAR_HEIGHT = 240;
+    private static final int CROP_AVATAR_WIDTH = 240;
+    private static final int IMAGE_FROM_CAMERA = 0x0a1;
+    private static final int IMAGE_FROM_PHOTOS = 0xfe2;
+    private static final int IMAGE_CROP_RESULT = 0xaf3;
 
 
     @Override
@@ -161,13 +178,9 @@ public class UserCenterEditorFragment extends BaseContentFragment {
         mRoundedImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* menuWindow = new PopupWindow (getActivity());
-                menuWindow.showAtLocation(findViewById(R.id.po),
-                        Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);*/
-                showPopupWindow(v);
+                showSelectFromPicDialog();
             }
         });
-        mRoundedImageView.setImageResource(R.drawable.list_car);
         mCustomerSexRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -304,61 +317,46 @@ public class UserCenterEditorFragment extends BaseContentFragment {
         super.onDestroy();
     }
 
-    private void showPopupWindow(View view) {
+    private void showSelectFromPicDialog() {
+        String[] from = this.getResources().getStringArray(R.array.user_face_from);
+        final CommonDialog dialog = CommonDialog.creatDialog(this.getActivity());
+        dialog.setTitle("修改头像");
+        dialog.setListViewInfo(new ArrayAdapter<String>(app,
+                        R.layout.common_dialog_textview, from),
+                new CommonDialog.OnDialogItemClickListener() {
 
-        // 一个自定义的布局，作为显示的内容
-        View contentView = LayoutInflater.from(getActivity()).inflate(
-                R.layout.popupwindow_userhead, null);
-        // 设置按钮的点击事件
-        Button mButtonPhoto = (Button) contentView.findViewById(R.id.button_photo);
-        Button mButtonPhotograph = (Button) contentView.findViewById(R.id.button_photograph);
-        mButtonPhoto.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent getAlbum = new Intent(Intent.ACTION_GET_CONTENT);
-
-                getAlbum.setType("image/*");
-                startActivityForResult(getAlbum, 1);
-
-            }
-        });
-        mButtonPhotograph.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                //下面这句指定调用相机拍照后的照片存储的路径
-                path = "/sdcard/Image/bitmap";
-                takeIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(new File(Environment.getExternalStorageDirectory(), path)));
-                startActivityForResult(takeIntent, 0X00);
-            }
-        });
-        final PopupWindow popupWindow = new PopupWindow(contentView,
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.setFocusable(true);
-        popupWindow.setTouchable(true);
-        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                Log.i("mengdd", "onTouch : ");
-
-                return false;
-                // 这里如果返回true的话，touch事件将被拦截
-                // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
-            }
-        });
-
-        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
-        // 我觉得这里是API的一个bug
-        popupWindow.setBackgroundDrawable(getResources().getDrawable(
-                R.drawable.popupwindow_bg));
-        // 设置好参数之后再show
-        popupWindow.showAsDropDown(view);
-
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+                        switch (position) {
+                            case 0:
+                                // 从相相册获取
+                                Intent intent = new Intent(Intent.ACTION_PICK, null);
+                                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
+                                startActivityForResult(intent, IMAGE_FROM_PHOTOS);
+                                break;
+                            case 1:
+                                String status = Environment.getExternalStorageState();
+                                if (status.equals(Environment.MEDIA_MOUNTED)) {
+                                    // 从相机获取
+                                    try {
+                                        Intent in = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                        in.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(GalleryUtils.getTempFile(getActivity(), TEMP_IMAGE_CAMERA)));
+                                        startActivityForResult(in, IMAGE_FROM_CAMERA);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    // 没有SD卡;
+                                    showToast(R.string.common_storage_null);
+                                }
+                                break;
+                        }
+                        dialog.dismiss();
+                    }
+                });
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
     }
 
     @Override
@@ -367,40 +365,39 @@ public class UserCenterEditorFragment extends BaseContentFragment {
         if (resultCode != RESULT_OK) {
             Log.e(TAG, "ActivityResult resultCode error");
             return;
-        }
-        Bitmap bm = null;
-        if (requestCode == RESULT_OK) {
-            Uri uri = data.getData();
-            //to do find the path of pic by uri
-
-        } else if (requestCode == RESULT_OK) {
-            Uri uri = data.getData();
-            if (uri == null) {
-                //use bundle to get data
-                Bundle bundle = data.getExtras();
-                if (bundle != null) {
-                    Bitmap photo = (Bitmap) bundle.get("data"); //get bitmap
-                    //spath :生成图片取个名字和路径包含类型
-                    saveImage(photo,path);
-                    //saveImage(Bitmap photo, String spath));
-                } else {
-                    Toast.makeText(getActivity(), "err****", Toast.LENGTH_LONG).show();
-                    return;
+        } else {
+            if (requestCode == IMAGE_FROM_CAMERA) {
+                if (resultCode == Activity.RESULT_OK) {
+                    //对相册返回的照片进行裁剪并存储
+                    //参数对应 上下文对象,返回码,数据地址uri,相片高度，宽度，File
+                    GalleryUtils.startSystemPhotoCrop(this,
+                            IMAGE_CROP_RESULT,
+                            Uri.fromFile(GalleryUtils.getTempFile(this.getActivity(), TEMP_IMAGE_CAMERA)),
+                            CROP_AVATAR_HEIGHT,
+                            CROP_AVATAR_WIDTH,
+                            GalleryUtils.getTempFile(this.getActivity(), TEMP_IMAGE_CROP));
                 }
-            } else {
-                //to do find the path of pic by uri
+            } else if (requestCode == IMAGE_FROM_PHOTOS) {
+                if (resultCode == Activity.RESULT_OK) {
+                    //对相机返回的照片进行裁剪并存储
+                    //参数对应 上下文对象,返回码,数据地址uri,相片高度，宽度，File
+                    GalleryUtils.startSystemPhotoCrop(this,
+                            IMAGE_CROP_RESULT,
+                            data.getData(),
+                            CROP_AVATAR_HEIGHT,
+                            CROP_AVATAR_WIDTH,
+                            GalleryUtils.getTempFile(this.getActivity(), TEMP_IMAGE_CROP));
+
+                }
+            } else if (requestCode == IMAGE_CROP_RESULT) {
+                if (resultCode == Activity.RESULT_OK) {
+                    //裁剪后返回的数据
+                    Log.d("changeHeadImg image=" + GalleryUtils.getTempFile(this.getActivity(), TEMP_IMAGE_CROP).getAbsolutePath());
+                    Bitmap bitmap = BitmapFactory.decodeFile(GalleryUtils.getTempFile(this.getActivity(), TEMP_IMAGE_CROP).getAbsolutePath());
+                    mRoundedImageView.setImageBitmap(bitmap);
+                }
+
             }
-        }
-    }
-    public static void saveImage(Bitmap photo, String spath) {
-        try {
-            BufferedOutputStream bos = new BufferedOutputStream(
-                    new FileOutputStream(spath,false));
-            photo.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-            bos.flush();
-            bos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
