@@ -6,7 +6,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.model.OrderList;
 import com.azhuoinfo.pshare.view.listview.BaseAdapter;
 
 import java.util.List;
@@ -14,17 +16,10 @@ import java.util.List;
 /**
  * Created by Azhuo on 2015/9/23.
  */
-public class HistoryOrderAdapter extends BaseAdapter<String>{
-    private List<String> list;
-    private Context context;
+public class HistoryOrderAdapter extends BaseAdapter<OrderList>{
+    private AMapLocation aMapLocation;
     public HistoryOrderAdapter(Context context) {
         super(context);
-    }
-
-    public HistoryOrderAdapter(Context context, List<String> items) {
-        super(context, items);
-        this.context=context;
-        this.list=items;
     }
 
     @Override
@@ -42,16 +37,16 @@ public class HistoryOrderAdapter extends BaseAdapter<String>{
         }else{
             holder=(ViewHolder) convertView.getTag();
         }
+
         return convertView;
     }
 
     class ViewHolder{
-        View layout;
-        private TextView mParkingNameTextView;
-        private TextView mParkingAddressTextView;
-        private TextView mOrFinishTextView;
-        private TextView mOrderPayTimeTextView;
-        private TextView mOrderPayMoneyTextView;
+        TextView mParkingNameTextView;
+        TextView mParkingAddressTextView;
+        TextView mOrFinishTextView;
+        TextView mOrderPayTimeTextView;
+        TextView mOrderPayMoneyTextView;
 }
 
 }

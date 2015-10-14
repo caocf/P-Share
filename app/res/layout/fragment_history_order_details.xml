@@ -37,15 +37,37 @@
 				android:layout_marginTop="@dimen/padding1"
 				android:src="@drawable/userhead"/>
 			<!-- 代泊员号  -->
-			<TextView
-				android:id="@+id/tv_parker_id"
+			<LinearLayout
+				android:id="@+id/ll_parker_id"
 				android:layout_height="wrap_content"
 				android:layout_width="wrap_content"
 				android:layout_centerHorizontal="true"
-				android:layout_marginTop="@dimen/padding2"
-				android:textSize="@dimen/text_size3"
+				android:layout_marginTop="@dimen/padding1"
 				android:layout_below="@+id/iv_parker_head"
-				android:text="@string/tv_order_servicePerson"/>
+				android:orientation="horizontal">
+				<TextView
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:layout_centerHorizontal="true"
+					android:layout_marginTop="@dimen/padding2"
+					android:textSize="@dimen/text_size3"
+					android:text="@string/tv_order_servicePerson" />
+				<TextView
+					android:id="@+id/tv_parker_id"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerHorizontal="true"
+					android:layout_marginTop="@dimen/padding2"
+					android:text="2"
+					android:textSize="@dimen/text_size3" />
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerHorizontal="true"
+					android:layout_marginTop="@dimen/padding2"
+					android:text="号"
+					android:textSize="@dimen/text_size3" />
+			</LinearLayout>
 			<!-- 代泊员的职务 -->
 			<LinearLayout
 				android:id="@+id/ll_parker_position"
@@ -53,7 +75,7 @@
 				android:layout_width="wrap_content"
 				android:layout_centerHorizontal="true"
 				android:layout_marginTop="@dimen/padding1"
-				android:layout_below="@+id/tv_parker_id"
+				android:layout_below="@+id/ll_parker_id"
 				android:orientation="horizontal">
 				<TextView
 					android:layout_height="wrap_content"

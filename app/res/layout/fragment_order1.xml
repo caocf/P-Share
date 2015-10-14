@@ -20,6 +20,6 @@
         android:layout_marginTop="@dimen/padding11"
         android:text="您未预约"
         android:textSize="@dimen/text_size4"
-        android:textColor="#c88400" />
+        android:textColor="@color/actionbar_background"/>
 
 </RelativeLayout>

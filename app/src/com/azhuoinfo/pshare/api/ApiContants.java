@@ -81,7 +81,7 @@ public class ApiContants {
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("token", "");
 		params.put("client",
-                OpenUDID_manager.isInitialized() ? OpenUDID_manager.getOpenUDID() : DeviceInfo.getDeviceId(context));
+				OpenUDID_manager.isInitialized() ? OpenUDID_manager.getOpenUDID() : DeviceInfo.getDeviceId(context));
 		params.put("time", ""+System.currentTimeMillis());
 		return params;
 	}
@@ -306,4 +306,15 @@ customer_age*/
         params.put("parking_id", parking_id );
         return params;
     }
+	public static String API_CUSTOMER_HISTORYORDER="/customer/historyOrder";
+	/**
+	 * 收藏停车场
+	 * @param customer_id
+	 * @return
+	 */
+	public HashMap<String, String> historyOrder(String customer_id){
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("customer_id", customer_id );
+		return params;
+	}
 }

@@ -100,31 +100,40 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 		mChangeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mOnClick = 0;
                 replaceFragment(MineHomeFragment.class, "MineHomeFragment", null);
             }
         });
 		mMineHomeButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                //Log.i("home", "onClick");
                 mOnClick++;
-                if (mOnClick % 2 == 1) {
+                if(mOnClick%2==1){
+                    mOnClick = 1;
+                   // Log.i("home","zhankai");
                     AnimationSet set = new AnimationSet(true);
-                    TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0,
+                    TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_PARENT,0,Animation.RELATIVE_TO_PARENT,0,
                             Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0);
                     set.addAnimation(translate);
                     set.setDuration(300);
                     set.setFillAfter(true);
                     mMineHomeButtonLinearLayout.offsetTopAndBottom(-mMineHomeButtonLinearLayout.getHeight());
                     mMineHomeButtonLinearLayout.startAnimation(set);
-                } else {
+                }
+                else{
+                    mOnClick = 0;
+                    //Log.i("home","heshang");
                     AnimationSet set = new AnimationSet(true);
-                    TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0,
+                    TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_PARENT,0,Animation.RELATIVE_TO_PARENT,0,
                             Animation.RELATIVE_TO_SELF, -0.5f, Animation.RELATIVE_TO_SELF, 0);
                     set.addAnimation(translate);
                     set.setDuration(300);
                     set.setFillAfter(true);
                     mMineHomeButtonLinearLayout.offsetTopAndBottom(mMineHomeButtonLinearLayout.getHeight());
                     mMineHomeButtonLinearLayout.startAnimation(set);
+
                 }
             }
         });

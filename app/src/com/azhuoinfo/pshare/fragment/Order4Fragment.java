@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -49,8 +50,8 @@ public class Order4Fragment extends BaseContentFragment implements ViewPager.OnP
     private TextView mCarNumberTextView;
     private GalleryViewPager mGalleryViewPager;
     private LinearLayout mContainer;
-    private ViewPager mViewPager;
-    private ArrayList<View> mPagerView;
+    private GridView mGridViewPhoto;
+
     //完成订单支付
     private Button mFinishAppointment;
     //private RelativeLayout mToPayRelativeLayout;
@@ -78,7 +79,7 @@ public class Order4Fragment extends BaseContentFragment implements ViewPager.OnP
         super.onActivityCreated(savedInstanceState);
         initViews(savedInstanceState);
         initData(savedInstanceState);
-        initPagerView();
+       // initPagerView();
     }
 
     @Override
@@ -96,7 +97,7 @@ public class Order4Fragment extends BaseContentFragment implements ViewPager.OnP
 
        //mGalleryViewPager=(GalleryViewPager) view.findViewById(R.id.gallery_picture);
         mContainer=(LinearLayout) view.findViewById(R.id.container);
-        mViewPager=(ViewPager) view.findViewById(R.id.viewPager);
+        mGridViewPhoto=(GridView) view.findViewById(R.id.gridview_photos);
         mFinishAppointment=(Button) view.findViewById(R.id.button_finish_order_pay);
 
         //mToPayRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_to_pay);/
@@ -127,62 +128,67 @@ public class Order4Fragment extends BaseContentFragment implements ViewPager.OnP
         return true;
     }
 
-    public void initPagerView(){
-        //查找布局文件用LayoutInflater.inflate
-        LayoutInflater inflater=getActivity().getLayoutInflater();
-        mPagerView = new ArrayList<View>();
-        //此处可以根据需要自由设定，这里只是简单的测试
-        for (int i = 1; i <= 12; i++) {
-            View view = inflater.inflate(R.layout.view_viewpager, null);
-            mPagerView.add(view);
-        }
-        // 1.设置幕后item的缓存数目
-        mViewPager.setOffscreenPageLimit(7);
-        // 2.设置页与页之间的间距
-        mViewPager.setPageMargin(10);
-        // 3.将父类的touch事件分发至viewPgaer，否则只能滑动中间的一个view对象
-        mContainer.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return mViewPager.dispatchTouchEvent(event);
-            }
-        });
-            //数据适配器
-        PagerAdapter mPagerAdapter = new PagerAdapter(){
-            @Override
-            //获取当前窗体界面数
-            public int getCount() {
-                // TODO Auto-generated method stub
-                return mPagerView.size();
-            }
-            @Override
-            //断是否由对象生成界面
-            public boolean isViewFromObject(View arg0, Object arg1) {
-                // TODO Auto-generated method stub
-                return arg0==arg1;
-            }
-            //是从ViewGroup中移出当前View
-            public void destroyItem(View arg0, int arg1, Object arg2) {
-                ((ViewPager) arg0).removeView(mPagerView.get(arg1));
-            }
-            //返回一个对象，这个对象表明了PagerAdapter适配器选择哪个对象放在当前的ViewPager中
-            public Object instantiateItem(View arg0, int arg1){
-                ((ViewPager)arg0).addView(mPagerView.get(arg1));
-                return mPagerView.get(arg1);
-            }
-        };
-        //绑定适配器
-        mViewPager.setAdapter(new MyAdapter(this.getActivity(),mPagerView));
-        mViewPager.setOnPageChangeListener(this);// 设置监听器
-    }
-
     @Override
     public void onPageScrolled(int i, float v, int i1) {
-        if (mViewPager != null) {
-            mViewPager.invalidate();
-        }
+
     }
 
+    /* public void initPagerView(){
+            //查找布局文件用LayoutInflater.inflate
+            LayoutInflater inflater=getActivity().getLayoutInflater();
+            mPagerView = new ArrayList<View>();
+            //此处可以根据需要自由设定，这里只是简单的测试
+            for (int i = 1; i <= 12; i++) {
+                View view = inflater.inflate(R.layout.view_viewpager, null);
+                mPagerView.add(view);
+            }
+            // 1.设置幕后item的缓存数目
+            mViewPager.setOffscreenPageLimit(7);
+            // 2.设置页与页之间的间距
+            mViewPager.setPageMargin(10);
+            // 3.将父类的touch事件分发至viewPgaer，否则只能滑动中间的一个view对象
+            mContainer.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return mViewPager.dispatchTouchEvent(event);
+                }
+            });
+                //数据适配器
+            PagerAdapter mPagerAdapter = new PagerAdapter(){
+                @Override
+                //获取当前窗体界面数
+                public int getCount() {
+                    // TODO Auto-generated method stub
+                    return mPagerView.size();
+                }
+                @Override
+                //断是否由对象生成界面
+                public boolean isViewFromObject(View arg0, Object arg1) {
+                    // TODO Auto-generated method stub
+                    return arg0==arg1;
+                }
+                //是从ViewGroup中移出当前View
+                public void destroyItem(View arg0, int arg1, Object arg2) {
+                    ((ViewPager) arg0).removeView(mPagerView.get(arg1));
+                }
+                //返回一个对象，这个对象表明了PagerAdapter适配器选择哪个对象放在当前的ViewPager中
+                public Object instantiateItem(View arg0, int arg1){
+                    ((ViewPager)arg0).addView(mPagerView.get(arg1));
+                    return mPagerView.get(arg1);
+                }
+            };
+            //绑定适配器
+            mViewPager.setAdapter(new MyAdapter(this.getActivity(),mPagerView));
+            mViewPager.setOnPageChangeListener(this);// 设置监听器
+        }
+
+        @Override
+        public void onPageScrolled(int i, float v, int i1) {
+            if (mViewPager != null) {
+                mViewPager.invalidate();
+            }
+        }
+    */
     @Override
     public void onPageSelected(int i) {
 

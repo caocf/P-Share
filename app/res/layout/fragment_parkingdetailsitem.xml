@@ -51,6 +51,7 @@
 				       android:layout_width="wrap_content"
 				       android:layout_gravity="center_vertical"
 				       android:textSize="@dimen/text_size3"
+					   android:textColor="@color/text_light_gray"
 				       android:text="上海黄浦区淮海东路99号"/>
 			    </LinearLayout>
 			    <TextView 
@@ -74,7 +75,15 @@
 				       android:layout_width="wrap_content"
 				       android:layout_gravity="center_vertical"
 				       android:textSize="@dimen/text_size3"
-				       android:text="800 "/>              
+					   android:textColor="@color/text_light_gray"
+				       android:text="800 "/>
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center_vertical"
+						android:textSize="@dimen/text_size3"
+						android:textColor="@color/text_light_gray"
+						android:text="@string/text_distance"/>
 			    </LinearLayout>
 			    <TextView 
 			        android:layout_height="@dimen/padding10"
@@ -97,6 +106,7 @@
 				       android:layout_width="wrap_content"
 				       android:layout_gravity="center_vertical"
 				       android:textSize="@dimen/text_size3"
+					   android:textColor="@color/text_light_gray"
 				       android:text="40 "/>              
 			    </LinearLayout>
 			    <TextView 
@@ -119,8 +129,16 @@
 				       android:layout_height="wrap_content"
 				       android:layout_width="wrap_content"
 				       android:layout_gravity="center_vertical"
+					   android:textColor="@color/text_light_gray"
 				       android:textSize="@dimen/text_size3"
-				       android:text="40"/>              
+				       android:text="40"/>
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center_vertical"
+						android:textColor="@color/text_light_gray"
+						android:textSize="@dimen/text_size3"
+						android:text="@string/text_price"/>
 			    </LinearLayout>		      	                    	                    	                    	        
 		    </LinearLayout>
 		    <TextView 
@@ -239,7 +257,7 @@
 				 android:layout_marginTop="@dimen/padding2"
 				 android:textColor="@color/text_white"
 				 android:background="@drawable/button"
-
+				android:visibility="gone"
 				 android:padding="@dimen/padding1"
 				 android:text="取消代泊"/>
 		        <!--<RelativeLayout
@@ -267,8 +285,16 @@
 				 android:layout_marginLeft="@dimen/padding8"
 				 android:id="@+id/ll_order_text"
 				 android:layout_marginBottom="@dimen/padding8"
-				 android:visibility="invisible">
+				 android:visibility="gone">
 				 <TextView
+					 android:id="@+id/text_order_text"
+					 android:layout_width="wrap_content"
+					 android:layout_height="wrap_content"
+					 android:textColor="@color/actionbar_background"
+					 android:textSize="@dimen/text_size3"
+					 android:layout_gravity="center"
+					 android:text="正在为你搭配代泊员..."/>
+				 <com.azhuoinfo.pshare.view.CountDownTextView
 					 android:id="@+id/tv_order_text"
 					 android:layout_width="wrap_content"
 					 android:layout_height="wrap_content"

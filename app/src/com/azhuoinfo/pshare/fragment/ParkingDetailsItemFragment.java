@@ -1,7 +1,10 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.graphics.pdf.PdfRenderer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +25,17 @@ import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.fragment.adapter.ParkingDetailsAdapter;
 import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.OrderInfo;
+import com.azhuoinfo.pshare.model.Parking;
 import com.azhuoinfo.pshare.model.UnfinishedOrderInfo;
 import com.azhuoinfo.pshare.model.UserAuth;
+import com.azhuoinfo.pshare.view.CountDownTextView;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import mobi.cangol.mobile.Session;
@@ -65,8 +72,9 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     private Button mAppointmentButton;
     //取消代泊
     private Button mCancelButton;
-
+    //接单倒计时
     private LinearLayout mOrderTextLinearLayout;
+    private CountDownTextView mOrderCountDownTextView;
     private TextView mOrderTextView;
 
     private AccountVerify mAccountVerify;
@@ -83,32 +91,29 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     private int listSize;
     private String order_id;
     private int count=0;
+    private Parking parking ;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
         customer_id=customerInfo.getCustomer_Id().toString();
         mAccountVerify = AccountVerify.getInstance(getActivity());
+        parking=this.getArguments().getParcelable("parking");
         customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
-        //while (true){
-            postUnfinishedOrder(customer_id);
-        //}
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_parkingdetailsitem,container,false);
     }
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
     }
-
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         initViews(savedInstanceState);
         initData(savedInstanceState);
@@ -121,10 +126,8 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mParkingDistanceTextView=(TextView) view.findViewById(R.id.tv_parking_distance);
         mParkingCanUseTextView=(TextView) view.findViewById(R.id.tv_parking_can_use);
         mParkingPriceTextView=(TextView) view.findViewById(R.id.tv_parking_price);
-
         mAppointmentTimeRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_parking_appointment_time);
         mAppointmentTimeTextView=(TextView) view.findViewById(R.id.tv_parking_appointment_time);
-
         mStopLinearLayout=(LinearLayout) view.findViewById(R.id.ll_stop_button);
         mImmediateButton=(Button) view.findViewById(R.id.immediate_stop);
         mAppointmentButton=(Button) view.findViewById(R.id.appointment_stop);
@@ -134,12 +137,18 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mAppointmentTextView=(TextView) view.findViewById(R.id.tv_appointment);*/
 
         mOrderTextLinearLayout=(LinearLayout) view.findViewById(R.id.ll_order_text);
-        mOrderTextView=(TextView) view.findViewById(R.id.tv_order_text);
+        mOrderCountDownTextView=(CountDownTextView) view.findViewById(R.id.tv_order_text);
+        mOrderTextView=(TextView) findViewById(R.id.text_order_text);
     }
 
     @Override
-    protected void initViews(Bundle bundle) {
+    protected void initViews(Bundle bundle){
         this.setTitle(R.string.yard_details);
+        mParkingNameTextView.setText(parking.getParking_name()+"");
+        mParkingAddressTextView.setText(parking.getParking_address()+"");
+        Log.e(TAG,parking.getParking_can_use()+"");
+        mParkingCanUseTextView.setText(parking.getParking_can_use()+"");
+        mParkingPriceTextView.setText(parking.getParking_charging_standard()+"");
         mAppointmentTimeRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,11 +181,6 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
             @Override
             public void onClick(View v) {
                 postUnfinishedOrder(customer_id);
-                if (listSize > 0) {
-                    Toast.makeText(getActivity(), "已有订单", Toast.LENGTH_SHORT).show();
-                } else {
-                    postCreateOrder(customer_id, "3", mImmediateTimeText);
-                }
             }
         });
         mAppointmentButton.setOnClickListener(new View.OnClickListener() {
@@ -189,7 +193,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                     if (listSize > 0) {
                         Toast.makeText(getActivity(), "已有订单", Toast.LENGTH_SHORT).show();
                     } else {
-                        postCreateOrder(customer_id, "4", mTimeText);
+                        postCreateOrder(customer_id, parking.getParking_id(), mTimeText);
                     }
                 }
             }
@@ -224,7 +228,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         apiTask.setRoot("orderInfo");
         apiTask.execute(new OnDataLoader<List<UnfinishedOrderInfo>>() {
             @Override
-            public void onStart() {
+            public void onStart(){
 
             }
             @Override
@@ -233,7 +237,12 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 listSize=unfinishedOrderInfos.size();
                 Session session=getSession();
                 session.put("unfinishedOrderInfos",unfinishedOrderInfos);
-                if(listSize>0){
+                if (listSize > 0) {
+                    Toast.makeText(getActivity(), "已有订单", Toast.LENGTH_SHORT).show();
+                } else {
+                    postCreateOrder(customer_id, parking.getParking_id(), mImmediateTimeText);
+                }
+                /*if(listSize>0){
                     for (int i=0;i<listSize;i++){
                         UnfinishedOrderInfo unfinishedOrderInfo=unfinishedOrderInfos.get(i);
                         order_id=unfinishedOrderInfo.getOrder_id();
@@ -251,7 +260,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                     mStopLinearLayout.setVisibility(View.VISIBLE);
                     mCancelButton.setVisibility(View.GONE);
                     mOrderTextLinearLayout.setVisibility(View.GONE);
-                }
+                }*/
                 /*for(int i=0;i<unfinishedOrderInfos.size();i++){
 
                 }*/
@@ -278,6 +287,17 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 mStopLinearLayout.setVisibility(View.GONE);
                 mCancelButton.setVisibility(View.VISIBLE);
                 mOrderTextLinearLayout.setVisibility(View.VISIBLE);
+                order_id=orderInfos.getOrder_id();
+                mOrderCountDownTextView.starTimeByMillisInFuture(3 * 60 * 1000);
+                mOrderCountDownTextView.setOnCountDownListener(new CountDownTextView.OnCountDownListener() {
+                    @Override
+                    public void onFinish() {
+                        postCancelOrder(order_id);
+                        mOrderTextView.setText("代泊员正忙，未接单，订单取消");
+                        mOrderCountDownTextView.setText("");
+                    }
+                });
+
             }
             @Override
             public void onFailure(String code, String message) {
