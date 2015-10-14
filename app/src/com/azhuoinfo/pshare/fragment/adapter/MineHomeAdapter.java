@@ -9,67 +9,51 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.model.Parking;
 import com.azhuoinfo.pshare.view.listview.BaseAdapter;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MineHomeAdapter extends BaseAdapter<String> {
+public class MineHomeAdapter extends BaseAdapter<Parking> {
 
-	private List<String> list;
-	private Context context;
-	public static Map<Integer, Boolean> isSelected;
 
 	public MineHomeAdapter(Context context) {
 		super(context);
 	}
-
-	public MineHomeAdapter(Context context, List<String> items) {
-		super(context, items);
-		this.context=context;
-		this.list=items;
-		init();
-	}
-	public void init(){
-		isSelected = new HashMap<Integer, Boolean>();
-		for (int i=0; i<list.size(); i++) {
-			isSelected.put(i, false);
-		}
-	}
+    public void singleSelected(int position) {
+        if (mSelect.contains(getItem(position))) {
+            mSelect.remove(getItem(position));
+        } else {
+            mSelect.clear();
+            mSelect.add(getItem(position));
+        }
+        notifyDataSetChanged();
+    }
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder=null;
 		if(convertView==null){
 			convertView = this.mInflater.inflate(R.layout.listview_item_minehome, parent, false);
 			holder=new ViewHolder();
-			holder.mCheckBox=(CheckBox) convertView.findViewById(R.id.cb_minehome);
+			holder.name= (TextView) convertView.findViewById(R.id.tv_minehome_name);
+            holder.icon= (ImageView) convertView.findViewById(R.id.tv_minehome_icon);
 			convertView.setTag(holder);
 		}else{
 			holder=(ViewHolder)convertView.getTag();
 		}
-		holder.mCheckBox.setChecked(isSelected.get(position));
-		holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				//先把链表中的数据取代掉
-				isSelected.put(position, isChecked);
-				if (buttonView.isChecked()) {
-					for (int i = 0; i < list.size(); i++) {
-						//把其他的checkbox设置为false
-						if (i != position) {
-							isSelected.put(i, false);
-						}
-					}
-				}
-				//通知适配器更改
-				MineHomeAdapter.this.notifyDataSetChanged();
-			}
-		});
+        Parking item=getItem(position);
+        holder.name.setText(""+item.getParking_name()+" "+item.getParking_address());
+        if(this.getItemSelected(position)){
+            holder.icon.setImageResource(android.R.drawable.checkbox_on_background);
+        }else{
+            holder.icon.setImageResource(android.R.drawable.checkbox_off_background);
+        }
 		return convertView;
 	}
 	public final class ViewHolder{
-		View layout;
-		public CheckBox mCheckBox;
+		TextView name;
+        ImageView icon;
 	}
 }

@@ -40,7 +40,7 @@ public class CarListFragment extends BaseContentFragment{
 
     private ListView mListView;
     private CarListAdapter mDataAdapter;
-    private RelativeLayout mAddCarRelativeLayout;
+    private TextView mAddCarTextView;
     private AccountVerify mAccountVerify;
 
     @Override
@@ -71,7 +71,7 @@ public class CarListFragment extends BaseContentFragment{
     @Override
     protected void findViews(View view) {
         mListView=(ListView) findViewById(R.id.lv_list_car);
-        mAddCarRelativeLayout=(RelativeLayout) findViewById(R.id.rl_add_car_list);
+        mAddCarTextView= (TextView) findViewById(R.id.tv_listcar_add);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class CarListFragment extends BaseContentFragment{
         this.setTitle(R.string.mine_carList);
         mDataAdapter=new CarListAdapter(this.getActivity());
         mListView.setAdapter(mDataAdapter);
-        mAddCarRelativeLayout.setOnClickListener(new View.OnClickListener() {
+        mAddCarTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setContentFragment(AddCarInformationFragment.class, "AddCarInformationFragment", null, ModuleMenuIDS.MODULE_HOME);

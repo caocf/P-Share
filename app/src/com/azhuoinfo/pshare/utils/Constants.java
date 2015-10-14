@@ -12,7 +12,7 @@ public class Constants {
 
 	public static final String TAG = "app_";
 
-	public static final String APP_DIR = "/cqurity";
+	public static final String APP_DIR = "/pshare";
 
 	public static final String APP_TEMP = APP_DIR + "/temp";
 
@@ -25,14 +25,6 @@ public class Constants {
 	public static final int LOGIN_REQUEST_CODE = 0x001;
 
 	public static final int PAGE_SIZE = 10;
-
-	public static final String URL_HELP = "http://vote.cangol.mobi/help.html";
-	
-	public static final String URL_COPYRIGHT = "http://vote.cangol.mobi/copyright.html";
-	
-	public static final String URL_SERVICES = "http://vote.cangol.mobi/service.html";
-	
-	public static final String URL_PRIVATE = "http://vote.cangol.mobi/private.html";
 
 	public static final String KEY_MESSAGE_LAST_TIME="message_last_time_";
 	public static final String KEY_USED_VERSION="is_new_version";

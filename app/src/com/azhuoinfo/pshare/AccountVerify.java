@@ -50,9 +50,9 @@ public class AccountVerify {
 	 * 设置当前用户（并执行 通知登录listener|和pushID注册操作）
 	 */
 	public void login(CustomerInfo user) {
+        isLogin=true;
         mGlobalData.save(KEY_USER,user);
-        setLogin(true);
-		notifyLogin();
+        notifyLogin();
 		//注册推送ID 暂时停用
 		//pushReg();
 	}
@@ -86,12 +86,6 @@ public class AccountVerify {
 	 */
 	public boolean isLogin() {
 		return isLogin;
-	}
-	/**
-	 * 设置登录
-	 */
-	private void setLogin(boolean isLogin) {
-		this.isLogin = isLogin;
 	}
 	/**
 	 * 注销操作

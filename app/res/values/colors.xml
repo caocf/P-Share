@@ -81,4 +81,6 @@
     <color name="text_phone">#2E8B57</color>
     <!-- 倒计时的时间颜色 -->
     <color name="text_remaining_time">#008B00</color>
+
+    <color name="province_line_border">#C7C7C7</color>
 </resources>
