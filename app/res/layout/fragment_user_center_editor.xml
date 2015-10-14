@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:orientation="vertical" >
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#ffffff"
+	android:orientation="vertical">
 	<!--actionbar-->
     <LinearLayout
         android:layout_height="wrap_content"
@@ -18,10 +19,11 @@
 	        <com.azhuoinfo.pshare.view.imageview.round.RoundedImageView
 	            android:id="@+id/iv_customer_head"
 	            android:layout_width="150dp"
-	            android:layout_height="150dp"
+	            android:layout_height="100dp"
 	            android:layout_gravity="center_horizontal"
 	            android:padding="@dimen/padding2"
-	            android:src="@drawable/userhead"/>
+	            android:src="@drawable/userhead"
+				app:oval="true"/>
 			<!--用户ID-->
 			<LinearLayout
 				android:layout_width="wrap_content"

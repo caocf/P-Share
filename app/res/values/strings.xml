@@ -183,4 +183,10 @@
 
     <string name="qr_code_content">(请将左侧二维码拿给代泊员扫描录入)</string>
 
+
+    <string-array name="user_face_from">
+        <item>从相册选择</item>
+        <item>拍照</item>
+    </string-array>
+
 </resources>
