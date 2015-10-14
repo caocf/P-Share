@@ -4,46 +4,21 @@
               android:layout_height="match_parent"
               android:background="@color/fragment_background"
               android:orientation="vertical">
-
-    <com.azhuoinfo.pshare.view.PromptView
-        android:id="@+id/promptView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <ListView
+    <com.azhuoinfo.pshare.view.AllListView
         android:id="@+id/lv_list_car"
         style="@style/Common_ListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <RelativeLayout
-        android:id="@+id/rl_add_car_list"
+    <TextView
+        android:id="@+id/tv_listcar_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/padding4"
-        android:layout_marginTop="@dimen/padding4"
+        android:layout_marginTop="16dp"
         android:background="@color/text_white"
-        android:paddingBottom="@dimen/padding1"
-        android:padding="8dp">
-
-        <ImageView
-            android:id="@+id/iv_add_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/padding2"
-            android:layout_toLeftOf="@+id/tv_add_car_list"
-            android:src="@drawable/add"/>
-
-        <TextView
-            android:id="@+id/tv_add_car_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/padding1"
-            android:text="@string/add"
-            android:textColor="#999d9c"
-            android:textSize="@dimen/text_size3"/>
-    </RelativeLayout>
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="+ 添加"
+        android:textColor="#999d9c"
+        android:textSize="14sp"/>
 </LinearLayout>

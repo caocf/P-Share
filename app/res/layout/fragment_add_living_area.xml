@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="match_parent"
-	android:layout_width="match_parent"
-	android:background="@color/fragment_background"
-	android:orientation="vertical">
-	<EditText
-		android:id="@+id/et_search"
-		android:layout_width="match_parent"
-		android:layout_height="@dimen/padding6"
-		android:layout_marginLeft="@dimen/padding2"
-		android:layout_marginRight="@dimen/padding2"
-		android:layout_marginTop="@dimen/padding1"
-		android:hint="搜索您要选择的小区、泊车区"
-		android:paddingLeft="@dimen/padding1"
-		android:drawableRight="@drawable/search_black"
-		android:paddingRight="@dimen/padding1"
-		android:background="@drawable/homepage_search_bg"/>
-	<ListView
-		android:id="@+id/lv_parking_address"
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:layout_marginTop="@dimen/padding1"
-		android:background="@color/text_white">
-	</ListView>
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fragment_background"
+    android:orientation="vertical">
+
+    <com.azhuoinfo.pshare.view.SearchEditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:background="@drawable/homepage_search_bg"
+        android:hint="搜索您要选择的小区、泊车区"
+        android:imeOptions="actionSearch"
+        android:padding="8dp"
+        android:textSize="13sp"
+        android:singleLine="true"/>
+
+    <com.azhuoinfo.pshare.view.PromptView
+        android:id="@+id/promptView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ListView
+        android:id="@+id/lv_parking_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/text_white">
+    </ListView>
+
 </LinearLayout>

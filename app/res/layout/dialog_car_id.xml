@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/dialog_car_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/common_layout_bg"
+        android:duplicateParentState="false"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <com.azhuoinfo.pshare.view.AllGridView
+            android:id="@+id/gridview_zh"
+            style="@style/Common_GridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="9">
+        </com.azhuoinfo.pshare.view.AllGridView>
+
+        <com.azhuoinfo.pshare.view.AllGridView
+            android:id="@+id/gridview_en"
+            style="@style/Common_GridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:numColumns="9">
+        </com.azhuoinfo.pshare.view.AllGridView>
+    </LinearLayout>
+</RelativeLayout>

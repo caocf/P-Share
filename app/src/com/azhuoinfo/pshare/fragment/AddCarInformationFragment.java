@@ -1,92 +1,45 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.azhuoinfo.pshare.AccountVerify;
-import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.model.AddCarInfo;
-import com.azhuoinfo.pshare.model.CustomerInfo;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.azhuoinfo.pshare.view.CarIdDialog;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
+import mobi.cangol.mobile.utils.StringUtils;
 
 /**
  * Created by Azhuo on 2015/9/22.
  */
 public class AddCarInformationFragment extends BaseContentFragment{
 
-    //返回到上个页面
-    //private Button activity_back;
-
-    //点击出现一个自定义的list列表选择车的归属地
-    private RelativeLayout mCarLocationRelativeLayout;
-    //设置选择车的归属地
-    private TextView mCarLocation1TextView;
-    private TextView mCarLocationTextView;
-    private LinearLayout mCarLocationLinearLayout;
-    private GridView mCarArea1GridView;
-    private GridView mCarArea2GridView;
-    //设置车牌号
+    private TextView mCarLocationEditText;
     private EditText mCarNumbrEditText;
-    //设置车型
     private EditText mCarBrandEditText;
-    //确定信息携带数据跳转到车列表界面将信息添加到其list中
+    private EditText mCarSFZIDEditText;
     private Button mConfirmButton;
 
     private AccountVerify mAccountVerify;
-
-    private String[] carArea1={"辽","吉","黑","冀","晋","陕","鲁","皖","苏","浙","豫","鄂","湘","赣","台",
-            "闽","滇","琼","川","粤","甘","青", "渝","沪","津","京","宁","蒙","藏","新","贵", "港","澳"};
-    private List<Map<String,String>> carList1;
-
-   private String[] carArea2={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T",
-            "U","V","W","X","Y","Z"};
-    private List<Map<String,String>> carList2;
-    private CustomerInfo customerInfo;
-    //得到的输入数据车牌和车型
-    private String mCarNumber,mCarBrand;
-
+    private String zh,en;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAccountVerify = AccountVerify.getInstance(getActivity());
-        customerInfo=(CustomerInfo) this.app.getSession().get("customerInfo");
-        carList1=new ArrayList<Map<String,String>>();
-        carList2=new ArrayList<Map<String,String>>();
-        for (int i=0;i<carArea1.length;i++){
-            HashMap<String,String> map=new HashMap<String,String>();
-            map.put("area1",carArea1[i]);
-            carList1.add(map);
-        }
-       /* for (int i=0;i<carArea2.length;i++){
-            HashMap<String,String> map=new HashMap<String,String>();
-            map.put("area2",carArea2[i]);
-            carList2.add(map);
-        }*/
     }
 
     @Override
@@ -110,72 +63,71 @@ public class AddCarInformationFragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
-        mCarLocationRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_car_location);
-        mCarLocationLinearLayout=(LinearLayout) view.findViewById(R.id.ll_car_area);
-        mCarArea1GridView=(GridView) view.findViewById(R.id.gv_car_area1);
-        mCarArea2GridView=(GridView) view.findViewById(R.id.gv_car_area2);
-
-        mCarLocationTextView=(TextView) view.findViewById(R.id.tv_car_location);
-        mCarLocation1TextView=(TextView) view.findViewById(R.id.tv_car_location1);
-
+        mCarLocationEditText=(TextView) view.findViewById(R.id.et_car_location);
         mCarNumbrEditText=(EditText) view.findViewById(R.id.et_car_number);
         mCarBrandEditText=(EditText) view.findViewById(R.id.et_car_brand);
+        mCarSFZIDEditText=(EditText) view.findViewById(R.id.et_car_sfzid);
 
         mConfirmButton=(Button) view.findViewById(R.id.button_confirm);
     }
 
     @Override
     protected void initViews(Bundle bundle) {
-        //this.setTitle(R.string.add_car_information);
+        this.setTitle(R.string.add_car_information);
 
-        final SimpleAdapter adapter1=new SimpleAdapter(getActivity(),carList1,R.layout.list_item_car_area,
-                new String[]{"area1"},new int[]{R.id.button_car_area});
-        mCarArea1GridView.setAdapter(adapter1);
-
-
-        Log.e(TAG, carList1.size() + "");
-        Log.e(TAG, carList1.get(1).toString());
-
-        SimpleAdapter adapter2=new SimpleAdapter(getActivity(),carList2,R.layout.list_item_car_area,
-                new String[]{"area2"},new int[]{R.id.button_car_area});
-        mCarArea2GridView.setAdapter(adapter2);
-
-        mCarLocationRelativeLayout.setOnClickListener(new View.OnClickListener() {
+        mCarLocationEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCarLocationLinearLayout.setVisibility(View.VISIBLE);
-            }
-        });
-        mCarArea1GridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                HashMap<String, String> item = (HashMap<String, String>) parent.getItemAtPosition(position);
-                Log.e(TAG, (String) item.get("area1"));
-                //setTitle(item.get("area1"));
-                mCarLocation1TextView.setText(item.get("area1").toString());
-                //replaceFragment(MonthlyRentCarFinishPayFragment.class, "MonthlyRentCarFinishPayFragment", null);
-            }
-        });
-        mCarArea2GridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               // mCarLocationTextView.setText(carList2.get(1).toString());
+                CarIdDialog carIdDialog = CarIdDialog.creatDialog(getActivity()).show();
+                carIdDialog.setOnIdSelectListener(new CarIdDialog.OnIdSelectListener() {
+                    @Override
+                    public void onIdSelectZh(String str) {
+                        zh = str;
+                        mCarLocationEditText.setText(StringUtils.trimToEmpty(zh) + StringUtils.trimToEmpty(en));
+                    }
+
+                    @Override
+                    public void onIdSelectEn(String str) {
+                        en = str;
+                        mCarLocationEditText.setText(StringUtils.trimToEmpty(zh) + StringUtils.trimToEmpty(en));
+                    }
+                });
             }
         });
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //需要改动
-                mCarNumber=mCarNumbrEditText.getText().toString();
-                mCarBrand=mCarBrandEditText.getText().toString();
-                postAddcar(customerInfo.getCustomer_Id().toString(),mCarBrand,"1","222","1234","苏E"+mCarNumber);
+                if(validate()){
+                    String mCarNumber = mCarNumbrEditText.getText().toString();
+                    String mCarBrand = mCarBrandEditText.getText().toString();
+                    String mCarSfzid = mCarSFZIDEditText.getText().toString();
+
+                    postAddcar(mAccountVerify.getCustomer_Id(), mCarBrand, null, null, mCarSfzid, zh + en + mCarNumber);
+                }
+
             }
         });
     }
     @Override
     protected void initData(Bundle bundle) {
-    }
 
+    }
+    private boolean validate(){
+        if(TextUtils.isEmpty(mCarLocationEditText.getText())){
+            showToast(R.string.fill_in_car_address);
+            return false;
+        }else if(TextUtils.isEmpty(mCarBrandEditText.getText())){
+            showToast(R.string.fill_in_car_brand);
+            return false;
+        }else if(TextUtils.isEmpty(mCarSFZIDEditText.getText())){
+            showToast(R.string.fill_in_car_sfzid);
+            return false;
+        }else if(TextUtils.isEmpty(mCarNumbrEditText.getText())){
+            showToast(R.string.Fill_in_car_number);
+            return false;
+        }
+        return true;
+    }
     @Override
     protected FragmentInfo getNavigtionUpToFragment() {
         return null;

@@ -16,7 +16,7 @@ public abstract class BaseAdapter<T> extends ArrayAdapter<T> {
 	public static final int TYPE_SELECT = 1;
 	public static final int TYPE_UNSELECT = 0;
 	protected boolean mSelectedMode;
-	private List<T> mSelect = new ArrayList<T>();
+    protected List<T> mSelect = new ArrayList<T>();
 	public BaseAdapter(Context context) {
 		this(context, null);
 	}

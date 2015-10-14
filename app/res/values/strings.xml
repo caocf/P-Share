@@ -96,9 +96,11 @@
     <string name="add_car_information">增加车辆信息</string>
     <string name="car_number">车牌号码</string>
     <string name="car_brand">车型</string>
+    <string name="car_sfzid">身份证号</string>
     <string name="fill_in_car_brand">请填写车型</string>
     <string name="Fill_in_car_number">请填写车牌车牌号</string>
     <string name="fill_in_car_address">请选择车牌归属地</string>
+    <string name="fill_in_car_sfzid">请填写身份证号</string>
     <string name="mine_carList">我的车列表</string>
 
     <!--我的月租列表-->
