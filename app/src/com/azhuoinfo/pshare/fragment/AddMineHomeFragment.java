@@ -142,7 +142,7 @@ public class AddMineHomeFragment extends BaseContentFragment {
             @Override
             public void onSuccess(boolean page, List<Parking> list) {
                 if (isEnable()) {
-
+                    popBackStack();
                 }
             }
 

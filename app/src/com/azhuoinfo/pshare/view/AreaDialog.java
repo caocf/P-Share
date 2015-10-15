@@ -105,7 +105,15 @@ public class AreaDialog {
         mViewCity = (WheelView) dialog.findViewById(R.id.id_city);
         mViewDistrict = (WheelView) dialog.findViewById(R.id.id_district);
         mBtnConfirm = (Button) dialog.findViewById(R.id.btn_confirm);
+        mLayoutView.setOnClickListener(new OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                if (dialog.isShowing())
+                    dialog.dismiss();
+            }
+
+        });
         mViewProvince.addChangingListener(new OnWheelChangedListener() {
 
             @Override

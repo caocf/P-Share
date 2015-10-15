@@ -7,6 +7,7 @@ dependencies {
     compile project(':uiframe-1.0.0')
     compile project(':appcore-1.0.0')
     compile project(':commons-pay')
+    compile files('libs/Android_Map_2.5.1.20150827.jar')
 }
 
 android {
