@@ -305,13 +305,13 @@ public class Order1Fragment extends BaseContentFragment{
         mParkerIDTextView = (TextView) findViewById(R.id.tv_parker_id4);
         mParkerLevelTextView = (TextView) findViewById(R.id.tv_parker_Level4);
         mParkerAreaTextView = (TextView) findViewById(R.id.tv_parker_area4);
-        mParkerMobileRelativeLayout = (RelativeLayout) findViewById(R.id.rl_parker_mobile);
+        mParkerMobileRelativeLayout = (RelativeLayout) findViewById(R.id.rl_parker_mobile4);
         mParkerMobileTextView = (TextView) findViewById(R.id.tv_parker_mobile4);
         mAppointmentTimeTextView = (TextView) findViewById(R.id.tv_appointment_time4);
         mAppointmentMakeCarTimeTextView = (TextView) findViewById(R.id.tv_appointment_make_car_time4);
-        mCountdownTimeTextView = (TextView) findViewById(R.id.tv_countdown_time);
-        mCarNumberTextView = (TextView) findViewById(R.id.tv_car_number);
-        mImageGridView = (GridView) findViewById(R.id.gridview_photos);
+        mCountdownTimeTextView = (TextView) findViewById(R.id.tv_countdown_time4);
+        mCarNumberTextView = (TextView) findViewById(R.id.tv_car_number4);
+        mImageGridView = (GridView) findViewById(R.id.gridview_photos4);
         mLeft = (ImageView) findViewById(R.id.iv_left);
         mRight = (ImageView) findViewById(R.id.iv_right);
         if (order_state.equals("3") || order_state.equals("4")) {
