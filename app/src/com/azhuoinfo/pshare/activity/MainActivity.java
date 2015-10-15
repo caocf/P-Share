@@ -58,12 +58,16 @@ public class MainActivity extends DrawerNavigationFragmentActivity implements On
 		if (savedInstanceState == null) {
 			// 启用动画
 			this.getCustomFragmentManager().setDefaultAnimation(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
-			this.setMenuFragment(MenuFragment.class, null);
-			if(mAccountVerify.getUser() != null){
-				this.setContentFragment(HomeFragment.class, "HomeFragment", null, ModuleMenuIDS.MODULE_HOME);
-			}else{
+            this.setMenuFragment(MenuFragment.class, null);
+            if(mGlobalData.get(AccountVerify.KEY_USER)!=null){
+                CustomerInfo user= (CustomerInfo) mGlobalData.get(AccountVerify.KEY_USER);
+                Log.d("CustomerInfo="+user);
+                mAccountVerify.setUser(user);
+                this.setContentFragment(HomeFragment.class, "HomeFragment", null, ModuleMenuIDS.MODULE_HOME);
+            }else{
 				this.setContentFragment(LoginAndRegister.class,"LoginAndRegister",null);
 			}
+
 			if (mGlobalData.get(Constants.KEY_CHECK_UPGRADE) == null || !TimeUtils.getCurrentDate().equals(mGlobalData.get(Constants.KEY_CHECK_UPGRADE))) {
 				// 判断升级提示是否检测过，每天只检测一次
 				checkUpgrade();

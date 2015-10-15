@@ -24,6 +24,7 @@ import java.util.Hashtable;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
+import mobi.cangol.mobile.utils.StringUtils;
 
 /**
  * Created by Azhuo on 2015/9/22.
@@ -48,23 +49,18 @@ public class UserCenterFragment extends BaseContentFragment {
     private ImageView mQRCodeImageView;
     private AccountVerify mAccountVerify;
     private CustomerInfo customerInfo;
-    private String customer_Id;
-    private String customer_mobile;
     private String mQRCodeText;
-    private String customer_nickname;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        customerInfo = (CustomerInfo) this.app.getSession().get("customerInfo");
-        customer_nickname = customerInfo.getCustomer_nickname();
-
-        customer_Id=customerInfo.getCustomer_Id();
-        customer_mobile=customerInfo.getCustomer_mobile();
-        mQRCodeText="customer:"+customer_Id+" "+customer_mobile;
+        mAccountVerify=AccountVerify.getInstance(this.getActivity());
+        customerInfo = mAccountVerify.getUser();
+        mQRCodeText="customer:"+customerInfo.getCustomer_Id()+" "+customerInfo.getCustomer_mobile();
 
         Log.e(TAG, customerInfo.getCustomer_Id().toString());
         mAccountVerify = AccountVerify.getInstance(getActivity());
+
     }
 
     @Override
@@ -107,8 +103,8 @@ public class UserCenterFragment extends BaseContentFragment {
                 setContentFragment(UserCenterFinishFragment.class, "UserCenterFinishFragment", null, ModuleMenuIDS.MODULE_HOME);
             }
         });
-        mCustomerIdTextView.setText(customerInfo.getCustomer_Id().toString());
-        mCustomerNicknameTextView.setText(customer_nickname);
+        mCustomerIdTextView.setText("" + customerInfo.getCustomer_Id());
+        mCustomerNicknameTextView.setText(StringUtils.trimToEmpty(customerInfo.getCustomer_nickname()));
         mQRCodeImageView.setImageBitmap(create2DCoderBitmap(mQRCodeText,150,150));
     }
 

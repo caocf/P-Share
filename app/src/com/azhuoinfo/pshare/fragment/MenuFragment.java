@@ -1,7 +1,6 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,15 +15,14 @@ import com.azhuoinfo.pshare.ModuleMenuIDS;
 
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.model.CustomerInfo;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import mobi.cangol.mobile.base.BaseMenuFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
-import mobi.cangol.mobile.service.global.GlobalData;
+import mobi.cangol.mobile.logging.Log;
+import mobi.cangol.mobile.utils.StringUtils;
 
-public class MenuFragment extends BaseMenuFragment {
-	public TextView mActivityTextView;
-	public TextView mDiscoveryTextView;
-	public TextView mMineTextView;
+public class MenuFragment extends BaseMenuFragment implements AccountVerify.OnLoginListener{
 
 	//定义设置控件
 	private ImageView mInstallImageView;
@@ -34,8 +32,6 @@ public class MenuFragment extends BaseMenuFragment {
 	private ImageView mCustomerHeadImageView;
 	//用户名
 	private TextView mCustomerNicknameTextView;
-	//用户Id
-	private TextView mCustomerIdTextView;
 	//用户积分
 	private TextView mCustomerPointsTextView;
 	//代泊区
@@ -50,16 +46,11 @@ public class MenuFragment extends BaseMenuFragment {
 	private RelativeLayout mMonthlyRentRelativeLayout;
 
 	private AccountVerify mAccountVerify;
-	private GlobalData mGlobalData;
-
-	private CustomerInfo customerInfo;
-	private String customerId;
-	private String customerNickName;
-	private String customerPoints;
-
+    private ImageLoader mImageLoader;
+    private CustomerInfo mCustomerInfo;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
+        mImageLoader=ImageLoader.getInstance();
 		mAccountVerify = AccountVerify.getInstance(getActivity());
 	}
 
@@ -90,36 +81,30 @@ public class MenuFragment extends BaseMenuFragment {
 		mPersonalCenterLinearLayout=(LinearLayout) v.findViewById(R.id.ll_personal_center);
 		mCustomerHeadImageView=(ImageView) v.findViewById(R.id.iv_customer_head);
 		mCustomerNicknameTextView=(TextView) v.findViewById(R.id.tv_customer_nickname);
-		mCustomerIdTextView=(TextView) v.findViewById(R.id.tv_customer_id);
 		mCustomerPointsTextView=(TextView) v.findViewById(R.id.tv_customer_points);
 		mParkingAreaRelativeLayout=(RelativeLayout) v.findViewById(R.id.rl_parkingArea);
 		mPointsRelativeLayout=(RelativeLayout) v.findViewById(R.id.rl_points);
 		mOrderRelativeLayout=(RelativeLayout) v.findViewById(R.id.rl_order);
 		mCarListRelativeLayout=(RelativeLayout) v.findViewById(R.id.rl_car_list);
 		mMonthlyRentRelativeLayout=(RelativeLayout) v.findViewById(R.id.rl_monthlyRent_list);
-        /*mActivityTextView = (TextView) v.findViewById(R.id.textview_menu_activity);
-        mDiscoveryTextView = (TextView) v.findViewById(R.id.textview_menu_discovery);
-		mMineTextView = (TextView) v.findViewById(R.id.textview_menu_mine);*/
 
+        mAccountVerify.registerLoginListener(this);
 	}
 
 	@Override
 	protected void initViews(Bundle savedInstanceState) {
 
-		//mCustomerIdTextView.setText(customerId);
-		//mCustomerNicknameTextView.setText(customerNickName);
-		//mCustomerPointsTextView.setText(customerPoints);
 		mInstallImageView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setContentFragment(SetUpFragment.class, "SetUpFragment", null, ModuleMenuIDS.MODULE_HOME);
+				setContentFragment(SetUpFragment.class, "SetUpFragment", null, ModuleMenuIDS.MODULE_SETTINGS);
 				showMenu(false);
 			}
 		});
 		mPersonalCenterLinearLayout.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setContentFragment(UserCenterFragment.class, "UserCenterFragment", null, ModuleMenuIDS.MODULE_HOME);
+				setContentFragment(UserCenterFragment.class, "UserCenterFragment", null, ModuleMenuIDS.MODULE_USER);
 				showMenu(false);
 			}
 		});
@@ -133,7 +118,7 @@ public class MenuFragment extends BaseMenuFragment {
 		mOrderRelativeLayout.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setContentFragment(MineOrderFragment.class, "MineOrderFragment", null, ModuleMenuIDS.MODULE_HOME);
+				setContentFragment(MineOrderFragment.class, "MineOrderFragment", null, ModuleMenuIDS.MODULE_ORDER);
 				showMenu(false);
 			}
 		});
@@ -147,44 +132,19 @@ public class MenuFragment extends BaseMenuFragment {
 		mMonthlyRentRelativeLayout.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setContentFragment(MonthlyRentFragment.class, "MonthlyRentFragment", null, ModuleMenuIDS.MODULE_HOME);
+				setContentFragment(MonthlyRentFragment.class, "MonthlyRentFragment", null, ModuleMenuIDS.MODULE_FEE);
 				showMenu(false);
 			}
 		});
 		mPointsRelativeLayout.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setContentFragment(PointsFragment.class, "PointsFragment", null, ModuleMenuIDS.MODULE_HOME);
+				setContentFragment(PointsFragment.class, "PointsFragment", null, ModuleMenuIDS.MODULE_SCORE);
 				showMenu(false);
 			}
 		});
-
-
-
-       /* mActivityTextView.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				setContentFragment(HomeFragment.class, "HomeFragment", null, ModuleMenuIDS.MODULE_HOME);
-			}
-		
-		});
-        mDiscoveryTextView.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-
-			}
-		
-		});
-		mMineTextView.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-
-			}
-		
-		});*/
+        updateViews();
+        Log.e("initViews updateViews " + mCustomerInfo);
 	}
 
 	@Override
@@ -202,23 +162,7 @@ public class MenuFragment extends BaseMenuFragment {
 		}
 	}
 	protected void updateFocus(int moduleId) {
-		switch (moduleId) {
-		case ModuleMenuIDS.MODULE_HOME:
-            /*mActivityTextView.setSelected(true);
-            mDiscoveryTextView.setSelected(false);
-			mMineTextView.setSelected(false);*/
-			break;
-		case ModuleMenuIDS.MODULE_DISCOVERY:
-           /* mActivityTextView.setSelected(false);
-            mDiscoveryTextView.setSelected(true);
-			mMineTextView.setSelected(false);*/
-			break;
-		case ModuleMenuIDS.MODULE_MINE:
-           /* mActivityTextView.setSelected(false);
-            mDiscoveryTextView.setSelected(false);
-			mMineTextView.setSelected(true);*/
-			break;
-		}
+
 	}
 	@Override
 	protected FragmentInfo getNavigtionUpToFragment() {
@@ -232,12 +176,47 @@ public class MenuFragment extends BaseMenuFragment {
 
 	@Override
 	protected void onOpen() {
-		customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
-		if(customerInfo!=null){
-			customerId= customerInfo.getCustomer_Id().toString();
-			customerNickName=customerInfo.getCustomer_nickname();
-			customerPoints=customerInfo.getCustomer_point();
-		}
-	}
 
+	}
+    private void updateViews(){
+        mCustomerInfo=mAccountVerify.getUser();
+        if(isEnable())
+        if(mCustomerInfo!=null){
+            mCustomerNicknameTextView.setText(StringUtils.trimToEmpty(mCustomerInfo.getCustomer_nickname()));
+            mCustomerPointsTextView.setText(StringUtils.trimToEmpty(mCustomerInfo.getCustomer_point()));
+            if(StringUtils.isNotEmpty(mCustomerInfo.getCustomer_head()))
+            mImageLoader.displayImage(mCustomerInfo.getCustomer_head(),mCustomerHeadImageView);
+        }else{
+            mCustomerNicknameTextView.setText("未登录");
+            mCustomerPointsTextView.setText("");
+            mCustomerHeadImageView.setImageResource(R.drawable.userhead);
+        }
+    }
+    @Override
+    public void login() {
+        updateViews();
+        Log.e(" login updateViews "+mCustomerInfo);
+    }
+
+    @Override
+    public void logout() {
+
+    }
+
+    @Override
+    public void expire() {
+
+    }
+
+    @Override
+    public void update() {
+        updateViews();
+        Log.e("update updateViews " + mCustomerInfo);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mAccountVerify.unregisterLoginListener(this);
+    }
 }

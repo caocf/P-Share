@@ -134,12 +134,12 @@ public class LoginFragment extends BaseContentFragment {
             }
 
             @Override
-            public void onSuccess(boolean page, CustomerInfo customerInfos) {
+            public void onSuccess(boolean page, CustomerInfo customerInfo) {
                 if (isEnable()) {
                     if (mLoadingDialog != null) mLoadingDialog.dismiss();
-                    if (customerInfos != null) {
-                        Log.d(TAG, "" + customerInfos);
-                        mAccountVerify.login(customerInfos);
+                    if (customerInfo != null) {
+                        Log.d(TAG, "" + customerInfo);
+                        mAccountVerify.login(customerInfo);
                         replaceFragment(HomeFragment.class, "HomeFragment", null);
                     } else {
                         showToast("无数据");

@@ -243,7 +243,6 @@ public class UserCenterEditorFragment extends BaseContentFragment {
                         intSex + "", mCustomerJobEditText.getText().toString(),
                         mCustomerRegionTextView.getText().toString(),
                         mCustomerMobileEditText.getText().toString(), mCustomerEmailEditText.getText().toString(), 20 + "");
-                replaceFragment(UserCenterFinishFragment.class, "UserCenterFinishFragment", null);
                 break;
         }
         return super.onMenuActionSelected(action);
@@ -300,14 +299,17 @@ public class UserCenterEditorFragment extends BaseContentFragment {
 
             @Override
             public void onSuccess(boolean page, CustomerInfo customerInfo) {
-                Session session = getSession();
-                session.put("customerInfo", customerInfo);
-                Log.e(TAG, "" + customerInfo);
+                if (isEnable()) {
+                    mAccountVerify.setUser(customerInfo);
+                    Log.e(TAG, "" + customerInfo);
+                    popBackStack();
+                }
             }
 
             @Override
             public void onFailure(String code, String message) {
-                Log.e(TAG, "请求失败");
+                if (isEnable())
+                    showToast(message);
             }
         });
     }
