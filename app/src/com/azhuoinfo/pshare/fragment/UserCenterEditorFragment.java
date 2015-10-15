@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -49,6 +51,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.logging.Handler;
 
 import mobi.cangol.mobile.Session;
@@ -109,6 +113,7 @@ public class UserCenterEditorFragment extends BaseContentFragment {
     private SetUserInfo setUserInfo;
     private PopupWindow menuWindow;
     private String path = "";
+    private String pathName = "";
     private final int IMAGE_CODE = 0;
 
     //对相册回调的处理
@@ -326,9 +331,10 @@ public class UserCenterEditorFragment extends BaseContentFragment {
 
             @Override
             public void onFailure(String code, String message) {
-                if (isEnable())
+                if (isEnable()) {
                     showToast(message);
-                mLoading.dismiss();
+                    mLoading.dismiss();
+                }
             }
         });
     }
@@ -389,6 +395,10 @@ public class UserCenterEditorFragment extends BaseContentFragment {
         } else {
             if (requestCode == IMAGE_FROM_CAMERA) {
                 if (resultCode == Activity.RESULT_OK) {
+                    pathName = new DateFormat().format(
+                            "yyyyMMdd_hhmmss",
+                            Calendar.getInstance(Locale.CHINA))
+                            + ".jpg";
                     //对相册返回的照片进行裁剪并存储
                     //参数对应 上下文对象,返回码,数据地址uri,相片高度，宽度，File
                     GalleryUtils.startSystemPhotoCrop(this,
@@ -396,10 +406,14 @@ public class UserCenterEditorFragment extends BaseContentFragment {
                             Uri.fromFile(GalleryUtils.getTempFile(this.getActivity(), TEMP_IMAGE_CAMERA)),
                             CROP_AVATAR_HEIGHT,
                             CROP_AVATAR_WIDTH,
-                            GalleryUtils.getTempFile(this.getActivity(), TEMP_IMAGE_CROP));
+                            GalleryUtils.getTempFile(this.getActivity(),pathName));
                 }
             } else if (requestCode == IMAGE_FROM_PHOTOS) {
                 if (resultCode == Activity.RESULT_OK) {
+                    pathName = new DateFormat().format(
+                            "yyyyMMdd_hhmmss",
+                            Calendar.getInstance(Locale.CHINA))
+                            + ".jpg";
                     //对相机返回的照片进行裁剪并存储
                     //参数对应 上下文对象,返回码,数据地址uri,相片高度，宽度，File
                     GalleryUtils.startSystemPhotoCrop(this,
@@ -407,19 +421,22 @@ public class UserCenterEditorFragment extends BaseContentFragment {
                             data.getData(),
                             CROP_AVATAR_HEIGHT,
                             CROP_AVATAR_WIDTH,
-                            GalleryUtils.getTempFile(this.getActivity(), TEMP_IMAGE_CROP));
-
+                            GalleryUtils.getTempFile(this.getActivity(), pathName));
                 }
             } else if (requestCode == IMAGE_CROP_RESULT) {
                 if (resultCode == Activity.RESULT_OK) {
                     //裁剪后返回的数据
-                    Log.d("changeHeadImg image=" + GalleryUtils.getTempFile(this.getActivity(), TEMP_IMAGE_CROP).getAbsolutePath());
-                    path = GalleryUtils.getTempFile(this.getActivity(), TEMP_IMAGE_CROP).getAbsolutePath();
-                    Bitmap bitmap = BitmapFactory.decodeFile(GalleryUtils.getTempFile(this.getActivity(), TEMP_IMAGE_CROP).getAbsolutePath());
+                    Log.d("changeHeadImg image=" + GalleryUtils.getTempFile(this.getActivity(), pathName).getAbsolutePath());
+                    path = GalleryUtils.getTempFile(this.getActivity(), pathName).getAbsolutePath();
+                    Bitmap bitmap = BitmapFactory.decodeFile(GalleryUtils.getTempFile(this.getActivity(), pathName).getAbsolutePath());
                     mRoundedImageView.setImageBitmap(bitmap);
                 }
-
             }
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 }

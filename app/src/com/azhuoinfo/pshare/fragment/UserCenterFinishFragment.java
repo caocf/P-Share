@@ -124,6 +124,7 @@ public class UserCenterFinishFragment extends BaseContentFragment{
     protected void initViews(Bundle bundle) {
         this.setTitle(R.string.user_center);
         if (!StringUtils.isEmpty(customerInfo.getCustomer_head())){
+            mobi.cangol.mobile.logging.Log.d("------------------------"+customerInfo.getCustomer_head()+"--------------------------------------------------------------");
             String customer_head = null;
             if(customerInfo.getCustomer_head().endsWith(",")){
                 customer_head = customerInfo.getCustomer_head().substring(0, customerInfo.getCustomer_head().length()-1);

@@ -149,7 +149,7 @@ public class GalleryUtils {
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
-			File photoFile = new File(path, name); 
+			File photoFile = new File(path, name);
 			FileOutputStream fileOutputStream = null;
 			try {
 				fileOutputStream = new FileOutputStream(photoFile);
