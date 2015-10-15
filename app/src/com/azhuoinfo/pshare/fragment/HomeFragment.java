@@ -60,6 +60,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
     private LocationSource.OnLocationChangedListener mListener;
     private LocationManagerProxy mAMapLocationManager;
 
+    private Parking mDefaultParking;
     private GlobalData mGlobalData;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -111,6 +112,16 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 replaceFragment(MineHomeFragment.class, "MineHomeFragment", null);
             }
         });
+        this.findViewById(R.id.layout_parking).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mDefaultParking!=null){
+                    Bundle bundle=new Bundle();
+                    bundle.putParcelable("parking", mDefaultParking);
+                    replaceFragment(ParkingDetailsItemFragment.class, "ParkingDetailsItemFragment", bundle);
+                }
+            }
+        });
 		mMineHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,9 +139,9 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 	protected void initData(Bundle savedInstanceState) {
         init();
 
-        if(mGlobalData.get("default_id")!=null){
-            String defautId=(String) mGlobalData.get("default_id");
-            getSearchParkbyId(defautId);
+        if(mGlobalData.get("default_parking")!=null){
+            mDefaultParking= (Parking) mGlobalData.get("default_parking");
+            getSearchParkbyId(mDefaultParking.getParking_id());
         }else{
             Log.e("default_id not");
             updateDefaltParking(null);
@@ -317,6 +328,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             @Override
             public void onSuccess(boolean page, Parking parking) {
                 if (isEnable()) {
+                    mGlobalData.save("default_parking",parking);
                     updateDefaltParking(parking);
                 }
             }
@@ -415,7 +427,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 markerOption.position(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())));
                 markerOption.title(parking.getParking_name()).snippet(parking.getParking_address());
                 markerOption.draggable(true);
-                markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.empty));
+                markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_map_image));
                 marker=mAmap.addMarker(markerOption);
                 marker.setObject(parking);
             }
