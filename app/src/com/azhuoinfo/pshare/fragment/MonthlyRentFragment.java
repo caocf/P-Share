@@ -66,8 +66,8 @@ public class MonthlyRentFragment extends BaseContentFragment{
         mTabHost = (TabHost)view.findViewById(android.R.id.tabhost);
         mTabHost.setup();
         mTabManager=new TabManager(this.getChildFragmentManager(),mTabHost,R.id.realtabcontent);
-        mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator("产权/月租"), MonthlyRentListFragment.class, new Bundle());
-        mTabManager.addTab(mTabHost.newTabSpec("ItemFragment2").setIndicator("历史缴费记录"), MonthlyRentHistoryListFragment.class, new Bundle());
+        mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator(tabView("产权/月租")), MonthlyRentListFragment.class, new Bundle());
+        mTabManager.addTab(mTabHost.newTabSpec("ItemFragment2").setIndicator(tabView("历史缴费记录")), MonthlyRentHistoryListFragment.class, new Bundle());
     }
 
     @Override
@@ -79,7 +79,12 @@ public class MonthlyRentFragment extends BaseContentFragment{
     protected void initData(Bundle bundle) {
 
     }
-
+    private View tabView(String title) {
+        View indicatorview = android.view.LayoutInflater.from(this.getActivity()).inflate(R.layout.common_tab_view, null);
+        TextView text = (TextView) indicatorview.findViewById(R.id.tabsText);
+        text.setText(title);
+        return indicatorview;
+    }
     @Override
     protected FragmentInfo getNavigtionUpToFragment() {
         return null;

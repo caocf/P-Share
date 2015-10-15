@@ -84,6 +84,8 @@
     <color name="common_btn_reverse_enable">#D5D5D5</color>
     
     <!-- tab -->
+    <color name="common_tab_text">@color/text_light_gray</color>
+    <color name="common_tab_text_pressed">@color/common_color_normal</color>
     <color name="common_tab_bg">@android:color/white</color>
     <color name="common_tab_line">@color/common_color_normal</color>
     

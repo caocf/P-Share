@@ -11,9 +11,12 @@ import android.widget.TextView;
 
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.utils.Constants;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
+import mobi.cangol.mobile.sdk.pay.OnPayResultListener;
+import mobi.cangol.mobile.sdk.pay.PayManager;
 
 /**
  * Created by Azhuo on 2015/9/22.
@@ -59,6 +62,7 @@ public class MonthlyRentCarPayFragment extends BaseContentFragment{
     private Button mDeleteButton;
 
     private AccountVerify mAccountVerify;
+     private PayManager mPayManager;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,14 +126,55 @@ public class MonthlyRentCarPayFragment extends BaseContentFragment{
     @Override
     protected void initViews(Bundle bundle) {
         this.setTitle(R.string.rent);
+        mConfirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toPay(PayManager.PAY_TYPE_ALIPAY,"桃子","桃子一斤","0.01");
+                //交易金额默认为人民币交易，接口中参数支付金额单位为【分】，参数值不能带小数。对账单中的交易金额单位为【元】。
+                toPay(PayManager.PAY_TYPE_WECHAT,"桃子","桃子一斤","1");
+            }
+        });
 
     }
 
     @Override
     protected void initData(Bundle bundle) {
+        initPay();
+    }
+    private void initPay(){
+        mPayManager=PayManager.getInstance(this.getActivity());
 
+        mPayManager.initPay(this.getActivity(), PayManager.PAY_TYPE_WECHAT, Constants.APP_ID, Constants.API_KEY, Constants.MCH_ID,Constants.NOTIFY_URL);
+
+        mPayManager.initPay(this.getActivity(), PayManager.PAY_TYPE_ALIPAY, Constants.SELLER, Constants.PARTNERID, Constants.RSA_PRIVATE, Constants.RSA_PUBLIC, Constants.NOTIFY_URL);
     }
 
+    protected void toPay(int payType,final String subject,final String desc,final String price) {
+//		PlaceOrderCallback callback=null;
+//		if(payType==PayManager.PAY_TYPE_WECHAT){
+//			callback=new MyOrderCallback(this,subject,desc,price);
+//		}else{
+//			callback=new MyOrderCallback2(this,subject,desc,price);
+//		}
+        PayManager.getInstance(this.getActivity()).toPay(this.getActivity(), payType, subject, desc, price, new OnPayResultListener() {
+
+            @Override
+            public void onSuccess(String billingIndex, String msg) {
+                showToast("订单:" + billingIndex + " " + msg);
+            }
+
+            @Override
+            public void onFailuire(String billingIndex, String msg) {
+                showToast("订单:" + billingIndex + " " + msg);
+            }
+
+            @Override
+            public void onCancel(String billingIndex, String msg) {
+                showToast("订单:" + billingIndex + " " + msg);
+            }
+
+        });
+    }
     @Override
     protected FragmentInfo getNavigtionUpToFragment() {
         return null;
