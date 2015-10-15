@@ -42,6 +42,7 @@ public class SplashActivity extends BaseActionBarActivity {
     }
 	@Override
 	public void findViews() {
+
 	}
 	
 	@Override
