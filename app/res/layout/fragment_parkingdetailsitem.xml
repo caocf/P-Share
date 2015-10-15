@@ -237,7 +237,7 @@
 					 android:layout_height="wrap_content"
 					 android:padding="@dimen/padding2"
 					 android:drawableLeft="@drawable/iv_button_order"
-					 android:drawableRight="10dp"
+					 android:drawablePadding="10dp"
 					 android:background="@drawable/button"
 					 android:textColor="@color/text_white"
 					 android:text="立即代泊"/>
@@ -247,7 +247,7 @@
 					 android:layout_height="wrap_content"
 					 android:padding="@dimen/padding2"
 					 android:drawableLeft="@drawable/iv_button_order"
-					 android:drawableRight="10dp"
+					 android:drawablePadding="10dp"
 					 android:layout_marginLeft="@dimen/padding6"
 					 android:text="预约代泊"
 					 android:textColor="@color/text_white"

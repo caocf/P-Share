@@ -92,7 +92,9 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     private String mTimeText;
     //立即代泊时间
     private String mImmediateTimeText;
+    private String strAppointmentNeed="";
     private ArrayList<String> list=new ArrayList<String>();
+    private List<CheckBox> checkBoxs=new ArrayList<CheckBox>();
     private CustomerInfo customerInfo;
     private int listSize;
     private String order_id;
@@ -190,31 +192,47 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mCheckBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+                if(isChecked){
+                    strAppointmentNeed+="1,";
+                    Log.e("strAppointmentNeed1",strAppointmentNeed);
+                }
             }
         });
-        mCheckBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mCheckBox2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+                if(isChecked){
+                    strAppointmentNeed+="2,";
+                    Log.e("strAppointmentNeed2",strAppointmentNeed);
+                }
             }
         });
-        mCheckBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mCheckBox3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+                if(isChecked){
+                    strAppointmentNeed+="3,";
+                    Log.e("strAppointmentNeed3",strAppointmentNeed);
+                }
             }
         });
-        mCheckBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mCheckBox4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+                if(isChecked){
+                    strAppointmentNeed+="4,";
+                    Log.e("strAppointmentNeed4",strAppointmentNeed);
+                }
             }
         });
         mImmediateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postUnfinishedOrder(customer_id);
+                if (listSize > 0) {
+                    Toast.makeText(getActivity(), "已有订单", Toast.LENGTH_SHORT).show();
+                } else {
+                    postCreateOrder(customer_id, parking.getParking_id(), mImmediateTimeText,strAppointmentNeed);
+                }
             }
         });
         mAppointmentButton.setOnClickListener(new View.OnClickListener() {
@@ -227,7 +245,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                     if (listSize > 0) {
                         Toast.makeText(getActivity(), "已有订单", Toast.LENGTH_SHORT).show();
                     } else {
-                        postCreateOrder(customer_id, parking.getParking_id(), mTimeText);
+                        postCreateOrder(customer_id, parking.getParking_id(), mTimeText,strAppointmentNeed);
                     }
                 }
             }
@@ -271,11 +289,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 listSize=unfinishedOrderInfos.size();
                 Session session=getSession();
                 session.put("unfinishedOrderInfos",unfinishedOrderInfos);
-                if (listSize > 0) {
-                    Toast.makeText(getActivity(), "已有订单", Toast.LENGTH_SHORT).show();
-                } else {
-                    postCreateOrder(customer_id, parking.getParking_id(), mImmediateTimeText);
-                }
+
             }
             @Override
             public void onFailure(String code, String message) {
@@ -283,11 +297,11 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
             }
         });
     }
-    public void postCreateOrder(String customerId,String parkingId,String orderPlanBegin) {
+    public void postCreateOrder(String customerId,String parkingId,String orderPlanBegin,String order_img_count) {
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_CREATEORDER));
-        apiTask.setParams(ApiContants.instance(getActivity()).userCreateOrder(customerId, parkingId, orderPlanBegin));
+        apiTask.setParams(ApiContants.instance(getActivity()).userCreateOrder(customerId, parkingId, orderPlanBegin,order_img_count));
         apiTask.setRoot("orderInfo");
         apiTask.execute(new OnDataLoader<OrderInfo>(){
             @Override
@@ -309,7 +323,6 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                         mOrderCountDownTextView.setText("");
                     }
                 });
-
             }
             @Override
             public void onFailure(String code, String message) {
