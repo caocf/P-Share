@@ -1,14 +1,13 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +17,7 @@ import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.LocationManagerProxy;
 import com.amap.api.location.LocationProviderProxy;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
@@ -31,7 +31,6 @@ import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
-import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.Parking;
 
 import java.util.List;
@@ -44,6 +43,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.logging.Log;
 import mobi.cangol.mobile.service.AppService;
 import mobi.cangol.mobile.service.global.GlobalData;
+import mobi.cangol.mobile.utils.BitmapUtils;
 
 
 public class HomeFragment extends BaseContentFragment implements LocationSource, AMapLocationListener ,AMap.OnInfoWindowClickListener,AMap.OnMarkerClickListener {
@@ -51,6 +51,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 	private LinearLayout mMineHomeButtonLinearLayout;
     private TextView mParkNameTextView;
     private TextView mParkNumTextView;
+    private TextView mParkDistanceTextView;
     private TextView mParkChangeTextView;
 	private AccountVerify mAccountVerify;
 
@@ -95,6 +96,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 		mMineHomeButtonLinearLayout=(LinearLayout) view.findViewById(R.id.ll_mine_home);
         mParkNameTextView=(TextView) view.findViewById(R.id.tv_parking_name);
         mParkNumTextView=(TextView) view.findViewById(R.id.tv_parking_num);
+        mParkDistanceTextView=(TextView) view.findViewById(R.id.tv_parking_distance);
         mParkChangeTextView=(TextView) view.findViewById(R.id.tv_parking_change);
 	}
 
@@ -104,8 +106,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);// 必须要写
         mAmap = mMapView.getMap();
-        mAmap.moveCamera(CameraUpdateFactory.zoomTo(14));
-
+        mAmap.moveCamera(CameraUpdateFactory.zoomTo(15));
         mParkChangeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,23 +195,21 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
     private void setUpMap() {
         mAmap.setLocationSource(this);// 设置定位监听
         mAmap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
-        //mAmap.getUiSettings().setZoomControlsEnabled(false);
         mAmap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         // 设置定位的类型为定位模式：定位（AMap.LOCATION_TYPE_LOCATE）、跟随（AMap.LOCATION_TYPE_MAP_FOLLOW）
         // 地图根据面向方向旋转（AMap.LOCATION_TYPE_MAP_ROTATE）三种模式
         mAmap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
         mAmap.setOnMarkerClickListener(this);// 设置点击marker事件监听器
         mAmap.setOnInfoWindowClickListener(this);// 设置点击infoWindow事件监听器
+        mAmap.getUiSettings().setZoomControlsEnabled(false);
+        mAmap.getUiSettings().setZoomPosition(AMapOptions.ZOOM_POSITION_RIGHT_CENTER);
+        mAmap.getUiSettings().setLogoPosition(AMapOptions.LOGO_POSITION_BOTTOM_RIGHT);
+        mAmap.getUiSettings().setCompassEnabled(true);
         //// 设置自定义InfoWindow样式
         mAmap.setInfoWindowAdapter(new AMap.InfoWindowAdapter() {
 
             @Override
             public View getInfoWindow(Marker marker) {
-                return null;
-            }
-
-            @Override
-            public View getInfoContents(Marker marker) {
                 LayoutInflater mInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View view = mInflater.inflate(R.layout.view_mark_content, null, false);
                 Parking parking = (Parking) marker.getObject();
@@ -218,6 +217,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 TextView num = (TextView) view.findViewById(R.id.view_marker_num);
                 TextView distance = (TextView) view.findViewById(R.id.view_marker_distance);
                 TextView address = (TextView) view.findViewById(R.id.view_marker_address);
+                TextView price = (TextView) view.findViewById(R.id.view_marker_price);
 
                 name.setText("" + parking.getParking_name());
                 if (parking.getParking_can_use() > 0) {
@@ -225,9 +225,16 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 } else {
                     num.setText("满:" + parking.getParking_can_use());
                 }
+                price.setText(parking.getParking_charging_standard()+"元");
                 address.setText("" + parking.getParking_address());
                 distance.setText(parking.getParking_distance() + "米");
                 return view;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+
+                return null;
             }
         });
     }
@@ -290,6 +297,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 Double geoLat = aMapLocation.getLatitude();
                 Double geoLng = aMapLocation.getLongitude();
                 getSearchParkListByLL("" + geoLat, "" + geoLng);
+                updateDefaltParking(mDefaultParking);
             }
         }
     }
@@ -329,6 +337,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             public void onSuccess(boolean page, Parking parking) {
                 if (isEnable()) {
                     mGlobalData.save("default_parking",parking);
+                    mDefaultParking=parking;
                     updateDefaltParking(parking);
                 }
             }
@@ -349,6 +358,12 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 mParkNumTextView.setText("满:"+parking.getParking_can_use());
             }
             mMineHomeButton.setText(""+parking.getParking_can_use());
+            if(mAMapLocation!=null){
+                int s = (int) AMapUtils.calculateLineDistance(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())),
+                        new LatLng(mAMapLocation.getLatitude(), mAMapLocation.getLongitude()));
+                parking.setParking_distance("" + s);
+                mParkDistanceTextView.setText(s+"米");
+            }
         }else{
 
         }
@@ -427,9 +442,32 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 markerOption.position(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())));
                 markerOption.title(parking.getParking_name()).snippet(parking.getParking_address());
                 markerOption.draggable(true);
-                markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_map_image));
+                if(parking.getParking_can_use()>0){
+                    int l=parking.getParking_can_use()>9?2:1;
+                    Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.empty),
+                            l==2?30-12:30-6,
+                            36,
+                            ""+parking.getParking_can_use(),
+                            getResources().getColor(R.color.menu_text_pressed),
+                            24,
+                            100);
+                    markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
+                }else{
+                    Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.full),
+                            24,
+                            36,
+                            ""+parking.getParking_can_use(),
+                            getResources().getColor(R.color.text_light_gray),
+                            24,
+                            100);
+                    markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
+                }
+
+                //markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_map_image));
                 marker=mAmap.addMarker(markerOption);
                 marker.setObject(parking);
+                if(i==0)
+                marker.showInfoWindow();
             }
         }else{
             showToast("附近没有停车场");
