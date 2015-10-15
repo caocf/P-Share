@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/fragment_background"
+    android:layout_height="match_parent">
+    <include layout="@layout/fragment_order1"></include>
+    <include layout="@layout/fragment_order2"></include>
+    <include layout="@layout/fragment_order3"></include>
+    <include layout="@layout/fragment_order4"></include>
+</LinearLayout>

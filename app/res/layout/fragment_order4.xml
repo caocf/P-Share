@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/fragment_order4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fragment_background" >
@@ -54,12 +55,12 @@
 					android:text="@string/tv_order_servicePerson"
 					/>
 				<TextView
-					android:id="@+id/tv_parker_id"
+					android:id="@+id/tv_parker_id4"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_centerHorizontal="true"
 					android:layout_marginTop="@dimen/padding2"
-					android:text="2"
+					android:text=""
 					android:textSize="@dimen/text_size3" />
 				<TextView
 					android:layout_width="wrap_content"
@@ -84,11 +85,10 @@
 					android:textSize="@dimen/text_size3"
 					android:text="@string/tv_order_servicePerson_position"/>
 				<TextView
-					android:id="@+id/tv_parker_Level"
+					android:id="@+id/tv_parker_Level4"
 					android:layout_height="wrap_content"
 					android:layout_width="wrap_content"
-					android:textSize="@dimen/text_size3"
-					android:text="@string/text_order_servicePerson_position"/>
+					android:textSize="@dimen/text_size3"/>
 			</LinearLayout>
 			<!-- 代泊员负责的区域地点 -->
 			<LinearLayout
@@ -105,7 +105,7 @@
 					android:textSize="@dimen/text_size3"
 					android:text="@string/tv_order_servicePerson_area"/>
 				<TextView
-					android:id="@+id/tv_parker_area"
+					android:id="@+id/tv_parker_area4"
 					android:layout_height="wrap_content"
 					android:layout_width="wrap_content"
 					android:textSize="@dimen/text_size3"
@@ -113,7 +113,7 @@
 			</LinearLayout>
 			<!-- 拨打代泊员号码 -->
 			<RelativeLayout
-				android:id="@+id/rl_parker_mobile"
+				android:id="@+id/rl_parker_mobile4"
 				android:layout_height="wrap_content"
 				android:layout_width="wrap_content"
 				android:layout_centerHorizontal="true"
@@ -129,13 +129,13 @@
 						android:layout_width="wrap_content"
 						android:src="@drawable/call_phone"/>
 					<TextView
-						android:id="@+id/tv_parker_mobile"
+						android:id="@+id/tv_parker_mobile4"
 						android:layout_height="wrap_content"
 						android:layout_width="wrap_content"
 						android:layout_gravity="center_vertical"
 						android:layout_marginLeft="@dimen/padding1"
 						android:textColor="@color/text_phone"
-						android:text="18301969764"/>
+						android:text=""/>
 				</LinearLayout>
 				<View
 					android:layout_height="1dp"
@@ -169,7 +169,7 @@
 	             android:textSize="@dimen/text_size3"
 	             android:text="@string/tv_order_time"/>
 	         <TextView
-	             android:id="@+id/tv_appointment_time"
+	             android:id="@+id/tv_appointment_time4"
 	             android:layout_height="wrap_content"
 	             android:layout_width="wrap_content"
 	             android:textSize="@dimen/text_size3"
@@ -189,7 +189,7 @@
 	             android:textSize="@dimen/text_size3"
 	             android:text="@string/tv_order_takeCar_time"/>
 	         <TextView
-	             android:id="@+id/tv_appointment_make_car_time"
+	             android:id="@+id/tv_appointment_make_car_time4"
 	             android:layout_height="wrap_content"
 	             android:layout_width="wrap_content"
 	             android:textSize="@dimen/text_size3"
@@ -209,7 +209,7 @@
 	             android:textSize="@dimen/text_size3"
 	             android:text="@string/tv_order_takeCar_remainingtime"/>
 	         <TextView
-	             android:id="@+id/tv_countdown_time"
+	             android:id="@+id/tv_countdown_time4"
 	             android:layout_height="wrap_content"
 	             android:layout_width="wrap_content"
 	             android:textSize="@dimen/text_size3"
@@ -229,7 +229,7 @@
 	             android:textSize="@dimen/text_size3"
 	             android:text="@string/tv_order_car_number"/>
 	         <TextView
-	             android:id="@+id/tv_car_number"
+	             android:id="@+id/tv_car_number4"
 	             android:layout_height="wrap_content"
 	             android:layout_width="wrap_content"
 	             android:textSize="@dimen/text_size3"
@@ -252,7 +252,7 @@
 				android:layout_centerVertical="true"
 				android:src="@drawable/order_left"/>
 			<GridView
-				android:id="@+id/gridview_photos"
+				android:id="@+id/gridview_photos4"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:layout_toRightOf="@+id/iv_left"
@@ -273,7 +273,7 @@
 		</RelativeLayout>
 
 	     <Button
-			 android:id="@+id/button_finish_order_pay"
+			 android:id="@+id/button_finish_order_pay4"
 	         style="@style/button_style"
 	         android:text="@string/button_payfinish"/>
 	</LinearLayout>

@@ -163,11 +163,12 @@ customer_age*/
 	 *
 	 * @return
 	 */
-	public HashMap<String, String> userCreateOrder(String customerId,String parkingId,String orderPlanBegin) {
+	public HashMap<String, String> userCreateOrder(String customerId,String parkingId,String orderPlanBegin,String order_img_count) {
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("customer_id", customerId );
 		params.put("parking_id",parkingId);
 		params.put("order_plan_begin",orderPlanBegin);
+		params.put("order_img_count",order_img_count);
 		return params;
 	}
 	public static String API_CUSTOMER_ADDCAR="/customer/addCar";

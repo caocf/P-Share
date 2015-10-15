@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/fragment_order3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fragment_background" >
@@ -173,11 +174,19 @@
 	             android:layout_height="wrap_content"
 	             android:layout_width="wrap_content"
 	             android:textSize="@dimen/text_size3"
+				 android:textColor="@color/text_light_gray"
 	             android:text="@string/text_order_time"/>
 	     </LinearLayout>
-	     <RelativeLayout	             
-            android:id="@+id/rl_unselect_order"
-            style="@style/ll_button_style">
+		<RelativeLayout
+			android:id="@+id/rl_unselect_order3"
+			android:layout_height="@dimen/padding8"
+			android:layout_width="match_parent"
+			android:layout_marginLeft="@dimen/padding4"
+			android:layout_marginRight="@dimen/padding4"
+			android:layout_alignParentBottom="true"
+			android:background="@drawable/button"
+			android:layout_marginTop="50dp"
+			android:layout_marginBottom="@dimen/padding8">
             <TextView
                 android:id="@+id/tv_unselect_order" 
                 android:layout_height="wrap_content"
