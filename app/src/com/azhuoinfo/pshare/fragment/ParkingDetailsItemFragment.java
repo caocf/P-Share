@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -61,6 +63,10 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     //时间
     private RelativeLayout mAppointmentTimeRelativeLayout;
     private TextView mAppointmentTimeTextView;
+    private CheckBox mCheckBox1;
+    private CheckBox mCheckBox2;
+    private CheckBox mCheckBox3;
+    private CheckBox mCheckBox4;
     /*//预约
     private RelativeLayout mAppointmentRelativeLayout;
     private TextView mAppointmentTextView;*/
@@ -126,6 +132,10 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mParkingDistanceTextView=(TextView) view.findViewById(R.id.tv_parking_distance);
         mParkingCanUseTextView=(TextView) view.findViewById(R.id.tv_parking_can_use);
         mParkingPriceTextView=(TextView) view.findViewById(R.id.tv_parking_price);
+        mCheckBox1=(CheckBox) findViewById(R.id.ib_shopping_cart);
+        mCheckBox2=(CheckBox)findViewById(R.id.ib_flashlight);
+        mCheckBox3=(CheckBox) findViewById(R.id.ib_wheelchair);
+        mCheckBox4=(CheckBox)findViewById(R.id.ib_umbrella);
         mAppointmentTimeRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_parking_appointment_time);
         mAppointmentTimeTextView=(TextView) view.findViewById(R.id.tv_parking_appointment_time);
         mStopLinearLayout=(LinearLayout) view.findViewById(R.id.ll_stop_button);
@@ -144,11 +154,11 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     @Override
     protected void initViews(Bundle bundle){
         this.setTitle(R.string.yard_details);
-        mParkingNameTextView.setText(parking.getParking_name()+"");
-        mParkingAddressTextView.setText(parking.getParking_address()+"");
-        Log.e(TAG,parking.getParking_can_use()+"");
-        mParkingCanUseTextView.setText(parking.getParking_can_use()+"");
-        mParkingPriceTextView.setText(parking.getParking_charging_standard()+"");
+        mParkingNameTextView.setText(parking.getParking_name() + "");
+        mParkingAddressTextView.setText(parking.getParking_address() + "");
+        Log.e(TAG, parking.getParking_can_use() + "");
+        mParkingCanUseTextView.setText(parking.getParking_can_use() + "");
+        mParkingPriceTextView.setText(parking.getParking_charging_standard() + "");
         mAppointmentTimeRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,6 +185,30 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                     }
                 }, hourOfDay, minute, true);
                 mTimeDialog.show();
+            }
+        });
+        mCheckBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+            }
+        });
+        mCheckBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+            }
+        });
+        mCheckBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+            }
+        });
+        mCheckBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
             }
         });
         mImmediateButton.setOnClickListener(new View.OnClickListener() {
@@ -242,28 +276,6 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 } else {
                     postCreateOrder(customer_id, parking.getParking_id(), mImmediateTimeText);
                 }
-                /*if(listSize>0){
-                    for (int i=0;i<listSize;i++){
-                        UnfinishedOrderInfo unfinishedOrderInfo=unfinishedOrderInfos.get(i);
-                        order_id=unfinishedOrderInfo.getOrder_id();
-                        String order_state=unfinishedOrderInfo.getOrder_state();
-                        if(order_state.equals("1")){
-                            mOrderTextLinearLayout.setVisibility(View.VISIBLE);
-                        }else if(order_state.equals("2")){
-                            mOrderTextLinearLayout.setVisibility(View.VISIBLE);
-                            mOrderTextView.setText("代泊员已接单");
-                        }
-                    }
-                    mStopLinearLayout.setVisibility(View.GONE);
-                    mCancelButton.setVisibility(View.VISIBLE);
-                }else{
-                    mStopLinearLayout.setVisibility(View.VISIBLE);
-                    mCancelButton.setVisibility(View.GONE);
-                    mOrderTextLinearLayout.setVisibility(View.GONE);
-                }*/
-                /*for(int i=0;i<unfinishedOrderInfos.size();i++){
-
-                }*/
             }
             @Override
             public void onFailure(String code, String message) {

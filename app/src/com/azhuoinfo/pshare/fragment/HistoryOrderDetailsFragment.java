@@ -57,9 +57,9 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
         mAccountVerify = AccountVerify.getInstance(getActivity());
         orderList=(OrderList)this.getArguments().get("orderList");
         parakerId=orderList.getParker_id();
-        parkerLevel=orderList.getParkerLevel();
+        parkerLevel=orderList.getParker_level();
         parkerMobile=orderList.getParker_mobile();
-        orderActualBegin=orderList.getOrder_actual_begin();
+        orderActualBegin=orderList.getUpdated_at();
         orderDuration=orderList.getOrder_duration();
         orderTotalFee=orderList.getOrder_total_fee();
         parkerName=orderList.getParker_name();
@@ -105,7 +105,7 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
         mParkerAreaTextView.setText(parkerName);
         mParkerMobileTextView.setText(parkerMobile);
         mParkerPositionTextView.setText(parkerLevel);
-        mPayMoneyTextView.setText(orderTotalFee);
+        mPayMoneyTextView.setText(orderTotalFee+"元");
         mOrderDateTextView.setText(orderActualBegin);
         mStopCarTimeTextView.setText(orderDuration);
         mCarNumberTextView.setText(carNumber);

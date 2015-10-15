@@ -51,7 +51,6 @@ public class MineOrderFragment extends BaseContentFragment{
         customer_Id=customerInfo.getCustomer_Id();
         //AlarmManager am = (AlarmManager)("http://139.196.12.103/1/1.0.0/customer/unfinishedOrder?customer_id="+customer_Id.toString());
        // am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,0,5*1000,);
-        postUnfinishedOrder(customer_Id);
 
     }
 
@@ -79,6 +78,7 @@ public class MineOrderFragment extends BaseContentFragment{
         mTabHost.setup();
         Log.e(TAG, order_state + "order_state");
         mTabManager=new TabManager(this.getChildFragmentManager(),mTabHost,R.id.realtabcontent);
+        postUnfinishedOrder(customer_Id);
         mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator("预/订"), Order1Fragment.class, new Bundle());
         mTabManager.addTab(mTabHost.newTabSpec("ItemFragment2").setIndicator("历史订单"), HistoryOrderFragment.class, new Bundle());
 
@@ -102,7 +102,7 @@ public class MineOrderFragment extends BaseContentFragment{
     public boolean isCleanStack() {
         return true;
     }
-    public void initTable(){
+   /* public void initTable(){
         if(listSize==0){
             mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator("预/订"), Order1Fragment.class, new Bundle());
         }else if(listSize!=0&&order_state.equals("1")){
@@ -111,7 +111,7 @@ public class MineOrderFragment extends BaseContentFragment{
             mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator("预/订"), Order3Fragment.class, new Bundle());
         }
         mTabManager.addTab(mTabHost.newTabSpec("ItemFragment2").setIndicator("历史订单"), HistoryOrderFragment.class, new Bundle());
-    }
+    }*/
     public void postUnfinishedOrder(String customerId){
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");

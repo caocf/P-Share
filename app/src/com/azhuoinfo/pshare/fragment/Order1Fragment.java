@@ -94,11 +94,12 @@ public class Order1Fragment extends BaseContentFragment{
         mAccountVerify = AccountVerify.getInstance(getActivity());
         customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
         customerId=customerInfo.getCustomer_Id();
-        postUnfinishedOrder(customerId);
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        postUnfinishedOrder(customerId);
         if(listSize==0){
             return inflater.inflate(R.layout.fragment_order1,container,false);
         }else if(listSize>0&&order_state.equals("1")){
@@ -135,18 +136,17 @@ public class Order1Fragment extends BaseContentFragment{
         /*Message message = handeler.obtainMessage(1);     // Message
         handeler.sendMessageDelayed(message, 1000);*/
 
-        if(listSize>0&&order_state.equals("1")){
-            initViewsOrder2();
-        }else if(listSize>0&&order_state.equals("2")){
-           initViewsOrder3();
-        }else if((listSize>0)&&(order_state.equals("3")||order_state.equals("4")||order_state.equals("5"))){
-           initViewsOrder4();
-        }
     }
 
     @Override
     protected void initData(Bundle bundle) {
-
+        if(listSize>0&&order_state.equals("1")){
+            initViewsOrder2();
+        }else if(listSize>0&&order_state.equals("2")){
+            initViewsOrder3();
+        }else if((listSize>0)&&(order_state.equals("3")||order_state.equals("4")||order_state.equals("5"))){
+            initViewsOrder4();
+        }
     }
 
     @Override

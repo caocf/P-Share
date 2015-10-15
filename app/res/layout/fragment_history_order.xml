@@ -4,6 +4,10 @@
     android:layout_height="match_parent"
     android:background="@color/fragment_background"
     android:orientation="vertical" >
+    <com.azhuoinfo.pshare.view.PromptView
+        android:id="@+id/promptView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
     <ListView
         android:id="@+id/lv_history_order"
         android:layout_height="wrap_content"

@@ -1,6 +1,7 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,6 @@ public class HistoryOrderFragment extends BaseContentFragment{
         mAccountVerify = AccountVerify.getInstance(getActivity());
         customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
         customerId=customerInfo.getCustomer_Id();
-        postHistoryOrder(customerId);
     }
 
     @Override
@@ -66,12 +66,14 @@ public class HistoryOrderFragment extends BaseContentFragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        postHistoryOrder(customerId);
         initViews(savedInstanceState);
         initData(savedInstanceState);
     }
 
     @Override
     protected void findViews(View view) {
+        mPromptView=(PromptView) findViewById(R.id.promptView);
         mHistoryOrderListView=(ListView) findViewById(R.id.lv_history_order);
 
     }
@@ -97,6 +99,7 @@ public class HistoryOrderFragment extends BaseContentFragment{
     }
     protected void updateViews(List<OrderList> list) {
         if(list!=null&&list.size()>0){
+            Log.e("updateViews",list+"");
             mDataAdapter.clear();
             mDataAdapter.addAll(list);
             if(mDataAdapter.getCount()>0){
@@ -122,7 +125,7 @@ public class HistoryOrderFragment extends BaseContentFragment{
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_HISTORYORDER));
         apiTask.setParams(ApiContants.instance(getActivity()).historyOrder(customerId));
-        apiTask.setRoot("orderList");
+        apiTask.setRoot("orderInfo");
         apiTask.execute(new OnDataLoader<List<OrderList>>() {
             @Override
             public void onStart() {
@@ -133,13 +136,15 @@ public class HistoryOrderFragment extends BaseContentFragment{
             public void onSuccess(boolean page, List<OrderList> orderLists) {
                 if (isEnable()) {
                     updateViews(orderLists);
+                    Log.e(TAG, orderLists + "");
                 }
+
             }
             @Override
             public void onFailure(String code, String message) {
                 showToast(message);
-                /*if (isEnable())
-                    mPromptView.showEmpty();*/
+                if (isEnable())
+                    mPromptView.showEmpty();
             }
         });
 
