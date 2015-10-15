@@ -10,9 +10,8 @@ public abstract class PlaceOrderCallback {
 		this.out_trade_no=null;
 		this.subject=subject;
 		this.detail=detail;
-		this.total_fee=subject;
+		this.total_fee=total_fee;
 	}
-	
-	public abstract String getOrderId();
+    public abstract String getOrderId();
 	
 }

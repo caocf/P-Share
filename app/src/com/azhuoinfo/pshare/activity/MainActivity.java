@@ -26,6 +26,7 @@ import com.azhuoinfo.pshare.view.CommonDialog;
 import mobi.cangol.mobile.logging.Log;
 import mobi.cangol.mobile.navigation.DrawerNavigationFragmentActivity;
 import mobi.cangol.mobile.navigation.SlidingNavigationFragmentActivity;
+import mobi.cangol.mobile.sdk.pay.PayManager;
 import mobi.cangol.mobile.service.AppService;
 import mobi.cangol.mobile.service.global.GlobalData;
 import mobi.cangol.mobile.service.status.StatusListener;
@@ -41,6 +42,7 @@ public class MainActivity extends DrawerNavigationFragmentActivity {
 	private boolean isBackPressed;
 	private AccountVerify mAccountVerify;
 	private GlobalData mGlobalData;
+    private PayManager mPayManager;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
@@ -89,8 +91,13 @@ public class MainActivity extends DrawerNavigationFragmentActivity {
 	private void initStatus() {
 		mGlobalData = (GlobalData) getAppService(AppService.GLOBAL_DATA);
 		mAccountVerify = AccountVerify.getInstance(this);
+        mPayManager=PayManager.getInstance(this);
 
-	}
+        mPayManager.initPay(this, PayManager.PAY_TYPE_WECHAT, Constants.APP_ID, Constants.API_KEY, Constants.MCH_ID,Constants.NOTIFY_URL);
+
+        mPayManager.initPay(this, PayManager.PAY_TYPE_ALIPAY, Constants.SELLER, Constants.PARTNERID, Constants.RSA_PRIVATE, Constants.RSA_PUBLIC, Constants.NOTIFY_URL);
+
+    }
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();

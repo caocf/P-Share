@@ -117,49 +117,49 @@ public class AlipayPay extends PayInterface {
 			@Override
 			protected String doInBackground(Void... params) {
 				//生成订单号
-				String orderId=orderCallback.getOrderId();
+				orderId=orderCallback.getOrderId();
 				// 订单
 				String orderInfo = getOrderInfo(orderId,orderCallback.subject,orderCallback.detail,orderCallback.total_fee);
 				// 对订单做RSA 签名
-				String sign = sign(orderInfo);
-				if (PayManager.DEBUG)
-					Log.d(TAG, "sign=="+sign);
-				try {
-					// 仅需对sign 做URL编码
-					sign = URLEncoder.encode(sign, "UTF-8");
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
+                String sign = sign(orderInfo);
+                if (PayManager.DEBUG)
+                    Log.d(TAG, "sign=="+sign);
+                try {
+                    // 仅需对sign 做URL编码
+                    sign = URLEncoder.encode(sign, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
 
-				// 完整的符合支付宝参数规范的订单信息
-				final String payInfo = orderInfo + "&sign=\"" + sign + "\"&"+ getSignType();
-				
-				// 构造PayTask 对象
-				PayTask alipay = new PayTask((Activity) context);
-				// 调用支付接口，获取支付结果
-				String resultStr = alipay.pay(payInfo);
-				return resultStr;
-			}
-			@Override
-			protected void onPostExecute(String result) {
-				super.onPostExecute(result);
-				if (PayManager.DEBUG)
-					Log.d(TAG, "result="+result);
-				if(TextUtils.isEmpty(result)){
-					if(null != onPayResultListener){
-						onPayResultListener.onFailuire(orderId,"未知原因(支付宝返回结果为空)");
-					}
-					return;
-				}
-				if(null != onPayResultListener){
-					PayResult payResult = new PayResult(result);
-					if("9000".equals(payResult.getResultStatus())){
-						onPayResultListener.onSuccess(orderId, payResult.getMemo());
-					}else{
-						onPayResultListener.onFailuire(orderId, payResult.getMemo());
-					}
-				}
-			}
+                // 完整的符合支付宝参数规范的订单信息
+                final String payInfo = orderInfo + "&sign=\"" + sign + "\"&"+ getSignType();
+
+                // 构造PayTask 对象
+                PayTask alipay = new PayTask((Activity) context);
+                // 调用支付接口，获取支付结果
+                String resultStr = alipay.pay(payInfo);
+                return resultStr;
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                if (PayManager.DEBUG)
+                    Log.d(TAG, "result="+result);
+                if(TextUtils.isEmpty(result)){
+                    if(null != onPayResultListener){
+                        onPayResultListener.onFailuire(orderId,"未知原因(支付宝返回结果为空)");
+                    }
+                    return;
+                }
+                if(null != onPayResultListener){
+                    PayResult payResult = new PayResult(result);
+                    if("9000".equals(payResult.getResultStatus())){
+                        onPayResultListener.onSuccess(orderId, payResult.getMemo());
+                    }else{
+                        onPayResultListener.onFailuire(orderId, payResult.getMemo());
+                    }
+                }
+            }
 		};
 		//执行
 		asyncTask.execute();

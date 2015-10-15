@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -11,12 +13,13 @@ import android.widget.TextView;
 
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
-import com.azhuoinfo.pshare.utils.Constants;
+import com.azhuoinfo.pshare.view.CommonDialog;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.sdk.pay.OnPayResultListener;
 import mobi.cangol.mobile.sdk.pay.PayManager;
+import mobi.cangol.mobile.sdk.pay.PlaceOrderCallback;
 
 /**
  * Created by Azhuo on 2015/9/22.
@@ -62,7 +65,6 @@ public class MonthlyRentCarPayFragment extends BaseContentFragment{
     private Button mDeleteButton;
 
     private AccountVerify mAccountVerify;
-     private PayManager mPayManager;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,7 +121,7 @@ public class MonthlyRentCarPayFragment extends BaseContentFragment{
 
         mPayMoneyTextView=(TextView) view.findViewById(R.id.tv_pay_money);
 
-        mConfirmButton=(Button) view.findViewById(R.id.button_confirm);
+        mConfirmButton=(Button) view.findViewById(R.id.button_to_pay);
         mDeleteButton=(Button) view.findViewById(R.id.button_delete_topay);
     }
 
@@ -129,9 +131,7 @@ public class MonthlyRentCarPayFragment extends BaseContentFragment{
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toPay(PayManager.PAY_TYPE_ALIPAY,"桃子","桃子一斤","0.01");
-                //交易金额默认为人民币交易，接口中参数支付金额单位为【分】，参数值不能带小数。对账单中的交易金额单位为【元】。
-                toPay(PayManager.PAY_TYPE_WECHAT,"桃子","桃子一斤","1");
+                showPayMethodDialog();
             }
         });
 
@@ -139,25 +139,16 @@ public class MonthlyRentCarPayFragment extends BaseContentFragment{
 
     @Override
     protected void initData(Bundle bundle) {
-        initPay();
-    }
-    private void initPay(){
-        mPayManager=PayManager.getInstance(this.getActivity());
-
-        mPayManager.initPay(this.getActivity(), PayManager.PAY_TYPE_WECHAT, Constants.APP_ID, Constants.API_KEY, Constants.MCH_ID,Constants.NOTIFY_URL);
-
-        mPayManager.initPay(this.getActivity(), PayManager.PAY_TYPE_ALIPAY, Constants.SELLER, Constants.PARTNERID, Constants.RSA_PRIVATE, Constants.RSA_PUBLIC, Constants.NOTIFY_URL);
     }
 
     protected void toPay(int payType,final String subject,final String desc,final String price) {
-//		PlaceOrderCallback callback=null;
-//		if(payType==PayManager.PAY_TYPE_WECHAT){
-//			callback=new MyOrderCallback(this,subject,desc,price);
-//		}else{
-//			callback=new MyOrderCallback2(this,subject,desc,price);
-//		}
-        PayManager.getInstance(this.getActivity()).toPay(this.getActivity(), payType, subject, desc, price, new OnPayResultListener() {
-
+        PayManager.getInstance(getActivity()).toPay(this.getActivity(), payType, new PlaceOrderCallback(subject, desc, price) {
+            @Override
+            public String getOrderId() {
+                //自定义订单号
+                return "128978342715192";
+            }
+        }, new OnPayResultListener() {
             @Override
             public void onSuccess(String billingIndex, String msg) {
                 showToast("订单:" + billingIndex + " " + msg);
@@ -172,8 +163,36 @@ public class MonthlyRentCarPayFragment extends BaseContentFragment{
             public void onCancel(String billingIndex, String msg) {
                 showToast("订单:" + billingIndex + " " + msg);
             }
-
         });
+    }
+    private void showPayMethodDialog() {
+        String[] from = this.getResources().getStringArray(R.array.pay_method);
+        final CommonDialog dialog = CommonDialog.creatDialog(this.getActivity());
+        dialog.setTitle("支付");
+        dialog.setListViewInfo(new ArrayAdapter<String>(app,
+                        R.layout.common_dialog_textview, from),
+                new CommonDialog.OnDialogItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+                        switch (position) {
+                            case 0:
+                                toPay(PayManager.PAY_TYPE_ALIPAY,"桃子","桃子一斤","0.02");
+                                break;
+                            case 1:
+                                //交易金额默认为人民币交易，接口中参数支付金额单位为【分】，参数值不能带小数。对账单中的交易金额单位为【元】。
+                                toPay(PayManager.PAY_TYPE_WECHAT,"桃子","桃子一斤","1");
+                                break;
+                            case 2:
+
+                                break;
+                        }
+                        dialog.dismiss();
+                    }
+                });
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
     }
     @Override
     protected FragmentInfo getNavigtionUpToFragment() {
