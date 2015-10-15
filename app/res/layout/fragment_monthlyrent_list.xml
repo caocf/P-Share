@@ -1,40 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="wrap_content"
-	android:layout_width="wrap_content">
-    <LinearLayout
-        android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/fragment_background"
+              android:orientation="vertical">
+
+    <com.azhuoinfo.pshare.view.AllListView
+        android:id="@+id/lv_monthlyRent_list"
+        style="@style/Common_ListView"
         android:layout_width="match_parent"
-		android:background="@color/fragment_background"
-        android:orientation="vertical">
-        <com.azhuoinfo.pshare.view.listview.MyListView
-	        android:id="@+id/lv_monthlyRent_list"
-	        android:layout_height="wrap_content"
-	        android:layout_width="match_parent"
-			android:layout_marginTop="@dimen/padding1"
-	        android:background="@color/text_white">
-	    </com.azhuoinfo.pshare.view.listview.MyListView>
-	    <RelativeLayout
-	        android:id="@+id/rl_add_monthlyRent"
-	        android:layout_height="wrap_content"
-	        android:layout_width="match_parent"
-	        android:padding="@dimen/padding2"
-	        android:layout_marginTop="@dimen/padding1"
-	        android:background="@color/text_white">
-	        <ImageView 
-	            android:layout_height="wrap_content"
-	            android:layout_width="wrap_content"
-	            android:layout_toLeftOf="@+id/tv_add_monthlyRent"
-	            android:layout_centerVertical="true"
-	            android:layout_marginRight="@dimen/padding2"
-	            android:src="@drawable/add"/>
-	        <TextView
-	            android:id="@+id/tv_add_monthlyRent"
-	            android:layout_height="wrap_content"
-	            android:layout_width="wrap_content"
-	            android:layout_centerInParent="true"
-	            android:text="@string/add"/>
-	    </RelativeLayout>
-	</LinearLayout>
-</ScrollView>
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_add_monthlyRent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding1"
+        android:background="@color/text_white"
+        android:padding="@dimen/padding2">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/padding2"
+            android:layout_toLeftOf="@+id/tv_add_monthlyRent"
+            android:src="@drawable/add"/>
+
+        <TextView
+            android:id="@+id/tv_add_monthlyRent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/add"/>
+    </RelativeLayout>
+</LinearLayout>

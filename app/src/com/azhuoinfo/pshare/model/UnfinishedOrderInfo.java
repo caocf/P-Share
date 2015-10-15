@@ -3,125 +3,216 @@ package com.azhuoinfo.pshare.model;
 /**
  * Created by Azhuo on 2015/10/9.
  */
-/*"order_sn":"订单唯一标识",
-        "order_unit_fee": "订单单位金额",
-        "order_paid_amount":"订单已支付金额",
-        "order_total_fee":"订单总金额",
-        "order_plan_begin": "计划开始时间",
-        "order_plan_end": "计划结束时间",
-        "order_actual_begin": "实际开始时间",
-        "order_actual_end": "实际结束时间",
-        "order_duration": "停车时长",
-        "order_path": "照片路径",
-        "order_state": "状态",
-        "create_at": "创建时间"
-
-        "customer_mobile":"客户手机",
-        "customer_head":"客户头像",
-        "customer_name":"客户姓名",
-
-        "parking_id": "停车场ID",
-        "parking_name": "停车场名称",
-        "parking_region": "停车场地区",
-        "parking_latitude": "停车场经度 ",
-        "parking_longitude": "停车场纬度",
-
-        "parker_id": "代泊员ID",
-        "parker_name": "代泊员名字",
-        "parker_mobile": "代泊员手机号",
-        "parker_cardid": "代泊员身份证号",
-
-        "car_brand": "车品牌型号",
-        "car_color": "车颜色",
-        "car_number": "车牌号 ",
-        "car_buy_date": "车购买时间",
-
-        "customer_id": "客户ID",
-        "customer_ nickname": "客户昵称 ",
-        "customer_head": "客户头像 ",
-        "customer_sex": "客户性别 ",
-        "customer_name": "客户真实姓名 ",
-        "customer_age": "客户年龄 ",
-        "customer_mobile": "客户手机号 ",
-        "customer_email": "客户邮箱 "*/
 public class UnfinishedOrderInfo {
-    private String order_id;
-    private String order_unit_fee;
-    private String order_paid_amount;
-    private String order_total_fee;
-    private String order_plan_begin;
+    private String  car_brand;//": "",
+    private String car_buy_date;//": "0000-00-00 00:00:00",
+    private String car_color;//": "",
+    private String car_number;//": "辽A666666",
+    private String  create_at;//": "2015-10-15 11:35:20",
+    private String customer_age;//": "",
+    private String  customer_email;//": "",
+    private String  customer_head;//": "",
+    private String  customer_id;//": "39f9f4f0-8378-4e7b-8241-32b7859d47c2",
+    private String customer_mobile;//": "18301969764",
+    private String customer_name;//": "",
+    private String customer_nickname;//": "",
+    private String customer_sex;//": "",
+    private String order_actual_begin_start;//": "2015-10-15 14:06:59",
+    private String order_actual_end_stop;//": "0000-00-00 00:00:00",
+    private String  order_duration;//": 0,
+    private String  order_id;//": "3345e536-7d32-4680-be62-41d5378ec005",
+    private String  order_img_count;//": "",
+    private String  order_path;//": "http://139.196.12.103/upload/20151015/3345e536-7d32-4680-be62-41d5378ec005/getcar/bit19.jpg,http://139.196.12.103/upload/20151015/3345e536-7d32-4680-be62-41d5378ec005/getcar/bit22.jpg,http://139.196.12.103/upload/20151015/3345e536-7d32-4680-be62-41d5378ec005/getcar/bit18.jpg,http://139.196.12.103/upload/20151015/3345e536-7d32-4680-be62-41d5378ec005/getcar/bit17.jpg,",
+    private String  order_plan_begin;//": "2015-10-15 11:35:20",
+    private String  order_plan_end;//": "2015-10-15 14:06",
+    private String  order_state;//": 3,
+    private String   order_total_fee;//": 0,
+    private String   order_unit_fee;//": 34,
+    private String   parker_cardid;//": "323232323",
+    private String   parker_id;//": "2",
+    private String   parker_level;//": "",
+    private String   parker_mobile;//": "10086",
+    private String   parker_name;//": "那家停车场",
+    private String   parking_address;//": "后变",
+    private String   parking_area;//": "",
+    private String   parking_id;//": "3",
+    private String   parking_img_count;//": "",
+    private String   parking_latitude;//": "",
+    private String   parking_longitude;//": "",
+    private String   parking_name;//": "那家停车场",
+    private String   parking_path;//": "",
+    private String  updated_at;//": "2015-10-15 14:06:59"
 
-    private String order_plan_end;
-    private String order_actual_begin;
-    private String order_actual_end;
-    private String order_path;
-    private String order_state;
+    public UnfinishedOrderInfo() {
+    }
 
-    private String create_at;
-    private String customer_id;
-    private String customer_nickname;
-    private String customer_head;
-    private String customer_sex;
-    private String customer_name;
-    private String customer_age;
-    private String customer_mobile;
-    private String customer_email;
-
-    private String parking_id;
-    private String parking_name;
-    private String parking_region;
-    private String parking_latitude;
-    private String parking_longitude;
-
-    private String parker_level;
-    private String parker_id;
-    private String parker_name;
-    private String parker_mobile;
-    private String parker_cardid;
-
-    private String car_number;
-    private String car_brand;
-    private String car_color;
-    private String car_buy_date;
-
-    public UnfinishedOrderInfo(String order_id, String order_unit_fee, String order_paid_amount, String order_total_fee, String order_plan_begin, String order_plan_end, String order_actual_begin, String order_actual_end, String order_path, String order_state, String create_at, String customer_id, String customer_nickname, String customer_head, String customer_sex, String customer_name, String customer_age, String customer_mobile, String customer_email, String parking_id, String parking_name, String parking_region, String parking_latitude, String parking_longitude, String parker_level, String parker_id, String parker_name, String parker_mobile, String parker_cardid, String car_number, String car_brand, String car_color, String car_buy_date) {
+    public UnfinishedOrderInfo(String car_brand, String car_buy_date, String car_color, String car_number, String create_at, String customer_age, String customer_email, String customer_head, String customer_id, String customer_mobile, String customer_name, String customer_nickname, String customer_sex, String order_actual_begin_start, String order_actual_end_stop, String order_duration, String order_id, String order_img_count, String order_path, String order_plan_begin, String order_plan_end, String order_state, String order_total_fee, String order_unit_fee, String parker_cardid, String parker_id, String parker_level, String parker_mobile, String parker_name, String parking_address, String parking_area, String parking_id, String parking_img_count, String parking_latitude, String parking_longitude, String parking_name, String parking_path, String updated_at) {
+        this.car_brand = car_brand;
+        this.car_buy_date = car_buy_date;
+        this.car_color = car_color;
+        this.car_number = car_number;
+        this.create_at = create_at;
+        this.customer_age = customer_age;
+        this.customer_email = customer_email;
+        this.customer_head = customer_head;
+        this.customer_id = customer_id;
+        this.customer_mobile = customer_mobile;
+        this.customer_name = customer_name;
+        this.customer_nickname = customer_nickname;
+        this.customer_sex = customer_sex;
+        this.order_actual_begin_start = order_actual_begin_start;
+        this.order_actual_end_stop = order_actual_end_stop;
+        this.order_duration = order_duration;
         this.order_id = order_id;
-        this.order_unit_fee = order_unit_fee;
-        this.order_paid_amount = order_paid_amount;
-        this.order_total_fee = order_total_fee;
+        this.order_img_count = order_img_count;
+        this.order_path = order_path;
         this.order_plan_begin = order_plan_begin;
         this.order_plan_end = order_plan_end;
-        this.order_actual_begin = order_actual_begin;
-        this.order_actual_end = order_actual_end;
-        this.order_path = order_path;
         this.order_state = order_state;
-        this.create_at = create_at;
-        this.customer_id = customer_id;
-        this.customer_nickname = customer_nickname;
-        this.customer_head = customer_head;
-        this.customer_sex = customer_sex;
-        this.customer_name = customer_name;
-        this.customer_age = customer_age;
-        this.customer_mobile = customer_mobile;
-        this.customer_email = customer_email;
+        this.order_total_fee = order_total_fee;
+        this.order_unit_fee = order_unit_fee;
+        this.parker_cardid = parker_cardid;
+        this.parker_id = parker_id;
+        this.parker_level = parker_level;
+        this.parker_mobile = parker_mobile;
+        this.parker_name = parker_name;
+        this.parking_address = parking_address;
+        this.parking_area = parking_area;
         this.parking_id = parking_id;
-        this.parking_name = parking_name;
-        this.parking_region = parking_region;
+        this.parking_img_count = parking_img_count;
         this.parking_latitude = parking_latitude;
         this.parking_longitude = parking_longitude;
-        this.parker_level = parker_level;
-        this.parker_id = parker_id;
-        this.parker_name = parker_name;
-        this.parker_mobile = parker_mobile;
-        this.parker_cardid = parker_cardid;
-        this.car_number = car_number;
+        this.parking_name = parking_name;
+        this.parking_path = parking_path;
+        this.updated_at = updated_at;
+    }
+
+    public String getCar_brand() {
+        return car_brand;
+    }
+
+    public void setCar_brand(String car_brand) {
         this.car_brand = car_brand;
-        this.car_color = car_color;
+    }
+
+    public String getCar_buy_date() {
+        return car_buy_date;
+    }
+
+    public void setCar_buy_date(String car_buy_date) {
         this.car_buy_date = car_buy_date;
     }
 
-    public UnfinishedOrderInfo() {
+    public String getCar_color() {
+        return car_color;
+    }
 
+    public void setCar_color(String car_color) {
+        this.car_color = car_color;
+    }
+
+    public String getCar_number() {
+        return car_number;
+    }
+
+    public void setCar_number(String car_number) {
+        this.car_number = car_number;
+    }
+
+    public String getCreate_at() {
+        return create_at;
+    }
+
+    public void setCreate_at(String create_at) {
+        this.create_at = create_at;
+    }
+
+    public String getCustomer_age() {
+        return customer_age;
+    }
+
+    public void setCustomer_age(String customer_age) {
+        this.customer_age = customer_age;
+    }
+
+    public String getCustomer_email() {
+        return customer_email;
+    }
+
+    public void setCustomer_email(String customer_email) {
+        this.customer_email = customer_email;
+    }
+
+    public String getCustomer_head() {
+        return customer_head;
+    }
+
+    public void setCustomer_head(String customer_head) {
+        this.customer_head = customer_head;
+    }
+
+    public String getCustomer_id() {
+        return customer_id;
+    }
+
+    public void setCustomer_id(String customer_id) {
+        this.customer_id = customer_id;
+    }
+
+    public String getCustomer_mobile() {
+        return customer_mobile;
+    }
+
+    public void setCustomer_mobile(String customer_mobile) {
+        this.customer_mobile = customer_mobile;
+    }
+
+    public String getCustomer_name() {
+        return customer_name;
+    }
+
+    public void setCustomer_name(String customer_name) {
+        this.customer_name = customer_name;
+    }
+
+    public String getCustomer_nickname() {
+        return customer_nickname;
+    }
+
+    public void setCustomer_nickname(String customer_nickname) {
+        this.customer_nickname = customer_nickname;
+    }
+
+    public String getCustomer_sex() {
+        return customer_sex;
+    }
+
+    public void setCustomer_sex(String customer_sex) {
+        this.customer_sex = customer_sex;
+    }
+
+    public String getOrder_actual_begin_start() {
+        return order_actual_begin_start;
+    }
+
+    public void setOrder_actual_begin_start(String order_actual_begin_start) {
+        this.order_actual_begin_start = order_actual_begin_start;
+    }
+
+    public String getOrder_actual_end_stop() {
+        return order_actual_end_stop;
+    }
+
+    public void setOrder_actual_end_stop(String order_actual_end_stop) {
+        this.order_actual_end_stop = order_actual_end_stop;
+    }
+
+    public String getOrder_duration() {
+        return order_duration;
+    }
+
+    public void setOrder_duration(String order_duration) {
+        this.order_duration = order_duration;
     }
 
     public String getOrder_id() {
@@ -132,28 +223,20 @@ public class UnfinishedOrderInfo {
         this.order_id = order_id;
     }
 
-    public String getOrder_unit_fee() {
-        return order_unit_fee;
+    public String getOrder_img_count() {
+        return order_img_count;
     }
 
-    public void setOrder_unit_fee(String order_unit_fee) {
-        this.order_unit_fee = order_unit_fee;
+    public void setOrder_img_count(String order_img_count) {
+        this.order_img_count = order_img_count;
     }
 
-    public String getOrder_paid_amount() {
-        return order_paid_amount;
+    public String getOrder_path() {
+        return order_path;
     }
 
-    public void setOrder_paid_amount(String order_paid_amount) {
-        this.order_paid_amount = order_paid_amount;
-    }
-
-    public String getOrder_total_fee() {
-        return order_total_fee;
-    }
-
-    public void setOrder_total_fee(String order_total_fee) {
-        this.order_total_fee = order_total_fee;
+    public void setOrder_path(String order_path) {
+        this.order_path = order_path;
     }
 
     public String getOrder_plan_begin() {
@@ -172,30 +255,6 @@ public class UnfinishedOrderInfo {
         this.order_plan_end = order_plan_end;
     }
 
-    public String getOrder_actual_begin() {
-        return order_actual_begin;
-    }
-
-    public void setOrder_actual_begin(String order_actual_begin) {
-        this.order_actual_begin = order_actual_begin;
-    }
-
-    public String getOrder_actual_end() {
-        return order_actual_end;
-    }
-
-    public void setOrder_actual_end(String order_actual_end) {
-        this.order_actual_end = order_actual_end;
-    }
-
-    public String getOrder_path() {
-        return order_path;
-    }
-
-    public void setOrder_path(String order_path) {
-        this.order_path = order_path;
-    }
-
     public String getOrder_state() {
         return order_state;
     }
@@ -204,76 +263,76 @@ public class UnfinishedOrderInfo {
         this.order_state = order_state;
     }
 
-    public String getCreate_at() {
-        return create_at;
+    public String getOrder_total_fee() {
+        return order_total_fee;
     }
 
-    public void setCreate_at(String create_at) {
-        this.create_at = create_at;
+    public void setOrder_total_fee(String order_total_fee) {
+        this.order_total_fee = order_total_fee;
     }
 
-    public String getCustomer_id() {
-        return customer_id;
+    public String getOrder_unit_fee() {
+        return order_unit_fee;
     }
 
-    public void setCustomer_id(String customer_id) {
-        this.customer_id = customer_id;
+    public void setOrder_unit_fee(String order_unit_fee) {
+        this.order_unit_fee = order_unit_fee;
     }
 
-    public String getCustomer_nickname() {
-        return customer_nickname;
+    public String getParker_cardid() {
+        return parker_cardid;
     }
 
-    public void setCustomer_nickname(String customer_nickname) {
-        this.customer_nickname = customer_nickname;
+    public void setParker_cardid(String parker_cardid) {
+        this.parker_cardid = parker_cardid;
     }
 
-    public String getCustomer_head() {
-        return customer_head;
+    public String getParker_id() {
+        return parker_id;
     }
 
-    public void setCustomer_head(String customer_head) {
-        this.customer_head = customer_head;
+    public void setParker_id(String parker_id) {
+        this.parker_id = parker_id;
     }
 
-    public String getCustomer_sex() {
-        return customer_sex;
+    public String getParker_level() {
+        return parker_level;
     }
 
-    public void setCustomer_sex(String customer_sex) {
-        this.customer_sex = customer_sex;
+    public void setParker_level(String parker_level) {
+        this.parker_level = parker_level;
     }
 
-    public String getCustomer_name() {
-        return customer_name;
+    public String getParker_mobile() {
+        return parker_mobile;
     }
 
-    public void setCustomer_name(String customer_name) {
-        this.customer_name = customer_name;
+    public void setParker_mobile(String parker_mobile) {
+        this.parker_mobile = parker_mobile;
     }
 
-    public String getCustomer_age() {
-        return customer_age;
+    public String getParker_name() {
+        return parker_name;
     }
 
-    public void setCustomer_age(String customer_age) {
-        this.customer_age = customer_age;
+    public void setParker_name(String parker_name) {
+        this.parker_name = parker_name;
     }
 
-    public String getCustomer_mobile() {
-        return customer_mobile;
+    public String getParking_address() {
+        return parking_address;
     }
 
-    public void setCustomer_mobile(String customer_mobile) {
-        this.customer_mobile = customer_mobile;
+    public void setParking_address(String parking_address) {
+        this.parking_address = parking_address;
     }
 
-    public String getCustomer_email() {
-        return customer_email;
+    public String getParking_area() {
+        return parking_area;
     }
 
-    public void setCustomer_email(String customer_email) {
-        this.customer_email = customer_email;
+    public void setParking_area(String parking_area) {
+        this.parking_area = parking_area;
     }
 
     public String getParking_id() {
@@ -284,20 +343,12 @@ public class UnfinishedOrderInfo {
         this.parking_id = parking_id;
     }
 
-    public String getParking_name() {
-        return parking_name;
+    public String getParking_img_count() {
+        return parking_img_count;
     }
 
-    public void setParking_name(String parking_name) {
-        this.parking_name = parking_name;
-    }
-
-    public String getParking_region() {
-        return parking_region;
-    }
-
-    public void setParking_region(String parking_region) {
-        this.parking_region = parking_region;
+    public void setParking_img_count(String parking_img_count) {
+        this.parking_img_count = parking_img_count;
     }
 
     public String getParking_latitude() {
@@ -316,114 +367,71 @@ public class UnfinishedOrderInfo {
         this.parking_longitude = parking_longitude;
     }
 
-    public String getParker_level() {
-        return parker_level;
+    public String getParking_name() {
+        return parking_name;
     }
 
-    public void setParker_level(String parker_level) {
-        this.parker_level = parker_level;
+    public void setParking_name(String parking_name) {
+        this.parking_name = parking_name;
     }
 
-    public String getParker_id() {
-        return parker_id;
+    public String getParking_path() {
+        return parking_path;
     }
 
-    public void setParker_id(String parker_id) {
-        this.parker_id = parker_id;
+    public void setParking_path(String parking_path) {
+        this.parking_path = parking_path;
     }
 
-    public String getParker_name() {
-        return parker_name;
+    public String getUpdated_at() {
+        return updated_at;
     }
 
-    public void setParker_name(String parker_name) {
-        this.parker_name = parker_name;
-    }
-
-    public String getParker_mobile() {
-        return parker_mobile;
-    }
-
-    public void setParker_mobile(String parker_mobile) {
-        this.parker_mobile = parker_mobile;
-    }
-
-    public String getParker_cardid() {
-        return parker_cardid;
-    }
-
-    public void setParker_cardid(String parker_cardid) {
-        this.parker_cardid = parker_cardid;
-    }
-
-    public String getCar_number() {
-        return car_number;
-    }
-
-    public void setCar_number(String car_number) {
-        this.car_number = car_number;
-    }
-
-    public String getCar_brand() {
-        return car_brand;
-    }
-
-    public void setCar_brand(String car_brand) {
-        this.car_brand = car_brand;
-    }
-
-    public String getCar_color() {
-        return car_color;
-    }
-
-    public void setCar_color(String car_color) {
-        this.car_color = car_color;
-    }
-
-    public String getCar_buy_date() {
-        return car_buy_date;
-    }
-
-    public void setCar_buy_date(String car_buy_date) {
-        this.car_buy_date = car_buy_date;
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
     }
 
     @Override
     public String toString() {
         return "UnfinishedOrderInfo{" +
-                "order_id='" + order_id + '\'' +
-                ", order_unit_fee='" + order_unit_fee + '\'' +
-                ", order_paid_amount='" + order_paid_amount + '\'' +
-                ", order_total_fee='" + order_total_fee + '\'' +
+                "car_brand='" + car_brand + '\'' +
+                ", car_buy_date='" + car_buy_date + '\'' +
+                ", car_color='" + car_color + '\'' +
+                ", car_number='" + car_number + '\'' +
+                ", create_at='" + create_at + '\'' +
+                ", customer_age='" + customer_age + '\'' +
+                ", customer_email='" + customer_email + '\'' +
+                ", customer_head='" + customer_head + '\'' +
+                ", customer_id='" + customer_id + '\'' +
+                ", customer_mobile='" + customer_mobile + '\'' +
+                ", customer_name='" + customer_name + '\'' +
+                ", customer_nickname='" + customer_nickname + '\'' +
+                ", customer_sex='" + customer_sex + '\'' +
+                ", order_actual_begin_start='" + order_actual_begin_start + '\'' +
+                ", order_actual_end_stop='" + order_actual_end_stop + '\'' +
+                ", order_duration='" + order_duration + '\'' +
+                ", order_id='" + order_id + '\'' +
+                ", order_img_count='" + order_img_count + '\'' +
+                ", order_path='" + order_path + '\'' +
                 ", order_plan_begin='" + order_plan_begin + '\'' +
                 ", order_plan_end='" + order_plan_end + '\'' +
-                ", order_actual_begin='" + order_actual_begin + '\'' +
-                ", order_actual_end='" + order_actual_end + '\'' +
-                ", order_path='" + order_path + '\'' +
                 ", order_state='" + order_state + '\'' +
-                ", create_at='" + create_at + '\'' +
-                ", customer_id='" + customer_id + '\'' +
-                ", customer_nickname='" + customer_nickname + '\'' +
-                ", customer_head='" + customer_head + '\'' +
-                ", customer_sex='" + customer_sex + '\'' +
-                ", customer_name='" + customer_name + '\'' +
-                ", customer_age='" + customer_age + '\'' +
-                ", customer_mobile='" + customer_mobile + '\'' +
-                ", customer_email='" + customer_email + '\'' +
+                ", order_total_fee='" + order_total_fee + '\'' +
+                ", order_unit_fee='" + order_unit_fee + '\'' +
+                ", parker_cardid='" + parker_cardid + '\'' +
+                ", parker_id='" + parker_id + '\'' +
+                ", parker_level='" + parker_level + '\'' +
+                ", parker_mobile='" + parker_mobile + '\'' +
+                ", parker_name='" + parker_name + '\'' +
+                ", parking_address='" + parking_address + '\'' +
+                ", parking_area='" + parking_area + '\'' +
                 ", parking_id='" + parking_id + '\'' +
-                ", parking_name='" + parking_name + '\'' +
-                ", parking_region='" + parking_region + '\'' +
+                ", parking_img_count='" + parking_img_count + '\'' +
                 ", parking_latitude='" + parking_latitude + '\'' +
                 ", parking_longitude='" + parking_longitude + '\'' +
-                ", parker_level='" + parker_level + '\'' +
-                ", parker_id='" + parker_id + '\'' +
-                ", parker_name='" + parker_name + '\'' +
-                ", parker_mobile='" + parker_mobile + '\'' +
-                ", parker_cardid='" + parker_cardid + '\'' +
-                ", car_number='" + car_number + '\'' +
-                ", car_brand='" + car_brand + '\'' +
-                ", car_color='" + car_color + '\'' +
-                ", car_buy_date='" + car_buy_date + '\'' +
+                ", parking_name='" + parking_name + '\'' +
+                ", parking_path='" + parking_path + '\'' +
+                ", updated_at='" + updated_at + '\'' +
                 '}';
     }
 }

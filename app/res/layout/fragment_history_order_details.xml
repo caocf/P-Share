@@ -232,11 +232,44 @@
 	             android:textSize="@dimen/text_size3"
 	             android:text="@string/text_order_car_number"/>
 	     </LinearLayout>
-	     <RelativeLayout 
-	         android:layout_height="100dp"
-	         android:layout_width="match_parent"
-			 android:layout_marginBottom="@dimen/padding8"
-	         android:background="#ff00ff">	         
-	     </RelativeLayout>
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/padding11"
+			android:id="@+id/container"
+			android:clipChildren="false"
+			android:gravity="center"
+			android:layerType="software"
+			android:layout_marginBottom="50dp"
+			android:orientation="horizontal" >
+			<ImageView
+				android:id="@+id/iv_left"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dp"
+				android:layout_centerVertical="true"
+				android:src="@drawable/order_left"/>
+				<GridView
+					android:id="@+id/gridview_photos"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:layout_marginTop="20dp"
+					android:layout_marginBottom="20dp"
+					android:layout_toRightOf="@+id/iv_left"
+					android:layout_toLeftOf="@+id/iv_right"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="10dp"
+					android:numColumns="3"
+					android:background="@color/text_white"
+					android:clipChildren="false">
+				</GridView>
+			<ImageView
+				android:id="@+id/iv_right"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="10dp"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:src="@drawable/order_right"/>
+		</RelativeLayout>
 	</LinearLayout>
 </ScrollView>

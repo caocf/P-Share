@@ -6,6 +6,7 @@ dependencies {
     compile project(':actionbar-1.0.0')
     compile project(':uiframe-1.0.0')
     compile project(':appcore-1.0.0')
+    compile project(':commons-pay')
 }
 
 android {

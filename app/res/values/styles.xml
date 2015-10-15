@@ -228,9 +228,9 @@
         <item name="android:textSize">16.0sp</item>
         <item name="android:singleLine">true</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/actionbar_tab_text_selector</item>
+        <item name="android:textColor">@color/common_tab_text_selector</item>
         <item name="android:button">@null</item>
-        <item name="android:background">@drawable/actionbar_tab_selector</item>
+        <item name="android:background">@drawable/common_tab_selector</item>
     </style>
 
     <style name="Common_Radio_Tab">
@@ -238,7 +238,7 @@
         <item name="android:textSize">16.0sp</item>
         <item name="android:singleLine">true</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/actionbar_tab_text_selector</item>
+        <item name="android:textColor">@color/common_tab_text_selector</item>
         <item name="android:button">@null</item>
         <item name="android:background">@drawable/common_radio_selector</item>
     </style>
