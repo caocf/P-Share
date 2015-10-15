@@ -192,7 +192,6 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         setUpMap();
     }
     private void setUpMap() {
-        showToast("正在定位中....");
         mAmap.setLocationSource(this);// 设置定位监听
         mAmap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
         //mAmap.getUiSettings().setZoomControlsEnabled(false);
@@ -262,6 +261,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             //其中如果间隔时间为-1，则定位只定一次
             mAMapLocationManager.requestLocationData(
                     LocationProviderProxy.AMapNetwork, 60*1000, 10, this);
+            showToast("正在定位中....");
         }
     }
     /**

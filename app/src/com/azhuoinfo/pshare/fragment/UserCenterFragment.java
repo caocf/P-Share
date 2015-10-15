@@ -54,11 +54,6 @@ public class UserCenterFragment extends BaseContentFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAccountVerify=AccountVerify.getInstance(this.getActivity());
-        customerInfo = mAccountVerify.getUser();
-        mQRCodeText="customer:"+customerInfo.getCustomer_Id()+" "+customerInfo.getCustomer_mobile();
-
-        Log.e(TAG, customerInfo.getCustomer_Id().toString());
         mAccountVerify = AccountVerify.getInstance(getActivity());
 
     }
@@ -97,6 +92,10 @@ public class UserCenterFragment extends BaseContentFragment {
     @Override
     protected void initViews(Bundle bundle) {
         this.setTitle(R.string.user_center);
+        customerInfo = mAccountVerify.getUser();
+        mQRCodeText="customer:"+customerInfo.getCustomer_Id()+" "+customerInfo.getCustomer_mobile();
+        Log.e(TAG, customerInfo.getCustomer_Id().toString());
+
         mEditorInformationLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +104,7 @@ public class UserCenterFragment extends BaseContentFragment {
         });
         mCustomerIdTextView.setText("" + customerInfo.getCustomer_Id());
         mCustomerNicknameTextView.setText(StringUtils.trimToEmpty(customerInfo.getCustomer_nickname()));
+        mCustomerPointsTextView.setText(StringUtils.null2Zero(customerInfo.getCustomer_point()));
         mQRCodeImageView.setImageBitmap(create2DCoderBitmap(mQRCodeText,150,150));
     }
 
