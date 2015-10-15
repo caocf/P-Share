@@ -323,6 +323,7 @@ public class UserCenterEditorFragment extends BaseContentFragment {
             public void onSuccess(boolean page, CustomerInfo customerInfo) {
                 if (isEnable()) {
                     mLoading.dismiss();
+                    showToast("修改成功");
                     mAccountVerify.setUser(customerInfo);
                     Log.e(TAG, "" + customerInfo);
                     popBackStack();

@@ -74,7 +74,6 @@ public class UserCenterFinishFragment extends BaseContentFragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
         //Log.e(TAG, customerInfo.getCustomer_Id().toString());
         mAccountVerify = AccountVerify.getInstance(getActivity());
         loader = ImageLoader.getInstance();
@@ -122,6 +121,7 @@ public class UserCenterFinishFragment extends BaseContentFragment{
 
     @Override
     protected void initViews(Bundle bundle) {
+        customerInfo = mAccountVerify.getUser();
         this.setTitle(R.string.user_center);
         if (!StringUtils.isEmpty(customerInfo.getCustomer_head())){
             mobi.cangol.mobile.logging.Log.d("------------------------"+customerInfo.getCustomer_head()+"--------------------------------------------------------------");
