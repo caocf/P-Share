@@ -22,6 +22,9 @@ import java.util.List;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
+import mobi.cangol.mobile.service.AppService;
+import mobi.cangol.mobile.service.global.GlobalData;
+
 import com.azhuoinfo.pshare.fragment.adapter.MineHomeAdapter.ViewHolder;
 import com.azhuoinfo.pshare.model.CarList;
 import com.azhuoinfo.pshare.model.Parking;
@@ -37,10 +40,12 @@ public class MineHomeFragment extends BaseContentFragment{
     private TextView mAddTexView;
     private AccountVerify mAccountVerify;
     private MineHomeAdapter mDataAdapter;
+    private GlobalData mGlobalData;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAccountVerify = AccountVerify.getInstance(getActivity());
+        mGlobalData = (GlobalData) getAppService(AppService.GLOBAL_DATA);
     }
 
     @Override
@@ -66,7 +71,6 @@ public class MineHomeFragment extends BaseContentFragment{
     protected void findViews(View view) {
         mListView=(ListView) view.findViewById(R.id.lv_mine_home_list);
         mAddTexView= (TextView) view.findViewById(R.id.tv_mine_home_add);
-
     }
 
     @Override
@@ -84,13 +88,16 @@ public class MineHomeFragment extends BaseContentFragment{
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mDataAdapter.singleSelected(position);
+                Parking item= (Parking) parent.getItemAtPosition(position);
+                mDataAdapter.setDefault(item.getParking_id());
+                mGlobalData.save("default_id",item.getParking_id());
             }
         });
     }
 
     @Override
     protected void initData(Bundle bundle) {
+        mDataAdapter.setDefault((String) mGlobalData.get("default_id"));
         getSearchSaveParkList(mAccountVerify.getCustomer_Id());
     }
 

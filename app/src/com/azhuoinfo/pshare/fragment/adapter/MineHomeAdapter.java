@@ -16,21 +16,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mobi.cangol.mobile.utils.StringUtils;
+
 public class MineHomeAdapter extends BaseAdapter<Parking> {
 
-
+    private String defaultId;
 	public MineHomeAdapter(Context context) {
 		super(context);
 	}
-    public void singleSelected(int position) {
-        if (mSelect.contains(getItem(position))) {
-            mSelect.remove(getItem(position));
-        } else {
-            mSelect.clear();
-            mSelect.add(getItem(position));
-        }
-        notifyDataSetChanged();
-    }
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder=null;
@@ -45,14 +38,20 @@ public class MineHomeAdapter extends BaseAdapter<Parking> {
 		}
         Parking item=getItem(position);
         holder.name.setText(""+item.getParking_name()+" "+item.getParking_address());
-        if(this.getItemSelected(position)){
+        if(item.getParking_id().equals(defaultId)){
             holder.icon.setImageResource(android.R.drawable.checkbox_on_background);
         }else{
             holder.icon.setImageResource(android.R.drawable.checkbox_off_background);
         }
 		return convertView;
 	}
-	public final class ViewHolder{
+
+    public void setDefault(String defaultId) {
+        this.defaultId=defaultId;
+        notifyDataSetChanged();
+    }
+
+    public final class ViewHolder{
 		TextView name;
         ImageView icon;
 	}

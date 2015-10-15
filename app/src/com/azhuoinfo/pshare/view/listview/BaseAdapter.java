@@ -130,4 +130,6 @@ public abstract class BaseAdapter<T> extends ArrayAdapter<T> {
 	public List<T> getItems() {
 		return mItems;
 	}
+
+
 }

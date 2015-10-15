@@ -41,13 +41,17 @@ import mobi.cangol.mobile.actionbar.ActionMenuItem;
 import mobi.cangol.mobile.actionbar.view.SearchView;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
+import mobi.cangol.mobile.logging.Log;
+import mobi.cangol.mobile.service.AppService;
+import mobi.cangol.mobile.service.global.GlobalData;
 
 
 public class HomeFragment extends BaseContentFragment implements LocationSource, AMapLocationListener ,AMap.OnInfoWindowClickListener,AMap.OnMarkerClickListener {
 	private Button mMineHomeButton;
-	private int mOnClick=0;
 	private LinearLayout mMineHomeButtonLinearLayout;
-	private Button mChangeButton;
+    private TextView mParkNameTextView;
+    private TextView mParkNumTextView;
+    private TextView mParkChangeTextView;
 	private AccountVerify mAccountVerify;
 
     private AMapLocation mAMapLocation;
@@ -55,11 +59,13 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
     private AMap mAmap;
     private LocationSource.OnLocationChangedListener mListener;
     private LocationManagerProxy mAMapLocationManager;
+
+    private GlobalData mGlobalData;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		CustomerInfo customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
 		this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.homepager_user, R.drawable.left_head);
 		mAccountVerify = AccountVerify.getInstance(getActivity());
+        mGlobalData = (GlobalData) getAppService(AppService.GLOBAL_DATA);
 	}
 
 	@Override
@@ -85,8 +91,10 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 	@Override
 	protected void findViews(View view) {
 		mMineHomeButton=(Button) view.findViewById(R.id.button_mine_home);
-		mChangeButton=(Button) view.findViewById(R.id.button_change);
 		mMineHomeButtonLinearLayout=(LinearLayout) view.findViewById(R.id.ll_mine_home);
+        mParkNameTextView=(TextView) view.findViewById(R.id.tv_parking_name);
+        mParkNumTextView=(TextView) view.findViewById(R.id.tv_parking_num);
+        mParkChangeTextView=(TextView) view.findViewById(R.id.tv_parking_change);
 	}
 
 	@Override
@@ -97,43 +105,19 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         mAmap = mMapView.getMap();
         mAmap.moveCamera(CameraUpdateFactory.zoomTo(14));
 
-		mChangeButton.setOnClickListener(new View.OnClickListener() {
+        mParkChangeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnClick = 0;
                 replaceFragment(MineHomeFragment.class, "MineHomeFragment", null);
             }
         });
 		mMineHomeButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                //Log.i("home", "onClick");
-                mOnClick++;
-                if(mOnClick%2==1){
-                    mOnClick = 1;
-                   // Log.i("home","zhankai");
-                    AnimationSet set = new AnimationSet(true);
-                    TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_PARENT,0,Animation.RELATIVE_TO_PARENT,0,
-                            Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0);
-                    set.addAnimation(translate);
-                    set.setDuration(300);
-                    set.setFillAfter(true);
-                    mMineHomeButtonLinearLayout.offsetTopAndBottom(-mMineHomeButtonLinearLayout.getHeight());
-                    mMineHomeButtonLinearLayout.startAnimation(set);
-                }
-                else{
-                    mOnClick = 0;
-                    //Log.i("home","heshang");
-                    AnimationSet set = new AnimationSet(true);
-                    TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_PARENT,0,Animation.RELATIVE_TO_PARENT,0,
-                            Animation.RELATIVE_TO_SELF, -0.5f, Animation.RELATIVE_TO_SELF, 0);
-                    set.addAnimation(translate);
-                    set.setDuration(300);
-                    set.setFillAfter(true);
-                    mMineHomeButtonLinearLayout.offsetTopAndBottom(mMineHomeButtonLinearLayout.getHeight());
-                    mMineHomeButtonLinearLayout.startAnimation(set);
-
+                if (mMineHomeButtonLinearLayout.getVisibility() == View.VISIBLE) {
+                    mMineHomeButtonLinearLayout.setVisibility(View.GONE);
+                } else {
+                    mMineHomeButtonLinearLayout.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -143,6 +127,15 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 	@Override
 	protected void initData(Bundle savedInstanceState) {
         init();
+
+        if(mGlobalData.get("default_id")!=null){
+            String defautId=(String) mGlobalData.get("default_id");
+            getSearchParkbyId(defautId);
+        }else{
+            Log.e("default_id not");
+            updateDefaltParking(null);
+        }
+
 	}
 
     @Override
@@ -309,6 +302,46 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
     public void onProviderDisabled(String provider) {
 
     }
+
+    public void getSearchParkbyId(String id) {
+        ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
+        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_SEARCHPARKBYID));
+        apiTask.setParams(ApiContants.instance(getActivity()).searchParkbyId(id));
+        apiTask.setRoot("parking");
+        apiTask.execute(new OnDataLoader<Parking>() {
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onSuccess(boolean page, Parking parking) {
+                if (isEnable()) {
+                    updateDefaltParking(parking);
+                }
+            }
+
+            @Override
+            public void onFailure(String code, String message) {
+
+            }
+        });
+    }
+
+    private void updateDefaltParking(Parking parking) {
+        if(parking!=null){
+            mParkNameTextView.setText(parking.getParking_name());
+            if(parking.getParking_can_use()>0){
+                mParkNumTextView.setText("空:"+parking.getParking_can_use());
+            }else{
+                mParkNumTextView.setText("满:"+parking.getParking_can_use());
+            }
+            mMineHomeButton.setText(""+parking.getParking_can_use());
+        }else{
+
+        }
+    }
+
     public void getSearchParkListbyName(String name) {
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_SEARCHPARKLISTBYNAME));

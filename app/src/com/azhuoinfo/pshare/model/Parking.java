@@ -3,10 +3,12 @@ package com.azhuoinfo.pshare.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * Created by weixuewu on 15/10/12.
  */
-public class Parking implements Parcelable {
+public class Parking implements Parcelable ,Serializable{
 
     private String parking_address; //德平路333号
     private String parking_area; //浦东区

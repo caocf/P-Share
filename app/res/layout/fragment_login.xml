@@ -68,7 +68,7 @@
 		        android:background="@drawable/registeractivity_search_bg"
 		        android:layout_gravity="center_vertical"
 		        android:hint="@string/phone_number"
-                android:text="18201952413">
+                android:text="">
 				<requestFocus />	       
 		    </EditText>
 		    <ImageView 
@@ -114,7 +114,7 @@
 		        android:layout_gravity="center_vertical"
 				android:inputType="textPassword" 
 		        android:hint="@string/password"
-                android:text="111111">
+                android:text="">
 				<requestFocus />	       
 		    </EditText>
         </LinearLayout>       
