@@ -53,17 +53,35 @@
             android:textColor="#999d9c"
             android:textSize="@dimen/text_size3"            
             android:text="已完成"/>
-        <TextView
-            android:id="@+id/tv_order_pay_money"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_marginTop="@dimen/padding2"
             android:layout_marginBottom="@dimen/padding1"
             android:layout_below="@+id/tv_or_finish"
-            android:layout_alignParentRight="true"
-            android:textColor="#999d9c"
-            android:textSize="@dimen/text_size3"
-            android:text="已付款：20元"/>        
+            android:layout_alignParentRight="true">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textColor="#999d9c"
+                android:textSize="@dimen/text_size3"
+                android:text="已付款：" />
+            <TextView
+                android:id="@+id/tv_order_pay_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#999d9c"
+                android:textSize="@dimen/text_size3"
+                android:text="20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#999d9c"
+                android:textSize="@dimen/text_size3"
+                android:text="元" />
+        </LinearLayout>
+
     </RelativeLayout>   
     <ImageView
         android:id="@+id/iv_back" 

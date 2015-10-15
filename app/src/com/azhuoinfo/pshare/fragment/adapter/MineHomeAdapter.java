@@ -30,8 +30,8 @@ public class MineHomeAdapter extends BaseAdapter<Parking> {
 		if(convertView==null){
 			convertView = this.mInflater.inflate(R.layout.listview_item_minehome, parent, false);
 			holder=new ViewHolder();
-			holder.name= (TextView) convertView.findViewById(R.id.tv_minehome_name);
-            holder.icon= (ImageView) convertView.findViewById(R.id.tv_minehome_icon);
+			/*holder.name= (TextView) convertView.findViewById(R.id.tv_minehome_name);
+            holder.icon= (ImageView) convertView.findViewById(R.id.tv_minehome_icon);*/
 			convertView.setTag(holder);
 		}else{
 			holder=(ViewHolder)convertView.getTag();
