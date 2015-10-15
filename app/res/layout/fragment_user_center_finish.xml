@@ -45,7 +45,8 @@
 	        <LinearLayout
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_gravity="center_horizontal"	            
+	            android:layout_gravity="center_horizontal"
+                android:visibility="invisible"
 	            android:orientation="horizontal"
 	            android:gravity="center">
 	            <TextView		            
@@ -69,6 +70,7 @@
 				android:layout_height="wrap_content"
 				android:layout_width="wrap_content"
 				android:layout_gravity="center_horizontal"
+                android:visibility="invisible"
 				android:orientation="horizontal">
 				<TextView
 					android:layout_height="wrap_content"
@@ -207,7 +209,6 @@
 				android:layout_toRightOf="@+id/tv1_customer_sex"
 				android:layout_toLeftOf="@+id/iv_customer_sex"
 				android:textSize="@dimen/text_size3"
-				android:text="男"
 				android:textColor="#999d9c"
 				android:gravity="right"/>
 		</RelativeLayout>
@@ -237,7 +238,6 @@
 				android:layout_toRightOf="@+id/tv1_customer_job"
 				android:layout_marginRight="@dimen/padding3"
 				android:textSize="@dimen/text_size3"
-				android:hint="工程师"
 				android:textColor="#999d9c"
 				android:gravity="right"
 				android:editable="false"
@@ -273,7 +273,6 @@
 				android:layout_toRightOf="@+id/tv1_customer_region"
 				android:layout_toLeftOf="@+id/iv_customer_region"
 				android:textSize="@dimen/text_size3"
-				android:text="上海"
 				android:textColor="#999d9c"
 				android:gravity="right"/>
 		</RelativeLayout>
@@ -303,7 +302,6 @@
 				android:layout_toRightOf="@+id/tv1_customer_email"
 				android:layout_marginRight="@dimen/padding3"
 				android:textSize="@dimen/text_size3"
-				android:hint="2323458666@qq.com"
 				android:textColor="#999d9c"
 				android:gravity="right"
 				android:editable="false"

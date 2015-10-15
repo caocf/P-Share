@@ -51,6 +51,7 @@ public class AccountVerify {
 	 */
 	public void login(CustomerInfo user) {
         isLogin=true;
+        this.user = user;
         mGlobalData.save(KEY_USER,user);
         notifyLogin();
 		//注册推送ID 暂时停用
@@ -58,24 +59,17 @@ public class AccountVerify {
 	}
 
 	public void setUser(CustomerInfo user) {
-		this.user = user;
+        isLogin=true;
+        this.user = user;
         mGlobalData.save(KEY_USER,user);
 		notifyUpdate();
 	}
 	
 	public CustomerInfo getUser() {
-        if(user!=null){
-            return user;
-        }else if(mGlobalData.get(KEY_USER)!=null){
-            user= (CustomerInfo) mGlobalData.get(KEY_USER);
-            isLogin=true;
-            return user;
-        }else{
-            return null;
-        }
+        return user;
 	}
     public String getCustomer_Id() {
-        if(user!=null&isLogin){
+        if(user!=null&&isLogin){
             return user.getCustomer_Id();
         }
         return null;

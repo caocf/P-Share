@@ -72,8 +72,6 @@ public class UserCenterFinishFragment extends BaseContentFragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
-        //Log.e(TAG, customerInfo.getCustomer_Id().toString());
         mAccountVerify = AccountVerify.getInstance(getActivity());
     }
     @Override
@@ -120,7 +118,7 @@ public class UserCenterFinishFragment extends BaseContentFragment{
     @Override
     protected void initViews(Bundle bundle) {
         this.setTitle(R.string.user_center);
-
+        customerInfo=mAccountVerify.getUser();
         mCustomerNicknameTextView.setText(customerInfo.getCustomer_nickname().toString());
         mCustomerIdTextView.setText(customerInfo.getCustomer_Id().toString());
         mCustomerMobileTextView.setText(customerInfo.getCustomer_mobile().toString());
@@ -164,7 +162,7 @@ public class UserCenterFinishFragment extends BaseContentFragment{
 
     @Override
     public boolean isCleanStack() {
-        return true;
+        return false;
     }
     @Override
     public void onDestroy() {

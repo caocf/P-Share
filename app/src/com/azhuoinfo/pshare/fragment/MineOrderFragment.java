@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
@@ -79,8 +80,8 @@ public class MineOrderFragment extends BaseContentFragment{
         Log.e(TAG, order_state + "order_state");
         mTabManager=new TabManager(this.getChildFragmentManager(),mTabHost,R.id.realtabcontent);
         postUnfinishedOrder(customer_Id);
-        mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator("预/订"), Order1Fragment.class, new Bundle());
-        mTabManager.addTab(mTabHost.newTabSpec("ItemFragment2").setIndicator("历史订单"), HistoryOrderFragment.class, new Bundle());
+        mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator(tabView("预/订")), Order1Fragment.class, new Bundle());
+        mTabManager.addTab(mTabHost.newTabSpec("ItemFragment2").setIndicator(tabView("历史订单")), HistoryOrderFragment.class, new Bundle());
 
 
     }
@@ -92,6 +93,12 @@ public class MineOrderFragment extends BaseContentFragment{
     @Override
     protected void initData(Bundle bundle) {
 
+    }
+    private View tabView(String title) {
+        View indicatorview = android.view.LayoutInflater.from(this.getActivity()).inflate(R.layout.common_tab_view, null);
+        TextView text = (TextView) indicatorview.findViewById(R.id.tabsText);
+        text.setText(title);
+        return indicatorview;
     }
     @Override
     protected FragmentInfo getNavigtionUpToFragment() {

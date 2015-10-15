@@ -192,5 +192,10 @@
         <item>从相册选择</item>
         <item>拍照</item>
     </string-array>
+    <string-array name="pay_method">
+        <item>支付宝支付</item>
+        <item>微信支付</item>
+        <item>现金支付</item>
+    </string-array>
 
 </resources>

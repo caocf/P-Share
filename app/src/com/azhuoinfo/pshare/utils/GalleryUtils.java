@@ -137,29 +137,6 @@ public class GalleryUtils {
 		}
 	}
 	/**
-	 * 保存到相册，并返回相册url
-	 * 无存储卡 还是有问题
-	 * @param context
-	 * @param bitmap
-	 * @return
-	 * @throws FileNotFoundException 
-	 */
-	public static Uri saveGalleryImage(Context context, Bitmap bitmap) throws FileNotFoundException{
-	    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-	    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-	    String path =null;
-	    try{
-	    	path=Images.Media.insertImage(context.getContentResolver(), bitmap, ""+UUID.randomUUID(), null);
-	    }catch (Exception e){
-	    	FileUtils.newFolder(StorageUtils.getOwnCacheDirectory(context, Constants.APP_WALLPAPER).getAbsolutePath());
-		    path=Images.Media.insertImage(context.getContentResolver(), StorageUtils.getOwnCacheDirectory(context, Constants.APP_WALLPAPER).getAbsolutePath()+"/", ""+UUID.randomUUID()+".jpg", null);
-	    }finally{
-	    	if(path!=null)
-		    	return Uri.parse(path);
-	    }
-	    return null;
-	}
-	/**
 	 * 保存图片到文件
 	 * @param path
 	 * @param name

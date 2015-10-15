@@ -6,28 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.azhuoinfo.pshare.AccountVerify;
-import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
-import com.azhuoinfo.pshare.fragment.adapter.CarListAdapter;
 import com.azhuoinfo.pshare.fragment.adapter.MineHomeAdapter;
-import java.util.ArrayList;
+import com.azhuoinfo.pshare.model.Parking;
+
 import java.util.List;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.service.AppService;
 import mobi.cangol.mobile.service.global.GlobalData;
-
-import com.azhuoinfo.pshare.fragment.adapter.MineHomeAdapter.ViewHolder;
-import com.azhuoinfo.pshare.model.CarList;
-import com.azhuoinfo.pshare.model.Parking;
 
 /**
  * Created by Azhuo on 2015/9/22.
@@ -90,14 +84,16 @@ public class MineHomeFragment extends BaseContentFragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Parking item= (Parking) parent.getItemAtPosition(position);
                 mDataAdapter.setDefault(item.getParking_id());
-                mGlobalData.save("default_id",item.getParking_id());
+                mGlobalData.remove("default_parking");
+                mGlobalData.save("default_parking",item);
             }
         });
     }
 
     @Override
     protected void initData(Bundle bundle) {
-        mDataAdapter.setDefault((String) mGlobalData.get("default_id"));
+        if(mGlobalData.get("default_parking")!=null)
+            mDataAdapter.setDefault(((Parking) mGlobalData.get("default_parking")).getParking_id());
         getSearchSaveParkList(mAccountVerify.getCustomer_Id());
     }
 

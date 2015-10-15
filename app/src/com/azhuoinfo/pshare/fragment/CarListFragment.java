@@ -94,7 +94,10 @@ public class CarListFragment extends BaseContentFragment{
     }
     @Override
     protected void initData(Bundle bundle) {
-        postCarList(mAccountVerify.getCustomer_Id());
+        if(mAccountVerify.isLogin())
+            postCarList(mAccountVerify.getCustomer_Id());
+        else
+            mAccountVerify.showLoginDialog(this);
     }
 
     @Override

@@ -51,6 +51,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <data android:scheme="wxe0b0e843ec7f97f6" />
             </intent-filter>
         </activity>
         
@@ -58,7 +59,9 @@
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+
         <!--高德地图 <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="71198b844b5aa4103fa2d9ebb7ec231e" />-->
@@ -67,6 +70,20 @@
            android:name="com.amap.api.v2.apikey"
            android:value="5eb10c04d258624b72ebf85d90017a72" />
 
+        <!-- wechat pay begin -->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <!-- wechat pay begin -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <!-- alipay sdk end -->
    </application>
 
 </manifest>
