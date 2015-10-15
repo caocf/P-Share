@@ -182,10 +182,18 @@ public class MenuFragment extends BaseMenuFragment implements AccountVerify.OnLo
         mCustomerInfo=mAccountVerify.getUser();
         if(isEnable())
         if(mCustomerInfo!=null){
+			if (!StringUtils.isEmpty(mCustomerInfo.getCustomer_head())){
+				String customer_head = null;
+				if(mCustomerInfo.getCustomer_head().endsWith(",")){
+					customer_head = mCustomerInfo.getCustomer_head().substring(0, mCustomerInfo.getCustomer_head().length()-1);
+				}else{
+					customer_head = mCustomerInfo.getCustomer_head();
+				}
+				ImageLoader loader = ImageLoader.getInstance();
+				loader.displayImage(customer_head,mCustomerHeadImageView);
+			}
             mCustomerNicknameTextView.setText(StringUtils.trimToEmpty(mCustomerInfo.getCustomer_nickname()));
             mCustomerPointsTextView.setText(StringUtils.trimToEmpty(mCustomerInfo.getCustomer_point()));
-            if(StringUtils.isNotEmpty(mCustomerInfo.getCustomer_head()))
-            mImageLoader.displayImage(mCustomerInfo.getCustomer_head(),mCustomerHeadImageView);
         }else{
             mCustomerNicknameTextView.setText("未登录");
             mCustomerPointsTextView.setText("");

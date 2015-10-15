@@ -41,7 +41,9 @@ import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.SetUserInfo;
 import com.azhuoinfo.pshare.utils.GalleryUtils;
 import com.azhuoinfo.pshare.view.CommonDialog;
+import com.azhuoinfo.pshare.view.LoadingDialog;
 import com.azhuoinfo.pshare.view.imageview.round.RoundedImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -55,6 +57,7 @@ import mobi.cangol.mobile.actionbar.ActionMenuItem;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.logging.Log;
+import mobi.cangol.mobile.utils.StringUtils;
 
 /**
  * Created by Azhuo on 2015/9/22.
@@ -66,8 +69,6 @@ public class UserCenterEditorFragment extends BaseContentFragment {
     //个人中心是否显示可编辑状态
     private int count = 0;
     private boolean isEditor = false;
-    //用户的头像设置
-    private ImageView mCustomerHeadImageView;
     //用户名
     private TextView mCustomerNicknameTextView;
     //用户Id
@@ -107,7 +108,7 @@ public class UserCenterEditorFragment extends BaseContentFragment {
     private CustomerInfo customerInfo;
     private SetUserInfo setUserInfo;
     private PopupWindow menuWindow;
-    private String path;
+    private String path = "";
     private final int IMAGE_CODE = 0;
 
     //对相册回调的处理
@@ -175,6 +176,16 @@ public class UserCenterEditorFragment extends BaseContentFragment {
     @Override
     protected void initViews(Bundle bundle) {
         this.setTitle(R.string.user_center);
+        if (!StringUtils.isEmpty(customerInfo.getCustomer_head())){
+            String customer_head = null;
+            if(customerInfo.getCustomer_head().endsWith(",")){
+                customer_head = customerInfo.getCustomer_head().substring(0, customerInfo.getCustomer_head().length()-1);
+            }else{
+                customer_head = customerInfo.getCustomer_head();
+            }
+            ImageLoader loader = ImageLoader.getInstance();
+            loader.displayImage(customer_head,mRoundedImageView);
+        }
         mRoundedImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -239,10 +250,9 @@ public class UserCenterEditorFragment extends BaseContentFragment {
                 } else if (mCustomerSexTextView.getText().toString().equals("女士")) {
                     intSex = 2;
                 }
-                postSetUserInfo(customerInfo.getCustomer_Id().toString(), mCustomerNickNameEditText.getText().toString(),
-                        intSex + "", mCustomerJobEditText.getText().toString(),
+                postSetUserInfo(customerInfo.getCustomer_Id().toString(), mCustomerNickNameEditText.getText().toString(),intSex, mCustomerJobEditText.getText().toString(),
                         mCustomerRegionTextView.getText().toString(),
-                        mCustomerMobileEditText.getText().toString(), mCustomerEmailEditText.getText().toString(), 20 + "");
+                        mCustomerMobileEditText.getText().toString(), mCustomerEmailEditText.getText().toString());
                 break;
         }
         return super.onMenuActionSelected(action);
@@ -283,23 +293,31 @@ public class UserCenterEditorFragment extends BaseContentFragment {
     }
 
     public void postSetUserInfo(String customerId, String customerNickmane,
-                                String customerSex, String customerJob,
-                                String customerRegion, String customerMobile, String customerEmail, String customerAge) {
+                                int customerSex,String customerJob,
+                                String customerRegion, String customerMobile, String customerEmail) {
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
-        apiTask.setMethod("GET");
+        apiTask.setMethod("POST");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_SETUSERINFO));
-        apiTask.setParams(ApiContants.instance(getActivity()).setUserInfo(customerId, customerNickmane,
-                customerSex, customerJob, customerRegion, customerMobile, customerEmail, customerAge));
-        //apiTask.setRoot("customerInfo");
+        apiTask.setParams(ApiContants.instance(getActivity()).setUserInfo(customerId, customerNickmane, customerJob, customerRegion, customerMobile, customerEmail));
+        if(!path.equals("")){
+            apiTask.getParams().put("customer_head", new File(path));
+        }
+        apiTask.getParams().put("customer_sex", customerSex);
         apiTask.execute(new OnDataLoader<CustomerInfo>() {
+
+            private LoadingDialog mLoading;
+
             @Override
             public void onStart() {
-
+                if (getActivity() != null) {
+                    mLoading = LoadingDialog.show(getActivity());
+                }
             }
 
             @Override
             public void onSuccess(boolean page, CustomerInfo customerInfo) {
                 if (isEnable()) {
+                    mLoading.dismiss();
                     mAccountVerify.setUser(customerInfo);
                     Log.e(TAG, "" + customerInfo);
                     popBackStack();
@@ -310,6 +328,7 @@ public class UserCenterEditorFragment extends BaseContentFragment {
             public void onFailure(String code, String message) {
                 if (isEnable())
                     showToast(message);
+                mLoading.dismiss();
             }
         });
     }
@@ -395,6 +414,7 @@ public class UserCenterEditorFragment extends BaseContentFragment {
                 if (resultCode == Activity.RESULT_OK) {
                     //裁剪后返回的数据
                     Log.d("changeHeadImg image=" + GalleryUtils.getTempFile(this.getActivity(), TEMP_IMAGE_CROP).getAbsolutePath());
+                    path = GalleryUtils.getTempFile(this.getActivity(), TEMP_IMAGE_CROP).getAbsolutePath();
                     Bitmap bitmap = BitmapFactory.decodeFile(GalleryUtils.getTempFile(this.getActivity(), TEMP_IMAGE_CROP).getAbsolutePath());
                     mRoundedImageView.setImageBitmap(bitmap);
                 }
