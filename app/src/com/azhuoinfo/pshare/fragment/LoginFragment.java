@@ -1,6 +1,8 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,6 +45,8 @@ public class LoginFragment extends BaseContentFragment {
 
 	private AccountVerify mAccountVerify;
     private GlobalData mGlobalData;
+	private SharedPreferences preferences;
+	private SharedPreferences.Editor editor;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -103,7 +107,12 @@ public class LoginFragment extends BaseContentFragment {
 
 	@Override
 	protected void initData(Bundle bundle) {
+		preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+		editor = preferences.edit();
 
+		if(preferences.contains("user")){
+			mMobileEditText.setText(preferences.getString("user",null));
+		}
 	}
 	@Override
 	protected FragmentInfo getNavigtionUpToFragment() {
@@ -139,6 +148,8 @@ public class LoginFragment extends BaseContentFragment {
                 if (isEnable()) {
                     if (mLoadingDialog != null) mLoadingDialog.dismiss();
                     if (customerInfo != null) {
+						editor.putString("user",customerInfo.getCustomer_mobile());
+						editor.commit();
                         Log.d(TAG, "" + customerInfo);
                         mAccountVerify.login(customerInfo);
                         replaceFragment(HomeFragment.class, "HomeFragment", null);
