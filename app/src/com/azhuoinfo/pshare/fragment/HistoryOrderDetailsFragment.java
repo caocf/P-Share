@@ -88,6 +88,7 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
         super.onCreate(savedInstanceState);
         mAccountVerify = AccountVerify.getInstance(getActivity());
         orderList=(OrderList)this.getArguments().get("orderList");
+        orderState=orderList.getOrder_state();
         parakerId=orderList.getParker_id();
         parkerLevel=orderList.getParker_level();
         parkerMobile=orderList.getParker_mobile();
@@ -117,8 +118,8 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initViews(savedInstanceState);
-        initData(savedInstanceState);
-    }
+    initData(savedInstanceState);
+}
 
     @Override
     protected void findViews(View view) {
@@ -155,7 +156,6 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
         mPayMoneyTextView.setText(orderTotalFee);
         mOrderDateTextView.setText(orderDate);
         mCarNumberTextView.setText(carNumber);
-
         mList = new ArrayList<Map<String, Object>>();
         urls = new ArrayList<String>();
         show = new ArrayList<String>();
@@ -196,12 +196,13 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
     private void saveList() {
         String order_path = orderList.getOrder_path();
         String parking_path=orderList.getParking_path();
-
-        String[] orderPaths = order_path.split(",");
-        Log.e("orderPaths",orderPaths.length+"");
-        for (int i = 0; i < orderPaths.length ; i++) {
+        if(order_path!=null){
+            String[] orderPaths = order_path.split(",");
+            Log.e("orderPaths",orderPaths.length+"");
+            for (int i = 0; i < orderPaths.length ; i++) {
                 urls.add(orderPaths[i]);
-            Log.e("path", orderPaths[orderPaths.length-1]);
+                Log.e("path", orderPaths[orderPaths.length-1]);
+            }
         }
         if(parking_path!=null){
             if(parking_path.contains(",")){
@@ -209,13 +210,11 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
                 urls.add(parking_path);
             }
         }
-
         for (int j = 0; j < 3; j++) {
             show.add(urls.get(j));
         }
         Log.d("saveList",urls.size()+"");
     }
-
     /**
      * 对图片的显示
      *

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -25,6 +26,7 @@ import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.fragment.adapter.ImageAdapter;
 import com.azhuoinfo.pshare.model.CustomerInfo;
+import com.azhuoinfo.pshare.model.Parking;
 import com.azhuoinfo.pshare.model.UnfinishedOrderInfo;
 import com.azhuoinfo.pshare.model.UserAuth;
 import com.azhuoinfo.pshare.view.listview.BaseAdapter;
@@ -33,6 +35,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
@@ -45,6 +49,7 @@ public class Order1Fragment extends BaseContentFragment{
     private RelativeLayout mOrder2RelativeLayout;
     private ScrollView mOrder3ScrollView;
     private ScrollView mOrder4ScrollView;
+    private RelativeLayout mToPayRelativeLayout;
     /*
     * order2
     * */
@@ -71,6 +76,7 @@ public class Order1Fragment extends BaseContentFragment{
     private TextView mCountdownTimeTextView;
     //用户车牌号
     private TextView mCarNumberTextView;
+    private Button mFinishButton;
     private GridView mImageGridView;
     private ImageView mLeft;
     private ImageView mRight;
@@ -99,7 +105,9 @@ public class Order1Fragment extends BaseContentFragment{
     private String carNumber;
     private String orderPath;
     private String parkingName;
+    private  String parkingPath;
     private List<String> list;
+    private Timer timer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -124,6 +132,7 @@ public class Order1Fragment extends BaseContentFragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         initViews(savedInstanceState);
         initData(savedInstanceState);
     }
@@ -139,11 +148,13 @@ public class Order1Fragment extends BaseContentFragment{
         mOrder2RelativeLayout=(RelativeLayout) findViewById(R.id.fragment_order2);
         mOrder3ScrollView=(ScrollView) findViewById(R.id.fragment_order3);
         mOrder4ScrollView=(ScrollView) findViewById(R.id.fragment_order4);
+        mToPayRelativeLayout=(RelativeLayout) findViewById(R.id.listitem_to_pay);
 
     }
 
     @Override
     protected void initData(Bundle bundle) {
+       /* handler.postDelayed(runnable, 2000);//每两秒执行一次runnable.*/
         postUnfinishedOrder(customerId);
 
     }
@@ -164,12 +175,14 @@ public class Order1Fragment extends BaseContentFragment{
             mOrder2RelativeLayout.setVisibility(View.GONE);
             mOrder3ScrollView.setVisibility(View.GONE);
             mOrder4ScrollView.setVisibility(View.GONE);
+            mToPayRelativeLayout.setVisibility(View.GONE);
         }else if(listSize>0&&order_state.equals("1")){
             Log.e("mOrder2RelativeLayout",order_state+"");
             mOrder1RelativeLayout.setVisibility(View.GONE);
             mOrder2RelativeLayout.setVisibility(View.VISIBLE);
             mOrder3ScrollView.setVisibility(View.GONE);
             mOrder4ScrollView.setVisibility(View.GONE);
+            mToPayRelativeLayout.setVisibility(View.GONE);
             initViewsOrder2();
         }else if(listSize>0&&order_state.equals("2")){
             Log.e("mOrder3ScrollView",order_state+"");
@@ -179,11 +192,17 @@ public class Order1Fragment extends BaseContentFragment{
             mOrder4ScrollView.setVisibility(View.GONE);
             initViewsOrder3();
         }else if((listSize>0)&&(order_state.equals("3")||order_state.equals("4"))){
-            Log.e("mOrder4ScrollView",order_state+"");
+            Log.e("mOrder4ScrollView", order_state + "");
             mOrder1RelativeLayout.setVisibility(View.GONE);
             mOrder2RelativeLayout.setVisibility(View.GONE);
             mOrder3ScrollView.setVisibility(View.GONE);
             mOrder4ScrollView.setVisibility(View.VISIBLE);
+            mToPayRelativeLayout.setVisibility(View.GONE);
+          /*  if(parkingPath!=null){
+                mOrder4ScrollView.setVisibility(View.VISIBLE);
+            }else {
+                mToPayRelativeLayout.setVisibility(View.GONE);
+            }*/
             initViewsOrder4();
         }
     }
@@ -216,6 +235,7 @@ public class Order1Fragment extends BaseContentFragment{
                             orderPlanEnd = unfinishedOrderInfo.getOrder_plan_end();
                             carNumber = unfinishedOrderInfo.getCar_number();
                             orderPath = unfinishedOrderInfo.getOrder_path();
+                            parkingPath=unfinishedOrderInfo.getParking_path();
                             Log.e(TAG, order_state);
                         }
                     }
@@ -250,6 +270,7 @@ public class Order1Fragment extends BaseContentFragment{
                 mOrder4ScrollView.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), "订单已取消", Toast.LENGTH_SHORT);
             }
+
             @Override
             public void onFailure(String code, String message) {
                 mobi.cangol.mobile.logging.Log.d(TAG, "code=:" + code + ",message=" + message);
@@ -275,8 +296,8 @@ public class Order1Fragment extends BaseContentFragment{
         mParkerLevelTextView=(TextView) findViewById(R.id.tv_parker_Level);
         mParkerAreaTextView=(TextView) findViewById(R.id.tv_parker_area);
         mParkerMobileRelativeLayout=(RelativeLayout) findViewById(R.id.rl_parker_mobile);
-        mParkerMobileTextView=(TextView) findViewById(R.id.tv_parker_mobile4);
-        mAppointmentTimeTextView=(TextView) findViewById(R.id.tv_appointment_time4);
+        mParkerMobileTextView=(TextView) findViewById(R.id.tv_parker_mobile);
+        mAppointmentTimeTextView=(TextView) findViewById(R.id.tv_appointment_time);
         mOrder3RelativeLayout=(RelativeLayout) findViewById(R.id.rl_unselect_order3);
         if(order_state.equals("2")){
             //mParkerHeadImageView.setImageBitmap();
@@ -285,6 +306,7 @@ public class Order1Fragment extends BaseContentFragment{
             mParkerMobileTextView.setText(parkerMobile+"");
             mParkerLevelTextView.setText(parkerLevel+"");
             mAppointmentTimeTextView.setText(orderPlanBegin + "");
+            Log.e("orderPlanBegin",orderPlanBegin+"");
             mParkerMobileRelativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -313,6 +335,7 @@ public class Order1Fragment extends BaseContentFragment{
         mAppointmentMakeCarTimeTextView = (TextView) findViewById(R.id.tv_appointment_make_car_time4);
         mCarNumberTextView = (TextView) findViewById(R.id.tv_car_number4);
         mImageGridView = (GridView) findViewById(R.id.gridview_photos4);
+        mFinishButton=(Button) findViewById(R.id.button_finish_order_pay4);
         mLeft = (ImageView) findViewById(R.id.iv_left);
         mRight = (ImageView) findViewById(R.id.iv_right);
         if (order_state.equals("3") || order_state.equals("4")) {
@@ -322,7 +345,7 @@ public class Order1Fragment extends BaseContentFragment{
             mParkerMobileTextView.setText(parkerMobile + "");
             mParkerLevelTextView.setText(parkerLevel + "");
             mAppointmentTimeTextView.setText(orderPlanBegin + "");
-            Log.e("orderPlanBegin",orderPlanBegin);
+            Log.e("orderPlanBegin", orderPlanBegin);
             mAppointmentMakeCarTimeTextView.setText(orderPlanEnd + "");
             mCarNumberTextView.setText(carNumber + "");
             mParkerMobileRelativeLayout.setOnClickListener(new View.OnClickListener() {
@@ -349,15 +372,35 @@ public class Order1Fragment extends BaseContentFragment{
                     toRight();
                 }
             });
+            mFinishButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mToPayRelativeLayout.setVisibility(View.VISIBLE);
+                }
+            });
+          /*  if(parkingPath!=null){
+
+                mOrder4ScrollView.setVisibility(View.VISIBLE);
+            }else {
+                mToPayRelativeLayout.setVisibility(View.GONE);
+            }*/
         }
     }
     /**
      * 对图片显示的数据初始化
      */
     private void saveList() {
-        String[] orderPaths = orderPath.split(",");
-        for (int i = 0; i < orderPaths.length ; i++) {
-            urls.add(orderPaths[i]);
+        if(orderPath!=null){
+            String[] orderPaths = orderPath.split(",");
+            for (int i = 0; i < orderPaths.length ; i++) {
+                urls.add(orderPaths[i]);
+            }
+        }
+        if(parkingPath!=null){
+            if(parkingPath.contains(",")){
+                parkingPath=parkingPath.replaceAll(",","");
+                urls.add(parkingPath);
+            }
         }
         for (int j = 0; j < 3; j++) {
             show.add(urls.get(j));
@@ -387,7 +430,7 @@ public class Order1Fragment extends BaseContentFragment{
             showImage(show);
         }
     }
-    private void toRight() {
+    private void toRight(){
         if (right == urls.size() - 1) {
             Toast.makeText(getActivity(),"当前位于最右方!",Toast.LENGTH_SHORT).show();
             //showToast("当前位于最右方!");
@@ -399,5 +442,62 @@ public class Order1Fragment extends BaseContentFragment{
             right++;
             showImage(show);
         }
+    }
+
+   /* Handler handler=new Handler();
+    Runnable runnable=new Runnable() {
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            //要做的事情
+            handler.postDelayed(this, 5000);
+            postUnfinishedOrder(customerId);
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        handler.removeCallbacks(runnable);
+        super.onDestroy();
+    }*/
+    /*public void textTime(){
+
+    }
+   public class TestTime {
+         public static void main(String[] args) {
+                   TestTime tt = new TestTime();
+                  tt.showTimeCount(99*3600000+75*1000);
+              }
+                   //时间计数器，最多只能到99小时，如需要更大小时数需要改改方法
+                    public String showTimeCount(long time) {
+                  System.out.println("time="+time);
+                    if(time >= 360000000){
+                            return "00:00:00";
+                        }
+                    String timeCount = "";
+                    long hourc = time/3600000;
+                    String hour = "0" + hourc;
+                    System.out.println("hour="+hour);
+                    hour = hour.substring(hour.length()-2, hour.length());
+                    System.out.println("hour2="+hour);
+
+                    long minuec = (time-hourc*3600000)/(60000);
+                    String minue = "0" + minuec;
+                    System.out.println("minue="+minue);
+                    minue = minue.substring(minue.length()-2, minue.length());
+                    System.out.println("minue2="+minue);
+
+                    long secc = (time-hourc*3600000-minuec*60000)/1000;
+                    String sec = "0" + secc;
+                    System.out.println("sec="+sec);
+                   sec = sec.substring(sec.length()-2, sec.length());
+                    System.out.println("sec2="+sec);
+                    timeCount = hour + ":" + minue + ":" + sec;
+                    System.out.println("timeCount="+timeCount);
+                    return timeCount;
+                }
+   }*/
+    public void textTime(){
+
     }
 }

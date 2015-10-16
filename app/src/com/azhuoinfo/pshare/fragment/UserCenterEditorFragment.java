@@ -42,6 +42,7 @@ import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.SetUserInfo;
 import com.azhuoinfo.pshare.utils.GalleryUtils;
+import com.azhuoinfo.pshare.view.AreaDialog;
 import com.azhuoinfo.pshare.view.CommonDialog;
 import com.azhuoinfo.pshare.view.LoadingDialog;
 import com.azhuoinfo.pshare.view.imageview.round.RoundedImageView;
@@ -101,10 +102,11 @@ public class UserCenterEditorFragment extends BaseContentFragment {
     private RelativeLayout mCustomerRegionRelativeLayout;
     private TextView mCustomerRegionTextView;
     private ImageView mCustomerRegionImageView;
+    private String mArea;
     private RoundedImageView mRoundedImageView;
     //设置用户邮箱
     private EditText mCustomerEmailEditText;
-    private String[] sex = new String[]{"男", "女"};
+    private String[] sex = new String[]{"先生", "女士"};
     private String[] homes = new String[]{"山东", "上海", "江苏"};
     private int isFinish = R.drawable.editor;
 
@@ -206,7 +208,15 @@ public class UserCenterEditorFragment extends BaseContentFragment {
         mCustomerRegionRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showRegionListDialog();
+                AreaDialog dialog = AreaDialog.creatDialog(getActivity());
+                dialog.setOnSelectListener(new AreaDialog.OnSelectListener() {
+                    @Override
+                    public void onSelect(String province, String city, String district, String zipcode) {
+                        mCustomerRegionTextView.setText(province + "," + city + "," + district);
+                        mArea = district;
+                    }
+                });
+                /*showRegionListDialog();*/
             }
         });
         mCustomerNickNameEditText.setText(customerInfo.getCustomer_nickname().toString());

@@ -7,4 +7,5 @@
     <include layout="@layout/fragment_order2"></include>
     <include layout="@layout/fragment_order3"></include>
     <include layout="@layout/fragment_order4"></include>
+    <include layout="@layout/list_menu_pay_pager"></include>
 </LinearLayout>
