@@ -142,19 +142,31 @@ customer_age*/
 	 *
 	 * @return
 	 */
-	public HashMap<String, String> setUserInfo(String customerId,String customerNickmane,
-												   String customerSex,String customerJob,
-												   String customerRegion,String customerMobile,String customerEmail,String customerAge) {
+	public HashMap<String, String> setUserInfo(String customerId,String customerNickmane,String customerJob,
+												   String customerRegion,String customerMobile,String customerEmail) {
 		HashMap<String, String> params = new HashMap<String, String>();
+		if(customerNickmane == null||customerNickmane.length()==0){
+			customerNickmane = "";
+		}
+		if(customerJob == null||customerJob.length()==0){
+			customerJob = "";
+		}
+		if(customerRegion == null||customerRegion.length()==0){
+			customerRegion = "";
+		}
+		if(customerMobile == null||customerMobile.length()==0){
+			customerMobile = "";
+		}
+		if(customerEmail == null||customerEmail.length()==0){
+			customerEmail = "";
+		}
 		params.put("customer_id", customerId );
 		params.put("customer_nickname",customerNickmane);
-		//params.put("customer_head",customerHead);
-		params.put("customer_sex",customerSex);
+		params.put("customer_age",String.valueOf(100));
 		params.put("customer_job",customerJob);
 		params.put("customer_region",customerRegion);
 		params.put("customer_mobile",customerMobile);
 		params.put("customer_email",customerEmail);
-		params.put("customer_age",customerAge);
 		return params;
 	}
 	public static String API_CUSTOMER_CREATEORDER="/customer/createOrder";

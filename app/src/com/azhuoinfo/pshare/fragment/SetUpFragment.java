@@ -1,5 +1,8 @@
 package com.azhuoinfo.pshare.fragment;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,6 +97,18 @@ public class SetUpFragment extends BaseContentFragment{
             @Override
             public void onClick(View v) {
                 showLogoutDialog();
+            }
+        });
+        mScoreCheerRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("market://details?id="+ getActivity().getPackageName());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    showToast(R.string.app_not_launcher_market);
+                }
             }
         });
     }

@@ -89,6 +89,13 @@ public class Order4Fragment extends BaseContentFragment implements ViewPager.OnP
         mParkerPositionTextView=(TextView) view.findViewById(R.id.tv_parker_position);
         mParkerAreaTextView=(TextView) view.findViewById(R.id.tv_parker_area);
         mParkerMobileTextView=(TextView) view.findViewById(R.id.tv_parker_mobile);
+        
+        mAppointmentTimeTextView=(TextView) view.findViewById(R.id.tv_appointment_time);
+        mCarNumberTextView=(TextView) view.findViewById(R.id.tv_car_number);
+
+       //mGalleryViewPager=(GalleryViewPager) view.findViewById(R.id.gallery_picture);
+        mContainer=(LinearLayout) view.findViewById(R.id.container);
+        mGridViewPhoto=(GridView) view.findViewById(R.id.gridview_photos);
 
         //mToPayRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_to_pay);/
     }

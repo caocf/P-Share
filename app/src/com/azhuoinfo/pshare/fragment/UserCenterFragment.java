@@ -19,6 +19,7 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.Hashtable;
 
@@ -54,7 +55,11 @@ public class UserCenterFragment extends BaseContentFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAccountVerify = AccountVerify.getInstance(getActivity());
+        mAccountVerify=AccountVerify.getInstance(this.getActivity());
+        customerInfo = mAccountVerify.getUser();
+        mQRCodeText="customer:"+customerInfo.getCustomer_Id()+" "+customerInfo.getCustomer_mobile();
+
+        Log.e(TAG, customerInfo.getCustomer_Id().toString());
 
     }
 
@@ -92,10 +97,16 @@ public class UserCenterFragment extends BaseContentFragment {
     @Override
     protected void initViews(Bundle bundle) {
         this.setTitle(R.string.user_center);
-        customerInfo = mAccountVerify.getUser();
-        mQRCodeText="customer:"+customerInfo.getCustomer_Id()+" "+customerInfo.getCustomer_mobile();
-        Log.e(TAG, customerInfo.getCustomer_Id().toString());
-
+        if (!StringUtils.isEmpty(customerInfo.getCustomer_head())){
+            String customer_head = null;
+            if(customerInfo.getCustomer_head().endsWith(",")){
+                customer_head = customerInfo.getCustomer_head().substring(0, customerInfo.getCustomer_head().length()-1);
+            }else{
+                customer_head = customerInfo.getCustomer_head();
+            }
+            ImageLoader loader = ImageLoader.getInstance();
+            loader.displayImage(customer_head,mCustomerHeadImageView);
+        }
         mEditorInformationLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,8 +115,7 @@ public class UserCenterFragment extends BaseContentFragment {
         });
         mCustomerIdTextView.setText("" + customerInfo.getCustomer_Id());
         mCustomerNicknameTextView.setText(StringUtils.trimToEmpty(customerInfo.getCustomer_nickname()));
-        mCustomerPointsTextView.setText(StringUtils.null2Zero(customerInfo.getCustomer_point()));
-        mQRCodeImageView.setImageBitmap(create2DCoderBitmap(mQRCodeText,150,150));
+        mQRCodeImageView.setImageBitmap(create2DCoderBitmap(mQRCodeText, 150, 150));
     }
 
     @Override

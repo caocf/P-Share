@@ -19,11 +19,13 @@ import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.SetUserInfo;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import mobi.cangol.mobile.actionbar.ActionMenu;
 import mobi.cangol.mobile.actionbar.ActionMenuItem;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
+import mobi.cangol.mobile.utils.StringUtils;
 
 /**
  * Created by Azhuo on 2015/9/22.
@@ -68,11 +70,13 @@ public class UserCenterFinishFragment extends BaseContentFragment{
 
     private AccountVerify mAccountVerify;
     private CustomerInfo customerInfo;
-
+    private ImageLoader loader;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Log.e(TAG, customerInfo.getCustomer_Id().toString());
         mAccountVerify = AccountVerify.getInstance(getActivity());
+        loader = ImageLoader.getInstance();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -117,9 +121,20 @@ public class UserCenterFinishFragment extends BaseContentFragment{
 
     @Override
     protected void initViews(Bundle bundle) {
+        customerInfo = mAccountVerify.getUser();
         this.setTitle(R.string.user_center);
-        customerInfo=mAccountVerify.getUser();
-        mCustomerNicknameTextView.setText(customerInfo.getCustomer_nickname().toString());
+        if (!StringUtils.isEmpty(customerInfo.getCustomer_head())){
+            mobi.cangol.mobile.logging.Log.d("------------------------"+customerInfo.getCustomer_head()+"--------------------------------------------------------------");
+            String customer_head = null;
+            if(customerInfo.getCustomer_head().endsWith(",")){
+                customer_head = customerInfo.getCustomer_head().substring(0, customerInfo.getCustomer_head().length()-1);
+            }else{
+                customer_head = customerInfo.getCustomer_head();
+            }
+            ImageLoader loader = ImageLoader.getInstance();
+            loader.displayImage(customer_head,mCustomerHeadImageView);
+        }
+        mCustomerNicknameTextView.setText(customerInfo.getCustomer_nickname());
         mCustomerIdTextView.setText(customerInfo.getCustomer_Id().toString());
         mCustomerMobileTextView.setText(customerInfo.getCustomer_mobile().toString());
         if(customerInfo.getCustomer_sex().equals("3")){
@@ -162,7 +177,7 @@ public class UserCenterFinishFragment extends BaseContentFragment{
 
     @Override
     public boolean isCleanStack() {
-        return false;
+        return true;
     }
     @Override
     public void onDestroy() {

@@ -6,14 +6,13 @@
     android:orientation="vertical" >
     <RelativeLayout
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding2"
+        android:padding="8dp"
         android:layout_width="match_parent"
         android:background="@color/text_white">
         <TextView 
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/padding2"
             android:textSize="@dimen/text_size3"
             android:textColor="@color/text_light_gray"
             android:text="@string/destination"/>

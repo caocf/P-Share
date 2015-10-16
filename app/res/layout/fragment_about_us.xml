@@ -15,7 +15,7 @@
 	        android:layout_width="100dp"
 	        android:layout_height="100dp"
 	        android:background="@color/text_white"
-	        android:src="@drawable/icon"
+	        android:src="@drawable/ic_launcher"
 	       	android:layout_centerHorizontal="true"
 	        android:layout_marginTop="@dimen/padding8"/>
         <!--  app名称-->

@@ -52,7 +52,13 @@
                 android:id="@+id/tv_parking_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/padding2"/>
+                android:layout_marginLeft="12dp"/>
+
+            <TextView
+                android:id="@+id/tv_parking_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"/>
         </LinearLayout>
 
         <TextView
