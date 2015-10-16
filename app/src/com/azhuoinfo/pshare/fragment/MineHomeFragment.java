@@ -92,10 +92,11 @@ public class MineHomeFragment extends BaseContentFragment{
                 mGlobalData.save("default_parking", item);
             }
         });
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 showDeleteDialog(position);
+                return false;
             }
         });
     }

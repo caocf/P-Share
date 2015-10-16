@@ -131,7 +131,7 @@ public class MonthlyRentCarPayFragment extends BaseContentFragment{
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPayMethodDialog();
+                    showPayMethodDialog();
             }
         });
 
