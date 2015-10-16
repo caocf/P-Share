@@ -27,7 +27,6 @@ public class SplashActivity extends BaseActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setFullScreen(true);
         this.setActionbarShow(false);
         setContentView(R.layout.activity_splashing);
         initFragmentStack(R.id.layout_splashing);
@@ -60,7 +59,6 @@ public class SplashActivity extends BaseActionBarActivity {
     }
     private void toGuide(){
         this.replaceFragment(GuideFragment.class, "GuideFragment", null);
-
         mGlobalData.save(Constants.KEY_USED_VERSION, DeviceInfo.getAppVersion(this));
     }
     public void toMain(){
