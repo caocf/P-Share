@@ -22,7 +22,7 @@ import mobi.cangol.mobile.utils.DeviceInfo;
  */
 public class SplashActivity extends BaseActionBarActivity {
 	//SharedPreferences对象
-    private boolean isGuide=true;//为测试guide提供方便开启guide
+    private boolean isGuide=false;//为测试guide提供方便开启guide
     private GlobalData mGlobalData;
     @Override
     public void onCreate(Bundle savedInstanceState) {
