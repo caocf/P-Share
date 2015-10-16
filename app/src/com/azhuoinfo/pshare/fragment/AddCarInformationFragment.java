@@ -18,6 +18,7 @@ import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.model.AddCarInfo;
 import com.azhuoinfo.pshare.view.CarIdDialog;
+import com.azhuoinfo.pshare.view.LoadingDialog;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
@@ -142,16 +143,25 @@ public class AddCarInformationFragment extends BaseContentFragment{
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_ADDCAR));
         apiTask.setParams(ApiContants.instance(getActivity()).useAddCar(customerId, carBrand, carColor, carSize, ownerIdNumber,carNumber));
         apiTask.execute(new OnDataLoader<AddCarInfo>(){
+            LoadingDialog mLoadingDialog;
             @Override
             public void onStart(){
-
+                if(isEnable())
+                    if (mLoadingDialog == null) mLoadingDialog = LoadingDialog.show(getActivity());
             }
             @Override
             public void onSuccess(boolean page, AddCarInfo addCarInfo) {
-                replaceFragment(CarListFragment.class,"CarListFragment",null);
+                if(isEnable()){
+                    if (mLoadingDialog != null) mLoadingDialog.dismiss();
+                    popBackStack();
+                }
             }
             @Override
             public void onFailure(String code, String message) {
+                if(isEnable()){
+                    if (mLoadingDialog != null) mLoadingDialog.dismiss();
+                    showToast(message);
+                }
 
             }
         });

@@ -130,7 +130,8 @@ public class LoginFragment extends BaseContentFragment {
 
             @Override
             public void onStart() {
-                if (mLoadingDialog == null) mLoadingDialog = LoadingDialog.show(getActivity());
+                if (isEnable())
+                    if (mLoadingDialog == null) mLoadingDialog = LoadingDialog.show(getActivity());
             }
 
             @Override

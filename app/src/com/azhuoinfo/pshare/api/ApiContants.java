@@ -231,6 +231,18 @@ customer_age*/
 		//params.put("order_id",orderId);
 		return params;
 	}
+    public static String API_CUSTOMER_DELETECAR="/customer/deletecar";
+    /**
+     * 未实现
+     *，car_id
+     * @return
+     */
+    public HashMap<String, String> deleteCar(String customerId,String car_id){
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("customer_id", customerId );
+        params.put("car_id", car_id );
+        return params;
+    }
 	public static String API_CUSTOMER_SENDSMSCODE="/customer/sendSmsCode";
 	/**
 	 *customer_id，car_brand，car_number，car_color，car_size，owner_id_number（未确定是否需

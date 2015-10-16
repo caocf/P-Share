@@ -55,7 +55,7 @@
     <string name="common_dialog_exit">退出</string>
     <string name="dialog_tips_title">提示</string>
     <string name="dialog_delete_title">提示</string>
-    <string name="dialog_delete_content">你确定要删除吗？</string>
+    <string name="dialog_delete_content">你确定要删除此项吗？</string>
     <string name="dialog_delete_success">删除成功！</string>
     <string name="dialog_server_fail">获取服务器链接错误！</string>
     <string name="dialog_upgrade_title">升级提示</string>

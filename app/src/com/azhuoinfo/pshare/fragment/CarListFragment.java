@@ -24,6 +24,7 @@ import com.azhuoinfo.pshare.fragment.adapter.ParkingDetailsAdapter;
 import com.azhuoinfo.pshare.model.CarList;
 import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.Parking;
+import com.azhuoinfo.pshare.view.CommonDialog;
 import com.azhuoinfo.pshare.view.PromptView;
 import com.azhuoinfo.pshare.view.listview.MyListView;
 
@@ -37,7 +38,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
  * Created by Azhuo on 2015/9/22.
  */
 public class CarListFragment extends BaseContentFragment{
-
+    private PromptView mPromptView;
     private ListView mListView;
     private CarListAdapter mDataAdapter;
     private TextView mAddCarTextView;
@@ -70,6 +71,7 @@ public class CarListFragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
+        mPromptView= (PromptView) findViewById(R.id.promptView);
         mListView=(ListView) findViewById(R.id.lv_list_car);
         mAddCarTextView= (TextView) findViewById(R.id.tv_listcar_add);
     }
@@ -91,6 +93,12 @@ public class CarListFragment extends BaseContentFragment{
 
             }
         });
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                showDeleteDialog(position);
+            }
+        });
     }
     @Override
     protected void initData(Bundle bundle) {
@@ -99,7 +107,28 @@ public class CarListFragment extends BaseContentFragment{
         else
             mAccountVerify.showLoginDialog(this);
     }
+    public void showDeleteDialog(final int position){
+        CommonDialog dialog = CommonDialog.creatDialog(getActivity());
+        //dialog.setTitle(R.string.dialog_delete_title);
+        dialog.setMessage(R.string.dialog_delete_content);
+        dialog.setLeftButtonInfo(getString(R.string.common_dialog_confirm), new CommonDialog.OnButtonClickListener() {
 
+            @Override
+            public void onClick(View view) {
+                CarList item= mDataAdapter.get(position);
+                deleteCar(item.getCar_id());
+                mDataAdapter.remove(position);
+            }
+
+        });
+        dialog.setRightButtonInfo(getString(R.string.common_dialog_cancel), new CommonDialog.OnButtonClickListener() {
+            @Override
+            public void onClick(View view) {
+                // do nothing
+            }
+        });
+        dialog.show();
+    }
     @Override
     protected FragmentInfo getNavigtionUpToFragment() {
         return null;
@@ -125,18 +154,44 @@ public class CarListFragment extends BaseContentFragment{
         apiTask.setRoot("orderInfo");
         apiTask.execute(new OnDataLoader<List<CarList>>() {
             public void onStart() {
+                if (isEnable())
+                    mPromptView.showLoading();
             }
 
             @Override
             public void onSuccess(boolean page, List<CarList> list) {
                 if (isEnable()) {
                     updateViews(list);
+                    mPromptView.showContent();
                 }
             }
 
             @Override
             public void onFailure(String code, String message) {
+                mPromptView.showContent();
                 showToast(message);
+            }
+        });
+    }
+    public void deleteCar(String car_id){
+        ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
+        apiTask.setMethod("GET");
+        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_DELETECAR));
+        apiTask.setParams(ApiContants.instance(getActivity()).deleteCar(mAccountVerify.getCustomer_Id(), car_id));
+        apiTask.execute(new OnDataLoader<String>() {
+            public void onStart() {
+            }
+
+            @Override
+            public void onSuccess(boolean page, String result) {
+                if (isEnable()) {
+                    showToast("删除成功！");
+                }
+            }
+
+            @Override
+            public void onFailure(String code, String message) {
+                if (isEnable())showToast(message);
             }
         });
     }
