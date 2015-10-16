@@ -271,7 +271,15 @@
 				android:layout_centerVertical="true"
 				android:src="@drawable/order_right"/>
 		</RelativeLayout>
-
+		<Button
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/text_light_gray"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			android:layout_marginTop="20dp"
+			android:textColor="@color/text_white"
+			android:text="取车"/>
 	     <Button
 			 android:id="@+id/button_finish_order_pay4"
 	         style="@style/button_style"

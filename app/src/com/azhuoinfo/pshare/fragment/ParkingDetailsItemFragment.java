@@ -164,13 +164,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mAppointmentTimeRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calendar = Calendar.getInstance();
-                year = calendar.get(Calendar.YEAR);
-                monthOfYear = calendar.get(Calendar.MONTH);
-                dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-                hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
-                minute = calendar.get(Calendar.MINUTE);
-                mImmediateTimeText = year + "/" + (monthOfYear + 1) % 12 + "/" + dayOfMonth + " " + hourOfDay + ":" + minute;
+                currentTime();
                 mTimeDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -228,10 +222,12 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mImmediateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                currentTime();
                 if (listSize > 0) {
                     Toast.makeText(getActivity(), "已有订单", Toast.LENGTH_SHORT).show();
                 } else {
-                    postCreateOrder(customer_id, parking.getParking_id(), mImmediateTimeText,strAppointmentNeed);
+                    Log.e("mImmediateTimeText",mImmediateTimeText+"");
+                    postCreateOrder(customer_id, parking.getParking_id(), mImmediateTimeText, strAppointmentNeed);
                 }
             }
         });
@@ -245,6 +241,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                     if (listSize > 0) {
                         Toast.makeText(getActivity(), "已有订单", Toast.LENGTH_SHORT).show();
                     } else {
+                        Log.e("mTimeText",mTimeText+"");
                         postCreateOrder(customer_id, parking.getParking_id(), mTimeText,strAppointmentNeed);
                     }
                 }
@@ -302,7 +299,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_CREATEORDER));
-        apiTask.setParams(ApiContants.instance(getActivity()).userCreateOrder(customerId, parkingId, orderPlanBegin,order_img_count));
+        apiTask.setParams(ApiContants.instance(getActivity()).userCreateOrder(customerId, parkingId, orderPlanBegin, order_img_count));
         apiTask.setRoot("orderInfo");
         apiTask.execute(new OnDataLoader<OrderInfo>(){
             @Override
@@ -358,5 +355,17 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 }
             }
         });
+    }
+    /*
+    * 取当前时间
+    * */
+    public void currentTime(){
+        calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        monthOfYear = calendar.get(Calendar.MONTH);
+        dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
+        mImmediateTimeText = year + "/" + (monthOfYear + 1) % 12 + "/" + dayOfMonth + " " + hourOfDay + ":" + minute;
     }
 }

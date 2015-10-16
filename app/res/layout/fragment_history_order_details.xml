@@ -236,6 +236,15 @@
 	             android:textSize="@dimen/text_size3"
 	             android:text="@string/text_order_car_number"/>
 	     </LinearLayout>
+		<Button
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/text_light_gray"
+			android:layout_margin="50dp"
+			android:text="订单取消"
+			android:textColor="@color/text_white"
+			android:visibility="gone"
+			/>
 		<RelativeLayout
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/padding11"
