@@ -18,7 +18,11 @@ import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.fragment.adapter.ImageAdapter;
 import com.azhuoinfo.pshare.model.OrderList;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,12 +72,15 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
     private String parakerId;
     private String parkerLevel;
     private String parkerMobile;
-    private String orderActualBegin;
+    private String orderDate;
     private String parkerName;
+    private String parkingName;
     private String orderPlanEnd;
     private String carNumber;
     private String orderDuration;
     private String orderTotalFee;
+    private String order_actual_begin_start;
+    private String order_actual_end_stop;
     private String orderState;
 
     @Override
@@ -84,11 +91,14 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
         parakerId=orderList.getParker_id();
         parkerLevel=orderList.getParker_level();
         parkerMobile=orderList.getParker_mobile();
-        orderActualBegin=orderList.getUpdated_at();
+        orderDate=orderList.getUpdated_at();
         orderDuration=orderList.getOrder_duration();
         orderTotalFee=orderList.getOrder_total_fee();
         parkerName=orderList.getParker_name();
+        parkingName=orderList.getParking_name();
         carNumber=orderList.getCar_number();
+        order_actual_begin_start=orderList.getOrder_actual_begin_start();
+        order_actual_end_stop=orderList.getOrder_actual_end_stop();
 
     }
 
@@ -129,18 +139,23 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
 
     @Override
     protected void initViews(Bundle bundle) {
-        mParkerIDTextView.setText(parakerId);
-        mParkerAreaTextView.setText(parkerName);
-        mParkerMobileTextView.setText(parkerMobile);
-        mParkerPositionTextView.setText(parkerLevel);
-        mPayMoneyTextView.setText(orderTotalFee+"元");
-        mOrderDateTextView.setText(orderActualBegin);
-        mStopCarTimeTextView.setText(orderDuration);
-        mCarNumberTextView.setText(carNumber);
+
     }
 
     @Override
     protected void initData(Bundle bundle) {
+        //friendly_time(order_actual_begin_start);
+        /*Log.e("order_actual_begin_start：",order_actual_begin_start);
+        Log.e("order_actual_end_stop：",order_actual_end_stop);*/
+        dateDiff(order_actual_begin_start, order_actual_end_stop, "yyyy-MM-dd HH:mm:ss");
+        mParkerIDTextView.setText(parakerId);
+        mParkerAreaTextView.setText(parkingName);
+        mParkerMobileTextView.setText(parkerMobile);
+        mParkerPositionTextView.setText(parkerLevel);
+        mPayMoneyTextView.setText(orderTotalFee);
+        mOrderDateTextView.setText(orderDate);
+        mCarNumberTextView.setText(carNumber);
+
         mList = new ArrayList<Map<String, Object>>();
         urls = new ArrayList<String>();
         show = new ArrayList<String>();
@@ -180,10 +195,17 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
      */
     private void saveList() {
         String order_path = orderList.getOrder_path();
+        String parking_path=orderList.getParking_path();
+        Log.e("parking_path", parking_path);
+        parking_path=parking_path.substring(0,parking_path.length()-1);
+        Log.e("parking_path", parking_path);
         String[] orderPaths = order_path.split(",");
+        Log.e("orderPaths",orderPaths.length+"");
         for (int i = 0; i < orderPaths.length ; i++) {
                 urls.add(orderPaths[i]);
+            Log.e("path", orderPaths[orderPaths.length-1]);
         }
+        urls.add(parking_path);
         for (int j = 0; j < 3; j++) {
             show.add(urls.get(j));
         }
@@ -203,7 +225,7 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
         Log.d("showImage",urls.toString());
     }
 
-    private void toLeft() {
+    private void toLeft(){
         if (left == 0) {
             Toast.makeText(getActivity(),"当前位于最左方!",Toast.LENGTH_SHORT).show();
         } else {
@@ -227,6 +249,28 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
             left++;
             right++;
             showImage(show);
+        }
+    }
+    public void dateDiff(String startTime, String endTime, String format) {
+       //按照传入的格式生成一个simpledateformate对象
+        SimpleDateFormat sd = new SimpleDateFormat(format);
+        long nd = 1000 * 24 * 60 * 60;//一天的毫秒数
+        long nh = 1000 * 60 * 60;//一小时的毫秒数
+        long nm = 1000 * 60;//一分钟的毫秒数
+        long ns = 1000;//一秒钟的毫秒数
+        long diff;
+        try {
+           //获得两个时间的毫秒时间差异
+            diff = sd.parse(endTime).getTime() - sd.parse(startTime).getTime();
+            long day = diff / nd;//计算差多少天
+            long hour = diff % nd / nh;//计算差多少小时
+            long min = diff % nd % nh / nm;//计算差多少分钟
+            long sec = diff % nd % nh % nm / ns;//计算差多少秒
+            String str=day + "天" + hour + "小时" + min + "分钟" + sec + "秒";
+            mStopCarTimeTextView.setText(str);
+            Log.e(TAG,"时间相差：" + day + "天" + hour + "小时" + min + "分钟" + sec + "秒");
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 }

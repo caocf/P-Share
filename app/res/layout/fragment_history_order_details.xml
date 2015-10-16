@@ -210,8 +210,12 @@
 	             android:layout_height="wrap_content"
 	             android:layout_width="wrap_content"
 	             android:textSize="@dimen/text_size3"
-	             android:textColor="@color/text_color_red"
-	             android:text="@string/text_pay_money"/>
+	             android:textColor="@color/text_color_red"/>
+			 <TextView
+				 android:layout_height="wrap_content"
+				 android:layout_width="wrap_content"
+				 android:textSize="@dimen/text_size3"
+				 android:text="元"/>
 	     </LinearLayout>
 	     <!--  车牌号-->
 	     <LinearLayout
