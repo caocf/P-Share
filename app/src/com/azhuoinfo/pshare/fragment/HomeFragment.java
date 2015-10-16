@@ -44,6 +44,7 @@ import mobi.cangol.mobile.logging.Log;
 import mobi.cangol.mobile.service.AppService;
 import mobi.cangol.mobile.service.global.GlobalData;
 import mobi.cangol.mobile.utils.BitmapUtils;
+import mobi.cangol.mobile.utils.DeviceInfo;
 
 
 public class HomeFragment extends BaseContentFragment implements LocationSource, AMapLocationListener ,AMap.OnInfoWindowClickListener,AMap.OnMarkerClickListener {
@@ -445,20 +446,20 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 if(parking.getParking_can_use()>0){
                     int l=parking.getParking_can_use()>9?2:1;
                     Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.empty),
-                            l==2?30-12:30-6,
-                            36,
+                            l==2?8* DeviceInfo.getDensity(getActivity()):11* DeviceInfo.getDensity(getActivity()),
+                            18* DeviceInfo.getDensity(getActivity()),
                             ""+parking.getParking_can_use(),
                             getResources().getColor(R.color.menu_text_pressed),
-                            24,
+                            (int) (12* DeviceInfo.getDensity(getActivity())),
                             100);
                     markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
                 }else{
                     Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.full),
-                            24,
-                            36,
+                            11* DeviceInfo.getDensity(getActivity()),
+                            18* DeviceInfo.getDensity(getActivity()),
                             ""+parking.getParking_can_use(),
                             getResources().getColor(R.color.text_light_gray),
-                            24,
+                            (int) (12* DeviceInfo.getDensity(getActivity())),
                             100);
                     markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
                 }
