@@ -196,16 +196,20 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
     private void saveList() {
         String order_path = orderList.getOrder_path();
         String parking_path=orderList.getParking_path();
-        Log.e("parking_path", parking_path);
-        parking_path=parking_path.substring(0,parking_path.length()-1);
-        Log.e("parking_path", parking_path);
+
         String[] orderPaths = order_path.split(",");
         Log.e("orderPaths",orderPaths.length+"");
         for (int i = 0; i < orderPaths.length ; i++) {
                 urls.add(orderPaths[i]);
             Log.e("path", orderPaths[orderPaths.length-1]);
         }
-        urls.add(parking_path);
+        if(parking_path!=null){
+            if(parking_path.contains(",")){
+                parking_path=parking_path.replaceAll(",","");
+                urls.add(parking_path);
+            }
+        }
+
         for (int j = 0; j < 3; j++) {
             show.add(urls.get(j));
         }

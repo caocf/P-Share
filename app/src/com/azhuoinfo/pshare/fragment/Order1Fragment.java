@@ -311,8 +311,8 @@ public class Order1Fragment extends BaseContentFragment{
         mParkerMobileTextView = (TextView) findViewById(R.id.tv_parker_mobile4);
         mAppointmentTimeTextView = (TextView) findViewById(R.id.tv_appointment_time4);
         mAppointmentMakeCarTimeTextView = (TextView) findViewById(R.id.tv_appointment_make_car_time4);
-        mCarNumberTextView = (TextView) findViewById(R.id.tv_car_number);
-        mImageGridView = (GridView) findViewById(R.id.gridview_photos);
+        mCarNumberTextView = (TextView) findViewById(R.id.tv_car_number4);
+        mImageGridView = (GridView) findViewById(R.id.gridview_photos4);
         mLeft = (ImageView) findViewById(R.id.iv_left);
         mRight = (ImageView) findViewById(R.id.iv_right);
         if (order_state.equals("3") || order_state.equals("4")) {
@@ -322,6 +322,7 @@ public class Order1Fragment extends BaseContentFragment{
             mParkerMobileTextView.setText(parkerMobile + "");
             mParkerLevelTextView.setText(parkerLevel + "");
             mAppointmentTimeTextView.setText(orderPlanBegin + "");
+            Log.e("orderPlanBegin",orderPlanBegin);
             mAppointmentMakeCarTimeTextView.setText(orderPlanEnd + "");
             mCarNumberTextView.setText(carNumber + "");
             mParkerMobileRelativeLayout.setOnClickListener(new View.OnClickListener() {
