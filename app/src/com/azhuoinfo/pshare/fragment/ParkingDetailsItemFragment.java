@@ -155,7 +155,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
 
     @Override
     protected void initViews(Bundle bundle){
-        this.setTitle(R.string.yard_details);
+        this.setTitle(parking.getParking_name());
         mParkingNameTextView.setText(parking.getParking_name() + "");
         mParkingAddressTextView.setText(parking.getParking_address() + "");
         Log.e(TAG, parking.getParking_can_use() + "");

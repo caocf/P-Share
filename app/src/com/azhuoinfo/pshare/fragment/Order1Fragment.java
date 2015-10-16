@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -29,6 +31,7 @@ import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.Parking;
 import com.azhuoinfo.pshare.model.UnfinishedOrderInfo;
 import com.azhuoinfo.pshare.model.UserAuth;
+import com.azhuoinfo.pshare.view.CommonDialog;
 import com.azhuoinfo.pshare.view.listview.BaseAdapter;
 
 import java.util.ArrayList;
@@ -40,6 +43,9 @@ import java.util.TimerTask;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
+import mobi.cangol.mobile.sdk.pay.OnPayResultListener;
+import mobi.cangol.mobile.sdk.pay.PayManager;
+import mobi.cangol.mobile.sdk.pay.PlaceOrderCallback;
 
 /**
  * Created by Azhuo on 2015/9/22.
@@ -77,6 +83,7 @@ public class Order1Fragment extends BaseContentFragment{
     //用户车牌号
     private TextView mCarNumberTextView;
     private Button mFinishButton;
+    private Button mGetCarButton;
     private GridView mImageGridView;
     private ImageView mLeft;
     private ImageView mRight;
@@ -206,7 +213,7 @@ public class Order1Fragment extends BaseContentFragment{
             initViewsOrder4();
         }
     }
-    public void postUnfinishedOrder(String customerId){
+    public void postUnfinishedOrder(final String customerId){
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_UNFINISHEDORDER));
@@ -242,7 +249,6 @@ public class Order1Fragment extends BaseContentFragment{
                     initOrderState();
                 }
             }
-
             @Override
             public void onFailure(String code, String message) {
 
@@ -258,10 +264,8 @@ public class Order1Fragment extends BaseContentFragment{
             @Override
             public void onStart() {
                 if (getActivity() != null) {
-
                 }
             }
-
             @Override
             public void onSuccess(boolean page, UserAuth auth) {
                 mOrder1RelativeLayout.setVisibility(View.VISIBLE);
@@ -270,12 +274,40 @@ public class Order1Fragment extends BaseContentFragment{
                 mOrder4ScrollView.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), "订单已取消", Toast.LENGTH_SHORT);
             }
-
             @Override
             public void onFailure(String code, String message) {
                 mobi.cangol.mobile.logging.Log.d(TAG, "code=:" + code + ",message=" + message);
                 if (getActivity() != null) {
+
                 }
+            }
+        });
+    }
+    public void postGetCar(String customer_id,String order_id){
+        ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
+        apiTask.setMethod("GET");
+        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_GETCAR));
+        apiTask.setParams(ApiContants.instance(getActivity()).getCar(customer_id, order_id));
+        apiTask.execute(new OnDataLoader<UserAuth>() {
+            @Override
+            public void onStart() {
+
+            }
+            @Override
+            public void onSuccess(boolean page, UserAuth userAuth) {
+               mFinishButton.setVisibility(View.VISIBLE);
+                mGetCarButton.setVisibility(View.GONE);
+                mFinishButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showPayMethodDialog();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String code, String message) {
+
             }
         });
     }
@@ -336,6 +368,7 @@ public class Order1Fragment extends BaseContentFragment{
         mCarNumberTextView = (TextView) findViewById(R.id.tv_car_number4);
         mImageGridView = (GridView) findViewById(R.id.gridview_photos4);
         mFinishButton=(Button) findViewById(R.id.button_finish_order_pay4);
+        mGetCarButton=(Button) findViewById(R.id.button_to_make_car4);
         mLeft = (ImageView) findViewById(R.id.iv_left);
         mRight = (ImageView) findViewById(R.id.iv_right);
         if (order_state.equals("3") || order_state.equals("4")) {
@@ -372,18 +405,18 @@ public class Order1Fragment extends BaseContentFragment{
                     toRight();
                 }
             });
+            mGetCarButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    postGetCar(customerId, orderId);
+                }
+            });
             mFinishButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mToPayRelativeLayout.setVisibility(View.VISIBLE);
                 }
             });
-          /*  if(parkingPath!=null){
-
-                mOrder4ScrollView.setVisibility(View.VISIBLE);
-            }else {
-                mToPayRelativeLayout.setVisibility(View.GONE);
-            }*/
         }
     }
     /**
@@ -443,61 +476,57 @@ public class Order1Fragment extends BaseContentFragment{
             showImage(show);
         }
     }
+    protected void toPay(int payType,final String subject,final String desc,final String price) {
+        PayManager.getInstance(getActivity()).toPay(this.getActivity(), payType, new PlaceOrderCallback(subject, desc, price) {
+            @Override
+            public String getOrderId() {
+                //自定义订单号
+                return "128978342715192";
+            }
+        }, new OnPayResultListener() {
+            @Override
+            public void onSuccess(String billingIndex, String msg) {
+                showToast("订单:" + billingIndex + " " + msg);
+            }
 
-   /* Handler handler=new Handler();
-    Runnable runnable=new Runnable() {
-        @Override
-        public void run() {
-            // TODO Auto-generated method stub
-            //要做的事情
-            handler.postDelayed(this, 5000);
-            postUnfinishedOrder(customerId);
-        }
-    };
+            @Override
+            public void onFailuire(String billingIndex, String msg) {
+                showToast("订单:" + billingIndex + " " + msg);
+            }
 
-    @Override
-    public void onDestroy() {
-        handler.removeCallbacks(runnable);
-        super.onDestroy();
-    }*/
-    /*public void textTime(){
-
+            @Override
+            public void onCancel(String billingIndex, String msg) {
+                showToast("订单:" + billingIndex + " " + msg);
+            }
+        });
     }
-   public class TestTime {
-         public static void main(String[] args) {
-                   TestTime tt = new TestTime();
-                  tt.showTimeCount(99*3600000+75*1000);
-              }
-                   //时间计数器，最多只能到99小时，如需要更大小时数需要改改方法
-                    public String showTimeCount(long time) {
-                  System.out.println("time="+time);
-                    if(time >= 360000000){
-                            return "00:00:00";
+    private void showPayMethodDialog() {
+        String[] from = this.getResources().getStringArray(R.array.pay_method);
+        final CommonDialog dialog = CommonDialog.creatDialog(this.getActivity());
+        dialog.setTitle("支付");
+        dialog.setListViewInfo(new ArrayAdapter<String>(app,
+                        R.layout.common_dialog_textview, from),
+                new CommonDialog.OnDialogItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+                        switch (position) {
+                            case 0:
+                                toPay(PayManager.PAY_TYPE_ALIPAY,"桃子","桃子一斤","0.02");
+                                break;
+                            case 1:
+                                //交易金额默认为人民币交易，接口中参数支付金额单位为【分】，参数值不能带小数。对账单中的交易金额单位为【元】。
+                                toPay(PayManager.PAY_TYPE_WECHAT,"桃子","桃子一斤","1");
+                                break;
+                            case 2:
+
+                                break;
                         }
-                    String timeCount = "";
-                    long hourc = time/3600000;
-                    String hour = "0" + hourc;
-                    System.out.println("hour="+hour);
-                    hour = hour.substring(hour.length()-2, hour.length());
-                    System.out.println("hour2="+hour);
-
-                    long minuec = (time-hourc*3600000)/(60000);
-                    String minue = "0" + minuec;
-                    System.out.println("minue="+minue);
-                    minue = minue.substring(minue.length()-2, minue.length());
-                    System.out.println("minue2="+minue);
-
-                    long secc = (time-hourc*3600000-minuec*60000)/1000;
-                    String sec = "0" + secc;
-                    System.out.println("sec="+sec);
-                   sec = sec.substring(sec.length()-2, sec.length());
-                    System.out.println("sec2="+sec);
-                    timeCount = hour + ":" + minue + ":" + sec;
-                    System.out.println("timeCount="+timeCount);
-                    return timeCount;
-                }
-   }*/
-    public void textTime(){
-
+                        dialog.dismiss();
+                    }
+                });
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
     }
 }

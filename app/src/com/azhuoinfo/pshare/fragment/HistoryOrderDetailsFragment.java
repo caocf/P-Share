@@ -227,7 +227,6 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
         mImageGridView.setAdapter(adapter);
         Log.d("showImage",urls.toString());
     }
-
     private void toLeft(){
         if (left == 0) {
             Toast.makeText(getActivity(),"当前位于最左方!",Toast.LENGTH_SHORT).show();
