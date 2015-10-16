@@ -25,23 +25,23 @@ public class Constants {
     public static final String KEY_USED_VERSION = "is_new_version";
 
     /********微信支付相关*********/
-    // appid 请同时修改 androidmanifest.xml里面.PayActivityd里的属性<dataandroid:scheme="wxb4ba3c02aa476ea1"/>为新设置的appid
-    public static final String APP_ID = "wxe0b0e843ec7f97f6";
+    // appid 请同时修改 androidmanifest.xml里面.PayActivityd里的属性<dataandroid:scheme="wx0112a93a0974d61b"/>为新设置的appid
+    public static final String APP_ID = "wx0112a93a0974d61b";
     // 商户号
-    public static final String MCH_ID = "1252078201";
+    public static final String MCH_ID = "1273348301";
     // API密钥，在商户平台设置
-    public static final String API_KEY = "xianZhizewangluokejiyouxiangongs";
+    public static final String API_KEY = "1234567890sukenxzkhcnsjdhydfnjag";
 
 
 
 
     /********支付宝钱包相关*********/
     //商户收款账号
-    public static final String SELLER = "etg511@163.com";
+    public static final String SELLER = "zhifu@forwell-parking.com";
     //商户PID
-    public static final String PARTNERID = "2088911891298769";
+    public static final String PARTNERID = "2088021550883080";
     //商户私钥，pkcs8格式
-    public static final String RSA_PRIVATE = "MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAMS2avtDTaSBgtrLw/nf7IKTKCTEDqMrKOaog+1CCM4rpr3cWUqRH8uHGFN0tMXfEY189Yg/oRuTaErvVfhePFJoxlQ6sCPYKwJg8ULXPdz+XXqBWGvqgboLuHUvI4KRlWSZnjsHxEHrjuMRAcq7b/Bn0z15rIIuP9xXeJREhDGLAgMBAAECgYEApjkLL6UQr+jsfRxgTv6kKTZWXrL5N3IaDsbpLAx3ylfif176aOM2/dH7gVIGC4pSl7+27tnttpKaN3AEsmpXB0ScW4YLG+ON8m+kO3mOPLLcY4M92O/ytZ6JOVQ0vvatawf5oXSDVldCC5+d+xyLDHmDo1w7IyN9B5rTxDOPXKECQQDoVAtGtA+RY7oUcd/le/NEXqK5MrZcrkOvUdxq2MDxeH7SXVdy/C1W4CWDDyr2iuikEKuHxgIj5ajFH0bVG+17AkEA2MFjSWP+NGY+MN6LR0A3tM3FdF5dM5MBa2p+ik38oKSJtNVnod6OfNZCqD0jdTn44bNgOn4qEJLe3urZB5onMQJBAOfSRNYuAYK/kgOohRLFlb3Y+GH3mkPslxkvg9MRqaTI6TMbdJEF1G/lhUi7L9GGVhCvmZkHGUecd8UKKnGnRlUCQEuNvUoLrMQfD3aBXBMN81z2jOkvK1Wa3FfQ2yLiZDiqocWCzYjCxvAEz19NUFrARlyF5fj9mTQFveH+AoB/30ECQQCzzespUgjJFADwQCWoKnVxaTqMydN3wOpVw6FI75IdvPpcpbHY+G6V3et6ZPzuamwGBdYBfo747wrvNko71sdm";
+    public static final String RSA_PRIVATE = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAKMLgUUYUTqwDOWaEg3ZqZ9A5UBjP8KO+xdpTmc1zv1c5EpMXVdXD7P6OuKHHNUAhu4gICEiB7+bLDSkro9gLcl99vyzblbTXBI1iSlPSq3mKfP8SVh1ZGZh1FDIMDX7KCju8jEKU1oUtiZkIJaGKlH+fYigQhPf+yPaOGEOm17vAgMBAAECgYBIZBFPRk66ifQP9WpSr/O5+6xN/EMQ9T7S1DS1apSutZG+000WPFeCh3Whom/Qut0t2SGq1FswXYsxDHVcv01UVYNrsmOf/bszI04cG3LVVoxPdF6g+oNMvNLBlYznpo4VLmMUDnN63YsgH1QRg8FIB01pU+KGa/knnUB1yEMEsQJBANSICl5IxpsspRb0xUYKDVQErfpeOK5dC0A1UddQvkhuNg7J5nWhuKjucGd3vYpzZFVt0lLZ69ScYhfu7rJluQ0CQQDEZGVpBKxy20Ig8bA6vaxLiX+lIrJ2fZ+T21z4PcCemWYkF5bPQahPPW3brvsn2u5b7TyQV50fNEjR7cgUhIDrAkEAndbq3FrwJQ5jDUl7uSh9/Yf8LZUMQ3KWiHkQ7vfoWaKAQztvDK2ulsd+c1laSxiny0pkiWOO4bfCokOwwo0JgQJBALX4IE6yWecCab+Esbl7zY0gFfm4sItB0v55HyeUcEmD8TQ39zCKsZzaWlRXSbegD4N1ycwkoh0roN2C6QS50YkCQBIFFvVQeEy9tUfvX6eG+d+xhjUIaUOY/E4Oo3vi4fy0Vsbtx2AAJlgk8RhWEyS2fsXZ8h/HD0yAIjs5EDDlLnc=";
     //支付宝公钥
     public static final String RSA_PUBLIC = "";
 

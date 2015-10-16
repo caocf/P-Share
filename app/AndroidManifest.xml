@@ -56,7 +56,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="wxe0b0e843ec7f97f6" />
+                <data android:scheme="wx0112a93a0974d61b" />
             </intent-filter>
         </activity>
         

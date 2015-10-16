@@ -15,11 +15,14 @@ import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.view.CommonDialog;
 
+import java.util.Random;
+
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.sdk.pay.OnPayResultListener;
 import mobi.cangol.mobile.sdk.pay.PayManager;
 import mobi.cangol.mobile.sdk.pay.PlaceOrderCallback;
+import mobi.cangol.mobile.sdk.utils.MD5;
 
 /**
  * Created by Azhuo on 2015/9/22.
@@ -146,7 +149,8 @@ public class MonthlyRentCarPayFragment extends BaseContentFragment{
             @Override
             public String getOrderId() {
                 //自定义订单号
-                return "128978342715192";
+                Random random = new Random();
+                return MD5.getMessageDigest(String.valueOf(random.nextInt(10000)).getBytes());
             }
         }, new OnPayResultListener() {
             @Override
@@ -182,7 +186,7 @@ public class MonthlyRentCarPayFragment extends BaseContentFragment{
                                 break;
                             case 1:
                                 //交易金额默认为人民币交易，接口中参数支付金额单位为【分】，参数值不能带小数。对账单中的交易金额单位为【元】。
-                                toPay(PayManager.PAY_TYPE_WECHAT,"桃子","桃子一斤","1");
+                                toPay(PayManager.PAY_TYPE_WECHAT,"桃子1","桃子一斤1","1");
                                 break;
                             case 2:
 
