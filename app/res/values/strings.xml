@@ -133,6 +133,7 @@
     <string name="tv_user_stop_state">您的停车状态：</string>
     <string name="tv_order_car_number">车牌号:</string>
     <string name="button_payfinish">完成订单支付</string>
+    <string name="button_make_car">我要取车</string>
     <string name="tv_order_takeCar_remainingtime">停车计时：</string>
     <string name="appointment">预约</string>
     <string name="tv_unselect_order">取消预约</string>

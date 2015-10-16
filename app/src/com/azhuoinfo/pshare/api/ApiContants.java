@@ -231,7 +231,7 @@ customer_age*/
 		//params.put("order_id",orderId);
 		return params;
 	}
-    public static String API_CUSTOMER_DELETECAR="/customer/deletecar";
+    public static String API_CUSTOMER_DELETECAR="/customer/deleteCar";
     /**
      * 未实现
      *，car_id
@@ -355,4 +355,17 @@ customer_age*/
         params.put("parking_id", parking_id );
         return params;
     }
+	public static String API_CUSTOMER_GETCAR="/customer/getCar";
+	/**
+	 * 收藏停车场
+	 * @param customer_id
+	 * @param order_id
+	 * @return
+	 */
+	public HashMap<String, String> getCar(String customer_id,String order_id){
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("parking_id", customer_id );
+		params.put("order_id",order_id);
+		return params;
+	}
 }

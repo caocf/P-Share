@@ -158,7 +158,6 @@ public class CarListFragment extends BaseContentFragment{
                 if (isEnable())
                     mPromptView.showLoading();
             }
-
             @Override
             public void onSuccess(boolean page, List<CarList> list) {
                 if (isEnable()) {
@@ -166,7 +165,6 @@ public class CarListFragment extends BaseContentFragment{
                     mPromptView.showContent();
                 }
             }
-
             @Override
             public void onFailure(String code, String message) {
                 mPromptView.showContent();
