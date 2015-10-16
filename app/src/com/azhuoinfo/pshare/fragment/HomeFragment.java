@@ -35,9 +35,11 @@ import com.azhuoinfo.pshare.model.Parking;
 
 import java.util.List;
 
+import mobi.cangol.mobile.actionbar.ActionBarActivity;
 import mobi.cangol.mobile.actionbar.ActionMenu;
 import mobi.cangol.mobile.actionbar.ActionMenuItem;
 import mobi.cangol.mobile.actionbar.view.SearchView;
+import mobi.cangol.mobile.base.BaseActionBarActivity;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.logging.Log;
@@ -104,6 +106,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 	@Override
 	protected void initViews(Bundle savedInstanceState) {
 		this.setTitle(R.string.title_home);
+        ((ActionBarActivity) this.getActivity()).setStatusBarTintColor(getActivity().getResources().getColor(R.color.actionbar_background));
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);// 必须要写
         mAmap = mMapView.getMap();
