@@ -22,6 +22,8 @@ import mobi.cangol.mobile.utils.DeviceInfo;
  */
 public class SplashActivity extends BaseActionBarActivity {
 	//SharedPreferences对象
+    private boolean isGuide=true;//为测试guide提供方便开启guide
+    private GlobalData mGlobalData;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,12 +31,37 @@ public class SplashActivity extends BaseActionBarActivity {
         this.setActionbarShow(false);
         setContentView(R.layout.activity_splashing);
         initFragmentStack(R.id.layout_splashing);
+        mGlobalData = (GlobalData) getAppService(AppService.GLOBAL_DATA);
+        checkGuide();
         new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				toMain();
-			}
-		}, 100L);
+            @Override
+            public void run() {
+                if (isGuide) {
+                    toGuide();
+                } else {
+                    toMain();
+                }
+            }
+        }, 1500L);
+    }
+    private void checkGuide(){
+        if(isGuide)return;
+        if (mGlobalData.get(Constants.KEY_USED_VERSION) == null) {
+            isGuide=true;
+        } else {
+            String newVersion = (String) mGlobalData.get(Constants.KEY_USED_VERSION);
+            Log.d("newVersion="+newVersion+",AppVersion="+DeviceInfo.getAppVersion(this));
+            if (!DeviceInfo.getAppVersion(this).equals(newVersion)) {
+                isGuide=true;
+            }else {
+                isGuide=false;
+            }
+        }
+    }
+    private void toGuide(){
+        this.replaceFragment(GuideFragment.class, "GuideFragment", null);
+
+        mGlobalData.save(Constants.KEY_USED_VERSION, DeviceInfo.getAppVersion(this));
     }
     public void toMain(){
     	startActivity(new Intent(SplashActivity.this, MainActivity.class));

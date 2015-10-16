@@ -22,7 +22,7 @@ public class Constants {
 	public static final String APP_DB = "app.db";
 
 
-
+    public static final String KEY_USED_VERSION = "is_new_version";
 
     /********微信支付相关*********/
     // appid 请同时修改 androidmanifest.xml里面.PayActivityd里的属性<dataandroid:scheme="wxb4ba3c02aa476ea1"/>为新设置的appid
@@ -49,4 +49,5 @@ public class Constants {
 
     // 在商户后台回调地址
     public static final String NOTIFY_URL = "http://112.74.125.226/XPRO/appZhiNotice/findZhiNotice.do";
+
 }
