@@ -155,7 +155,7 @@ public class MobileApplication extends CoreApplication {
 		
 		Log.d("初始化GlobalData");
 		globalData=(GlobalData) getAppService(AppService.GLOBAL_DATA);
-		
+        globalData.refresh();
 		
 		Log.d("初始化CrashService");
 		CrashService crashService = (CrashService) getAppService(AppService.CRASH_SERVICE);

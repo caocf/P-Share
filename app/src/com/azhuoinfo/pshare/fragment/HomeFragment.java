@@ -35,9 +35,11 @@ import com.azhuoinfo.pshare.model.Parking;
 
 import java.util.List;
 
+import mobi.cangol.mobile.actionbar.ActionBarActivity;
 import mobi.cangol.mobile.actionbar.ActionMenu;
 import mobi.cangol.mobile.actionbar.ActionMenuItem;
 import mobi.cangol.mobile.actionbar.view.SearchView;
+import mobi.cangol.mobile.base.BaseActionBarActivity;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.logging.Log;
@@ -104,6 +106,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 	@Override
 	protected void initViews(Bundle savedInstanceState) {
 		this.setTitle(R.string.title_home);
+        ((ActionBarActivity) this.getActivity()).setStatusBarTintColor(getActivity().getResources().getColor(R.color.actionbar_background));
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);// 必须要写
         mAmap = mMapView.getMap();
@@ -167,7 +170,16 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
     public boolean onMenuActionSelected(ActionMenuItem action) {
         switch(action.getId()){
             case 1:
-                SearchView searchView=this.getCustomActionBar().startSearchMode();
+                final SearchView searchView=this.getCustomActionBar().startSearchMode();
+                searchView.setSearchTextHint("我想停在哪里附近？");
+                searchView.setActioImageResource(R.drawable.actionbar_search);
+                searchView.setOnActionClickListener(new SearchView.OnActionClickListener() {
+                    @Override
+                    public boolean onActionClick(String s) {
+                        getSearchParkListbyName(s);
+                        return true;
+                    }
+                });
                 searchView.setOnSearchTextListener(new SearchView.OnSearchTextListener() {
                     @Override
                     public boolean onSearchText(String s) {
@@ -446,7 +458,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 if(parking.getParking_can_use()>0){
                     int l=parking.getParking_can_use()>9?2:1;
                     Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.empty),
-                            l==2?8* DeviceInfo.getDensity(getActivity()):11* DeviceInfo.getDensity(getActivity()),
+                            l==2?9* DeviceInfo.getDensity(getActivity()):11.5f* DeviceInfo.getDensity(getActivity()),
                             18* DeviceInfo.getDensity(getActivity()),
                             ""+parking.getParking_can_use(),
                             getResources().getColor(R.color.menu_text_pressed),
@@ -455,7 +467,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                     markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
                 }else{
                     Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.full),
-                            11* DeviceInfo.getDensity(getActivity()),
+                            11.5f* DeviceInfo.getDensity(getActivity()),
                             18* DeviceInfo.getDensity(getActivity()),
                             ""+parking.getParking_can_use(),
                             getResources().getColor(R.color.text_light_gray),

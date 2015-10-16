@@ -49,7 +49,6 @@ public class MainActivity extends DrawerNavigationFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
         this.setFloatActionBarEnabled(true);
-        this.setStatusBarTintColor(getResources().getColor(R.color.actionbar_background));
 		this.getCustomActionBar().setTitleGravity(Gravity.CENTER);
 		initStatus();
 		if (savedInstanceState == null) {

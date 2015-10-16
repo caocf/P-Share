@@ -98,7 +98,16 @@ public class ParkingDetailsFragment extends BaseContentFragment implements AMapL
     public boolean onMenuActionSelected(ActionMenuItem action) {
         switch(action.getId()){
             case 1:
-                SearchView searchView=this.getCustomActionBar().startSearchMode();
+                final SearchView searchView=this.getCustomActionBar().startSearchMode();
+                searchView.setSearchTextHint("我想停在哪里附近？");
+                searchView.setActioImageResource(R.drawable.actionbar_search);
+                searchView.setOnActionClickListener(new SearchView.OnActionClickListener() {
+                    @Override
+                    public boolean onActionClick(String s) {
+                        getSearchParkListbyName(s);
+                        return true;
+                    }
+                });
                 searchView.setOnSearchTextListener(new SearchView.OnSearchTextListener() {
                     @Override
                     public boolean onSearchText(String s) {

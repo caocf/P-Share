@@ -53,7 +53,7 @@ public class CarIdAdapter extends BaseAdapter<String> {
         holder.mName.setText(item);
         if(this.getItemSelected(position)){
             holder.mName.setBackgroundResource(R.drawable.bg_carid_selector);
-            holder.mName.setTextColor(getResources().getColor(R.color.text_blue));
+            holder.mName.setTextColor(getResources().getColor(R.color.actionbar_background));
         }else{
             holder.mName.setBackgroundResource(R.color.text_white);
             holder.mName.setTextColor(getResources().getColor(R.color.text_light_gray));
