@@ -193,7 +193,7 @@ public class MenuFragment extends BaseMenuFragment implements AccountVerify.OnLo
 				loader.displayImage(customer_head,mCustomerHeadImageView);
 			}
             mCustomerNicknameTextView.setText(StringUtils.trimToEmpty(mCustomerInfo.getCustomer_nickname()));
-            mCustomerPointsTextView.setText(StringUtils.trimToEmpty(mCustomerInfo.getCustomer_point()));
+            mCustomerPointsTextView.setText(StringUtils.null2Zero(mCustomerInfo.getCustomer_point()));
         }else{
             mCustomerNicknameTextView.setText("未登录");
             mCustomerPointsTextView.setText("");

@@ -449,7 +449,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 if(parking.getParking_can_use()>0){
                     int l=parking.getParking_can_use()>9?2:1;
                     Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.empty),
-                            l==2?8* DeviceInfo.getDensity(getActivity()):11* DeviceInfo.getDensity(getActivity()),
+                            l==2?9* DeviceInfo.getDensity(getActivity()):11.5f* DeviceInfo.getDensity(getActivity()),
                             18* DeviceInfo.getDensity(getActivity()),
                             ""+parking.getParking_can_use(),
                             getResources().getColor(R.color.menu_text_pressed),
@@ -458,7 +458,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                     markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
                 }else{
                     Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.full),
-                            11* DeviceInfo.getDensity(getActivity()),
+                            11.5f* DeviceInfo.getDensity(getActivity()),
                             18* DeviceInfo.getDensity(getActivity()),
                             ""+parking.getParking_can_use(),
                             getResources().getColor(R.color.text_light_gray),
