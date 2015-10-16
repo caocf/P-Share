@@ -260,6 +260,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     }
     @Override
     protected void initData(Bundle bundle) {
+        postUnfinishedOrder(customer_id);
 
     }
     @Override

@@ -98,6 +98,7 @@ public class Order1Fragment extends BaseContentFragment{
     private String orderPlanEnd;
     private String carNumber;
     private String orderPath;
+    private String parkingName;
     private List<String> list;
 
     @Override
@@ -210,6 +211,7 @@ public class Order1Fragment extends BaseContentFragment{
                             parkerLevel = unfinishedOrderInfo.getParker_level();
                             parkerMobile = unfinishedOrderInfo.getParker_mobile();
                             parkerName = unfinishedOrderInfo.getParker_name();
+                            parkingName=unfinishedOrderInfo.getParking_name();
                             orderPlanBegin = unfinishedOrderInfo.getOrder_plan_begin();
                             orderPlanEnd = unfinishedOrderInfo.getOrder_plan_end();
                             carNumber = unfinishedOrderInfo.getCar_number();
@@ -279,7 +281,7 @@ public class Order1Fragment extends BaseContentFragment{
         if(order_state.equals("2")){
             //mParkerHeadImageView.setImageBitmap();
             mParkerIDTextView.setText(parakerId + "");
-            mParkerAreaTextView.setText(parkerName + "");
+            mParkerAreaTextView.setText(parkingName + "");
             mParkerMobileTextView.setText(parkerMobile+"");
             mParkerLevelTextView.setText(parkerLevel+"");
             mAppointmentTimeTextView.setText(orderPlanBegin + "");
@@ -316,7 +318,7 @@ public class Order1Fragment extends BaseContentFragment{
         if (order_state.equals("3") || order_state.equals("4")) {
             Log.e(TAG,parakerId+":"+parkerName+":"+parakerId+":"+parkerMobile+":"+parkerLevel+":"+orderPlanBegin+":"+orderPlanEnd);
             mParkerIDTextView.setText(parakerId + "");
-            mParkerAreaTextView.setText(parkerName + "");
+            mParkerAreaTextView.setText(parkingName + "");
             mParkerMobileTextView.setText(parkerMobile + "");
             mParkerLevelTextView.setText(parkerLevel + "");
             mAppointmentTimeTextView.setText(orderPlanBegin + "");
@@ -361,10 +363,8 @@ public class Order1Fragment extends BaseContentFragment{
         }
         Log.d("saveList", urls.size() + "");
     }
-
     /**
      * 对图片的显示
-     *
      * @param urls
      */
     private void showImage(List<String> urls) {
@@ -374,7 +374,6 @@ public class Order1Fragment extends BaseContentFragment{
         mImageGridView.setAdapter(adapter);
         Log.d("showImage", urls.toString());
     }
-
     private void toLeft() {
         if (left == 0) {
             Toast.makeText(getActivity(),"当前位于最左方!",Toast.LENGTH_SHORT).show();
@@ -387,7 +386,6 @@ public class Order1Fragment extends BaseContentFragment{
             showImage(show);
         }
     }
-
     private void toRight() {
         if (right == urls.size() - 1) {
             Toast.makeText(getActivity(),"当前位于最右方!",Toast.LENGTH_SHORT).show();
