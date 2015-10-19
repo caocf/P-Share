@@ -163,9 +163,7 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment{
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
         if(resultCode==RESULT_OK){
-          /*  CarList item=data.get
-            mParkingId=item.gdataetParking_id();
-            mPakingTextView.setText(item.getParking_name());*/
+
         }
     }
     @Override
