@@ -11,9 +11,16 @@ dependencies {
 }
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'pshare'
+            keyPassword 'boxiang2015'
+            storeFile file('/Users/weixuewu/git/P-Share/release/pshare.keystore')
+            storePassword 'boxiang2015'
+        }
+    }
     compileSdkVersion 22
     buildToolsVersion '23.0.0'
-
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'

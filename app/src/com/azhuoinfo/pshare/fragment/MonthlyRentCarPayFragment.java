@@ -15,11 +15,14 @@ import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.view.CommonDialog;
 
+import java.util.Random;
+
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.sdk.pay.OnPayResultListener;
 import mobi.cangol.mobile.sdk.pay.PayManager;
 import mobi.cangol.mobile.sdk.pay.PlaceOrderCallback;
+import mobi.cangol.mobile.sdk.utils.MD5;
 
 /**
  * Created by Azhuo on 2015/9/22.
@@ -131,7 +134,7 @@ public class MonthlyRentCarPayFragment extends BaseContentFragment{
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    showPayMethodDialog();
+                    showPayMethodDialog("桃子","1斤桃子","0.01");
             }
         });
 
@@ -146,7 +149,8 @@ public class MonthlyRentCarPayFragment extends BaseContentFragment{
             @Override
             public String getOrderId() {
                 //自定义订单号
-                return "128978342715192";
+                Random random = new Random();
+                return MD5.getMessageDigest(String.valueOf(random.nextInt(10000)).getBytes());
             }
         }, new OnPayResultListener() {
             @Override
@@ -165,7 +169,7 @@ public class MonthlyRentCarPayFragment extends BaseContentFragment{
             }
         });
     }
-    private void showPayMethodDialog() {
+    private void showPayMethodDialog(final String subject,final String desc,final String price) {
         String[] from = this.getResources().getStringArray(R.array.pay_method);
         final CommonDialog dialog = CommonDialog.creatDialog(this.getActivity());
         dialog.setTitle("支付");
@@ -178,11 +182,12 @@ public class MonthlyRentCarPayFragment extends BaseContentFragment{
                                             int position, long id) {
                         switch (position) {
                             case 0:
-                                toPay(PayManager.PAY_TYPE_ALIPAY,"桃子","桃子一斤","0.02");
+                                toPay(PayManager.PAY_TYPE_ALIPAY,subject,desc,price);//单位是元
                                 break;
                             case 1:
                                 //交易金额默认为人民币交易，接口中参数支付金额单位为【分】，参数值不能带小数。对账单中的交易金额单位为【元】。
-                                toPay(PayManager.PAY_TYPE_WECHAT,"桃子","桃子一斤","1");
+                                int fee=Integer.parseInt(price)*100;
+                                toPay(PayManager.PAY_TYPE_WECHAT,subject,desc,""+fee);
                                 break;
                             case 2:
 

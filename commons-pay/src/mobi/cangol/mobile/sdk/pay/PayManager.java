@@ -14,7 +14,7 @@ public class PayManager {
 	private static PayManager instance;
 	private PayInterface aliPay;
 	private PayInterface webchatPay;
-    public static boolean DEBUG=false;
+    public static boolean DEBUG=true;
 	private PayManager(Context context) {
 
 	}
