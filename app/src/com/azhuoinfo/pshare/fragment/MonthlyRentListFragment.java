@@ -16,6 +16,7 @@ import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.fragment.adapter.MonthlyRentListAdapter;
+import com.azhuoinfo.pshare.view.AllListView;
 import com.azhuoinfo.pshare.view.listview.MyListView;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 public class MonthlyRentListFragment extends BaseContentFragment{
 
     //月租车列表
-    private ListView mMonthlyRentListView;
+    private AllListView mMonthlyRentListView;
     //添加月租车
     private RelativeLayout mAddMonthlyRentCarRelativeLayout;
 
@@ -47,7 +48,6 @@ public class MonthlyRentListFragment extends BaseContentFragment{
         super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_monthlyrent_list,container,false);
     }
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -63,28 +63,29 @@ public class MonthlyRentListFragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
-        mMonthlyRentListView=(ListView) view.findViewById(R.id.lv_monthlyRent_list);
-        for (int i = 0; i < 4; i++) {
-            list.add(""+i);
-        }
-        mMonthlyRentListView.setAdapter(new MonthlyRentListAdapter(this.getActivity(), list));
-        mAddMonthlyRentCarRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_add_monthlyRent);
 
     }
 
     @Override
     protected void initViews(Bundle bundle) {
-        mAddMonthlyRentCarRelativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                replaceParentFragment(AddMonthlyRentCarFragment.class, "AddMonthlyRentCarFragment", null);
-            }
-        });
+        mMonthlyRentListView=(AllListView) findViewById(R.id.lv_monthlyRent_list);
+        list.clear();
+        for (int i = 0; i < 4; i++) {
+            list.add(""+i);
+        }
+        mMonthlyRentListView.setAdapter(new MonthlyRentListAdapter(this.getActivity(), list));
+        mAddMonthlyRentCarRelativeLayout=(RelativeLayout) findViewById(R.id.rl_add_monthlyRent);
 
         mMonthlyRentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                replaceParentFragment(MonthlyRentCarPayFragment.class,"MonthlyRentCarPayFragment",null);
+                replaceParentFragment(AddMonthlyRentCarFragment.class, "AddMonthlyRentCarFragment", null);
+            }
+        });
+        mAddMonthlyRentCarRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceParentFragment(AddMonthlyRentCarFragment.class, "AddMonthlyRentCarFragment", null);
             }
         });
     }

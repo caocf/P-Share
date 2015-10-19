@@ -356,7 +356,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
             }
         });
     }
-    /*
+    /**
     * 取当前时间
     * */
     public void currentTime(){

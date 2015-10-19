@@ -1,9 +1,14 @@
 package com.azhuoinfo.pshare.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by Azhuo on 2015/10/10.
  */
-public class CarList {
+public class CarList implements Parcelable,Serializable {
     /*,
             "car_buy_date": "0000-00-00 00:00:00",
             "car_driver_image": "",
@@ -51,6 +56,36 @@ public class CarList {
         this.customer_id = customer_id;
         this.owner_id_number = owner_id_number;
     }
+
+    protected CarList(Parcel in) {
+        car_id = in.readString();
+        car_number = in.readString();
+        car_brand = in.readString();
+        car_color = in.readString();
+        car_size = in.readString();
+        car_buy_date = in.readString();
+        car_driver_image = in.readString();
+        car_image = in.readString();
+        car_issue_date = in.readString();
+        car_lasts = in.readString();
+        car_mine_image = in.readString();
+        car_use_date = in.readString();
+        car_use_type = in.readString();
+        customer_id = in.readString();
+        owner_id_number = in.readString();
+    }
+
+    public static final Creator<CarList> CREATOR = new Creator<CarList>() {
+        @Override
+        public CarList createFromParcel(Parcel in) {
+            return new CarList(in);
+        }
+
+        @Override
+        public CarList[] newArray(int size) {
+            return new CarList[size];
+        }
+    };
 
     public String getCar_id() {
         return car_id;
@@ -191,5 +226,29 @@ public class CarList {
                 ", customer_id='" + customer_id + '\'' +
                 ", owner_id_number='" + owner_id_number + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(car_id);
+        dest.writeString(car_number);
+        dest.writeString(car_brand);
+        dest.writeString(car_color);
+        dest.writeString(car_size);
+        dest.writeString(car_buy_date);
+        dest.writeString(car_driver_image);
+        dest.writeString(car_image);
+        dest.writeString(car_issue_date);
+        dest.writeString(car_lasts);
+        dest.writeString(car_mine_image);
+        dest.writeString(car_use_date);
+        dest.writeString(car_use_type);
+        dest.writeString(customer_id);
+        dest.writeString(owner_id_number);
     }
 }
