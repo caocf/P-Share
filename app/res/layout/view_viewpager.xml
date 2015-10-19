@@ -7,5 +7,6 @@
         android:layout_height="80dp"
         android:scaleType="fitXY"
         android:layout_marginLeft="@dimen/padding2"
-        android:src="@drawable/iv_integration_freeparking_ticket"/>
+        android:src="@drawable/iv_integration_freeparking_ticket"
+        android:id="@+id/" />
 </LinearLayout>

@@ -17,6 +17,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/25.
+ * 登录注册
  */
 public class LoginAndRegister extends BaseContentFragment {
 

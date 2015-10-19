@@ -66,7 +66,8 @@ import mobi.cangol.mobile.utils.StringUtils;
 
 /**
  * Created by Azhuo on 2015/9/22.
- */
+ * 个人中心模块编辑
+ * */
 public class UserCenterEditorFragment extends BaseContentFragment {
     /*
      *actionbar

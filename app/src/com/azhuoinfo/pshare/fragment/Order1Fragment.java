@@ -47,6 +47,7 @@ import mobi.cangol.mobile.sdk.pay.PlaceOrderCallback;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 订单模块中预定
  */
 public class Order1Fragment extends BaseContentFragment{
     private RelativeLayout mOrder1RelativeLayout;

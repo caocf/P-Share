@@ -18,6 +18,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 优惠积分模块
  */
 public class PointsFragment extends BaseContentFragment{
 

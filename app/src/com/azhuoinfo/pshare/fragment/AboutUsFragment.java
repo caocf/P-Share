@@ -14,6 +14,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 设置里面app的介绍
  */
 public class AboutUsFragment extends BaseContentFragment{
     private AccountVerify mAccountVerify;

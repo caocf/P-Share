@@ -19,7 +19,9 @@ import com.azhuoinfo.pshare.model.UserAuth;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.logging.Log;
-
+/**
+* 重置密码
+* */
 public class ResetPassWordFragment extends BaseContentFragment {
 
 	//定义新密码控件

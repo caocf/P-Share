@@ -22,6 +22,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 月租历史缴费列表
  */
 public class MonthlyRentHistoryListFragment extends BaseContentFragment{
 

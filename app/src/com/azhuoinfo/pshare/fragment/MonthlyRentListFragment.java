@@ -27,6 +27,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 产权月租列表
  */
 public class MonthlyRentListFragment extends BaseContentFragment{
 

@@ -26,6 +26,7 @@ import mobi.cangol.mobile.utils.StringUtils;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 我的车辆模块添加车辆具体信息
  */
 public class AddCarInformationFragment extends BaseContentFragment{
 

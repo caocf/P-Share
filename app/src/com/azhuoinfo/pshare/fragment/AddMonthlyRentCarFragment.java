@@ -32,6 +32,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 缴费模块产权/月租，添加产权月租
  */
 public class AddMonthlyRentCarFragment extends BaseContentFragment{
     //返回上一个页面
@@ -79,7 +80,6 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
         return inflater.inflate(R.layout.fragment_add_monthlyrent_car,container,false);
     }
 

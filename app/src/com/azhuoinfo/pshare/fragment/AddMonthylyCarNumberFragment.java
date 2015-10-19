@@ -26,6 +26,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 产权/月租，添加产权月租车牌选择
  */
 public class AddMonthylyCarNumberFragment extends BaseContentFragment{
     private PromptView mPromptView;

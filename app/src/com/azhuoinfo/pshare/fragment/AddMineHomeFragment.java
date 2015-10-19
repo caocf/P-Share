@@ -32,6 +32,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ *地图房子Button我的家模块添加停车场
  */
 public class AddMineHomeFragment extends BaseContentFragment {
 

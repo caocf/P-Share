@@ -31,6 +31,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 历史订单列表
  */
 public class HistoryOrderFragment extends BaseContentFragment{
 

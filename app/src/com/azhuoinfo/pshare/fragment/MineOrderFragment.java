@@ -33,6 +33,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 订单模块
  */
 public class MineOrderFragment extends BaseContentFragment{
     private TabManager mTabManager;

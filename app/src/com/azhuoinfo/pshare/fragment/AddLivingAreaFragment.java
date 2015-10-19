@@ -29,6 +29,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 订单模块小区的选择
  */
 public class AddLivingAreaFragment extends BaseContentFragment{
     //添加进入的停车地址列表

@@ -36,6 +36,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 我的车辆模块车列表
  */
 public class CarListFragment extends BaseContentFragment{
     private PromptView mPromptView;

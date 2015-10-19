@@ -21,7 +21,9 @@ import mobi.cangol.mobile.base.BaseMenuFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.logging.Log;
 import mobi.cangol.mobile.utils.StringUtils;
-
+/**
+* 侧滑menu
+* */
 public class MenuFragment extends BaseMenuFragment implements AccountVerify.OnLoginListener{
 
 	//定义设置控件

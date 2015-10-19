@@ -28,6 +28,7 @@ import mobi.cangol.mobile.service.global.GlobalData;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 我的家列表
  */
 public class MineHomeFragment extends BaseContentFragment{
     private PromptView mPromptView;

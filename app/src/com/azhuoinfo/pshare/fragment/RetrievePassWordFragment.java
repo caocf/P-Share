@@ -21,7 +21,10 @@ import com.azhuoinfo.pshare.model.UserCode;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.logging.Log;
-
+/**
+* 忘记密码
+*
+* */
 
 public class RetrievePassWordFragment extends BaseContentFragment {
 	//定义返回到上个页面的控件
