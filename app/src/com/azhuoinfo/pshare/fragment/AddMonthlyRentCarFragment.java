@@ -163,7 +163,6 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment{
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
         if(resultCode==RESULT_OK){
-
         }
     }
     @Override

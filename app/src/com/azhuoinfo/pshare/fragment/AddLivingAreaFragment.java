@@ -31,7 +31,6 @@ import mobi.cangol.mobile.base.FragmentInfo;
  * Created by Azhuo on 2015/9/22.
  */
 public class AddLivingAreaFragment extends BaseContentFragment{
-
     //添加进入的停车地址列表
     private ListView mListView;
     private PromptView mPromptView;
@@ -127,14 +126,12 @@ public class AddLivingAreaFragment extends BaseContentFragment{
                 if (isEnable())
                     mPromptView.showLoading();
             }
-
             @Override
             public void onSuccess(boolean page, List<Parking> list) {
                   if (isEnable()) {
                     updateViews(list);
                 }
             }
-
             @Override
             public void onFailure(String code, String message) {
                 if (isEnable())
