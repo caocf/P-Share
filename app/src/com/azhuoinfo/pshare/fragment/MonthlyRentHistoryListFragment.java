@@ -5,13 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.azhuoinfo.pshare.AccountVerify;
-import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.fragment.adapter.MonthlyRentHistoryListAdapter;
 
@@ -71,7 +67,7 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
         mMonthlyRentHistoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                replaceParentFragment(MonthlyRentCarFinishPayFragment.class,"MonthlyRentCarFinishPayFragment",null);
+                replaceParentFragment(MonthlyRentCarfinishPayFragment.class,"MonthlyRentCarFinishPayFragment",null);
             }
         });
     }

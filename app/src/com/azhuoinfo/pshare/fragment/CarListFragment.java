@@ -169,7 +169,7 @@ public class CarListFragment extends BaseContentFragment{
             @Override
             public void onFailure(String code, String message) {
                 mPromptView.showContent();
-                showToast(message);
+                //showToast(message);
             }
         });
     }

@@ -2,6 +2,10 @@ package com.azhuoinfo.pshare.fragment;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +22,12 @@ import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.fragment.adapter.ParkingDetailsAdapter;
+import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.Parking;
+import com.azhuoinfo.pshare.model.UnfinishedOrderInfo;
 import com.azhuoinfo.pshare.view.PromptView;
 
 import java.util.List;
-
 import mobi.cangol.mobile.actionbar.ActionMenu;
 import mobi.cangol.mobile.actionbar.ActionMenuItem;
 import mobi.cangol.mobile.actionbar.view.SearchView;
@@ -206,7 +211,7 @@ public class ParkingDetailsFragment extends BaseContentFragment implements AMapL
         //在定位结束后，在合适的生命周期调用destroy()方法
         //其中如果间隔时间为-1，则定位只定一次
         mLocationManagerProxy.requestLocationData(
-                LocationProviderProxy.AMapNetwork, 60*1000, 15, this);
+                LocationProviderProxy.AMapNetwork, 60 * 1000, 15, this);
         mLocationManagerProxy.setGpsEnable(true);
     }
     @Override
@@ -248,4 +253,5 @@ public class ParkingDetailsFragment extends BaseContentFragment implements AMapL
         super.onDestroyView();
         mLocationManagerProxy.destroy();
     }
+
 }
