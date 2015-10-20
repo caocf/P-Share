@@ -111,6 +111,7 @@ public  class ApiClient {
 				Class<?> c=getGenericClass(onDataLoader.getClass().getGenericInterfaces()[0]);
 			    if(DEBUG)Log.d("Parser class:"+c);
 				ApiResult<T> result=(ApiResult<T>) ApiResult.parserObject(c, response,root);
+                if(onDataLoader!=null)onDataLoader.setApiResult(result);
 				if(result.isSuccess()){
 					if(result.getObject()!=null){
 						if(onDataLoader!=null)onDataLoader.onSuccess(result.getPage(),result.getObject());
