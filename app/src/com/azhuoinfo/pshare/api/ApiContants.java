@@ -243,6 +243,19 @@ customer_age*/
         params.put("car_id", car_id );
         return params;
     }
+
+    public static String API_CUSTOMER_DELETEPARKING="/customer/deleteParking";
+    /**
+     * 未实现
+     *，parking_id
+     * @return
+     */
+    public HashMap<String, String> deleteParking(String customerId,String parking_id){
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("customer_id", customerId );
+        params.put("parking_id", parking_id );
+        return params;
+    }
 	public static String API_CUSTOMER_SENDSMSCODE="/customer/sendSmsCode";
 	/**
 	 *customer_id，car_brand，car_number，car_color，car_size，owner_id_number（未确定是否需

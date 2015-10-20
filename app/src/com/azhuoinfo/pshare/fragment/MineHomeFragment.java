@@ -125,7 +125,7 @@ public class MineHomeFragment extends BaseContentFragment{
             @Override
             public void onClick(View view) {
                 Parking item = mDataAdapter.get(position);
-                deleteCar(item.getParking_id());
+                deletePark(item.getParking_id());
                 mDataAdapter.remove(position);
             }
 
@@ -167,11 +167,11 @@ public class MineHomeFragment extends BaseContentFragment{
             }
         });
     }
-    public void deleteCar(String parking_id){
+    public void deletePark(String parking_id){
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
-        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_DELETECAR));
-        apiTask.setParams(ApiContants.instance(getActivity()).deleteCar(mAccountVerify.getCustomer_Id(), parking_id));
+        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_DELETEPARKING));
+        apiTask.setParams(ApiContants.instance(getActivity()).deleteParking(mAccountVerify.getCustomer_Id(), parking_id));
         apiTask.execute(new OnDataLoader<String>() {
             public void onStart() {
             }
