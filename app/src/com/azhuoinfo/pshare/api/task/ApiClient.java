@@ -108,7 +108,7 @@ public  class ApiClient {
 			public void onSuccess(JSONObject response) {
 				super.onSuccess(response);
 				if(DEBUG)Log.d("Success response:"+response);
-				Class<?> c=getGenericClass(onDataLoader.getClass().getGenericInterfaces()[0]);
+				Class<?> c=getGenericClass(onDataLoader.getClass().getGenericSuperclass());
 			    if(DEBUG)Log.d("Parser class:"+c);
 				ApiResult<T> result=(ApiResult<T>) ApiResult.parserObject(c, response,root);
                 if(onDataLoader!=null)onDataLoader.setApiResult(result);
