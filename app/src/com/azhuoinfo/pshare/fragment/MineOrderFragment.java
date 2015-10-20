@@ -33,6 +33,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 订单模块
  */
 public class MineOrderFragment extends BaseContentFragment{
     private TabManager mTabManager;
@@ -109,16 +110,6 @@ public class MineOrderFragment extends BaseContentFragment{
     public boolean isCleanStack() {
         return true;
     }
-   /* public void initTable(){
-        if(listSize==0){
-            mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator("预/订"), Order1Fragment.class, new Bundle());
-        }else if(listSize!=0&&order_state.equals("1")){
-            mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator("预/订"), Order2Fragment.class, new Bundle());
-        }else if(listSize!=0&&order_state.equals("2")){
-            mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator("预/订"), Order3Fragment.class, new Bundle());
-        }
-        mTabManager.addTab(mTabHost.newTabSpec("ItemFragment2").setIndicator("历史订单"), HistoryOrderFragment.class, new Bundle());
-    }*/
     public void postUnfinishedOrder(String customerId){
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");

@@ -31,6 +31,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 首页右边：周边车场列表
  */
 public class ParkingDetailsFragment extends BaseContentFragment implements AMapLocationListener {
 

@@ -26,6 +26,7 @@ import mobi.cangol.mobile.sdk.utils.MD5;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 产权/月租去支付
  */
 public class MonthlyRentCarPayFragment extends BaseContentFragment{
     //返回上一个页面

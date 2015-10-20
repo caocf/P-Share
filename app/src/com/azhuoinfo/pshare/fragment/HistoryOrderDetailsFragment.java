@@ -32,6 +32,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 历史订单详情页
  */
 public class HistoryOrderDetailsFragment extends BaseContentFragment{
 
@@ -82,6 +83,7 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
     private String order_actual_begin_start;
     private String order_actual_end_stop;
     private String orderState;
+    private String order_path;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,7 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
         parkerName=orderList.getParker_name();
         parkingName=orderList.getParking_name();
         carNumber=orderList.getCar_number();
+        order_path=orderList.getOrder_path();
         order_actual_begin_start=orderList.getOrder_actual_begin_start();
         order_actual_end_stop=orderList.getOrder_actual_end_stop();
 
@@ -159,8 +162,13 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
         mList = new ArrayList<Map<String, Object>>();
         urls = new ArrayList<String>();
         show = new ArrayList<String>();
-        saveList();
-        showImage(show);
+        if(!order_path.equals("")){
+            saveList();
+            showImage(show);
+        }else{
+
+        }
+
         /**
          * 图册左移监听
          */
@@ -198,10 +206,15 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
         String parking_path=orderList.getParking_path();
         if(order_path!=null){
             String[] orderPaths = order_path.split(",");
-            Log.e("orderPaths",orderPaths.length+"");
-            for (int i = 0; i < orderPaths.length ; i++) {
-                urls.add(orderPaths[i]);
+            Log.e("orderPaths", orderPaths.length + "");
+            for (int i = 0; i < (orderPaths.length+1) ; i++) {
+                if(i==orderPaths.length){
+                    urls.add(orderPaths[0]);
+                }else{
+                    urls.add(orderPaths[i]);
+                }
                 Log.e("path", orderPaths[orderPaths.length-1]);
+                Log.e("orderPaths", orderPaths+"");
             }
         }
         if(parking_path!=null){
@@ -210,8 +223,11 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
                 urls.add(parking_path);
             }
         }
-        for (int j = 0; j < 3; j++) {
-            show.add(urls.get(j));
+        Log.e("order_path",order_path+"");
+        if(order_path!=null){
+            for (int j = 0; j < 3; j++) {
+                show.add(urls.get(j));
+            }
         }
         Log.d("saveList",urls.size()+"");
     }

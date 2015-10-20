@@ -48,6 +48,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 周边车场详情
  */
 public class ParkingDetailsItemFragment extends BaseContentFragment{
     //名称
@@ -356,7 +357,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
             }
         });
     }
-    /*
+    /**
     * 取当前时间
     * */
     public void currentTime(){

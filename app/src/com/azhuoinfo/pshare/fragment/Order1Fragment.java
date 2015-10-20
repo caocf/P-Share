@@ -1,12 +1,10 @@
 package com.azhuoinfo.pshare.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,18 +26,18 @@ import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.fragment.adapter.ImageAdapter;
 import com.azhuoinfo.pshare.model.CustomerInfo;
-import com.azhuoinfo.pshare.model.Parking;
 import com.azhuoinfo.pshare.model.UnfinishedOrderInfo;
 import com.azhuoinfo.pshare.model.UserAuth;
 import com.azhuoinfo.pshare.view.CommonDialog;
-import com.azhuoinfo.pshare.view.listview.BaseAdapter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
@@ -49,6 +47,7 @@ import mobi.cangol.mobile.sdk.pay.PlaceOrderCallback;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 订单模块中预定
  */
 public class Order1Fragment extends BaseContentFragment{
     private RelativeLayout mOrder1RelativeLayout;
@@ -113,8 +112,16 @@ public class Order1Fragment extends BaseContentFragment{
     private String orderPath;
     private String parkingName;
     private  String parkingPath;
+    private long diff;
     private List<String> list;
     private Timer timer;
+    private Calendar calendar;
+    private int year,monthOfYear,dayOfMonth,hourOfDay,minute;
+    private Long hour,min,sec;
+    private String currentTime;
+    private String orderActualBegin;
+    private String LgTime;
+    private Handler handler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -243,6 +250,7 @@ public class Order1Fragment extends BaseContentFragment{
                             carNumber = unfinishedOrderInfo.getCar_number();
                             orderPath = unfinishedOrderInfo.getOrder_path();
                             parkingPath=unfinishedOrderInfo.getParking_path();
+                            orderActualBegin=unfinishedOrderInfo.getOrder_actual_begin_start();
                             Log.e(TAG, order_state);
                         }
                     }
@@ -293,9 +301,10 @@ public class Order1Fragment extends BaseContentFragment{
             public void onStart() {
 
             }
+
             @Override
             public void onSuccess(boolean page, UserAuth userAuth) {
-               mFinishButton.setVisibility(View.VISIBLE);
+                mFinishButton.setVisibility(View.VISIBLE);
                 mGetCarButton.setVisibility(View.GONE);
                 mFinishButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -336,9 +345,9 @@ public class Order1Fragment extends BaseContentFragment{
             mParkerIDTextView.setText(parakerId + "");
             mParkerAreaTextView.setText(parkingName + "");
             mParkerMobileTextView.setText(parkerMobile+"");
-            mParkerLevelTextView.setText(parkerLevel+"");
+            mParkerLevelTextView.setText(parkerLevel + "");
             mAppointmentTimeTextView.setText(orderPlanBegin + "");
-            Log.e("orderPlanBegin",orderPlanBegin+"");
+            Log.e("orderPlanBegin", orderPlanBegin + "");
             mParkerMobileRelativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -366,13 +375,14 @@ public class Order1Fragment extends BaseContentFragment{
         mAppointmentTimeTextView = (TextView) findViewById(R.id.tv_appointment_time4);
         mAppointmentMakeCarTimeTextView = (TextView) findViewById(R.id.tv_appointment_make_car_time4);
         mCarNumberTextView = (TextView) findViewById(R.id.tv_car_number4);
+        mCountdownTimeTextView=(TextView) findViewById(R.id.tv_countdown_time4);
         mImageGridView = (GridView) findViewById(R.id.gridview_photos4);
         mFinishButton=(Button) findViewById(R.id.button_finish_order_pay4);
         mGetCarButton=(Button) findViewById(R.id.button_to_make_car4);
         mLeft = (ImageView) findViewById(R.id.iv_left);
         mRight = (ImageView) findViewById(R.id.iv_right);
-        if (order_state.equals("3") || order_state.equals("4")) {
-            Log.e(TAG,parakerId+":"+parkerName+":"+parakerId+":"+parkerMobile+":"+parkerLevel+":"+orderPlanBegin+":"+orderPlanEnd);
+        if (order_state.equals("3") || order_state.equals("4")){
+            Log.e(TAG, parakerId + ":" + parkerName + ":" + parakerId + ":" + parkerMobile + ":" + parkerLevel + ":" + orderPlanBegin + ":" + orderPlanEnd);
             mParkerIDTextView.setText(parakerId + "");
             mParkerAreaTextView.setText(parkingName + "");
             mParkerMobileTextView.setText(parkerMobile + "");
@@ -388,6 +398,13 @@ public class Order1Fragment extends BaseContentFragment{
                     startActivity(intent);
                 }
             });
+           // mCountdownTimeTextView.starTimeByStopTimeInFuture();
+            Date date = new Date();
+            SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//24小时制
+            LgTime = sdformat.format(date);
+           // new Thread(new MyThread()).start();
+           dateDiff(orderActualBegin, LgTime, "yyyy-MM-dd HH:mm:ss");
+           // runnable.run();
             mList = new ArrayList<Map<String, Object>>();
             urls = new ArrayList<String>();
             show = new ArrayList<String>();
@@ -528,5 +545,48 @@ public class Order1Fragment extends BaseContentFragment{
                 });
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
+    }
+    /**
+    * 时间计时
+    * @param orderActualBegin
+     * @param currentTime
+     * @param format
+    * */
+    public void dateDiff(String orderActualBegin, String currentTime, String format) {
+        //按照传入的格式生成一个simpledateformate对象
+        SimpleDateFormat sd = new SimpleDateFormat(format);
+        try {
+            //获得两个时间的毫秒时间差异
+            diff = sd.parse(currentTime).getTime() - sd.parse(orderActualBegin).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        handler = new Handler();
+        Runnable runnable = new Runnable() {
+            long nh = 1000 * 60 * 60;//一小时的毫秒数
+            long nm = 1000 * 60;//一分钟的毫秒数
+            long ns = 1000;//一秒钟的毫秒数
+            @Override
+            public void run() {
+                diff++;
+                hour = diff / nh;//计算差多少小时
+                min = diff %  nh / nm;//计算差多少分钟
+                sec = diff % nh % nm / ns;//计算差多少秒
+                Log.e("sec",sec+"");
+                Log.e("diff",diff+"");
+                String str=hour+":"+min+":"+sec;
+                Log.e("str2",str);
+                mCountdownTimeTextView.setText(diff+"");
+                Log.e("str",str);
+                handler.postDelayed(this, 1000);
+            }
+        };
+        runnable.run();
+    }
+
+    @Override
+    public void onDestroy() {
+        //handler.removeCallbacks();
+        super.onDestroy();
     }
 }

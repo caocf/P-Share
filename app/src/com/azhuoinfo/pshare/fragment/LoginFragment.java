@@ -29,7 +29,9 @@ import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.service.AppService;
 import mobi.cangol.mobile.service.global.GlobalData;
-
+/**
+* 登录
+* */
 public class LoginFragment extends BaseContentFragment {
 
 	//定义填写手机号码的控件

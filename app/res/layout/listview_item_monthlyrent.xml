@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="@dimen/padding1"
-    android:gravity="center_vertical"
+    android:layout_gravity="center_vertical"
+	android:background="@drawable/common_listview_item_selector"
     android:orientation="vertical" >
-    <RelativeLayout 
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content">
         <LinearLayout
 	        android:id="@+id/ll_car" 
 	        android:layout_height="wrap_content"
@@ -17,7 +15,7 @@
 	        <ImageView 
 	            android:layout_height="wrap_content"
 	            android:layout_width="wrap_content"
-	            android:src="@drawable/blue_car"/>
+	            android:src="@drawable/car_list"/>
 	        <TextView
 	            android:id="@+id/tv_car_number" 
 	            android:layout_height="wrap_content"
@@ -46,13 +44,12 @@
 	        android:text="2015/9/10-2015/10/1"/>
 	    <Button
 	        android:id="@+id/button_pay" 
-	        android:layout_height="wrap_content"
+	        android:layout_height="25dp"
 	        android:layout_width="wrap_content"
 	        android:layout_alignParentRight="true"
 	        android:layout_marginRight="@dimen/padding2"
 	        android:layout_centerVertical="true"
-	        android:background="@drawable/to_pay"
+	        android:background="@color/actionbar_background"
 	        android:textColor="@color/text_white"
 	        android:text="去支付"/>
-    </RelativeLayout>
 </RelativeLayout>

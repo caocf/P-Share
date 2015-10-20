@@ -208,13 +208,13 @@
 	             android:layout_width="wrap_content"
 	             android:textSize="@dimen/text_size3"
 	             android:text="@string/tv_order_takeCar_remainingtime"/>
-	         <TextView
-	             android:id="@+id/tv_countdown_time4"
-	             android:layout_height="wrap_content"
-	             android:layout_width="wrap_content"
-	             android:textSize="@dimen/text_size3"
-	             android:textColor="@color/text_remaining_time"
-	             android:text="@string/text_order_takeCar_remainingtime"/>
+			 <TextView
+				 android:id="@+id/tv_countdown_time4"
+				 android:layout_height="wrap_content"
+				 android:layout_width="wrap_content"
+				 android:textSize="@dimen/text_size3"
+				 android:textColor="@color/text_remaining_time"
+				 android:text="@string/text_order_takeCar_remainingtime"/>
 	     </LinearLayout>
 	     <!--  车牌号-->
 	     <LinearLayout

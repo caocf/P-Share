@@ -1,16 +1,11 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.azhuoinfo.pshare.AccountVerify;
@@ -20,15 +15,10 @@ import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.fragment.adapter.CarListAdapter;
-import com.azhuoinfo.pshare.fragment.adapter.ParkingDetailsAdapter;
 import com.azhuoinfo.pshare.model.CarList;
-import com.azhuoinfo.pshare.model.CustomerInfo;
-import com.azhuoinfo.pshare.model.Parking;
 import com.azhuoinfo.pshare.view.CommonDialog;
 import com.azhuoinfo.pshare.view.PromptView;
-import com.azhuoinfo.pshare.view.listview.MyListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
@@ -36,9 +26,9 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
- * 我的车辆模块车列表
+ * 产权/月租，添加产权月租车牌选择
  */
-public class CarListFragment extends BaseContentFragment{
+public class AddMonthylyCarNumberFragment extends BaseContentFragment{
     private PromptView mPromptView;
     private ListView mListView;
     private CarListAdapter mDataAdapter;
@@ -78,27 +68,19 @@ public class CarListFragment extends BaseContentFragment{
     }
 
     @Override
-    protected void initViews(Bundle bundle) {
+    protected void initViews(final Bundle bundle) {
         this.setTitle(R.string.mine_carList);
+        mAddCarTextView.setVisibility(View.GONE);
         mDataAdapter=new CarListAdapter(this.getActivity());
         mListView.setAdapter(mDataAdapter);
-        mAddCarTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setContentFragment(AddCarInformationFragment.class, "AddCarInformationFragment", null, ModuleMenuIDS.MODULE_HOME);
-            }
-        });
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
-        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                showDeleteDialog(position);
-                return false;
+                CarList item=(CarList)parent.getItemAtPosition(position);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("carList", item);
+                setResult(RESULT_OK, bundle);
+                popBackStack();
             }
         });
     }
@@ -109,28 +91,6 @@ public class CarListFragment extends BaseContentFragment{
         else
             mAccountVerify.showLoginDialog(this);
     }
-    public void showDeleteDialog(final int position){
-        CommonDialog dialog = CommonDialog.creatDialog(getActivity());
-        //dialog.setTitle(R.string.dialog_delete_title);
-        dialog.setMessage(R.string.dialog_delete_content);
-        dialog.setLeftButtonInfo(getString(R.string.common_dialog_confirm), new CommonDialog.OnButtonClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                CarList item= mDataAdapter.get(position);
-                deleteCar(item.getCar_id());
-                mDataAdapter.remove(position);
-            }
-
-        });
-        dialog.setRightButtonInfo(getString(R.string.common_dialog_cancel), new CommonDialog.OnButtonClickListener() {
-            @Override
-            public void onClick(View view) {
-                // do nothing
-            }
-        });
-        dialog.show();
-    }
     @Override
     protected FragmentInfo getNavigtionUpToFragment() {
         return null;
@@ -138,7 +98,7 @@ public class CarListFragment extends BaseContentFragment{
 
     @Override
     public boolean isCleanStack() {
-        return true;
+        return false;
     }
     protected void updateViews(List<CarList> list) {
         if(list!=null&&list.size()>0){
@@ -170,28 +130,6 @@ public class CarListFragment extends BaseContentFragment{
             public void onFailure(String code, String message) {
                 mPromptView.showContent();
                 showToast(message);
-            }
-        });
-    }
-    public void deleteCar(String car_id){
-        ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
-        apiTask.setMethod("GET");
-        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_DELETECAR));
-        apiTask.setParams(ApiContants.instance(getActivity()).deleteCar(mAccountVerify.getCustomer_Id(), car_id));
-        apiTask.execute(new OnDataLoader<String>() {
-            public void onStart() {
-            }
-
-            @Override
-            public void onSuccess(boolean page, String result) {
-                if (isEnable()) {
-                    showToast("删除成功！");
-                }
-            }
-
-            @Override
-            public void onFailure(String code, String message) {
-                if (isEnable())showToast(message);
             }
         });
     }

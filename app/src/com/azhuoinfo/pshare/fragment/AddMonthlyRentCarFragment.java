@@ -20,6 +20,10 @@ import android.widget.TextView;
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.fragment.adapter.MyPagerAdapter;
+import com.azhuoinfo.pshare.model.CarList;
+import com.azhuoinfo.pshare.model.Parking;
+import com.azhuoinfo.pshare.view.AreaDialog;
+import com.azhuoinfo.pshare.view.CountryDialog;
 
 import java.util.ArrayList;
 
@@ -28,6 +32,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 缴费模块产权/月租，添加产权月租
  */
 public class AddMonthlyRentCarFragment extends BaseContentFragment{
     //返回上一个页面
@@ -64,18 +69,17 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment{
     private TextView mCarNumberTextView;
     //确定添加
     private Button mConfirmButton;
-
     private AccountVerify mAccountVerify;
+    private String carNumber;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAccountVerify = AccountVerify.getInstance(getActivity());
-    }
 
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
         return inflater.inflate(R.layout.fragment_add_monthlyrent_car,container,false);
     }
 
@@ -133,9 +137,34 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment{
 
     @Override
     protected void initData(Bundle bundle) {
+        mCPCRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CountryDialog dialog = CountryDialog.creatDialog(getActivity());
+                dialog.setOnSelectListener(new CountryDialog.OnSelectListener() {
+                    @Override
+                    public void onSelect(String province, String city, String district, String zipcode) {
+                        mCountryTextView.setText(province);
+                        mProvinceTextView.setText(city);
+                        mCityTextView.setText(district);
+                    }
+                });
 
+            }
+        });
+        mCarNumberRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(AddMonthylyCarNumberFragment.class, "AddMonthylyCarNumberFragment", null);
+            }
+        });
     }
-
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+        }
+    }
     @Override
     protected FragmentInfo getNavigtionUpToFragment() {
         return null;

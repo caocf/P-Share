@@ -20,7 +20,9 @@ import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.BaseMenuFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.service.global.GlobalData;
-
+	/**
+	* 设置中意见反馈
+	* */
 public class SuggestionFeedbackFragment extends BaseContentFragment {
 
 	//反馈意见内容信息
