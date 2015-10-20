@@ -106,7 +106,7 @@ public class ApiResult<T> implements Serializable {
         try {
             result.setSource(json.toString());
             result.setSuccess(SUCCESS_CODE.equals(JsonUtils.getString(json, CODE)));
-            //result.setTimestamp(JsonUtils.getString(json,"timestamp"));
+            result.setTimestamp(JsonUtils.getString(json,"timestamp"));
             if (result.isSuccess() && c != null) {
                 Object resultObject = JsonUtils.getObject(json, DATA);
                 if (resultObject != null&&resultObject!=JSONObject.NULL) {
