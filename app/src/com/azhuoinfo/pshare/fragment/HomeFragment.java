@@ -455,28 +455,28 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 markerOption.position(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())));
                 markerOption.title(parking.getParking_name()).snippet(parking.getParking_address());
                 markerOption.draggable(true);
-                if(parking.getParking_can_use()>0){
-                    int l=parking.getParking_can_use()>9?2:1;
-                    Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.empty),
-                            l==2?9* DeviceInfo.getDensity(getActivity()):11.5f* DeviceInfo.getDensity(getActivity()),
-                            18* DeviceInfo.getDensity(getActivity()),
-                            ""+parking.getParking_can_use(),
-                            getResources().getColor(R.color.menu_text_pressed),
-                            (int) (12* DeviceInfo.getDensity(getActivity())),
-                            100);
-                    markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
-                }else{
-                    Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.full),
-                            11.5f* DeviceInfo.getDensity(getActivity()),
-                            18* DeviceInfo.getDensity(getActivity()),
-                            ""+parking.getParking_can_use(),
-                            getResources().getColor(R.color.text_light_gray),
-                            (int) (12* DeviceInfo.getDensity(getActivity())),
-                            100);
-                    markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
-                }
+//                if(parking.getParking_can_use()>0){
+//                    int l=parking.getParking_can_use()>9?2:1;
+//                    Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.empty),
+//                            l==2?14.5f* DeviceInfo.getDensity(getActivity()):16f* DeviceInfo.getDensity(getActivity()),
+//                            18* DeviceInfo.getDensity(getActivity()),
+//                            ""+parking.getParking_can_use(),
+//                            getResources().getColor(R.color.menu_text_pressed),
+//                            (int) (12* DeviceInfo.getDensity(getActivity())),
+//                            100);
+//                    markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
+//                }else{
+//                    Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.full),
+//                            16f* DeviceInfo.getDensity(getActivity()),
+//                            18* DeviceInfo.getDensity(getActivity()),
+//                            ""+parking.getParking_can_use(),
+//                            getResources().getColor(R.color.text_light_gray),
+//                            (int) (12* DeviceInfo.getDensity(getActivity())),
+//                            100);
+//                    markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
+//                }
 
-                //markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_map_image));
+                markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_p));
                 marker=mAmap.addMarker(markerOption);
                 marker.setObject(parking);
                 if(i==0)
