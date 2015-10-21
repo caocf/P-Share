@@ -44,6 +44,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
@@ -161,49 +162,63 @@ public class Order1Fragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
-        /*mOrder1RelativeLayout=(RelativeLayout) view.findViewById(R.id.fragment_order1);
-        mOrder2RelativeLayout=(RelativeLayout) view.findViewById(R.id.fragment_order2);
-        mOrder3ScrollView=(ScrollView) view.findViewById(R.id.fragment_order3);
-        mOrder4ScrollView=(ScrollView) view.findViewById(R.id.fragment_order4);
-        mToPayRelativeLayout=(RelativeLayout) view.findViewById(R.id.listitem_to_pay);*/
-        mOrder1RelativeLayout=(RelativeLayout) view.findViewById(R.id.fg_order1);
-        mOrder2RelativeLayout=(RelativeLayout) view.findViewById(R.id.fg_order2);
-        mOrder3ScrollView=(ScrollView) view.findViewById(R.id.fg_order3);
-        mOrder4ScrollView=(ScrollView) view.findViewById(R.id.fg_order4);
-        mToPayRelativeLayout=(RelativeLayout) view.findViewById(R.id.fg_list_menu_pay_pager);
     }
 
     @Override
     protected void initViews(Bundle bundle) {
-/*        mOrder1RelativeLayout=(RelativeLayout) findViewById(R.id.fragment_order1);
-        mOrder2RelativeLayout=(RelativeLayout) findViewById(R.id.fragment_order2);
-        mOrder3ScrollView=(ScrollView) findViewById(R.id.fragment_order3);
-        mOrder4ScrollView=(ScrollView) findViewById(R.id.fragment_order4);
-        mToPayRelativeLayout=(RelativeLayout) findViewById(R.id.listitem_to_pay);*/
 
-        /*mOrder1RelativeLayout=(RelativeLayout) findViewById(R.id.fg_order1);
+        mOrder1RelativeLayout=(RelativeLayout) findViewById(R.id.fg_order1);
         mOrder2RelativeLayout=(RelativeLayout) findViewById(R.id.fg_order2);
         mOrder3ScrollView=(ScrollView) findViewById(R.id.fg_order3);
         mOrder4ScrollView=(ScrollView) findViewById(R.id.fg_order4);
-        mToPayRelativeLayout=(RelativeLayout) findViewById(R.id.fg_list_menu_pay_pager);*/
-
-
-
+        mToPayRelativeLayout=(RelativeLayout) findViewById(R.id.fg_list_menu_pay_pager);
     }
 
+    LoadingDialog loadingDialog;
     @Override
     protected void initData(Bundle bundle) {
        /* handler.postDelayed(runnable, 2000);//每两秒执行一次runnable.*/
         //postUnfinishedOrder(customerId);
         //initOrderState();
+        loadingDialog = LoadingDialog.show(getActivity());
+        updateHandler = new Handler(new Handler.Callback() {
+            String last_order_state = "";
+            @Override
+            public boolean handleMessage(Message msg) {
+                if (order_state == null){
+                    initOrderState();
+                }else {
+                    Log.d("updateHandler", "receive  " + last_order_state + " " + order_state);
+                    if (!last_order_state.equals(order_state)) {
+                        Log.d("updateHandler", "update  " + last_order_state + " " + order_state);
+                        initOrderState();
+                        Log.d("order_string", "last_order " + last_order_state);
+                        Log.d("order_string", "order " + order_state);
+                        last_order_state = new String(order_state);
+                        if (order_state.equals("3") || order_state.equals("4")) {
+                            dateDiff(orderActualBegin, (String) msg.obj, "yyyy-MM-dd HH:mm:ss");
+                        }
+                    }
+                }
+                if (loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
+                return false;
+            }
+        });
         PollingUnfinishedOrder(customerId);
-
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        //pollingHttpClient.cancelRequests(getActivity(), true);
+    public void onPause() {
+        super.onPause();
+        if (pollingHttpClient!=null) {
+            pollingHttpClient.cancelRequests(getActivity(), true);
+        }
+        if (timer2!=null) {
+            timer2.cancel();
+            timer2.purge();
+        }
     }
 
     @Override
@@ -266,6 +281,8 @@ public class Order1Fragment extends BaseContentFragment{
         }
     }
 
+    Handler updateHandler;
+
     PollingHttpClient pollingHttpClient;
     public void PollingUnfinishedOrder(final String customerId){
         pollingHttpClient = new PollingHttpClient();
@@ -277,9 +294,12 @@ public class Order1Fragment extends BaseContentFragment{
                 pollingUnfinishedOrderHandler,
                 18,10000);
     }
-
-    String last_order_state;
     class PollingUnfinishedOrderHandler extends PollingResponseHandler{
+
+        @Override
+        public void onStart() {
+            Log.d("ResponseHandler", "onStart");
+        }
 
         @Override
         public boolean isFailResponse(String content) {
@@ -307,29 +327,19 @@ public class Order1Fragment extends BaseContentFragment{
                             orderPath = unfinishedOrderInfo.getOrder_path();
                             parkingPath=unfinishedOrderInfo.getParking_path();
                             orderActualBegin=unfinishedOrderInfo.getOrder_actual_begin_start();
-                            Log.e(TAG,"order_state is " + order_state);
-                            if (order_state.equals("3") || order_state.equals("4")) {
-                                //dateDiff(orderActualBegin, this.getApiResult().getTimestamp(), "yyyy-MM-dd HH:mm:ss");
-                            }
+                            Log.e(TAG, "order_state is " + order_state);
                         }
                     }
-                    initOrderState();
 
-                    /*if (!order_state.equals(last_order_state)){
-                            initOrderState();
-                            last_order_state = new String(order_state);
-                        }*/
+                    Message message = updateHandler.obtainMessage(1,apiResult.getTimestamp());
+                    updateHandler.sendMessage(message);
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             return true;
-        }
-
-        @Override
-        public void onStart() {
-            Log.d("ResponseHandler", "onStart");
         }
 
         @Override
@@ -340,81 +350,11 @@ public class Order1Fragment extends BaseContentFragment{
         @Override
         public void onSuccess(int statusCode, String content) {
             Log.d("ResponseHandler", "statusCode=" + statusCode + " content:" + content);
-            /*if (unfinishedOrderInfos!=null) {
-                if (listSize != 0) {*/
-
-
-                    //initOrderState();
-                //}
-            //}
-
-            /*try {
-                ApiResult apiResult = ApiResult.parserObject(UnfinishedOrderInfo.class, new JSONObject(content), "orderInfo");
-                List<UnfinishedOrderInfo> unfinishedOrderInfos = apiResult.getList();
-                if(isEnable()){
-                    Log.e(TAG, unfinishedOrderInfos.size() + "");
-                    listSize = unfinishedOrderInfos.size();
-                    if (listSize != 0) {
-                        for (int i = 0; i < unfinishedOrderInfos.size(); i++) {
-                            UnfinishedOrderInfo unfinishedOrderInfo = unfinishedOrderInfos.get(i);
-                            order_state = unfinishedOrderInfo.getOrder_state();
-                            orderId = unfinishedOrderInfo.getOrder_id();
-                            parakerId = unfinishedOrderInfo.getParker_id();
-                            parkerLevel = unfinishedOrderInfo.getParker_level();
-                            parkerMobile = unfinishedOrderInfo.getParker_mobile();
-                            parkerName = unfinishedOrderInfo.getParker_name();
-                            parkingName=unfinishedOrderInfo.getParking_name();
-                            orderPlanBegin = unfinishedOrderInfo.getOrder_plan_begin();
-                            orderPlanEnd = unfinishedOrderInfo.getOrder_plan_end();
-                            carNumber = unfinishedOrderInfo.getCar_number();
-                            orderPath = unfinishedOrderInfo.getOrder_path();
-                            parkingPath=unfinishedOrderInfo.getParking_path();
-                            orderActualBegin=unfinishedOrderInfo.getOrder_actual_begin_start();
-                            Log.e(TAG, order_state);
-                        }
-                    }
-                    initOrderState();
-                    pollingHttpClient.cancelRequests(getActivity(),true);
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }*/
-
-
-
-/*            List<UnfinishedOrderInfo> unfinishedOrderInfos;
-            if(isEnable()){
-                Log.e(TAG, unfinishedOrderInfos.size() + "");
-                listSize = unfinishedOrderInfos.size();
-                if (listSize != 0) {
-                    for (int i = 0; i < unfinishedOrderInfos.size(); i++) {
-                        UnfinishedOrderInfo unfinishedOrderInfo = unfinishedOrderInfos.get(i);
-                        order_state = unfinishedOrderInfo.getOrder_state();
-                        orderId = unfinishedOrderInfo.getOrder_id();
-                        parakerId = unfinishedOrderInfo.getParker_id();
-                        parkerLevel = unfinishedOrderInfo.getParker_level();
-                        parkerMobile = unfinishedOrderInfo.getParker_mobile();
-                        parkerName = unfinishedOrderInfo.getParker_name();
-                        parkingName=unfinishedOrderInfo.getParking_name();
-                        orderPlanBegin = unfinishedOrderInfo.getOrder_plan_begin();
-                        orderPlanEnd = unfinishedOrderInfo.getOrder_plan_end();
-                        carNumber = unfinishedOrderInfo.getCar_number();
-                        orderPath = unfinishedOrderInfo.getOrder_path();
-                        parkingPath=unfinishedOrderInfo.getParking_path();
-                        orderActualBegin=unfinishedOrderInfo.getOrder_actual_begin_start();
-                        Log.e(TAG, order_state);
-                    }
-                }
-                initOrderState();
-            }*/
         }
 
         @Override
         public void onFailure(Throwable error, String content) {
             Log.d("ResponseHandler", "error=" + error + " content:" + content);
-            //initOrderState();
-            //unfinishedOrderInfos = null;
         }
     }
 
@@ -757,7 +697,12 @@ public class Order1Fragment extends BaseContentFragment{
      * @param currentTime
      * @param format
     * */
+    Thread timeThread;
+    boolean isStopTimer = false;
+    Timer timer2;
     public void dateDiff(String orderActualBegin, String currentTime, String format) {
+        timer2 = new Timer();
+
         //按照传入的格式生成一个simpledateformate对象
         SimpleDateFormat sd = new SimpleDateFormat(format);
         try {
@@ -767,7 +712,6 @@ public class Order1Fragment extends BaseContentFragment{
             e.printStackTrace();
         }
 
-        handler = new Handler();
         handler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {
@@ -778,7 +722,31 @@ public class Order1Fragment extends BaseContentFragment{
                 return false;
             }
         });
-        Runnable runnable = new Runnable() {
+
+
+        timer2.schedule(new TimerTask() {
+
+            final long nh = 1000 * 60 * 60;//一小时的毫秒数
+            final long nm = 1000 * 60;//一分钟的毫秒数
+            final long ns = 1000;//一秒钟的毫秒数
+            @Override
+            public void run() {
+                diff+=1000;
+                hour = diff / nh;//计算差多少小时
+                min = diff %  nh / nm;//计算差多少分钟
+                sec = diff % nh % nm / ns;//计算差多少秒
+                Log.e("sec",sec+"");
+                Log.e("diff",diff+"");
+                //String str=hour+":"+min+":"+sec;
+                String str=String.format("%02d:%02d:%02d",hour,min,sec);
+                Message message = handler.obtainMessage(1,str);
+                handler.sendMessage(message);
+                Log.e("str2",str);
+                Log.e("str", str);
+            }
+        },0,1000);
+
+/*        Runnable runnable = new Runnable() {
             long nh = 1000 * 60 * 60;//一小时的毫秒数
             long nm = 1000 * 60;//一分钟的毫秒数
             long ns = 1000;//一秒钟的毫秒数
@@ -798,8 +766,7 @@ public class Order1Fragment extends BaseContentFragment{
                 Log.e("str",str);
                 handler.postDelayed(this, 1000);
             }
-        };
-        runnable.run();
+        };*/
     }
 
     @Override

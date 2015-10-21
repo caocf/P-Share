@@ -29,8 +29,8 @@ public class CarIdDialog {
     private CarIdAdapter mZhCarIdAdapter;
     private CarIdAdapter mEnCarIdAdapter;
 
-    private String[] zhs={"辽","吉","黑","冀","晋","陕","鲁","皖","苏","浙","豫","鄂","湘","赣","台",
-            "闽","滇","琼","川","粤","甘","青", "渝","沪","津","京","宁","蒙","藏","新","贵", "港","澳"};
+    private String[] zhs={"辽","吉","黑","冀","晋","陕","鲁","皖","苏","浙","豫","鄂","湘","赣",
+            "闽","滇","琼","川","粤","甘","青", "渝","沪","津","京","宁","蒙","藏","新","贵","云","桂"};
 
     private String[] ens={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T",
             "U","V","W","X","Y","Z"};

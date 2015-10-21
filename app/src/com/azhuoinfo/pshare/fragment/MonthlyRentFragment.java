@@ -73,7 +73,7 @@ public class MonthlyRentFragment extends BaseContentFragment{
 
     @Override
     protected void initViews(Bundle bundle) {
-        this.setTitle(R.string.rent);
+        this.setTitle("我的社区生活");
     }
 
     @Override

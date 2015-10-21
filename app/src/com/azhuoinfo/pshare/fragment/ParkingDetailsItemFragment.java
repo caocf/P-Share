@@ -70,6 +70,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     //时间
     private RelativeLayout mAppointmentTimeRelativeLayout;
     private TextView mAppointmentTimeTextView;
+    private CheckBox mCheckBox0;
     private CheckBox mCheckBox1;
     private CheckBox mCheckBox2;
     private CheckBox mCheckBox3;
@@ -143,7 +144,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mParkingPriceTextView=(TextView) view.findViewById(R.id.tv_parking_price);
         mCheckBox1=(CheckBox) findViewById(R.id.ib_shopping_cart);
         mCheckBox2=(CheckBox)findViewById(R.id.ib_flashlight);
-        mCheckBox3=(CheckBox) findViewById(R.id.ib_wheelchair);
+        mCheckBox3=(CheckBox) findViewById(R.id.ib_wash_car);
         mCheckBox4=(CheckBox)findViewById(R.id.ib_umbrella);
         mAppointmentTimeRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_parking_appointment_time);
         mAppointmentTimeTextView=(TextView) view.findViewById(R.id.tv_parking_appointment_time);
@@ -166,6 +167,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mParkingNameTextView.setText(parking.getParking_name() + "");
         mParkingAddressTextView.setText(parking.getParking_address() + "");
         Log.e(TAG, parking.getParking_can_use() + "");
+        mParkingDistanceTextView.setText(parking.getParking_distance()+"");
         mParkingCanUseTextView.setText(parking.getParking_can_use() + "");
         mParkingPriceTextView.setText(parking.getParking_charging_standard() + "");
         mAppointmentTimeRelativeLayout.setOnClickListener(new View.OnClickListener() {

@@ -164,40 +164,7 @@
                         android:layout_centerVertical="true"
                         android:textColor="@color/text_white"
                         android:textSize="@dimen/text_size4"
-                        android:text="我的车辆" />
-                    <ImageView
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/padding4"
-                        android:src="@drawable/iv_slidingmenu_righthead"/>
-                </RelativeLayout>
-                <!--  分割线-->
-                <View style="@style/view_line"/>
-                <!--  我的月租列表-->
-                <RelativeLayout
-                    android:id="@+id/rl_monthlyRent_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/padding2"
-                    android:layout_marginBottom="@dimen/padding2" >
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/monthly_rent"
-                        android:layout_marginLeft="@dimen/padding4"/>
-                    <TextView
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_toRightOf="@+id/imageView5"
-                        android:layout_marginLeft="@dimen/padding2"
-                        android:layout_centerVertical="true"
-                        android:textColor="@color/text_white"
-                        android:textSize="@dimen/text_size4"
-                        android:text="缴费" />
+                        android:text="@string/mine_carList" />
                     <ImageView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
@@ -240,6 +207,40 @@
                         android:layout_marginRight="@dimen/padding4"
                         android:src="@drawable/iv_slidingmenu_righthead"/>
                 </RelativeLayout>
+                <!--  分割线-->
+                <View style="@style/view_line"/>
+                <!--  我的月租列表-->
+                <RelativeLayout
+                    android:id="@+id/rl_monthlyRent_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding2"
+                    android:layout_marginBottom="@dimen/padding2" >
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/monthly_rent"
+                        android:layout_marginLeft="@dimen/padding4"/>
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_toRightOf="@+id/imageView5"
+                        android:layout_marginLeft="@dimen/padding2"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/text_white"
+                        android:textSize="@dimen/text_size4"
+                        android:text="我的社区生活" />
+                    <ImageView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/padding4"
+                        android:src="@drawable/iv_slidingmenu_righthead"/>
+                </RelativeLayout>
+
                 <!--  分割线-->
                 <View style="@style/view_line"/>
             </LinearLayout>

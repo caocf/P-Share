@@ -196,30 +196,32 @@
 		        <LinearLayout
 		            android:layout_height="match_parent"
 		            android:layout_width="match_parent"
-		            android:padding="@dimen/padding2"
-		            android:paddingTop="@dimen/padding2"
-		            android:paddingBottom="@dimen/padding2"
 		            android:paddingLeft="@dimen/padding4"
 		            android:paddingRight="@dimen/padding4"
 					android:background="@color/text_white"
 		            android:layout_gravity="center_horizontal"
 		            android:orientation="horizontal">
+
 		            <CheckBox
+						android:paddingTop="@dimen/padding2"
 		                android:id="@+id/ib_shopping_cart"
 		                style="@style/iv_need_style"
 						android:drawableTop="@drawable/need1_bg"
 						android:button="@null" />
 		            <CheckBox
+						android:paddingTop="@dimen/padding2"
 		                android:id="@+id/ib_flashlight"
 						style="@style/iv_need_style"
 						android:drawableTop="@drawable/need2_bg"
 						android:button="@null" />
 		            <CheckBox
-		                android:id="@+id/ib_wheelchair"
+						android:paddingTop="@dimen/padding2"
+		                android:id="@+id/ib_wash_car"
 						style="@style/iv_need_style"
-						android:drawableTop="@drawable/need3_bg"
+						android:drawableTop="@drawable/need0_bg"
 						android:button="@null" />
 		            <CheckBox
+						android:paddingTop="@dimen/padding2"
 		                android:id="@+id/ib_umbrella"
 						style="@style/iv_need_style"
 						android:drawableTop="@drawable/need4_bg"
@@ -270,7 +272,7 @@
 				 android:layout_marginLeft="@dimen/padding8"
 				 android:id="@+id/ll_order_text"
 				 android:layout_marginBottom="@dimen/padding8"
-				 android:visibility="gone">
+				 android:visibility="visible">
 				 <TextView
 					 android:id="@+id/text_order_text"
 					 android:layout_width="wrap_content"
