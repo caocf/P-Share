@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,6 +34,8 @@ import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.model.Parking;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import mobi.cangol.mobile.actionbar.ActionBarActivity;
@@ -177,6 +180,8 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                     @Override
                     public boolean onActionClick(String s) {
                         getSearchParkListbyName(s);
+                        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(searchView.geSearchEditText().getWindowToken(), 0);
                         return true;
                     }
                 });
@@ -184,6 +189,8 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                     @Override
                     public boolean onSearchText(String s) {
                         getSearchParkListbyName(s);
+                        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(searchView.geSearchEditText().getWindowToken(), 0);
                         return true;
                     }
                 });
@@ -436,51 +443,76 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             }
         });
     }
+    public void sort(List<Parking> list){
+        if(list!=null&&list.size()>0){
+            for (int i=0;i<list.size();i++){
+                Parking parking =list.get(i);
+                int s = (int) AMapUtils.calculateLineDistance(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())),
+                        new LatLng(mAMapLocation.getLatitude(), mAMapLocation.getLongitude()));
+                parking.setParking_distance(""+s);
+            }
+        }
+        Collections.sort(list, new Comparator<Parking>() {
+            @Override
+            public int compare(Parking lhs, Parking rhs) {
+                return Integer.parseInt(lhs.getParking_distance()) - Integer.parseInt(rhs.getParking_distance());
+            }
+        });
+    }
     public void drawMarker(List<Parking> list){
         if(list!=null&&list.size()>0){
+            sort(list);
             //mAmap.clear();//清除marker信息，（清除掉了当前位置）
             mAmap.setLocationSource(this);
             mAmap.getUiSettings().setMyLocationButtonEnabled(true);
             mAmap.setMyLocationEnabled(true);
-
             MarkerOptions markerOption=null;
             Parking parking=null;
             Marker marker=null;
             for (int i=0;i<list.size();i++){
                 parking=list.get(i);
-                int s = (int) AMapUtils.calculateLineDistance(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())),
-                        new LatLng(mAMapLocation.getLatitude(), mAMapLocation.getLongitude()));
-                parking.setParking_distance(""+s);
                 markerOption = new MarkerOptions();
                 markerOption.position(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())));
                 markerOption.title(parking.getParking_name()).snippet(parking.getParking_address());
                 markerOption.draggable(true);
-//                if(parking.getParking_can_use()>0){
-//                    int l=parking.getParking_can_use()>9?2:1;
-//                    Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.empty),
-//                            l==2?14.5f* DeviceInfo.getDensity(getActivity()):16f* DeviceInfo.getDensity(getActivity()),
-//                            18* DeviceInfo.getDensity(getActivity()),
-//                            ""+parking.getParking_can_use(),
-//                            getResources().getColor(R.color.menu_text_pressed),
-//                            (int) (12* DeviceInfo.getDensity(getActivity())),
-//                            100);
-//                    markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
-//                }else{
-//                    Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.full),
-//                            16f* DeviceInfo.getDensity(getActivity()),
-//                            18* DeviceInfo.getDensity(getActivity()),
-//                            ""+parking.getParking_can_use(),
-//                            getResources().getColor(R.color.text_light_gray),
-//                            (int) (12* DeviceInfo.getDensity(getActivity())),
-//                            100);
-//                    markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
-//                }
+                if(parking.getParking_can_use()==0){
+                    Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.full),
+                            22f* DeviceInfo.getDensity(getActivity()),
+                            18* DeviceInfo.getDensity(getActivity()),
+                            ""+parking.getParking_can_use(),
+                            getResources().getColor(R.color.parking_full),
+                            (int) (12* DeviceInfo.getDensity(getActivity())),
+                            100);
+                    markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
+                }else if(parking.getParking_can_use()<5){
+                    Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.lack),
+                            22f* DeviceInfo.getDensity(getActivity()),
+                            18* DeviceInfo.getDensity(getActivity()),
+                            ""+parking.getParking_can_use(),
+                            getResources().getColor(R.color.parking_lack),
+                            (int) (12* DeviceInfo.getDensity(getActivity())),
+                            100);
+                    markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
+                }else{
+                    int l=parking.getParking_can_use()>9?2:1;
+                    Bitmap bitmap=BitmapUtils.addWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.empty),
+                            l==2?21f* DeviceInfo.getDensity(getActivity()):22* DeviceInfo.getDensity(getActivity()),
+                            18* DeviceInfo.getDensity(getActivity()),
+                            ""+parking.getParking_can_use(),
+                            getResources().getColor(R.color.parking_empty),
+                            (int) (12* DeviceInfo.getDensity(getActivity())),
+                            100);
+                    markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
+                }
 
-                markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_p));
+                //markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.empty));
+                markerOption.anchor(0.2f,1.0f);
                 marker=mAmap.addMarker(markerOption);
                 marker.setObject(parking);
-                if(i==0)
-                marker.showInfoWindow();
+                if(i==0){
+                    marker.showInfoWindow();
+                    //mAmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mAMapLocation.getLatitude(), mAMapLocation.getLongitude()),15));
+                }
             }
         }else{
             showToast("附近没有停车场");
