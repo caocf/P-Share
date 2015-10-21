@@ -20,6 +20,7 @@ import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.model.UserAuth;
 import com.azhuoinfo.pshare.model.UserCode;
+import com.azhuoinfo.pshare.view.CountDownTextView;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
@@ -36,7 +37,7 @@ public class RegisterFragment extends BaseContentFragment {
 	//定义注册密码的控件
 	private EditText mPasswordEditText;
 	//获取验证码
-	private TextView get_code;
+	private CountDownTextView get_code;
 	//定义输入验证码的控件
 	private EditText mCodeEditText;
 	//定义注册账号的控件
@@ -73,7 +74,7 @@ public class RegisterFragment extends BaseContentFragment {
 	protected void findViews(View view) {
 		mMobileEditText=(EditText) view.findViewById(R.id.registerActivity_editText_Phone);
 		mPasswordEditText=(EditText) view.findViewById(R.id.registerActivity_editText_Password);
-		get_code=(TextView) view.findViewById(R.id.get_code);
+		get_code=(CountDownTextView) view.findViewById(R.id.get_code);
 		mCodeEditText=(EditText) view.findViewById(R.id.registerActivity_editText_Code);
 		register=(Button) view.findViewById(R.id.register);
 		rl_registerActivity_backLoginActivity=(RelativeLayout) view.findViewById(R.id.rl_registerActivity_backLoginActivity);
@@ -83,16 +84,25 @@ public class RegisterFragment extends BaseContentFragment {
 	protected void initViews(Bundle bundle) {
 		this.setTitle(R.string.registered);
 		get_code.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(mMobileEditText.getText()!=null){
-					postSendSmsCode(mMobileEditText.getText().toString());
-				}else{
-					Toast.makeText(getActivity(),"请输入手机号",Toast.LENGTH_SHORT);
-				}
+            @Override
+            public void onClick(View v) {
+                if (mMobileEditText.getText() != null) {
+                    postSendSmsCode(mMobileEditText.getText().toString());
+                    get_code.starTimeByMillisInFuture(60 * 1000);
+                    get_code.setEnabled(false);
+                } else {
+                    Toast.makeText(getActivity(), "请输入手机号", Toast.LENGTH_SHORT);
+                }
 
-			}
-		});
+            }
+        });
+        get_code.setOnCountDownListener(new CountDownTextView.OnCountDownListener() {
+            @Override
+            public void onFinish() {
+                get_code.setEnabled(true);
+                get_code.setText(R.string.get_code);
+            }
+        });
 		register.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

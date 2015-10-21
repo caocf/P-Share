@@ -68,6 +68,8 @@
 		        android:background="@drawable/registeractivity_search_bg"
 		        android:layout_gravity="center_vertical"
 		        android:hint="@string/phone_number"
+                android:singleLine="true"
+                android:maxLength="11"
                 android:text="">
 				<requestFocus />	       
 		    </EditText>
@@ -114,6 +116,7 @@
 		        android:layout_gravity="center_vertical"
 				android:inputType="textPassword" 
 		        android:hint="@string/password"
+                android:maxLength="11"
                 android:text="">
 				<requestFocus />	       
 		    </EditText>
