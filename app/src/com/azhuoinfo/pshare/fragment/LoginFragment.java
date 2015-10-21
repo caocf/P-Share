@@ -150,11 +150,11 @@ public class LoginFragment extends BaseContentFragment {
                 if (isEnable()) {
                     if (mLoadingDialog != null) mLoadingDialog.dismiss();
                     if (customerInfo != null) {
-						editor.putString("user",customerInfo.getCustomer_mobile());
+						editor.putString("user", customerInfo.getCustomer_mobile());
 						editor.commit();
                         Log.d(TAG, "" + customerInfo);
                         mAccountVerify.login(customerInfo);
-                        replaceFragment(HomeFragment.class, "HomeFragment", null);
+                        toMain();
                     } else {
                         showToast("无数据");
                     }
@@ -171,5 +171,13 @@ public class LoginFragment extends BaseContentFragment {
 			}
 		});
 	}
+    private void toMain(){
+        if(preferences.getBoolean("isExplain",false)){
+            replaceFragment(HomeFragment.class, "HomeFragment", null);
+            preferences.edit().putBoolean("isExplain",false).commit();
+        }else{
+            replaceFragment(ExplainFragment.class, "ExplainFragment", null);
+        }
+    }
 
 }

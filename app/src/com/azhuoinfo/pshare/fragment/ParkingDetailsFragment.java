@@ -1,10 +1,12 @@
 package com.azhuoinfo.pshare.fragment;
 
+import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -106,6 +108,8 @@ public class ParkingDetailsFragment extends BaseContentFragment implements AMapL
                     @Override
                     public boolean onActionClick(String s) {
                         getSearchParkListbyName(s);
+                        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(searchView.geSearchEditText().getWindowToken(), 0);
                         return true;
                     }
                 });
@@ -113,6 +117,8 @@ public class ParkingDetailsFragment extends BaseContentFragment implements AMapL
                     @Override
                     public boolean onSearchText(String s) {
                         getSearchParkListbyName(s);
+                        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(searchView.geSearchEditText().getWindowToken(), 0);
                         return true;
                     }
                 });
