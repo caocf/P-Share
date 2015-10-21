@@ -5,6 +5,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.api.ApiContants;
+import com.azhuoinfo.pshare.api.ApiResult;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.fragment.adapter.ImageAdapter;
@@ -29,6 +31,10 @@ import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.UnfinishedOrderInfo;
 import com.azhuoinfo.pshare.model.UserAuth;
 import com.azhuoinfo.pshare.view.CommonDialog;
+import com.azhuoinfo.pshare.view.LoadingDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,6 +47,8 @@ import java.util.Timer;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
+import mobi.cangol.mobile.http.extras.PollingHttpClient;
+import mobi.cangol.mobile.http.extras.PollingResponseHandler;
 import mobi.cangol.mobile.sdk.pay.OnPayResultListener;
 import mobi.cangol.mobile.sdk.pay.PayManager;
 import mobi.cangol.mobile.sdk.pay.PlaceOrderCallback;
@@ -153,24 +161,49 @@ public class Order1Fragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
-
+        /*mOrder1RelativeLayout=(RelativeLayout) view.findViewById(R.id.fragment_order1);
+        mOrder2RelativeLayout=(RelativeLayout) view.findViewById(R.id.fragment_order2);
+        mOrder3ScrollView=(ScrollView) view.findViewById(R.id.fragment_order3);
+        mOrder4ScrollView=(ScrollView) view.findViewById(R.id.fragment_order4);
+        mToPayRelativeLayout=(RelativeLayout) view.findViewById(R.id.listitem_to_pay);*/
+        mOrder1RelativeLayout=(RelativeLayout) view.findViewById(R.id.fg_order1);
+        mOrder2RelativeLayout=(RelativeLayout) view.findViewById(R.id.fg_order2);
+        mOrder3ScrollView=(ScrollView) view.findViewById(R.id.fg_order3);
+        mOrder4ScrollView=(ScrollView) view.findViewById(R.id.fg_order4);
+        mToPayRelativeLayout=(RelativeLayout) view.findViewById(R.id.fg_list_menu_pay_pager);
     }
 
     @Override
     protected void initViews(Bundle bundle) {
-        mOrder1RelativeLayout=(RelativeLayout) findViewById(R.id.fragment_order1);
+/*        mOrder1RelativeLayout=(RelativeLayout) findViewById(R.id.fragment_order1);
         mOrder2RelativeLayout=(RelativeLayout) findViewById(R.id.fragment_order2);
         mOrder3ScrollView=(ScrollView) findViewById(R.id.fragment_order3);
         mOrder4ScrollView=(ScrollView) findViewById(R.id.fragment_order4);
-        mToPayRelativeLayout=(RelativeLayout) findViewById(R.id.listitem_to_pay);
+        mToPayRelativeLayout=(RelativeLayout) findViewById(R.id.listitem_to_pay);*/
+
+        /*mOrder1RelativeLayout=(RelativeLayout) findViewById(R.id.fg_order1);
+        mOrder2RelativeLayout=(RelativeLayout) findViewById(R.id.fg_order2);
+        mOrder3ScrollView=(ScrollView) findViewById(R.id.fg_order3);
+        mOrder4ScrollView=(ScrollView) findViewById(R.id.fg_order4);
+        mToPayRelativeLayout=(RelativeLayout) findViewById(R.id.fg_list_menu_pay_pager);*/
+
+
 
     }
 
     @Override
     protected void initData(Bundle bundle) {
        /* handler.postDelayed(runnable, 2000);//每两秒执行一次runnable.*/
-        postUnfinishedOrder(customerId);
+        //postUnfinishedOrder(customerId);
+        //initOrderState();
+        PollingUnfinishedOrder(customerId);
 
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        //pollingHttpClient.cancelRequests(getActivity(), true);
     }
 
     @Override
@@ -183,35 +216,47 @@ public class Order1Fragment extends BaseContentFragment{
         return true;
     }
     public void initOrderState(){
-        if(listSize==0){
+        if (
+        mOrder2RelativeLayout == null||
+        mOrder3ScrollView == null||
+        mOrder4ScrollView == null||
+        mToPayRelativeLayout == null||
+        mOrder1RelativeLayout == null
+                )
+            return;
+        if(listSize==0|| order_state == null || order_state.isEmpty()) {
             Log.e("mOrder1RelativeLayout",listSize+"");
+
+            mOrder2RelativeLayout.setVisibility(View.GONE);
+            mOrder3ScrollView.setVisibility(View.GONE);
+            mOrder4ScrollView.setVisibility(View.GONE);
+            mToPayRelativeLayout.setVisibility(View.GONE);
             mOrder1RelativeLayout.setVisibility(View.VISIBLE);
-            mOrder2RelativeLayout.setVisibility(View.GONE);
-            mOrder3ScrollView.setVisibility(View.GONE);
-            mOrder4ScrollView.setVisibility(View.GONE);
-            mToPayRelativeLayout.setVisibility(View.GONE);
         }else if(listSize>0&&order_state.equals("1")){
-            Log.e("mOrder2RelativeLayout",order_state+"");
+            Log.e("mOrder2RelativeLayout", order_state + "");
             mOrder1RelativeLayout.setVisibility(View.GONE);
-            mOrder2RelativeLayout.setVisibility(View.VISIBLE);
             mOrder3ScrollView.setVisibility(View.GONE);
             mOrder4ScrollView.setVisibility(View.GONE);
             mToPayRelativeLayout.setVisibility(View.GONE);
+            mOrder2RelativeLayout.setVisibility(View.VISIBLE);
+            Log.e("mOrder2RelativeLayout", order_state + " finish");
+
             initViewsOrder2();
+            //PollingUnfinishedOrder(customerId);
         }else if(listSize>0&&order_state.equals("2")){
-            Log.e("mOrder3ScrollView",order_state+"");
+            Log.e("mOrder3ScrollView", order_state + "");
             mOrder1RelativeLayout.setVisibility(View.GONE);
             mOrder2RelativeLayout.setVisibility(View.GONE);
-            mOrder3ScrollView.setVisibility(View.VISIBLE);
             mOrder4ScrollView.setVisibility(View.GONE);
+            mOrder3ScrollView.setVisibility(View.VISIBLE);
             initViewsOrder3();
-        }else if((listSize>0)&&(order_state.equals("3")||order_state.equals("4"))){
+        }else if((listSize>0)&&(order_state.equals("3")||order_state.equals("4"))) {
             Log.e("mOrder4ScrollView", order_state + "");
             mOrder1RelativeLayout.setVisibility(View.GONE);
             mOrder2RelativeLayout.setVisibility(View.GONE);
             mOrder3ScrollView.setVisibility(View.GONE);
-            mOrder4ScrollView.setVisibility(View.VISIBLE);
             mToPayRelativeLayout.setVisibility(View.GONE);
+            mOrder4ScrollView.setVisibility(View.VISIBLE);
           /*  if(parkingPath!=null){
                 mOrder4ScrollView.setVisibility(View.VISIBLE);
             }else {
@@ -220,18 +265,92 @@ public class Order1Fragment extends BaseContentFragment{
             initViewsOrder4();
         }
     }
-    public void postUnfinishedOrder(final String customerId){
-        ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
-        apiTask.setMethod("GET");
-        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_UNFINISHEDORDER));
-        apiTask.setParams(ApiContants.instance(getActivity()).unFinishedOrder(customerId));
-        apiTask.setRoot("orderInfo");
-        apiTask.execute(new OnDataLoader<List<UnfinishedOrderInfo>>() {
-            @Override
-            public void onStart() {
+
+    PollingHttpClient pollingHttpClient;
+    public void PollingUnfinishedOrder(final String customerId){
+        pollingHttpClient = new PollingHttpClient();
+        PollingUnfinishedOrderHandler pollingUnfinishedOrderHandler = new PollingUnfinishedOrderHandler();
+        pollingHttpClient.send(
+                getActivity(),
+                ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_UNFINISHEDORDER),
+                ApiContants.instance(getActivity()).unFinishedOrder(customerId),
+                pollingUnfinishedOrderHandler,
+                18,10000);
+    }
+
+    String last_order_state;
+    class PollingUnfinishedOrderHandler extends PollingResponseHandler{
+
+        @Override
+        public boolean isFailResponse(String content) {
+            Log.d("ResponseHandler", "isFailResponse content=" + content);
+            try {
+                ApiResult apiResult = ApiResult.parserObject(UnfinishedOrderInfo.class, new JSONObject(content), "orderInfo");
+                //List<UnfinishedOrderInfo> unfinishedOrderInfos = apiResult.getList();
+                List<UnfinishedOrderInfo> unfinishedOrderInfos = apiResult.getList();
+                if(isEnable()){
+                    //Log.e(TAG, unfinishedOrderInfos.size() + "");
+                    listSize = unfinishedOrderInfos.size();
+                    if (listSize != 0) {
+                        for (int i = 0; i < unfinishedOrderInfos.size(); i++) {
+                            UnfinishedOrderInfo unfinishedOrderInfo = unfinishedOrderInfos.get(i);
+                            order_state = unfinishedOrderInfo.getOrder_state();
+                            orderId = unfinishedOrderInfo.getOrder_id();
+                            parakerId = unfinishedOrderInfo.getParker_id();
+                            parkerLevel = unfinishedOrderInfo.getParker_level();
+                            parkerMobile = unfinishedOrderInfo.getParker_mobile();
+                            parkerName = unfinishedOrderInfo.getParker_name();
+                            parkingName=unfinishedOrderInfo.getParking_name();
+                            orderPlanBegin = unfinishedOrderInfo.getOrder_plan_begin();
+                            orderPlanEnd = unfinishedOrderInfo.getOrder_plan_end();
+                            carNumber = unfinishedOrderInfo.getCar_number();
+                            orderPath = unfinishedOrderInfo.getOrder_path();
+                            parkingPath=unfinishedOrderInfo.getParking_path();
+                            orderActualBegin=unfinishedOrderInfo.getOrder_actual_begin_start();
+                            Log.e(TAG,"order_state is " + order_state);
+                            if (order_state.equals("3") || order_state.equals("4")) {
+                                //dateDiff(orderActualBegin, this.getApiResult().getTimestamp(), "yyyy-MM-dd HH:mm:ss");
+                            }
+                        }
+                    }
+                    initOrderState();
+
+                    /*if (!order_state.equals(last_order_state)){
+                            initOrderState();
+                            last_order_state = new String(order_state);
+                        }*/
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            @Override
-            public void onSuccess(boolean page, List<UnfinishedOrderInfo> unfinishedOrderInfos) {
+
+            return true;
+        }
+
+        @Override
+        public void onStart() {
+            Log.d("ResponseHandler", "onStart");
+        }
+
+        @Override
+        public void onPollingFinish(int execTimes, String content) {
+            Log.d("ResponseHandler", "execTimes=" + execTimes + " content:" + content);
+        }
+
+        @Override
+        public void onSuccess(int statusCode, String content) {
+            Log.d("ResponseHandler", "statusCode=" + statusCode + " content:" + content);
+            /*if (unfinishedOrderInfos!=null) {
+                if (listSize != 0) {*/
+
+
+                    //initOrderState();
+                //}
+            //}
+
+            /*try {
+                ApiResult apiResult = ApiResult.parserObject(UnfinishedOrderInfo.class, new JSONObject(content), "orderInfo");
+                List<UnfinishedOrderInfo> unfinishedOrderInfos = apiResult.getList();
                 if(isEnable()){
                     Log.e(TAG, unfinishedOrderInfos.size() + "");
                     listSize = unfinishedOrderInfos.size();
@@ -255,11 +374,98 @@ public class Order1Fragment extends BaseContentFragment{
                         }
                     }
                     initOrderState();
+                    pollingHttpClient.cancelRequests(getActivity(),true);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }*/
+
+
+
+/*            List<UnfinishedOrderInfo> unfinishedOrderInfos;
+            if(isEnable()){
+                Log.e(TAG, unfinishedOrderInfos.size() + "");
+                listSize = unfinishedOrderInfos.size();
+                if (listSize != 0) {
+                    for (int i = 0; i < unfinishedOrderInfos.size(); i++) {
+                        UnfinishedOrderInfo unfinishedOrderInfo = unfinishedOrderInfos.get(i);
+                        order_state = unfinishedOrderInfo.getOrder_state();
+                        orderId = unfinishedOrderInfo.getOrder_id();
+                        parakerId = unfinishedOrderInfo.getParker_id();
+                        parkerLevel = unfinishedOrderInfo.getParker_level();
+                        parkerMobile = unfinishedOrderInfo.getParker_mobile();
+                        parkerName = unfinishedOrderInfo.getParker_name();
+                        parkingName=unfinishedOrderInfo.getParking_name();
+                        orderPlanBegin = unfinishedOrderInfo.getOrder_plan_begin();
+                        orderPlanEnd = unfinishedOrderInfo.getOrder_plan_end();
+                        carNumber = unfinishedOrderInfo.getCar_number();
+                        orderPath = unfinishedOrderInfo.getOrder_path();
+                        parkingPath=unfinishedOrderInfo.getParking_path();
+                        orderActualBegin=unfinishedOrderInfo.getOrder_actual_begin_start();
+                        Log.e(TAG, order_state);
+                    }
+                }
+                initOrderState();
+            }*/
+        }
+
+        @Override
+        public void onFailure(Throwable error, String content) {
+            Log.d("ResponseHandler", "error=" + error + " content:" + content);
+            //initOrderState();
+            //unfinishedOrderInfos = null;
+        }
+    }
+
+    public void postUnfinishedOrder(final String customerId){
+        ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
+        apiTask.setMethod("GET");
+        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_UNFINISHEDORDER));
+        apiTask.setParams(ApiContants.instance(getActivity()).unFinishedOrder(customerId));
+        apiTask.setRoot("orderInfo");
+        apiTask.execute(new OnDataLoader<List<UnfinishedOrderInfo>>() {
+            LoadingDialog loadingDialog;
+            @Override
+            public void onStart() {
+                loadingDialog = LoadingDialog.show(getActivity());
+            }
+            @Override
+            public void onSuccess(boolean page, List<UnfinishedOrderInfo> unfinishedOrderInfos) {
+                if(isEnable()){
+                    Log.e(TAG, unfinishedOrderInfos.size() + "");
+                    listSize = unfinishedOrderInfos.size();
+                    if (listSize != 0) {
+                        for (int i = 0; i < unfinishedOrderInfos.size(); i++) {
+                            UnfinishedOrderInfo unfinishedOrderInfo = unfinishedOrderInfos.get(i);
+                            order_state = unfinishedOrderInfo.getOrder_state();
+                            orderId = unfinishedOrderInfo.getOrder_id();
+                            parakerId = unfinishedOrderInfo.getParker_id();
+                            parkerLevel = unfinishedOrderInfo.getParker_level();
+                            parkerMobile = unfinishedOrderInfo.getParker_mobile();
+                            parkerName = unfinishedOrderInfo.getParker_name();
+                            parkingName=unfinishedOrderInfo.getParking_name();
+                            orderPlanBegin = unfinishedOrderInfo.getOrder_plan_begin();
+                            orderPlanEnd = unfinishedOrderInfo.getOrder_plan_end();
+                            carNumber = unfinishedOrderInfo.getCar_number();
+                            orderPath = unfinishedOrderInfo.getOrder_path();
+                            parkingPath=unfinishedOrderInfo.getParking_path();
+                            orderActualBegin=unfinishedOrderInfo.getOrder_actual_begin_start();
+                            Log.e(TAG, order_state);
+                            if (order_state.equals("3") || order_state.equals("4")) {
+                                dateDiff(orderActualBegin, this.getApiResult().getTimestamp(), "yyyy-MM-dd HH:mm:ss");
+                            }
+                        }
+                    }
+                    initOrderState();
+
+                    loadingDialog.dismiss();
                 }
             }
             @Override
             public void onFailure(String code, String message) {
-
+                Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
+                loadingDialog.dismiss();
             }
         });
     }
@@ -269,10 +475,10 @@ public class Order1Fragment extends BaseContentFragment{
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_CANCELORDER));
         apiTask.setParams(ApiContants.instance(getActivity()).userCancelOrder(orderSn));
         apiTask.execute(new OnDataLoader<UserAuth>() {
+            LoadingDialog loadingDialog;
             @Override
             public void onStart() {
-                if (getActivity() != null) {
-                }
+                loadingDialog = LoadingDialog.show(getActivity());
             }
             @Override
             public void onSuccess(boolean page, UserAuth auth) {
@@ -281,13 +487,12 @@ public class Order1Fragment extends BaseContentFragment{
                 mOrder3ScrollView.setVisibility(View.GONE);
                 mOrder4ScrollView.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), "订单已取消", Toast.LENGTH_SHORT);
+                loadingDialog.dismiss();
             }
             @Override
             public void onFailure(String code, String message) {
                 mobi.cangol.mobile.logging.Log.d(TAG, "code=:" + code + ",message=" + message);
-                if (getActivity() != null) {
-
-                }
+                loadingDialog.dismiss();
             }
         });
     }
@@ -403,7 +608,7 @@ public class Order1Fragment extends BaseContentFragment{
             SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//24小时制
             LgTime = sdformat.format(date);
            // new Thread(new MyThread()).start();
-           dateDiff(orderActualBegin, LgTime, "yyyy-MM-dd HH:mm:ss");
+
            // runnable.run();
             mList = new ArrayList<Map<String, Object>>();
             urls = new ArrayList<String>();
@@ -561,22 +766,35 @@ public class Order1Fragment extends BaseContentFragment{
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         handler = new Handler();
+        handler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                if (mCountdownTimeTextView == null){
+                    mCountdownTimeTextView=(TextView) findViewById(R.id.tv_countdown_time4);
+                }
+                mCountdownTimeTextView.setText((String)msg.obj+"");
+                return false;
+            }
+        });
         Runnable runnable = new Runnable() {
             long nh = 1000 * 60 * 60;//一小时的毫秒数
             long nm = 1000 * 60;//一分钟的毫秒数
             long ns = 1000;//一秒钟的毫秒数
             @Override
             public void run() {
-                diff++;
+                diff+=1000;
                 hour = diff / nh;//计算差多少小时
                 min = diff %  nh / nm;//计算差多少分钟
                 sec = diff % nh % nm / ns;//计算差多少秒
                 Log.e("sec",sec+"");
                 Log.e("diff",diff+"");
-                String str=hour+":"+min+":"+sec;
+                //String str=hour+":"+min+":"+sec;
+                String str=String.format("%02d:%02d:%02d",hour,min,sec);
+                Message message = handler.obtainMessage(1,str);
+                handler.sendMessage(message);
                 Log.e("str2",str);
-                mCountdownTimeTextView.setText(diff+"");
                 Log.e("str",str);
                 handler.postDelayed(this, 1000);
             }

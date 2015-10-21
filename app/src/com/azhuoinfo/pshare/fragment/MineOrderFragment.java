@@ -30,6 +30,7 @@ import java.util.List;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
+import mobi.cangol.mobile.http.extras.PollingHttpClient;
 
 /**
  * Created by Azhuo on 2015/9/22.
@@ -80,11 +81,9 @@ public class MineOrderFragment extends BaseContentFragment{
         mTabHost.setup();
         Log.e(TAG, order_state + "order_state");
         mTabManager=new TabManager(this.getChildFragmentManager(),mTabHost,R.id.realtabcontent);
-        postUnfinishedOrder(customer_Id);
+        //postUnfinishedOrder(customer_Id);
         mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator(tabView("预/订")), Order1Fragment.class, new Bundle());
         mTabManager.addTab(mTabHost.newTabSpec("ItemFragment2").setIndicator(tabView("历史订单")), HistoryOrderFragment.class, new Bundle());
-
-
     }
     @Override
     protected void initViews(Bundle bundle) {

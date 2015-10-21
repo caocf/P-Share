@@ -17,8 +17,9 @@ import mobi.cangol.mobile.base.FragmentInfo;
 
 /**
  * Created by Azhuo on 2015/9/22.
+ * 产权/月租完成支付
  */
-public class MonthlyRentCarFinishPayFragment extends BaseContentFragment{
+public class MonthlyRentCarfinishPayFragment extends BaseContentFragment{
     //返回上一个页面
     //private Button mBackButton;
 

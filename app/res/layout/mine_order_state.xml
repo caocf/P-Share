@@ -3,9 +3,14 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@color/fragment_background"
     android:layout_height="match_parent">
-    <include layout="@layout/fragment_order1"></include>
-    <include layout="@layout/fragment_order2"></include>
-    <include layout="@layout/fragment_order3"></include>
-    <include layout="@layout/fragment_order4"></include>
-    <include layout="@layout/list_menu_pay_pager"></include>
+    <include layout="@layout/fragment_order1"
+        android:id="@+id/fg_order1"/>
+    <include layout="@layout/fragment_order2"
+        android:id="@+id/fg_order2"/>
+    <include layout="@layout/fragment_order3"
+        android:id="@+id/fg_order3"/>
+    <include layout="@layout/fragment_order4"
+        android:id="@+id/fg_order4"/>
+    <include layout="@layout/list_menu_pay_pager"
+        android:id="@+id/fg_list_menu_pay_pager"/>
 </LinearLayout>

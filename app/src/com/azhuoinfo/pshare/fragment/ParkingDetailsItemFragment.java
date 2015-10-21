@@ -1,7 +1,9 @@
 package com.azhuoinfo.pshare.fragment;
 
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.pdf.PdfRenderer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -31,6 +33,7 @@ import com.azhuoinfo.pshare.model.Parking;
 import com.azhuoinfo.pshare.model.UnfinishedOrderInfo;
 import com.azhuoinfo.pshare.model.UserAuth;
 import com.azhuoinfo.pshare.view.CountDownTextView;
+import com.azhuoinfo.pshare.view.LoadingDialog;
 
 import org.w3c.dom.Text;
 
@@ -39,6 +42,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import javax.security.auth.callback.Callback;
+import javax.security.auth.callback.CallbackHandler;
 
 import mobi.cangol.mobile.Session;
 import mobi.cangol.mobile.actionbar.ActionMenu;
@@ -235,7 +241,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mAppointmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postUnfinishedOrder(customer_id);
+                //postUnfinishedOrder(customer_id);
                 if (mTimeText == null) {
                     Toast.makeText(getActivity(), "时间不能为空", Toast.LENGTH_SHORT).show();
                 } else {
@@ -251,7 +257,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postUnfinishedOrder(customer_id);
+                //postUnfinishedOrder(customer_id);
                 postCancelOrder(order_id);
             }
         });
@@ -271,31 +277,54 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         return false;
     }
 
+    void setButtonEnable(boolean enable) {
+        if (!enable) {
+            mImmediateButton.setEnabled(false);
+            mImmediateButton.setBackgroundResource(R.drawable.button_false);
+            mAppointmentButton.setEnabled(false);
+            mAppointmentButton.setBackgroundResource(R.drawable.button_false);
+        } else {
+            mImmediateButton.setEnabled(true);
+            mImmediateButton.setBackgroundResource(R.drawable.button);
+            mAppointmentButton.setEnabled(true);
+            mAppointmentButton.setBackgroundResource(R.drawable.button);
+        }
+    }
+
     public void postUnfinishedOrder(String customerId){
+
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_UNFINISHEDORDER));
         apiTask.setParams(ApiContants.instance(getActivity()).unFinishedOrder(customerId));
         apiTask.setRoot("orderInfo");
         apiTask.execute(new OnDataLoader<List<UnfinishedOrderInfo>>() {
+            LoadingDialog loadingDialog;
             @Override
             public void onStart(){
-
+                loadingDialog = LoadingDialog.show(getActivity());
             }
             @Override
             public void onSuccess(boolean page, List<UnfinishedOrderInfo> unfinishedOrderInfos) {
-                Log.e(TAG,unfinishedOrderInfos.size()+"");
+                Log.e(TAG, unfinishedOrderInfos.size() + "");
                 listSize=unfinishedOrderInfos.size();
                 Session session=getSession();
-                session.put("unfinishedOrderInfos",unfinishedOrderInfos);
+                session.put("unfinishedOrderInfos", unfinishedOrderInfos);
 
+                if (listSize>0){
+                    setButtonEnable(false);
+                }else {
+                    setButtonEnable(true);
+                }
+                loadingDialog.dismiss();
             }
             @Override
             public void onFailure(String code, String message) {
-
+                loadingDialog.dismiss();
             }
         });
     }
+
     public void postCreateOrder(String customerId,String parkingId,String orderPlanBegin,String order_img_count) {
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
@@ -303,9 +332,10 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         apiTask.setParams(ApiContants.instance(getActivity()).userCreateOrder(customerId, parkingId, orderPlanBegin, order_img_count));
         apiTask.setRoot("orderInfo");
         apiTask.execute(new OnDataLoader<OrderInfo>(){
+            LoadingDialog loadingDialog;
             @Override
-            public void onStart(){
-
+            public void onStart() {
+                loadingDialog = LoadingDialog.show(getActivity());
             }
             @Override
             public void onSuccess(boolean page, OrderInfo orderInfos) {
@@ -314,6 +344,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 mOrderTextLinearLayout.setVisibility(View.VISIBLE);
                 order_id=orderInfos.getOrder_id();
                 mOrderCountDownTextView.starTimeByMillisInFuture(3 * 60 * 1000);
+                loadingDialog.dismiss();
                 mOrderCountDownTextView.setOnCountDownListener(new CountDownTextView.OnCountDownListener() {
                     @Override
                     public void onFinish() {
@@ -325,38 +356,44 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
             }
             @Override
             public void onFailure(String code, String message) {
-                Log.e(TAG,"请求数据失败");
+                Log.e(TAG, "请求数据失败");
+                loadingDialog.dismiss();
             }
         });
     }
+
     public void postCancelOrder(String orderSn){
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_CANCELORDER));
         apiTask.setParams(ApiContants.instance(getActivity()).userCancelOrder(orderSn));
         apiTask.execute(new OnDataLoader<UserAuth>() {
+
+            LoadingDialog loadingDialog;
             @Override
             public void onStart() {
-                if (getActivity() != null){
-
-                }
+                loadingDialog = LoadingDialog.show(getActivity());
             }
             @Override
             public void onSuccess(boolean page, UserAuth auth) {
+                listSize = 0;
                 mStopLinearLayout.setVisibility(View.VISIBLE);
                 mCancelButton.setVisibility(View.GONE);
                 mOrderTextLinearLayout.setVisibility(View.GONE);
 
+                setButtonEnable(true);
+                loadingDialog.dismiss();
             }
             @Override
             public void onFailure(String code, String message) {
                 mobi.cangol.mobile.logging.Log.d(TAG, "code=:" + code + ",message=" + message);
                 if (getActivity() != null) {
-
+                    loadingDialog.dismiss();
                 }
             }
         });
     }
+
     /**
     * 取当前时间
     * */
