@@ -22,7 +22,8 @@
         android:background="@drawable/mine_home"
         android:gravity="center"
         android:text="0"
-        android:textSize="10sp"/>
+        android:textSize="10sp"
+        android:textColor="@color/actionbar_background"/>
 
     <LinearLayout
         android:id="@+id/ll_mine_home"

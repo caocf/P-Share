@@ -69,6 +69,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 
     private Parking mDefaultParking;
     private GlobalData mGlobalData;
+    private static final int ZOOM=15;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.homepager_user, R.drawable.left_head);
@@ -113,7 +114,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);// 必须要写
         mAmap = mMapView.getMap();
-        mAmap.moveCamera(CameraUpdateFactory.zoomTo(15));
+        mAmap.moveCamera(CameraUpdateFactory.zoomTo(ZOOM));
         mParkChangeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,6 +210,8 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
     private void init() {
         if (mAmap == null) {
             mAmap = mMapView.getMap();
+            //默认上海坐标
+            mAmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(31.22,121.48),ZOOM));
         }
         setUpMap();
     }
@@ -240,10 +243,15 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 TextView price = (TextView) view.findViewById(R.id.view_marker_price);
 
                 name.setText("" + parking.getParking_name());
-                if (parking.getParking_can_use() > 0) {
-                    num.setText("空:" + parking.getParking_can_use());
-                } else {
+                if (parking.getParking_can_use() == 0) {
                     num.setText("满:" + parking.getParking_can_use());
+                    num.setTextColor(getResources().getColor(R.color.parking_full));
+                } else if (parking.getParking_can_use() <5) {
+                    num.setText("紧:" + parking.getParking_can_use());
+                    num.setTextColor(getResources().getColor(R.color.parking_lack));
+                }else{
+                    num.setText("空:" + parking.getParking_can_use());
+                    num.setTextColor(getResources().getColor(R.color.parking_empty));
                 }
                 price.setText(parking.getParking_charging_standard()+"元");
                 address.setText("" + parking.getParking_address());
@@ -461,6 +469,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
     }
     public void drawMarker(List<Parking> list){
         if(list!=null&&list.size()>0){
+            if(mAMapLocation!=null)
             sort(list);
             //mAmap.clear();//清除marker信息，（清除掉了当前位置）
             mAmap.setLocationSource(this);
@@ -511,7 +520,8 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 marker.setObject(parking);
                 if(i==0){
                     marker.showInfoWindow();
-                    //mAmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mAMapLocation.getLatitude(), mAMapLocation.getLongitude()),15));
+
+                    mAmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())),ZOOM));
                 }
             }
         }else{
