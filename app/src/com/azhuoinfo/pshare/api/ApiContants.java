@@ -381,4 +381,36 @@ customer_age*/
 		params.put("order_id",order_id);
 		return params;
 	}
+
+	public static String API_CUSTOMER_CALCULATEPAY="/customer/calculatePay";
+	/**
+	 * 支付
+	 * @param order_id
+	 * @param parking_id
+	 * @return
+	 */
+	public HashMap<String, String> getCalculatePay(String order_id,String parking_id){
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("order_id",order_id);
+		params.put("parking_id", parking_id );
+		return params;
+	}
+
+	public static String API_CUSTOMER_COMMENT="/customer/comment";
+	/**
+	 * 发送评论
+	 * @param order_id
+	 * @param comment_operater_id
+	 * @param comment_level
+	 * @param comment_content
+	 * @return
+	 */
+	public HashMap<String, String> getComment(String order_id, String comment_operater_id, String comment_level, String comment_content){
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("order_id",order_id);
+		params.put("comment_operater_id",comment_operater_id );
+		params.put("comment_level",comment_level );
+		params.put("comment_content",comment_content );
+		return params;
+	}
 }

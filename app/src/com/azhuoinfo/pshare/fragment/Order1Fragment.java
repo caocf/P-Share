@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -27,7 +29,9 @@ import com.azhuoinfo.pshare.api.ApiResult;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.fragment.adapter.ImageAdapter;
+import com.azhuoinfo.pshare.model.Comment;
 import com.azhuoinfo.pshare.model.CustomerInfo;
+import com.azhuoinfo.pshare.model.OrderPay;
 import com.azhuoinfo.pshare.model.UnfinishedOrderInfo;
 import com.azhuoinfo.pshare.model.UserAuth;
 import com.azhuoinfo.pshare.view.CommonDialog;
@@ -265,7 +269,7 @@ public class Order1Fragment extends BaseContentFragment{
             mOrder4ScrollView.setVisibility(View.GONE);
             mOrder3ScrollView.setVisibility(View.VISIBLE);
             initViewsOrder3();
-        }else if((listSize>0)&&(order_state.equals("3")||order_state.equals("4"))) {
+        }else if((listSize>0)&&(order_state.equals("3")||order_state.equals("4")||order_state.equals("8"))) {
             Log.e("mOrder4ScrollView", order_state + "");
             mOrder1RelativeLayout.setVisibility(View.GONE);
             mOrder2RelativeLayout.setVisibility(View.GONE);
@@ -292,7 +296,7 @@ public class Order1Fragment extends BaseContentFragment{
                 ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_UNFINISHEDORDER),
                 ApiContants.instance(getActivity()).unFinishedOrder(customerId),
                 pollingUnfinishedOrderHandler,
-                18,10000);
+                18, 10000);
     }
     class PollingUnfinishedOrderHandler extends PollingResponseHandler{
 
@@ -416,10 +420,12 @@ public class Order1Fragment extends BaseContentFragment{
         apiTask.setParams(ApiContants.instance(getActivity()).userCancelOrder(orderSn));
         apiTask.execute(new OnDataLoader<UserAuth>() {
             LoadingDialog loadingDialog;
+
             @Override
             public void onStart() {
                 loadingDialog = LoadingDialog.show(getActivity());
             }
+
             @Override
             public void onSuccess(boolean page, UserAuth auth) {
                 mOrder1RelativeLayout.setVisibility(View.VISIBLE);
@@ -429,6 +435,7 @@ public class Order1Fragment extends BaseContentFragment{
                 Toast.makeText(getActivity(), "订单已取消", Toast.LENGTH_SHORT);
                 loadingDialog.dismiss();
             }
+
             @Override
             public void onFailure(String code, String message) {
                 mobi.cangol.mobile.logging.Log.d(TAG, "code=:" + code + ",message=" + message);
@@ -451,17 +458,71 @@ public class Order1Fragment extends BaseContentFragment{
             public void onSuccess(boolean page, UserAuth userAuth) {
                 mFinishButton.setVisibility(View.VISIBLE);
                 mGetCarButton.setVisibility(View.GONE);
-                mFinishButton.setOnClickListener(new View.OnClickListener() {
+/*                mFinishButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         showPayMethodDialog();
                     }
-                });
+                });*/
             }
 
             @Override
             public void onFailure(String code, String message) {
 
+            }
+        });
+    }
+
+
+    String totalPay;
+    public void postGetcalculatePay(final String order_id,String parking_id){
+        ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
+        apiTask.setMethod("GET");
+        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_CALCULATEPAY));
+        apiTask.setParams(ApiContants.instance(getActivity()).getCalculatePay(order_id, parking_id));
+        apiTask.execute(new OnDataLoader<OrderPay>() {
+            LoadingDialog loadingDialog;
+            @Override
+            public void onStart() {
+                loadingDialog = LoadingDialog.show(getActivity());
+            }
+
+            @Override
+            public void onSuccess(boolean page, OrderPay orderPay) {
+                totalPay = orderPay.toTalPay();
+                showPayMethodDialog();
+                loadingDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(String code, String message) {
+                loadingDialog.dismiss();
+            }
+        });
+    }
+
+
+    public void postAssessment(String order_id, String comment_operater_id,  String comment_level,String comment_content){
+        ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
+        apiTask.setMethod("GET");
+        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_CALCULATEPAY));
+        apiTask.setParams(ApiContants.instance(getActivity()).getComment(order_id,  comment_operater_id, comment_level,comment_content));
+        apiTask.execute(new OnDataLoader<Comment>() {
+            LoadingDialog loadingDialog;
+            @Override
+            public void onStart() {
+                loadingDialog = LoadingDialog.show(getActivity());
+            }
+
+            @Override
+            public void onSuccess(boolean page, Comment comment) {
+                showToast("评论发送成功");
+                loadingDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(String code, String message) {
+                loadingDialog.dismiss();
             }
         });
     }
@@ -526,7 +587,7 @@ public class Order1Fragment extends BaseContentFragment{
         mGetCarButton=(Button) findViewById(R.id.button_to_make_car4);
         mLeft = (ImageView) findViewById(R.id.iv_left);
         mRight = (ImageView) findViewById(R.id.iv_right);
-        if (order_state.equals("3") || order_state.equals("4")){
+        if (order_state.equals("3") || order_state.equals("4") || order_state.equals("8")){
             Log.e(TAG, parakerId + ":" + parkerName + ":" + parakerId + ":" + parkerMobile + ":" + parkerLevel + ":" + orderPlanBegin + ":" + orderPlanEnd);
             mParkerIDTextView.setText(parakerId + "");
             mParkerAreaTextView.setText(parkingName + "");
@@ -567,18 +628,33 @@ public class Order1Fragment extends BaseContentFragment{
                     toRight();
                 }
             });
-            mGetCarButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    postGetCar(customerId, orderId);
-                }
-            });
+
             mFinishButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mToPayRelativeLayout.setVisibility(View.VISIBLE);
                 }
             });
+
+            if (order_state.equals("8")){
+                mFinishButton.setVisibility(View.VISIBLE);
+                mGetCarButton.setVisibility(View.GONE);
+                mFinishButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        postGetcalculatePay(orderId,parakerId);
+                        //showPayMethodDialog();
+                        //mToPayRelativeLayout.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+            mGetCarButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    postGetCar(customerId, orderId);
+                }
+            });
+
         }
     }
     /**
@@ -643,12 +719,14 @@ public class Order1Fragment extends BaseContentFragment{
             @Override
             public String getOrderId() {
                 //自定义订单号
-                return "128978342715192";
+                return orderId;
             }
         }, new OnPayResultListener() {
             @Override
             public void onSuccess(String billingIndex, String msg) {
                 showToast("订单:" + billingIndex + " " + msg);
+                payDialog.dismiss();
+                showAssessmentDialog();
             }
 
             @Override
@@ -662,7 +740,103 @@ public class Order1Fragment extends BaseContentFragment{
             }
         });
     }
+
+    private void showAssessmentDialog() {
+        final CommonDialog dialog = CommonDialog.creatDialog(this.getActivity());
+        dialog.setContentView(R.layout.assessment_pager);
+        final RadioGroup radioGroup = (RadioGroup)dialog.findViewById(R.id.rg);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.as_1) {
+                    Log.e("as", "as_1");
+                } else if (checkedId == R.id.as_2) {
+                    Log.e("as", "as_2");
+                } else if (checkedId == R.id.as_3) {
+                    Log.e("as", "as_3");
+                }
+            }
+        });
+
+        Button payButton = (Button)dialog.findViewById(R.id.btn_pay);
+        payButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int checkedId = radioGroup.getCheckedRadioButtonId();
+                int level = 1;
+                if (checkedId == R.id.as_1) {
+                    Log.e("OnButtonClick", "as1");
+                    level = 1;
+                } else if (checkedId == R.id.as_2) {
+                    Log.e("OnButtonClick", "as2");
+                    level = 2;
+                } else if (checkedId == R.id.as_3) {
+                    Log.e("OnButtonClick", "as3");
+                    level = 3;
+                }
+                EditText et = (EditText)findViewById(R.id.comment_content);
+                postAssessment(orderId,customerId,""+level,et.getText().toString());
+            }
+        });
+
+        ImageView imageView = (ImageView)dialog.findViewById(R.id.iv_close);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+    }
+
+
+    CommonDialog payDialog;
     private void showPayMethodDialog() {
+        payDialog = CommonDialog.creatDialog(this.getActivity());
+        payDialog.setContentView(R.layout.list_menu_pay_pager);
+        final RadioGroup radioGroup = (RadioGroup)payDialog.findViewById(R.id.rg);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.alipay) {
+                    Log.e("onCheck", "alipay");
+                } else if (checkedId == R.id.wechatpay) {
+                    Log.e("onCheck", "wechatpay");
+                }
+            }
+        });
+
+        Button payButton = (Button)payDialog.findViewById(R.id.btn_pay);
+        payButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String paySubject = "口袋停-停车缴费";
+                final String payDesc = "停车缴费";
+                int checkedId = radioGroup.getCheckedRadioButtonId();
+                if (checkedId == R.id.alipay) {
+                    Log.e("OnButtonClick", "alipay");
+                    toPay(PayManager.PAY_TYPE_ALIPAY, paySubject, payDesc, totalPay);
+                } else if (checkedId == R.id.wechatpay) {
+                    Log.e("OnButtonClick", "wechatpay");
+                    int fee = Integer.parseInt(totalPay) * 100;
+                    toPay(PayManager.PAY_TYPE_WECHAT, paySubject, payDesc, "" + fee);
+                }
+            }
+        });
+
+        ImageView imageView = (ImageView)payDialog.findViewById(R.id.iv_close);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                payDialog.dismiss();
+            }
+        });
+        payDialog.setCanceledOnTouchOutside(true);
+        payDialog.show();
+    }
+
+    private void showPayMethodDialog0() {
         String[] from = this.getResources().getStringArray(R.array.pay_method);
         final CommonDialog dialog = CommonDialog.creatDialog(this.getActivity());
         dialog.setTitle("支付");
@@ -745,28 +919,6 @@ public class Order1Fragment extends BaseContentFragment{
                 Log.e("str", str);
             }
         },0,1000);
-
-/*        Runnable runnable = new Runnable() {
-            long nh = 1000 * 60 * 60;//一小时的毫秒数
-            long nm = 1000 * 60;//一分钟的毫秒数
-            long ns = 1000;//一秒钟的毫秒数
-            @Override
-            public void run() {
-                diff+=1000;
-                hour = diff / nh;//计算差多少小时
-                min = diff %  nh / nm;//计算差多少分钟
-                sec = diff % nh % nm / ns;//计算差多少秒
-                Log.e("sec",sec+"");
-                Log.e("diff",diff+"");
-                //String str=hour+":"+min+":"+sec;
-                String str=String.format("%02d:%02d:%02d",hour,min,sec);
-                Message message = handler.obtainMessage(1,str);
-                handler.sendMessage(message);
-                Log.e("str2",str);
-                Log.e("str",str);
-                handler.postDelayed(this, 1000);
-            }
-        };*/
     }
 
     @Override

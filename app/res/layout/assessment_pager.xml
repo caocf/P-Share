@@ -20,14 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="总金额："/>
-            <TextView
-                android:id="@+id/tv_money"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/text_money"
-                android:textColor="@color/text_color_red"
-                android:text="200元" />
+                android:text="请您对代泊员评价"/>
             <ImageView
                 android:id="@+id/iv_close"
                 android:layout_width="wrap_content"
@@ -35,40 +28,38 @@
                 android:layout_alignParentRight="true"
                 android:background="@drawable/circle_rectangle"/>
         </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/text_light_gray" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@string/pay_way" />
         <RadioGroup
             android:gravity="center_vertical"
             android:id="@+id/rg"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding2"
             android:layout_gravity="center"
             android:orientation="horizontal" >
             <RadioButton
-                android:id="@+id/alipay"
-                style="?android:checkboxStyle"
+                android:layout_weight="1"
+                android:id="@+id/as_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/padding4"
-                android:drawableEnd="@drawable/zhifubao"
-                android:drawableRight="@drawable/zhifubao" />
+                android:text="很好"/>
             <RadioButton
-                android:id="@+id/wechatpay"
-                style="?android:checkboxStyle"
+                android:layout_weight="1"
+                android:id="@+id/as_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/weixin"
-                android:drawableRight="@drawable/weixin"/>
+                android:text="好"/>
+            <RadioButton
+                android:layout_weight="1"
+                android:id="@+id/as_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="一般"/>
         </RadioGroup>
+        <EditText
+            android:id="@+id/comment_content"
+            android:layout_width="match_parent"
+            android:lines="2"
+            android:layout_height="wrap_content" />
         <Button
             android:id="@+id/btn_pay"
             android:layout_width="190dp"
@@ -76,6 +67,6 @@
             android:layout_marginTop="30dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/button" 
-            android:text="@string/pay"/>
+            android:text="确定"/>
     </LinearLayout>
 </RelativeLayout>
