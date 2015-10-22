@@ -24,7 +24,6 @@ import mobi.cangol.mobile.utils.DeviceInfo;
 
 public class ExplainFragment extends BaseContentFragment {
 
-    private LinearLayout mLinearLayout;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,15 +52,23 @@ public class ExplainFragment extends BaseContentFragment {
 
     @Override
     protected void findViews(View view) {
-        mLinearLayout=(LinearLayout) findViewById(R.id.explain_layout);
     }
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
         ((ActionBarActivity) this.getActivity()).setActionbarShow(false);
-        mLinearLayout.setOnClickListener(new OnClickListener() {
+        this.findViewById(R.id.explain_layout).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                replaceFragment(HomeFragment.class, "HomeFragment", null);
+                popBackStack();
+            }
+        });
+        this.findViewById(R.id.imageView_explain).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
                 replaceFragment(HomeFragment.class, "HomeFragment", null);
                 popBackStack();
             }
