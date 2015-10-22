@@ -239,7 +239,7 @@ public class Order1Fragment extends BaseContentFragment{
         mOrder1RelativeLayout == null
                 )
             return;
-        if(listSize==0|| order_state == null || order_state.isEmpty()) {
+        if(listSize==0||order_state.equals("6")|| order_state == null || order_state.isEmpty()) {
             Log.e("mOrder1RelativeLayout",listSize+"");
 
             mOrder2RelativeLayout.setVisibility(View.GONE);
@@ -258,7 +258,7 @@ public class Order1Fragment extends BaseContentFragment{
 
             initViewsOrder2();
             //PollingUnfinishedOrder(customerId);
-        }else if(listSize>0&&order_state.equals("2")){
+        }else if(listSize>0&&order_state.equals("2")) {
             Log.e("mOrder3ScrollView", order_state + "");
             mOrder1RelativeLayout.setVisibility(View.GONE);
             mOrder2RelativeLayout.setVisibility(View.GONE);

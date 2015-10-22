@@ -54,10 +54,16 @@ public class ParkingDetailsAdapter extends BaseAdapter<Parking> {
             holder.mParkingStatusTextView.setText("满:");
         }
         holder.mParkingCanUseTextView.setText(""+item.getParking_can_use());
-        holder.mParkingPriceTextView.setText(""+item.getParking_charging_standard()+"元/时");
-        int s= (int) AMapUtils.calculateLineDistance(new LatLng(Double.parseDouble(item.getParking_latitude()), Double.parseDouble(item.getParking_longitude())),
-                new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()));
-        item.setParking_distance(""+s);
+        holder.mParkingPriceTextView.setText("" + item.getParking_charging_standard() + "元/时");
+        if (aMapLocation!=null) {
+            int s = (int) AMapUtils.calculateLineDistance(
+                    new LatLng(Double.parseDouble(item.getParking_latitude()), Double.parseDouble(item.getParking_longitude())),
+                    new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()));
+            item.setParking_distance(""+s);
+        }else {
+            item.setParking_distance("----");
+        }
+
         holder.mParkingDistanceTextView.setText(item.getParking_distance()+"米");
 
         return convertView;
