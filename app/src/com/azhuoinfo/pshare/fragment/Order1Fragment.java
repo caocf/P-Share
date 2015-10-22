@@ -188,9 +188,9 @@ public class Order1Fragment extends BaseContentFragment{
                 if (order_state == null){
                     initOrderState();
                 }else {
-                    Log.d("updateHandler", "receive state " + last_order_state + " " + order_state);
+                    Log.d("updateHandler", "receive order_state " + last_order_state + " " + order_state);
                     if (!last_order_state.equals(order_state)) {
-                        Log.d("updateHandler", "update state " + last_order_state + " " + order_state);
+                        Log.d("updateHandler", "update order_state " + last_order_state + " " + order_state);
                         initOrderState();
                         Log.d("order_string", "last_order " + last_order_state);
                         Log.d("order_string", "order " + order_state);
