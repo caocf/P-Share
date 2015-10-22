@@ -188,9 +188,9 @@ public class Order1Fragment extends BaseContentFragment{
                 if (order_state == null){
                     initOrderState();
                 }else {
-                    Log.d("updateHandler", "receive  " + last_order_state + " " + order_state);
+                    Log.d("updateHandler", "receive state " + last_order_state + " " + order_state);
                     if (!last_order_state.equals(order_state)) {
-                        Log.d("updateHandler", "update  " + last_order_state + " " + order_state);
+                        Log.d("updateHandler", "update state " + last_order_state + " " + order_state);
                         initOrderState();
                         Log.d("order_string", "last_order " + last_order_state);
                         Log.d("order_string", "order " + order_state);
@@ -240,7 +240,7 @@ public class Order1Fragment extends BaseContentFragment{
                 )
             return;
         if(listSize==0||order_state.equals("6")|| order_state == null || order_state.isEmpty()) {
-            Log.e("mOrder1RelativeLayout",listSize+"");
+            Log.e("mOrder1RelativeLayout", listSize+"");
 
             mOrder2RelativeLayout.setVisibility(View.GONE);
             mOrder3ScrollView.setVisibility(View.GONE);
