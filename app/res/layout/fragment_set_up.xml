@@ -139,6 +139,37 @@
           android:src="@drawable/black_right_head"
           />
   	</RelativeLayout>
+    <!--帮助提示-->
+    <RelativeLayout
+        android:id="@+id/rl_help"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding8"
+        android:layout_marginTop="@dimen/padding9"
+        android:background="@color/text_white">
+        <ImageView
+            android:id="@+id/install_iv6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/suggestion"
+            android:layout_marginLeft="@dimen/padding2"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/install_iv6"
+            android:layout_marginLeft="@dimen/padding2"
+            android:textSize="@dimen/text_size4"
+            android:text="@string/helpandhint"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/padding3"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/black_right_head"
+            />
+    </RelativeLayout>
     <!-- 推送-->
   	<RelativeLayout
   	     android:id="@+id/rl_push"

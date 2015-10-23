@@ -33,10 +33,12 @@ import mobi.cangol.mobile.base.FragmentInfo;
  */
 public class MonthlyRentFragment extends BaseContentFragment{
    // private TabPageManager mTabPageManager;
-    private TabManager mTabManager;
-    private TabHost mTabHost;
+    /*private TabManager mTabManager;
+    private TabHost mTabHost;*/
     private ViewPager mViewPager;
     private AccountVerify mAccountVerify;
+    LinearLayout rent_layout;
+    LinearLayout history_layout;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,16 +66,33 @@ public class MonthlyRentFragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
+        rent_layout = (LinearLayout)view.findViewById(R.id.rent_layout);
+        history_layout = (LinearLayout)view.findViewById(R.id.history_layout);
+/*
         mTabHost = (TabHost)view.findViewById(android.R.id.tabhost);
         mTabHost.setup();
         mTabManager=new TabManager(this.getChildFragmentManager(),mTabHost,R.id.realtabcontent);
         mTabManager.addTab(mTabHost.newTabSpec("ItemFragment1").setIndicator(tabView("产权/月租")), MonthlyRentListFragment.class, new Bundle());
         mTabManager.addTab(mTabHost.newTabSpec("ItemFragment2").setIndicator(tabView("历史缴费记录")), MonthlyRentHistoryListFragment.class, new Bundle());
+*/
     }
 
     @Override
     protected void initViews(Bundle bundle) {
         this.setTitle("我的社区生活");
+        rent_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(MonthlyRentListFragment.class, "MonthlyRentListFragment", null);
+            }
+        });
+
+        history_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(MonthlyRentHistoryListFragment.class, "MonthlyRentListFragment", null);
+            }
+        });
     }
 
     @Override

@@ -67,7 +67,7 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
         mMonthlyRentHistoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                replaceParentFragment(MonthlyRentCarfinishPayFragment.class,"MonthlyRentCarFinishPayFragment",null);
+                replaceFragment(MonthlyRentCarfinishPayFragment.class,"MonthlyRentCarFinishPayFragment",null);
             }
         });
     }

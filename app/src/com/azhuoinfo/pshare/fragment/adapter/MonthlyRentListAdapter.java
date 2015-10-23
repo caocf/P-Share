@@ -36,7 +36,7 @@ public class MonthlyRentListAdapter extends BaseAdapter<String>{
             holder.mCarNumberTextView=(TextView) convertView.findViewById(R.id.tv_car_number);
             holder.mLivingAreaTextView=(TextView) convertView.findViewById(R.id.tv_living_area);
             holder.mRentTimeTextView=(TextView) convertView.findViewById(R.id.tv_rent_time);
-            holder.mPayButton=(Button) convertView.findViewById(R.id.button_pay);
+            holder.mPayButton=(TextView) convertView.findViewById(R.id.button_pay);
             convertView.setTag(holder);
         }else{
             holder=(ViewHolder) convertView.getTag();
@@ -49,7 +49,7 @@ public class MonthlyRentListAdapter extends BaseAdapter<String>{
         private TextView mCarNumberTextView;
         private TextView mLivingAreaTextView;
         private TextView mRentTimeTextView;
-        private Button mPayButton;
+        private TextView mPayButton;
 }
 
 }

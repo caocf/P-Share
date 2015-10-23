@@ -84,8 +84,8 @@
                     android:layout_marginBottom="@dimen/padding2" >
                     <ImageView
                         android:id="@+id/imageView1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:src="@drawable/parking_area"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/padding4" />
@@ -117,8 +117,8 @@
                     android:layout_marginBottom="@dimen/padding2" >
                     <ImageView
                         android:id="@+id/imageView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:src="@drawable/order"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/padding4"
@@ -151,8 +151,8 @@
                     android:layout_marginBottom="@dimen/padding2" >
                     <ImageView
                         android:id="@+id/imageView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/car_list"
                         android:layout_marginLeft="@dimen/padding4"/>
@@ -184,8 +184,8 @@
                     android:layout_marginBottom="@dimen/padding2" >
                     <ImageView
                         android:id="@+id/imageView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:src="@drawable/points"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/padding4"
@@ -218,8 +218,8 @@
                     android:layout_marginBottom="@dimen/padding2" >
                     <ImageView
                         android:id="@+id/imageView5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/monthly_rent"
                         android:layout_marginLeft="@dimen/padding4"/>

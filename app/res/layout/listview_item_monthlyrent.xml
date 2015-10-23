@@ -42,7 +42,9 @@
 	        android:layout_marginLeft="@dimen/padding2"
 	        android:textColor="@color/text_light_gray"
 	        android:text="2015/9/10-2015/10/1"/>
-	    <Button
+	    <TextView
+			style="?android:buttonStyle"
+			android:clickable="false"
 	        android:id="@+id/button_pay" 
 	        android:layout_height="25dp"
 	        android:layout_width="wrap_content"

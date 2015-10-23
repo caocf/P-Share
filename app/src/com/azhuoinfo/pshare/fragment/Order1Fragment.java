@@ -836,35 +836,6 @@ public class Order1Fragment extends BaseContentFragment{
         payDialog.show();
     }
 
-    private void showPayMethodDialog0() {
-        String[] from = this.getResources().getStringArray(R.array.pay_method);
-        final CommonDialog dialog = CommonDialog.creatDialog(this.getActivity());
-        dialog.setTitle("支付");
-        dialog.setListViewInfo(new ArrayAdapter<String>(app,
-                        R.layout.common_dialog_textview, from),
-                new CommonDialog.OnDialogItemClickListener() {
-
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view,
-                                            int position, long id) {
-                        switch (position) {
-                            case 0:
-                                toPay(PayManager.PAY_TYPE_ALIPAY,"桃子","桃子一斤","0.02");
-                                break;
-                            case 1:
-                                //交易金额默认为人民币交易，接口中参数支付金额单位为【分】，参数值不能带小数。对账单中的交易金额单位为【元】。
-                                toPay(PayManager.PAY_TYPE_WECHAT,"桃子","桃子一斤","1");
-                                break;
-                            case 2:
-
-                                break;
-                        }
-                        dialog.dismiss();
-                    }
-                });
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
-    }
     /**
     * 时间计时
     * @param orderActualBegin

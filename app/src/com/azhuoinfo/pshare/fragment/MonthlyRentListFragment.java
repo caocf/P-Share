@@ -80,13 +80,13 @@ public class MonthlyRentListFragment extends BaseContentFragment{
         mMonthlyRentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                replaceParentFragment(AddMonthlyRentCarFragment.class, "AddMonthlyRentCarFragment", null);
+                replaceFragment(AddMonthlyRentCarFragment.class, "AddMonthlyRentCarFragment", null);
             }
         });
         mAddMonthlyRentCarRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replaceParentFragment(AddMonthlyRentCarFragment.class, "AddMonthlyRentCarFragment", null);
+                replaceFragment(AddMonthlyRentCarFragment.class, "AddMonthlyRentCarFragment", null);
             }
         });
     }

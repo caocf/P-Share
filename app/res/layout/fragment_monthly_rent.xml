@@ -1,34 +1,68 @@
-<TabHost
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/tabhost"
     android:layout_width="match_parent"
-    android:background="@color/fragment_background"
-    android:layout_height="match_parent">
-
+    android:background="@drawable/mine_monthly_rent_bg"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/rent_layout"
+        android:padding="14dp"
+        android:background="@android:color/white"
+        android:layout_marginTop="64dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TabWidget
-            android:id="@android:id/tabs"
-            android:orientation="horizontal"
+        android:layout_height="100dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@drawable/yz"/>
+        <TextView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/common_dialog_list_driver"/>
+        <TextView
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@null"
-            android:layout_weight="0"/>
-
-        <FrameLayout
-            android:id="@android:id/tabcontent"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="0"/>
-
-        <FrameLayout
-            android:id="@+id/realtabcontent"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
+            android:textSize="24sp"
+            android:text="产权/月租"/>
     </LinearLayout>
-</TabHost>
+    <TextView
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_white"
+        android:text="您可以通过口袋停给自己所在小区（口袋停已覆盖）支付月租（产权）费。"/>
+
+    <LinearLayout
+        android:id="@+id/history_layout"
+        android:padding="14dp"
+        android:background="@android:color/white"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:divider="@android:drawable/divider_horizontal_dark"
+        android:showDividers="middle">
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@drawable/ls"/>
+        <TextView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/common_dialog_list_driver"/>
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="历史缴费记录"/>
+    </LinearLayout>
+</LinearLayout>

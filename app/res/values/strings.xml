@@ -187,6 +187,7 @@
     <string name="text_pay_money">30元</string>
 
     <string name="qr_code_content">(请将左侧二维码拿给代泊员扫描录入)</string>
+    <string name="helpandhint">帮助提示</string>
 
 
     <string-array name="user_face_from">
