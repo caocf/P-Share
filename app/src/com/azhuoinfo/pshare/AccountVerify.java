@@ -10,7 +10,6 @@ import com.azhuoinfo.pshare.activity.MainActivity;
 import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.fragment.LoginFragment;
 import com.azhuoinfo.pshare.model.CustomerInfo;
-import com.azhuoinfo.pshare.model.UserAuth;
 import com.azhuoinfo.pshare.utils.Constants;
 import com.azhuoinfo.pshare.view.CommonDialog;
 
