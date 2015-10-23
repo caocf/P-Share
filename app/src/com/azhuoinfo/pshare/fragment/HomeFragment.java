@@ -169,7 +169,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                     ((ActionBarActivity) getActivity()).displayMaskView(false);
                 }
             });
-            preferences.edit().putBoolean("isExplain",true).commit();
+            preferences.edit().putBoolean("showcase_home",true).commit();
         }
     }
     @Override
