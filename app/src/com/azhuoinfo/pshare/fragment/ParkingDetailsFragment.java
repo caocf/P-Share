@@ -111,11 +111,13 @@ public class ParkingDetailsFragment extends BaseContentFragment implements AMapL
                 final SearchView searchView=((ActionBarActivity)getActivity()).startSearchMode();
                 searchView.setSearchTextHint("我想停在哪里附近？");
                 searchView.setActioImageResource(R.drawable.actionbar_search);
+                searchView.setSearchHistoryEnable(false);
+                searchView.setOnTouchOutsiteDimiss(false);
                 searchView.setOnActionClickListener(new SearchView.OnActionClickListener() {
                     @Override
                     public boolean onActionClick(String s) {
                         getSearchParkListbyName(s);
-                        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(searchView.geSearchEditText().getWindowToken(), 0);
                         return true;
                     }
@@ -124,11 +126,13 @@ public class ParkingDetailsFragment extends BaseContentFragment implements AMapL
                     @Override
                     public boolean onSearchText(String s) {
                         getSearchParkListbyName(s);
-                        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(searchView.geSearchEditText().getWindowToken(), 0);
                         return true;
                     }
                 });
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(searchView.geSearchEditText(), InputMethodManager.SHOW_IMPLICIT);
                 break;
             case 2:
                 popBackStack();

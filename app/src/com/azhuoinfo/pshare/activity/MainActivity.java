@@ -45,7 +45,6 @@ public class MainActivity extends DrawerNavigationFragmentActivity {
     private PayManager mPayManager;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-        getWindow().setFormat(PixelFormat.TRANSLUCENT);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
         this.setFloatActionBarEnabled(true);

@@ -12,5 +12,5 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:padding="12dp"
-        android:src="@drawable/ic_explain_close"/>
+        android:src="@drawable/ic_close"/>
 </RelativeLayout>
