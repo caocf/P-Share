@@ -15,7 +15,7 @@ android {
         config {
             keyAlias 'pshare'
             keyPassword 'boxiang2015'
-            storeFile file('/Users/weixuewu/git/P-Share/release/pshare.keystore')
+            storeFile file('./release/pshare.keystore')
             storePassword 'boxiang2015'
         }
     }
@@ -47,5 +47,11 @@ android {
     }
     lintOptions {
         abortOnError false
+    }
+    buildTypes {
+        release {
+            debuggable false
+            signingConfig signingConfigs.config
+        }
     }
 }
