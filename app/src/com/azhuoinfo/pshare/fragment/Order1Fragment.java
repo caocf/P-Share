@@ -190,7 +190,7 @@ public class Order1Fragment extends BaseContentFragment{
             String last_order_state = "";
             @Override
             public boolean handleMessage(Message msg) {
-                if (order_state == null){
+                if (order_state == null || listSize == 0){
                     initOrderState();
                 }else {
                     Log.d("updateHandler", "receive order_state " + last_order_state + " " + order_state);
@@ -211,6 +211,13 @@ public class Order1Fragment extends BaseContentFragment{
                 return false;
             }
         });
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         PollingUnfinishedOrder(customerId);
     }
 

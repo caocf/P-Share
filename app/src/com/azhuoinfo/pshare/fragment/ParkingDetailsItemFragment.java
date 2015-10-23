@@ -1,12 +1,7 @@
 package com.azhuoinfo.pshare.fragment;
 
-import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.pdf.PdfRenderer;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -26,7 +21,6 @@ import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
-import com.azhuoinfo.pshare.fragment.adapter.ParkingDetailsAdapter;
 import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.OrderInfo;
 import com.azhuoinfo.pshare.model.Parking;
@@ -35,20 +29,11 @@ import com.azhuoinfo.pshare.model.UserAuth;
 import com.azhuoinfo.pshare.view.CountDownTextView;
 import com.azhuoinfo.pshare.view.LoadingDialog;
 
-import org.w3c.dom.Text;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-import javax.security.auth.callback.Callback;
-import javax.security.auth.callback.CallbackHandler;
-
 import mobi.cangol.mobile.Session;
-import mobi.cangol.mobile.actionbar.ActionMenu;
-import mobi.cangol.mobile.actionbar.ActionMenuItem;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 
@@ -70,11 +55,13 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     //时间
     private RelativeLayout mAppointmentTimeRelativeLayout;
     private TextView mAppointmentTimeTextView;
-    private CheckBox mCheckBox0;
+    ImageView mIV_WashCar;
+    CheckBox mCB_WashCar;
+/*    private CheckBox mCheckBox0;
     private CheckBox mCheckBox1;
     private CheckBox mCheckBox2;
     private CheckBox mCheckBox3;
-    private CheckBox mCheckBox4;
+    private CheckBox mCheckBox4;*/
     /*//预约
     private RelativeLayout mAppointmentRelativeLayout;
     private TextView mAppointmentTextView;*/
@@ -142,10 +129,12 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mParkingDistanceTextView=(TextView) view.findViewById(R.id.tv_parking_distance);
         mParkingCanUseTextView=(TextView) view.findViewById(R.id.tv_parking_can_use);
         mParkingPriceTextView=(TextView) view.findViewById(R.id.tv_parking_price);
-        mCheckBox1=(CheckBox) findViewById(R.id.ib_shopping_cart);
+/*        mCheckBox1=(CheckBox) findViewById(R.id.ib_shopping_cart);
         mCheckBox2=(CheckBox)findViewById(R.id.ib_flashlight);
         mCheckBox3=(CheckBox) findViewById(R.id.ib_wash_car);
-        mCheckBox4=(CheckBox)findViewById(R.id.ib_umbrella);
+        mCheckBox4=(CheckBox)findViewById(R.id.ib_umbrella);*/
+        mIV_WashCar = (ImageView)view.findViewById(R.id.iv_washcar);
+        mCB_WashCar = (CheckBox)view.findViewById(R.id.cb_washcar);
         mAppointmentTimeRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_parking_appointment_time);
         mAppointmentTimeTextView=(TextView) view.findViewById(R.id.tv_parking_appointment_time);
         mStopLinearLayout=(LinearLayout) view.findViewById(R.id.ll_stop_button);
@@ -167,7 +156,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mParkingNameTextView.setText(parking.getParking_name() + "");
         mParkingAddressTextView.setText(parking.getParking_address() + "");
         Log.e(TAG, parking.getParking_can_use() + "");
-        mParkingDistanceTextView.setText(parking.getParking_distance()+"");
+        mParkingDistanceTextView.setText(parking.getParking_distance() + "");
         mParkingCanUseTextView.setText(parking.getParking_can_use() + "");
         mParkingPriceTextView.setText(parking.getParking_charging_standard() + "");
         mAppointmentTimeRelativeLayout.setOnClickListener(new View.OnClickListener() {
@@ -192,7 +181,20 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 mTimeDialog.show();
             }
         });
-        mCheckBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        mCB_WashCar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    strAppointmentNeed="1";
+                    mIV_WashCar.setImageResource(R.drawable.xiche_select);
+                }else {
+                    strAppointmentNeed="0";
+                    mIV_WashCar.setImageResource(R.drawable.xiche);
+                }
+            }
+        });
+        /*mCheckBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
@@ -227,7 +229,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                     Log.e("strAppointmentNeed4",strAppointmentNeed);
                 }
             }
-        });
+        });*/
         mImmediateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
