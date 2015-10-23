@@ -43,15 +43,16 @@
 	        android:textColor="@color/text_light_gray"
 	        android:text="2015/9/10-2015/10/1"/>
 	    <TextView
-			style="?android:buttonStyle"
-			android:clickable="false"
-	        android:id="@+id/button_pay" 
+	        android:id="@+id/button_pay"
 	        android:layout_height="25dp"
 	        android:layout_width="wrap_content"
+			android:paddingLeft="@dimen/padding1"
+			android:paddingRight="@dimen/padding1"
 	        android:layout_alignParentRight="true"
 	        android:layout_marginRight="@dimen/padding2"
 	        android:layout_centerVertical="true"
-	        android:background="@color/actionbar_background"
+			android:gravity="center_vertical|center_horizontal"
+	        android:background="@drawable/button"
 	        android:textColor="@color/text_white"
 	        android:text="去支付"/>
 </RelativeLayout>

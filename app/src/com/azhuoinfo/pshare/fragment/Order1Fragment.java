@@ -116,6 +116,7 @@ public class Order1Fragment extends BaseContentFragment{
     private String customerId;
     private String orderId;
     private String parakerId;
+    private String parking_id;
     private String parkerLevel;
     private String parkerName;
     private String parkerMobile;
@@ -269,7 +270,7 @@ public class Order1Fragment extends BaseContentFragment{
             mOrder4ScrollView.setVisibility(View.GONE);
             mOrder3ScrollView.setVisibility(View.VISIBLE);
             initViewsOrder3();
-        }else if((listSize>0)&&(order_state.equals("3")||order_state.equals("4")||order_state.equals("8"))) {
+        }else if((listSize>0)&&(order_state.equals("3")||order_state.equals("4")||order_state.equals("8")|| order_state.equals("9"))) {
             Log.e("mOrder4ScrollView", order_state + "");
             mOrder1RelativeLayout.setVisibility(View.GONE);
             mOrder2RelativeLayout.setVisibility(View.GONE);
@@ -325,6 +326,7 @@ public class Order1Fragment extends BaseContentFragment{
                             parkerMobile = unfinishedOrderInfo.getParker_mobile();
                             parkerName = unfinishedOrderInfo.getParker_name();
                             parkingName=unfinishedOrderInfo.getParking_name();
+                            parking_id = unfinishedOrderInfo.getParking_id();
                             orderPlanBegin = unfinishedOrderInfo.getOrder_plan_begin();
                             orderPlanEnd = unfinishedOrderInfo.getOrder_plan_end();
                             carNumber = unfinishedOrderInfo.getCar_number();
@@ -389,6 +391,7 @@ public class Order1Fragment extends BaseContentFragment{
                             parkerMobile = unfinishedOrderInfo.getParker_mobile();
                             parkerName = unfinishedOrderInfo.getParker_name();
                             parkingName=unfinishedOrderInfo.getParking_name();
+                            parking_id = unfinishedOrderInfo.getParking_id();
                             orderPlanBegin = unfinishedOrderInfo.getOrder_plan_begin();
                             orderPlanEnd = unfinishedOrderInfo.getOrder_plan_end();
                             carNumber = unfinishedOrderInfo.getCar_number();
@@ -517,6 +520,7 @@ public class Order1Fragment extends BaseContentFragment{
             @Override
             public void onSuccess(boolean page, comment comment) {
                 showToast("评论发送成功");
+                commentDialog.dismiss();
                 loadingDialog.dismiss();
             }
 
@@ -587,7 +591,7 @@ public class Order1Fragment extends BaseContentFragment{
         mGetCarButton=(Button) findViewById(R.id.button_to_make_car4);
         mLeft = (ImageView) findViewById(R.id.iv_left);
         mRight = (ImageView) findViewById(R.id.iv_right);
-        if (order_state.equals("3") || order_state.equals("4") || order_state.equals("8")){
+        if (order_state.equals("3") || order_state.equals("4") || order_state.equals("8")|| order_state.equals("9")){
             Log.e(TAG, parakerId + ":" + parkerName + ":" + parakerId + ":" + parkerMobile + ":" + parkerLevel + ":" + orderPlanBegin + ":" + orderPlanEnd);
             mParkerIDTextView.setText(parakerId + "");
             mParkerAreaTextView.setText(parkingName + "");
@@ -636,13 +640,19 @@ public class Order1Fragment extends BaseContentFragment{
                 }
             });
 
-            if (order_state.equals("8")){
+            if (order_state.equals("3")){
+                mFinishButton.setVisibility(View.GONE);
+                mGetCarButton.setVisibility(View.INVISIBLE);
+            }else if (order_state.equals("4")){
+                mFinishButton.setVisibility(View.GONE);
+                mGetCarButton.setVisibility(View.VISIBLE);
+            } if (order_state.equals("8")||order_state.equals("9")){
                 mFinishButton.setVisibility(View.VISIBLE);
                 mGetCarButton.setVisibility(View.GONE);
                 mFinishButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        postGetcalculatePay(orderId,parakerId);
+                        postGetcalculatePay(orderId, parking_id);
                         //showPayMethodDialog();
                         //mToPayRelativeLayout.setVisibility(View.VISIBLE);
                     }
@@ -741,10 +751,11 @@ public class Order1Fragment extends BaseContentFragment{
         });
     }
 
+    CommonDialog commentDialog;
     private void showAssessmentDialog() {
-        final CommonDialog dialog = CommonDialog.creatDialog(this.getActivity());
-        dialog.setContentView(R.layout.assessment_pager);
-        final RadioGroup radioGroup = (RadioGroup)dialog.findViewById(R.id.rg);
+        commentDialog = CommonDialog.creatDialog(this.getActivity());
+        commentDialog.setContentView(R.layout.assessment_pager);
+        final RadioGroup radioGroup = (RadioGroup)commentDialog.findViewById(R.id.rg);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -758,7 +769,7 @@ public class Order1Fragment extends BaseContentFragment{
             }
         });
 
-        Button payButton = (Button)dialog.findViewById(R.id.btn_pay);
+        Button payButton = (Button)commentDialog.findViewById(R.id.btn_pay);
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -774,20 +785,20 @@ public class Order1Fragment extends BaseContentFragment{
                     Log.e("OnButtonClick", "as3");
                     level = 3;
                 }
-                EditText et = (EditText)findViewById(R.id.comment_content);
+                EditText et = (EditText)commentDialog.findViewById(R.id.comment_content);
                 postAssessment(orderId,customerId,""+level,et.getText().toString());
             }
         });
 
-        ImageView imageView = (ImageView)dialog.findViewById(R.id.iv_close);
+        ImageView imageView = (ImageView)commentDialog.findViewById(R.id.iv_close);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                commentDialog.dismiss();
             }
         });
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
+        commentDialog.setCanceledOnTouchOutside(true);
+        commentDialog.show();
     }
 
 
@@ -796,6 +807,11 @@ public class Order1Fragment extends BaseContentFragment{
         payDialog = CommonDialog.creatDialog(this.getActivity());
         payDialog.setContentView(R.layout.list_menu_pay_pager);
         final RadioGroup radioGroup = (RadioGroup)payDialog.findViewById(R.id.rg);
+
+        TextView tv_money;
+        tv_money = (TextView)payDialog.findViewById(R.id.tv_money);
+        tv_money.setText(String.format("%.2f",Double.parseDouble(totalPay)));
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -816,7 +832,8 @@ public class Order1Fragment extends BaseContentFragment{
                 int checkedId = radioGroup.getCheckedRadioButtonId();
                 if (checkedId == R.id.alipay) {
                     Log.e("OnButtonClick", "alipay");
-                    toPay(PayManager.PAY_TYPE_ALIPAY, paySubject, payDesc, totalPay);
+                    //toPay(PayManager.PAY_TYPE_ALIPAY, paySubject, payDesc, totalPay);
+                    toPay(PayManager.PAY_TYPE_ALIPAY, paySubject, payDesc, "0.01");
                 } else if (checkedId == R.id.wechatpay) {
                     Log.e("OnButtonClick", "wechatpay");
                     int fee = Integer.parseInt(totalPay) * 100;

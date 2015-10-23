@@ -77,6 +77,7 @@ public class MonthlyRentListFragment extends BaseContentFragment{
         mMonthlyRentListView.setAdapter(new MonthlyRentListAdapter(this.getActivity(), list));
         mAddMonthlyRentCarRelativeLayout=(RelativeLayout) findViewById(R.id.rl_add_monthlyRent);
 
+
         mMonthlyRentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

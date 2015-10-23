@@ -48,6 +48,6 @@ public class Constants {
 
 
     // 在商户后台回调地址
-    public static final String NOTIFY_URL = "http://112.74.125.226/XPRO/appZhiNotice/findZhiNotice.do";
+    public static final String NOTIFY_URL = "http://139.196.12.103/notify_url.jsp";
 
 }

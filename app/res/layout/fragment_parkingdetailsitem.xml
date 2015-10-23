@@ -279,15 +279,13 @@
 					 android:layout_height="wrap_content"
 					 android:textColor="@color/actionbar_background"
 					 android:textSize="@dimen/text_size3"
-					 android:layout_gravity="center"
-					 android:text="正在为你搭配代泊员..."/>
+					 android:layout_gravity="center"/>
 				 <com.azhuoinfo.pshare.view.CountDownTextView
 					 android:id="@+id/tv_order_text"
 					 android:layout_width="wrap_content"
 					 android:layout_height="wrap_content"
 					 android:textColor="@color/actionbar_background"
-					 android:textSize="@dimen/text_size3"
-					 android:text="正在为你搭配代泊员..."/>
+					 android:textSize="@dimen/text_size3"/>
 			 </LinearLayout>
 		    </LinearLayout>
 	</ScrollView>		    		      		          

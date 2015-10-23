@@ -290,6 +290,8 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
             mImmediateButton.setBackgroundResource(R.drawable.button);
             mAppointmentButton.setEnabled(true);
             mAppointmentButton.setBackgroundResource(R.drawable.button);
+            mOrderTextView.setText("");
+            mOrderTextView.setText("");
         }
     }
 
@@ -345,6 +347,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 mCancelButton.setVisibility(View.VISIBLE);
                 mOrderTextLinearLayout.setVisibility(View.VISIBLE);
                 order_id=orderInfos.getOrder_id();
+                mOrderTextView.setText("正在为你搭配代泊员...");
                 mOrderCountDownTextView.starTimeByMillisInFuture(3 * 60 * 1000);
                 loadingDialog.dismiss();
                 mOrderCountDownTextView.setOnCountDownListener(new CountDownTextView.OnCountDownListener() {
