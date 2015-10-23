@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
     compile project(':commons-zxing')
-    compile project(':actionbar-1.0.0')
+    compile project(':actionbar-1.0.1')
     compile project(':uiframe-1.0.0')
     compile project(':appcore-1.0.0')
     compile project(':commons-pay')

@@ -1,6 +1,7 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -42,7 +43,6 @@ import mobi.cangol.mobile.actionbar.ActionBarActivity;
 import mobi.cangol.mobile.actionbar.ActionMenu;
 import mobi.cangol.mobile.actionbar.ActionMenuItem;
 import mobi.cangol.mobile.actionbar.view.SearchView;
-import mobi.cangol.mobile.base.BaseActionBarActivity;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.logging.Log;
@@ -124,8 +124,8 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         this.findViewById(R.id.layout_parking).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mDefaultParking!=null){
-                    Bundle bundle=new Bundle();
+                if (mDefaultParking != null) {
+                    Bundle bundle = new Bundle();
                     bundle.putParcelable("parking", mDefaultParking);
                     replaceFragment(ParkingDetailsItemFragment.class, "ParkingDetailsItemFragment", bundle);
                 }
@@ -141,6 +141,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 }
             }
         });
+        showcase();
 
 	}
 
@@ -157,7 +158,20 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         }
 
 	}
-
+    private void showcase(){
+        SharedPreferences  preferences=getActivity().getPreferences(Context.MODE_PRIVATE);
+        if(!preferences.getBoolean("showcase_home",false)){
+            ((ActionBarActivity)this.getActivity()).setMaskView(R.layout.layout_showcase_home);
+            ((ActionBarActivity)this.getActivity()).displayMaskView(true);
+            this.getActivity().findViewById(R.id.imageView_showcase).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ActionBarActivity) getActivity()).displayMaskView(false);
+                }
+            });
+            preferences.edit().putBoolean("isExplain",true).commit();
+        }
+    }
     @Override
     protected FragmentInfo getNavigtionUpToFragment() {
         return null;
@@ -174,7 +188,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
     public boolean onMenuActionSelected(ActionMenuItem action) {
         switch(action.getId()){
             case 1:
-                final SearchView searchView=this.getCustomActionBar().startSearchMode();
+                final SearchView searchView=((ActionBarActivity)getActivity()).startSearchMode();
                 searchView.setSearchTextHint("我想停在哪里附近？");
                 searchView.setActioImageResource(R.drawable.actionbar_search);
                 searchView.setOnActionClickListener(new SearchView.OnActionClickListener() {

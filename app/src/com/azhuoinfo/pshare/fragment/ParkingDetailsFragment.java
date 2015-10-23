@@ -30,6 +30,8 @@ import com.azhuoinfo.pshare.model.UnfinishedOrderInfo;
 import com.azhuoinfo.pshare.view.PromptView;
 
 import java.util.List;
+
+import mobi.cangol.mobile.actionbar.ActionBarActivity;
 import mobi.cangol.mobile.actionbar.ActionMenu;
 import mobi.cangol.mobile.actionbar.ActionMenuItem;
 import mobi.cangol.mobile.actionbar.view.SearchView;
@@ -106,7 +108,7 @@ public class ParkingDetailsFragment extends BaseContentFragment implements AMapL
     public boolean onMenuActionSelected(ActionMenuItem action) {
         switch(action.getId()){
             case 1:
-                final SearchView searchView=this.getCustomActionBar().startSearchMode();
+                final SearchView searchView=((ActionBarActivity)getActivity()).startSearchMode();
                 searchView.setSearchTextHint("我想停在哪里附近？");
                 searchView.setActioImageResource(R.drawable.actionbar_search);
                 searchView.setOnActionClickListener(new SearchView.OnActionClickListener() {

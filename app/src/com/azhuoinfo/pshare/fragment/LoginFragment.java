@@ -25,6 +25,7 @@ import com.azhuoinfo.pshare.view.LoadingDialog;
 import java.util.List;
 
 import mobi.cangol.mobile.Session;
+import mobi.cangol.mobile.actionbar.ActionBarActivity;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.service.AppService;
@@ -154,7 +155,7 @@ public class LoginFragment extends BaseContentFragment {
 						editor.commit();
                         Log.d(TAG, "" + customerInfo);
                         mAccountVerify.login(customerInfo);
-                        toMain();
+                        replaceFragment(HomeFragment.class, "HomeFragment", null);
                     } else {
                         showToast("无数据");
                     }
@@ -166,18 +167,8 @@ public class LoginFragment extends BaseContentFragment {
                 if (isEnable()) {
                     if (mLoadingDialog != null) mLoadingDialog.dismiss();
                     showToast(message);
-                    //replaceFragment(HomeFragment.class, "HomeFragment", null);
                 }
 			}
 		});
 	}
-    private void toMain(){
-        if(preferences.getBoolean("isExplain",false)){
-            replaceFragment(HomeFragment.class, "HomeFragment", null);
-            preferences.edit().putBoolean("isExplain",false).commit();
-        }else{
-            replaceFragment(ExplainFragment.class, "ExplainFragment", null);
-        }
-    }
-
 }
