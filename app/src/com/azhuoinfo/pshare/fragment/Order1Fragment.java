@@ -29,7 +29,7 @@ import com.azhuoinfo.pshare.api.ApiResult;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.fragment.adapter.ImageAdapter;
-import com.azhuoinfo.pshare.model.Comment;
+import com.azhuoinfo.pshare.model.comment;
 import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.OrderPay;
 import com.azhuoinfo.pshare.model.UnfinishedOrderInfo;
@@ -507,7 +507,7 @@ public class Order1Fragment extends BaseContentFragment{
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_CALCULATEPAY));
         apiTask.setParams(ApiContants.instance(getActivity()).getComment(order_id,  comment_operater_id, comment_level,comment_content));
-        apiTask.execute(new OnDataLoader<Comment>() {
+        apiTask.execute(new OnDataLoader<comment>() {
             LoadingDialog loadingDialog;
             @Override
             public void onStart() {
@@ -515,7 +515,7 @@ public class Order1Fragment extends BaseContentFragment{
             }
 
             @Override
-            public void onSuccess(boolean page, Comment comment) {
+            public void onSuccess(boolean page, comment comment) {
                 showToast("评论发送成功");
                 loadingDialog.dismiss();
             }
