@@ -22,8 +22,8 @@ public class OrderInfo {
     private String customer_nickname;
     private String customer_head;
     private String customer_sex;
-    private String customer_name;
-    private String customer_age;
+    private String parker_name_back;
+    private String parker_mobile_back;
     private String customer_mobile;
     private String customer_email;
 
@@ -39,13 +39,13 @@ public class OrderInfo {
 
     private String car_number;
     private String car_brand;
-    private String car_color;
-    private String car_buy_date;
+    private String parker_carid_back;
+    private String parker_id_back;
 
     public OrderInfo() {
     }
 
-    public OrderInfo(String order_id, String order_unit_fee, String order_paid_amount, String order_total_fee, String order_plan_begin, String order_plan_end, String order_actual_begin, String order_actual_end, String order_path, String order_state, String create_at, String customer_id, String customer_nickname, String customer_head, String customer_sex, String customer_name, String customer_age, String customer_mobile, String customer_email, String parking_id, String parking_name, String parking_region, String parking_latitude, String parking_longitude, String parker_id, String parker_name, String parker_mobile, String parker_cardid, String car_number, String car_brand, String car_color, String car_buy_date) {
+    public OrderInfo(String order_id, String order_unit_fee, String order_paid_amount, String order_total_fee, String order_plan_begin, String order_plan_end, String order_actual_begin, String order_actual_end, String order_path, String order_state, String create_at, String customer_id, String customer_nickname, String customer_head, String customer_sex, String parker_name_back, String parker_mobile_back, String customer_mobile, String customer_email, String parking_id, String parking_name, String parking_region, String parking_latitude, String parking_longitude, String parker_id, String parker_name, String parker_mobile, String parker_cardid, String car_number, String car_brand, String parker_carid_back, String parker_id_back) {
         this.order_id = order_id;
         this.order_unit_fee = order_unit_fee;
         this.order_paid_amount = order_paid_amount;
@@ -61,8 +61,8 @@ public class OrderInfo {
         this.customer_nickname = customer_nickname;
         this.customer_head = customer_head;
         this.customer_sex = customer_sex;
-        this.customer_name = customer_name;
-        this.customer_age = customer_age;
+        this.parker_name_back = parker_name_back;
+        this.parker_mobile_back = parker_mobile_back;
         this.customer_mobile = customer_mobile;
         this.customer_email = customer_email;
         this.parking_id = parking_id;
@@ -76,8 +76,8 @@ public class OrderInfo {
         this.parker_cardid = parker_cardid;
         this.car_number = car_number;
         this.car_brand = car_brand;
-        this.car_color = car_color;
-        this.car_buy_date = car_buy_date;
+        this.parker_carid_back = parker_carid_back;
+        this.parker_id_back = parker_id_back;
     }
 
     public String getOrder_id() {
@@ -200,20 +200,20 @@ public class OrderInfo {
         this.customer_sex = customer_sex;
     }
 
-    public String getCustomer_name() {
-        return customer_name;
+    public String getParker_name_back() {
+        return parker_name_back;
     }
 
-    public void setCustomer_name(String customer_name) {
-        this.customer_name = customer_name;
+    public void setParker_name_back(String parker_name_back) {
+        this.parker_name_back = parker_name_back;
     }
 
-    public String getCustomer_age() {
-        return customer_age;
+    public String getParker_mobile_back() {
+        return parker_mobile_back;
     }
 
-    public void setCustomer_age(String customer_age) {
-        this.customer_age = customer_age;
+    public void setParker_mobile_back(String parker_mobile_back) {
+        this.parker_mobile_back = parker_mobile_back;
     }
 
     public String getCustomer_mobile() {
@@ -320,20 +320,20 @@ public class OrderInfo {
         this.car_brand = car_brand;
     }
 
-    public String getCar_color() {
-        return car_color;
+    public String getParker_carid_back() {
+        return parker_carid_back;
     }
 
-    public void setCar_color(String car_color) {
-        this.car_color = car_color;
+    public void setParker_carid_back(String parker_carid_back) {
+        this.parker_carid_back = parker_carid_back;
     }
 
-    public String getCar_buy_date() {
-        return car_buy_date;
+    public String getParker_id_back() {
+        return parker_id_back;
     }
 
-    public void setCar_buy_date(String car_buy_date) {
-        this.car_buy_date = car_buy_date;
+    public void setParker_id_back(String parker_id_back) {
+        this.parker_id_back = parker_id_back;
     }
 
     @Override
@@ -354,8 +354,8 @@ public class OrderInfo {
                 ", customer_nickname='" + customer_nickname + '\'' +
                 ", customer_head='" + customer_head + '\'' +
                 ", customer_sex='" + customer_sex + '\'' +
-                ", customer_name='" + customer_name + '\'' +
-                ", customer_age='" + customer_age + '\'' +
+                ", parker_name_back='" + parker_name_back + '\'' +
+                ", parker_mobile_back='" + parker_mobile_back + '\'' +
                 ", customer_mobile='" + customer_mobile + '\'' +
                 ", customer_email='" + customer_email + '\'' +
                 ", parking_id='" + parking_id + '\'' +
@@ -369,8 +369,8 @@ public class OrderInfo {
                 ", parker_cardid='" + parker_cardid + '\'' +
                 ", car_number='" + car_number + '\'' +
                 ", car_brand='" + car_brand + '\'' +
-                ", car_color='" + car_color + '\'' +
-                ", car_buy_date='" + car_buy_date + '\'' +
+                ", parker_carid_back='" + parker_carid_back + '\'' +
+                ", parker_id_back='" + parker_id_back + '\'' +
                 '}';
     }
 }

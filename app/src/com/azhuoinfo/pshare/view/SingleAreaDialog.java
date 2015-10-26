@@ -8,10 +8,8 @@ import android.os.Build;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.GridView;
 
 import com.azhuoinfo.pshare.R;
-import com.azhuoinfo.pshare.fragment.adapter.CarIdAdapter;
 import com.azhuoinfo.pshare.model.CityModel;
 import com.azhuoinfo.pshare.model.DistrictModel;
 import com.azhuoinfo.pshare.model.ProvinceModel;
@@ -29,10 +27,10 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 @SuppressLint("ClickableViewAccessibility")
-public class AreaDialog {
+public class SingleAreaDialog {
 	private final static String TAG = "CarIdDialog";
 
-    protected String[] mProvinceDatas;
+    protected String[] mDistrictDatas;
     protected Map<String, String[]> mCitisDatasMap = new HashMap<String, String[]>();
     protected Map<String, String[]> mDistrictDatasMap = new HashMap<String, String[]>();
     protected Map<String, String> mZipcodeDatasMap = new HashMap<String, String>();
@@ -44,9 +42,9 @@ public class AreaDialog {
 	private AlertDialog.Builder builder;
 	private Context context;
 	private AlertDialog dialog;
-	private View mLayoutView;
+	private View mLayoutView;/*
     private WheelView mViewProvince;
-    private WheelView mViewCity;
+    private WheelView mViewCity;*/
     private WheelView mViewDistrict;
     private Button mBtnConfirm;
 
@@ -58,12 +56,14 @@ public class AreaDialog {
     }
 
     public interface OnSelectListener{
-        void onSelect(String province,String city,String district,String zipcode);
+        void onSelect(String province, String city, String district, String zipcode);
     }
 
 
-	private AreaDialog(Context context) {
+	private SingleAreaDialog(Context context,String province, String city) {
 		this.context = context;
+        mCurrentProviceName = province;
+        mCurrentCityName = city;
 		//fix bug 低版本 nosuchmethod
 		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 			builder = new AlertDialog.Builder(context);
@@ -72,37 +72,37 @@ public class AreaDialog {
 		}
 		this.dialog = builder.create();
 		dialog.show();
-		dialog.setContentView(R.layout.dialog_wheel_area);
+		dialog.setContentView(R.layout.dialog_wheel_single_area);
 		dialog.setCanceledOnTouchOutside(true);
 		initViews();
 	}
 
-	public static AreaDialog creatDialog(Context context) {
-		return new AreaDialog(context);
+	public static SingleAreaDialog creatDialog(Context context,String province, String city) {
+		return new SingleAreaDialog(context,province, city);
 	}
 
 	public boolean isShow() {
 		return dialog.isShowing();
 	}
 
-	public AreaDialog self() {
+	public SingleAreaDialog self() {
 		return this;
 	}
 
-	public AreaDialog show() {
+	public SingleAreaDialog show() {
 		dialog.show();
 		return this;
 	}
 
-	public AreaDialog dismiss() {
+	public SingleAreaDialog dismiss() {
 		dialog.cancel();
 		return this;
 	}
 
 	private void initViews() {
-		mLayoutView= dialog.findViewById(R.id.dialog_area_layout);
+		mLayoutView= dialog.findViewById(R.id.dialog_area_layout);/*
         mViewProvince = (WheelView)dialog.findViewById(R.id.id_province);
-        mViewCity = (WheelView) dialog.findViewById(R.id.id_city);
+        mViewCity = (WheelView) dialog.findViewById(R.id.id_city);*/
         mViewDistrict = (WheelView) dialog.findViewById(R.id.id_district);
         mBtnConfirm = (Button) dialog.findViewById(R.id.btn_confirm);
         mLayoutView.setOnClickListener(new OnClickListener() {
@@ -113,21 +113,21 @@ public class AreaDialog {
                     dialog.dismiss();
             }
 
-        });
+        });/*
         mViewProvince.addChangingListener(new OnWheelChangedListener() {
 
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
-                updateCities();
+                //updateCities();
             }
         });
         mViewCity.addChangingListener(new OnWheelChangedListener() {
 
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
-                updateAreas();
+                //updateAreas();
             }
-        });
+        });*/
         mViewDistrict.addChangingListener(new OnWheelChangedListener() {
 
             @Override
@@ -139,20 +139,22 @@ public class AreaDialog {
         mBtnConfirm.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mOnSelectListener!=null)
-                    mOnSelectListener.onSelect(mCurrentProviceName,mCurrentCityName,mCurrentDistrictName,mCurrentZipCode);
+                if (mOnSelectListener != null)
+                    mOnSelectListener.onSelect(mCurrentProviceName, mCurrentCityName, mCurrentDistrictName, mCurrentZipCode);
                 dismiss();
             }
         });
-        initProvinceDatas();
+        initProvinceDatas();/*
         mViewProvince.setViewAdapter(new ArrayWheelAdapter<String>(this.context, mProvinceDatas));
         mViewProvince.setVisibleItems(7);
         mViewCity.setVisibleItems(7);
+        */
+        mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(this.context, mDistrictDatas));
         mViewDistrict.setVisibleItems(7);
-        updateCities();
-        updateAreas();
+        /*updateCities();
+        updateAreas();*/
 	}
-    private void updateAreas() {
+    /*private void updateAreas() {
         int pCurrent = mViewCity.getCurrentItem();
         mCurrentCityName = mCitisDatasMap.get(mCurrentProviceName)[pCurrent];
         String[] areas = mDistrictDatasMap.get(mCurrentCityName);
@@ -162,8 +164,6 @@ public class AreaDialog {
         }
         mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(this.context, areas));
         mViewDistrict.setCurrentItem(0);
-        mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[0];
-        mCurrentZipCode = mZipcodeDatasMap.get(mCurrentDistrictName);
     }
     private void updateCities() {
         int pCurrent = mViewProvince.getCurrentItem();
@@ -175,7 +175,7 @@ public class AreaDialog {
         mViewCity.setViewAdapter(new ArrayWheelAdapter<String>(this.context, cities));
         mViewCity.setCurrentItem(0);
         updateAreas();
-    }
+    }*/
 
     public void initProvinceDatas(){
         List<ProvinceModel> provinceList = null;
@@ -188,7 +188,7 @@ public class AreaDialog {
             parser.parse(input, handler);
             input.close();
             provinceList = handler.getDataList();
-            if (provinceList!= null && !provinceList.isEmpty()) {
+            /*if (provinceList!= null && !provinceList.isEmpty()) {
                 mCurrentProviceName = provinceList.get(0).getName();
                 List<CityModel> cityList = provinceList.get(0).getCityList();
                 if (cityList!= null && !cityList.isEmpty()) {
@@ -197,9 +197,11 @@ public class AreaDialog {
                     mCurrentDistrictName = districtList.get(0).getName();
                     mCurrentZipCode = districtList.get(0).getZipcode();
                 }
-            }
-            mProvinceDatas = new String[provinceList.size()];
-            for (int i=0; i< provinceList.size(); i++) {
+            }*/
+            //mProvinceDatas = new String[provinceList.size()];
+
+
+            /*for (int i=0; i< provinceList.size(); i++) {
                 mProvinceDatas[i] = provinceList.get(i).getName();
                 List<CityModel> cityList = provinceList.get(i).getCityList();
                 String[] cityNames = new String[cityList.size()];
@@ -217,7 +219,57 @@ public class AreaDialog {
                     mDistrictDatasMap.put(cityNames[j], distrinctNameArray);
                 }
                 mCitisDatasMap.put(provinceList.get(i).getName(), cityNames);
+            }*/
+
+
+            for (int i=0; i< provinceList.size(); i++) {
+                if(provinceList.get(i).getName().equals(mCurrentProviceName)){
+                    List<CityModel> cityList = provinceList.get(i).getCityList();
+                    for (int j=0; j< cityList.size(); j++) {
+                        if (cityList.get(j).getName().equals(mCurrentCityName)){
+                            List<DistrictModel> districtList = cityList.get(j).getDistrictList();
+
+                            String[] distrinctNameArray = new String[districtList.size()];
+                            DistrictModel[] distrinctArray = new DistrictModel[districtList.size()];
+
+                            mDistrictDatas = distrinctNameArray;
+
+                            for (int k=0; k<districtList.size(); k++) {
+                                DistrictModel districtModel = new DistrictModel(districtList.get(k).getName(), districtList.get(k).getZipcode());
+                                mZipcodeDatasMap.put(districtList.get(k).getName(), districtList.get(k).getZipcode());
+                                distrinctArray[k] = districtModel;
+                                distrinctNameArray[k] = districtModel.getName();
+                            }
+                            mDistrictDatasMap.put(mCurrentCityName, distrinctNameArray);
+                            break;
+                        }
+                    }
+                    break;
+                }
             }
+
+
+            /*for (int i=0; i< provinceList.size(); i++) {
+                mProvinceDatas[i] = provinceList.get(i).getName();
+                List<CityModel> cityList = provinceList.get(i).getCityList();
+                String[] cityNames = new String[cityList.size()];
+
+
+                for (int j=0; j< cityList.size(); j++) {
+                    cityNames[j] = cityList.get(j).getName();
+                    List<DistrictModel> districtList = cityList.get(j).getDistrictList();
+                    String[] distrinctNameArray = new String[districtList.size()];
+                    DistrictModel[] distrinctArray = new DistrictModel[districtList.size()];
+                    for (int k=0; k<districtList.size(); k++) {
+                        DistrictModel districtModel = new DistrictModel(districtList.get(k).getName(), districtList.get(k).getZipcode());
+                        mZipcodeDatasMap.put(districtList.get(k).getName(), districtList.get(k).getZipcode());
+                        distrinctArray[k] = districtModel;
+                        distrinctNameArray[k] = districtModel.getName();
+                    }
+                    mDistrictDatasMap.put(cityNames[j], distrinctNameArray);
+                }
+                mCitisDatasMap.put(provinceList.get(i).getName(), cityNames);
+            }*/
         } catch (Throwable e) {
             e.printStackTrace();
         } finally {

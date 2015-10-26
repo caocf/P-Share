@@ -24,6 +24,7 @@ import com.azhuoinfo.pshare.model.CarList;
 import com.azhuoinfo.pshare.model.Parking;
 import com.azhuoinfo.pshare.view.AreaDialog;
 import com.azhuoinfo.pshare.view.CountryDialog;
+import com.azhuoinfo.pshare.view.SingleAreaDialog;
 
 import java.util.ArrayList;
 
@@ -71,6 +72,12 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment{
     private Button mConfirmButton;
     private AccountVerify mAccountVerify;
     private String carNumber;
+
+    protected String mCurrentProviceName;
+    protected String mCurrentCityName;
+    protected String mCurrentDistrictName ="";
+    protected String mCurrentZipCode ="";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +93,17 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (savedInstanceState!=null) {
+            carNumber = savedInstanceState.getString("carNumber");
+            mCurrentCountry = savedInstanceState.getString("mCurrentCountry");
+            mCurrentProviceName = savedInstanceState.getString("mCurrentProviceName");
+            mCurrentCityName = savedInstanceState.getString("mCurrentCityName");
+            mCurrentDistrictName = savedInstanceState.getString("mCurrentDistrictName");
+            mCurrentZipCode = savedInstanceState.getString("mCurrentZipCode");
+            mParkingId = savedInstanceState.getString("mParkingId");
+            mParking_name = savedInstanceState.getString("mParking_name");
+            carNumber = savedInstanceState.getString("carNumber");
+        }
         findViews(view);
     }
 
@@ -123,15 +141,21 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment{
         mCustomerNameEditText=(EditText) view.findViewById(R.id.et_customer_name);
 
         mCarNumberRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_car_number);
-        mCarNumberTextView=(TextView) view.findViewById(R.id.car_number);
+        mCarNumberTextView=(TextView) view.findViewById(R.id.tv_car_number);
 
         mConfirmButton=(Button) findViewById(R.id.button_confirm);
 
     }
-
+String mCurrentCountry;
     @Override
     protected void initViews(Bundle bundle) {
         this.setTitle(R.string.add_rent);
+        mCountryTextView.setText(mCurrentCountry);
+        mProvinceTextView.setText(mCurrentProviceName);
+        mCityTextView.setText(mCurrentCityName);
+        mAreaTextView.setText(mCurrentDistrictName);
+        mCarNumberTextView.setText(carNumber);
+        mLivingAreaTextView.setText(mParking_name);
 
     }
 
@@ -144,27 +168,81 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment{
                 dialog.setOnSelectListener(new CountryDialog.OnSelectListener() {
                     @Override
                     public void onSelect(String province, String city, String district, String zipcode) {
+                        mCurrentCountry = province;
                         mCountryTextView.setText(province);
+                        mCurrentProviceName = city;
                         mProvinceTextView.setText(city);
+                        mCurrentCityName = district;
                         mCityTextView.setText(district);
                     }
                 });
 
             }
         });
+
+        mAreaRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SingleAreaDialog dialog = SingleAreaDialog.creatDialog(getActivity(),mCurrentProviceName,mCurrentCityName);
+                dialog.setOnSelectListener(new SingleAreaDialog.OnSelectListener() {
+                    @Override
+                    public void onSelect(String province, String city, String district, String zipcode) {
+                        /*mCountryTextView.setText(province);
+                        mProvinceTextView.setText(city);
+                        mCityTextView.setText(district);
+                        */
+                        mCurrentDistrictName = district;
+                        mAreaTextView.setText(district);
+                    }
+                });
+
+            }
+        });
+
+        mLivingAreaRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCurrentDistrictName!=null && !mCurrentDistrictName.isEmpty()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("area", mCurrentDistrictName);
+                    replaceFragment(AddLivingAreaFragment.class, "AddLivingAreaFragment", bundle, 1);
+                } else {
+                    showToast("请先选择省市区");
+                }
+            }
+        });
+
+
+
+
         mCarNumberRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replaceFragment(AddMonthylyCarNumberFragment.class, "AddMonthylyCarNumberFragment", null);
+                replaceFragment(AddMonthylyCarNumberFragment.class, "AddMonthylyCarNumberFragment", null,2);
             }
         });
     }
+
+    String mParkingId;
+    String mParking_name;
     @Override
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
         if(resultCode==RESULT_OK){
+            if (requestCode == 1) {
+                Parking item = data.getParcelable("parking");
+                mParkingId = item.getParking_id();
+                mParking_name = item.getParking_name();
+                mLivingAreaTextView.setText(item.getParking_name());
+            }else if (requestCode == 2){
+                CarList carListItem = data.getParcelable("carList");
+                carNumber = carListItem.getCar_number();
+                mCarNumberTextView.setText(carListItem.getCar_number());
+            }
+
         }
     }
+
     @Override
     protected FragmentInfo getNavigtionUpToFragment() {
         return null;
@@ -173,5 +251,20 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment{
     @Override
     public boolean isCleanStack() {
         return false;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("carNumber", carNumber);
+
+        outState.putString("mCurrentCountry", mCurrentCountry);
+        outState.putString("mCurrentProviceName", mCurrentProviceName);
+        outState.putString("mCurrentCityName",mCurrentCityName);
+        outState.putString("mCurrentDistrictName",mCurrentDistrictName);
+        outState.putString("mCurrentZipCode",mCurrentZipCode);
+        outState.putString("mParkingId",mParkingId);
+        outState.putString("mParking_name",mParking_name);
+
     }
 }

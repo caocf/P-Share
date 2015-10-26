@@ -163,6 +163,8 @@ public class CountryDialog {
         }
         mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(this.context, areas));
         mViewDistrict.setCurrentItem(0);
+        mCurrentDistrictName = mCitisDatasMap.get(mCurrentCityName)[0];
+        mCurrentZipCode = mDistrictDatasMap.get(mCurrentDistrictName);
     }
     private void updateCities() {
         int pCurrent = mViewProvince.getCurrentItem();
