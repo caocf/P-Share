@@ -28,9 +28,8 @@ public class AlipayPay extends PayInterface {
 	private String partnerId;
 	private String rsaPrivate;
 	private String rsaPublic;
-	private String notifyUrl;
-	private String orderId;
-	public AlipayPay(int payType){
+        private String orderId;
+        public AlipayPay(int payType){
 		super(payType);
 		this.setUsable(true);
 	}
@@ -42,7 +41,6 @@ public class AlipayPay extends PayInterface {
 		partnerId=args[1];
 		rsaPrivate=args[2];
 		rsaPublic=args[3];
-		notifyUrl=args[4];
 	}
 	@Override
 	public void destory() {
@@ -53,7 +51,7 @@ public class AlipayPay extends PayInterface {
 	 * 订单号由客户端生成getOutTradeNo
 	 */
 	@Override
-	public void toPay(final Context context, final String subject, final String detail, final String total_fee,final OnPayResultListener onPayResultListener) {
+	public void toPay(final Context context, final String subject, final String detail, final String total_fee,final String notify_url,final OnPayResultListener onPayResultListener) {
 		AsyncTask<Void,Void,String> asyncTask=new AsyncTask<Void,Void,String>(){
 			
 			@Override
@@ -61,7 +59,7 @@ public class AlipayPay extends PayInterface {
 				//生成订单号
 				orderId=getOutTradeNo();
 				// 生成订单信息
-				String orderInfo = getOrderInfo(orderId,subject,detail,total_fee);
+				String orderInfo = getOrderInfo(orderId,subject,detail,total_fee,notify_url);
 				// 对订单做RSA 签名
 				String sign = sign(orderInfo);
 				if (PayManager.DEBUG)
@@ -119,7 +117,7 @@ public class AlipayPay extends PayInterface {
 				//生成订单号
 				orderId=orderCallback.getOrderId();
 				// 订单
-				String orderInfo = getOrderInfo(orderId,orderCallback.subject,orderCallback.detail,orderCallback.total_fee);
+				String orderInfo = getOrderInfo(orderId,orderCallback.subject,orderCallback.detail,orderCallback.total_fee,orderCallback.notify_url);
 				// 对订单做RSA 签名
                 String sign = sign(orderInfo);
                 if (PayManager.DEBUG)
@@ -165,7 +163,7 @@ public class AlipayPay extends PayInterface {
 		asyncTask.execute();
 	}
 	
-	public String getOrderInfo(String outTradeNo,String subject, String body, String price) {
+	public String getOrderInfo(String outTradeNo,String subject, String body, String price,String notifyUrl) {
 		
 		// 签约合作者身份ID
 		String orderInfo = "partner=" + "\"" + partnerId + "\"";

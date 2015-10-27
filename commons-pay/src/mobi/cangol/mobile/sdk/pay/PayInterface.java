@@ -23,11 +23,12 @@ public abstract class PayInterface {
 	public int getPayType() {
 		return mPayType;
 	}
+
 	abstract public void destory();
 	
 	abstract public void initPay(Context context,String... args);
 	
-	abstract public void toPay(Context context,String subject,String detail,String total_fee, OnPayResultListener onPayResultListener) ;
+	abstract public void toPay(Context context,String subject,String detail,String total_fee,String notify_url, OnPayResultListener onPayResultListener) ;
 	
 	abstract public void toPay(Context context, PlaceOrderCallback orderCallback, OnPayResultListener onPayResultListener) ;
 		

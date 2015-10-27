@@ -40,7 +40,6 @@ public class WechatPay extends PayInterface implements IWXAPIEventHandler {
 	private String appId;
 	private String apiKey;
 	private String partnerId;
-	private String notifyUrl;
 	private AppRegister appRegister;
 	private OnPayResultListener onPayResultListener; 
 	private String orderId;
@@ -56,8 +55,7 @@ public class WechatPay extends PayInterface implements IWXAPIEventHandler {
 		appId=args[0];
 		apiKey=args[1];
 		partnerId=args[2];
-		notifyUrl=args[3];
-		
+
 		
 //		appRegister=new AppRegister();
 //		IntentFilter filter=new IntentFilter();
@@ -103,7 +101,7 @@ public class WechatPay extends PayInterface implements IWXAPIEventHandler {
 		}		
 	}
 	@Override
-	public void toPay(final Context context, final String subject, final String detail,  final String total_fee, final OnPayResultListener onPayResultListener) {
+	public void toPay(final Context context, final String subject, final String detail,  final String total_fee,final String notify_url, final OnPayResultListener onPayResultListener) {
 		this.onPayResultListener=onPayResultListener;
 		
 		AsyncTask<Void,Void,String> asyncTask=new AsyncTask<Void,Void,String>(){
@@ -116,7 +114,7 @@ public class WechatPay extends PayInterface implements IWXAPIEventHandler {
 				//发起同意下单请求,获取预支付交易会话ID(prepay_id)
 				String url = String.format("https://api.mch.weixin.qq.com/pay/unifiedorder");
 				orderId=genOutTradNo();
-				String entity = genProductArgs(orderId,subject,detail,total_fee);
+				String entity = genProductArgs(orderId,subject,detail,total_fee,notify_url);
 				String content=HttpUtils.getInstance(context).executePost(url, entity);
 				if (PayManager.DEBUG)
 					Log.d(TAG, "content="+content);
@@ -149,7 +147,7 @@ public class WechatPay extends PayInterface implements IWXAPIEventHandler {
 				//这里发起获同意下单请求
 				String url = String.format("https://api.mch.weixin.qq.com/pay/unifiedorder");
 				orderId=orderCallback.getOrderId();
-				String entity = genProductArgs(orderId,orderCallback.subject,orderCallback.detail,orderCallback.total_fee);
+				String entity = genProductArgs(orderId,orderCallback.subject,orderCallback.detail,orderCallback.total_fee,orderCallback.notify_url);
 				String content=HttpUtils.getInstance(context).executePost(url, entity);
 				if (PayManager.DEBUG)
 					Log.d(TAG, "content="+content);
@@ -176,7 +174,7 @@ public class WechatPay extends PayInterface implements IWXAPIEventHandler {
 	 * @param price
 	 * @return
 	 */
-	private String genProductArgs(String orderId,String subject,String detail,String price) {
+	private String genProductArgs(String orderId,String subject,String detail,String price,String notifyUrl) {
 		StringBuffer xml = new StringBuffer();
 		try {
 			String nonceStr = genNonceStr();

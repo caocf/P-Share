@@ -84,10 +84,10 @@ public class PayManager {
 	 * @param subject,detail,total_fee
 	 * @param onPayResultListener
 	 */
-	public void toPay(Context context, int payType, String subject,String detail, String total_fee, OnPayResultListener onPayResultListener) {
+	public void toPay(Context context, int payType, String subject,String detail, String total_fee,String notify_url, OnPayResultListener onPayResultListener) {
 		PayInterface pay = getPay(context, payType);
 		if (pay.isUsable()) {
-			pay.toPay(context,subject,detail,total_fee, onPayResultListener);
+			pay.toPay(context,subject,detail,total_fee,notify_url, onPayResultListener);
 		} else {
 			if (onPayResultListener != null)
 				onPayResultListener.onFailuire(null, PAY_EORROR);
