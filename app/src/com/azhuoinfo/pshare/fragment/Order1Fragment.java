@@ -731,8 +731,8 @@ public class Order1Fragment extends BaseContentFragment{
             showImage(show);
         }
     }
-    protected void toPay(int payType,final String subject,final String desc,final String price) {
-        PayManager.getInstance(getActivity()).toPay(this.getActivity(), payType, new PlaceOrderCallback(subject, desc, price) {
+    protected void toPay(int payType,final String subject,final String desc,final String price,String notify_url) {
+        PayManager.getInstance(getActivity()).toPay(this.getActivity(), payType, new PlaceOrderCallback(subject, desc, price,notify_url) {
             @Override
             public String getOrderId() {
                 //自定义订单号
@@ -840,11 +840,11 @@ public class Order1Fragment extends BaseContentFragment{
                 if (checkedId == R.id.alipay) {
                     Log.e("OnButtonClick", "alipay");
                     //toPay(PayManager.PAY_TYPE_ALIPAY, paySubject, payDesc, totalPay);
-                    toPay(PayManager.PAY_TYPE_ALIPAY, paySubject, payDesc, "0.01");
+                    toPay(PayManager.PAY_TYPE_ALIPAY, paySubject, payDesc, "0.01","");
                 } else if (checkedId == R.id.wechatpay) {
                     Log.e("OnButtonClick", "wechatpay");
                     int fee = Integer.parseInt(totalPay) * 100;
-                    toPay(PayManager.PAY_TYPE_WECHAT, paySubject, payDesc, "" + fee);
+                    toPay(PayManager.PAY_TYPE_WECHAT, paySubject, payDesc, "" + fee,"");
                 }
             }
         });

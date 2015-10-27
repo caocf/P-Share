@@ -91,9 +91,9 @@ public class MainActivity extends DrawerNavigationFragmentActivity {
 		mAccountVerify = AccountVerify.getInstance(this);
         mPayManager=PayManager.getInstance(this);
 
-        mPayManager.initPay(this, PayManager.PAY_TYPE_WECHAT, Constants.APP_ID, Constants.API_KEY, Constants.MCH_ID,Constants.NOTIFY_URL);
+        mPayManager.initPay(this, PayManager.PAY_TYPE_WECHAT, Constants.APP_ID, Constants.API_KEY, Constants.MCH_ID);
 
-        mPayManager.initPay(this, PayManager.PAY_TYPE_ALIPAY, Constants.SELLER, Constants.PARTNERID, Constants.RSA_PRIVATE, Constants.RSA_PUBLIC, Constants.NOTIFY_URL);
+        mPayManager.initPay(this, PayManager.PAY_TYPE_ALIPAY, Constants.SELLER, Constants.PARTNERID, Constants.RSA_PRIVATE, Constants.RSA_PUBLIC);
 
     }
 	@Override

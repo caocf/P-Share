@@ -6,7 +6,6 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.List;
 
-import mobi.cangol.mobile.logging.Log;
 import mobi.cangol.mobile.parser.JSONParserException;
 import mobi.cangol.mobile.parser.JsonUtils;
 
