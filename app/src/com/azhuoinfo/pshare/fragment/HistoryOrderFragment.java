@@ -134,7 +134,7 @@ public class HistoryOrderFragment extends BaseContentFragment{
                     mPromptView.showLoading();*/
             }
             @Override
-            public void onSuccess(boolean page, List<OrderList> orderLists) {
+            public void onSuccess(List<OrderList> orderLists) {
                 if (isEnable()) {
                     updateViews(orderLists);
                     Log.e(TAG, orderLists + "");

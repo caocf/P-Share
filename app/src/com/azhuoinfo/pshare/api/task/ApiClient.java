@@ -23,156 +23,131 @@ import mobi.cangol.mobile.service.PoolManager;
 import mobi.cangol.mobile.utils.DeviceInfo;
 
 
-public  class ApiClient {
-	public enum Method{
-		GET,
-		POST
-	}
-	public static final String TAG="ApiClient";
-	public static final boolean DEBUG=true;
-	public static final int MAX_THREAD=5;
-	public static final String ERROR="-1";
-	public static final String ERROR_CONNECT="网络无法连接,请检查网络";
-	public static final String TOKEN_ERROR = "40015";
-	private AccountVerify mAccountVerify;
-	private AsyncHttpClient mAsyncHttpClient;
-	private Context mContext;
-	private static ApiClient client=null;
-	private ApiClient(Context context){
-		mContext=context;
-		mAsyncHttpClient= AsyncHttpClient.build(TAG);
-		mAsyncHttpClient.setThreadool(PoolManager.buildPool(TAG, MAX_THREAD));
-		mAccountVerify = AccountVerify.getInstance(context);
-	}
-	public static ApiClient getInstance(Context context){
-		if(client==null){
-			client=new ApiClient(context);
-		}
-		return client;
-	}
-	public  void cancel(Object tag,boolean mayInterruptIfRunning){
-		mAsyncHttpClient.cancelRequests(tag, mayInterruptIfRunning);
-	}
-	public <E, T> void execute(Object tag,Method method,final String url,HashMap<String, Object> params,String root,final OnDataLoader<T> onDataLoader){
-		RequestParams requestParams=new RequestParams();
-		for (Map.Entry<String, Object> entry : params.entrySet()) {
-			if(entry.getValue() instanceof File){
-				try {
-					requestParams.put(entry.getKey(), (File)entry.getValue());
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
-			}else if(entry.getValue() instanceof InputStream){
-					requestParams.put(entry.getKey(), (InputStream)entry.getValue());
-			}else if(entry.getValue()!=null){
-				requestParams.put(entry.getKey(), String.valueOf(entry.getValue()));
-			}
-		}
-		if(DEBUG)Log.d(AsyncHttpClient.getUrlWithQueryString(url, requestParams));
-		if(DEBUG)Log.d(requestParams.toDebugString());
-		if(onDataLoader!=null)onDataLoader.onStart();
-		if(!DeviceInfo.isConnection(mContext)){
-			if(onDataLoader!=null)onDataLoader.onFailure(ERROR,ERROR_CONNECT);
-			return;
-		}
-		if(method==Method.GET){
-			executeGet(tag,url,requestParams, root,onDataLoader);
-		}else{
-			executePost(tag,url,requestParams, root,onDataLoader);
-		}
-	}
-	/**深度递归获取泛型**/
-	private Class<?> getGenericClass(Type type){
-		if (type  instanceof ParameterizedType) {
-			type=((ParameterizedType) type).getActualTypeArguments()[0];
-			return getGenericClass(type);
-		}else{
-			return (Class<?>) type;
-		}
-	}
-	private String getAction(String url){
-		String action=url.substring(url.indexOf("/", 8));
-		action=action.substring(0,action.contains("?")?action.indexOf("?"):action.length());
-		return action;
-	}
-	private <T> void executeGet(Object tag,final String url,RequestParams params,final String root,final OnDataLoader<T> onDataLoader){
-		mAsyncHttpClient.get(tag,url,params, new JsonHttpResponseHandler() {
-			long lasttime=0;
-			@Override
-			public void onStart() {
-				super.onStart();
-				lasttime=System.currentTimeMillis();
-			}
+public class ApiClient {
+    public enum Method {
+        GET,
+        POST
+    }
 
-			@Override
-			public void onSuccess(JSONObject response) {
-				super.onSuccess(response);
-				if(DEBUG)Log.d("Success response:"+response);
-				Class<?> c=getGenericClass(onDataLoader.getClass().getGenericSuperclass());
-			    if(DEBUG)Log.d("Parser class:"+c);
-				ApiResult<T> result=(ApiResult<T>) ApiResult.parserObject(c, response,root);
-                if(onDataLoader!=null)onDataLoader.setApiResult(result);
-				if(result.isSuccess()){
-					if(result.getObject()!=null){
-						if(onDataLoader!=null)onDataLoader.onSuccess(result.getPage(),result.getObject());
-					}else{
-						if(onDataLoader!=null)onDataLoader.onSuccess(result.getPage(),(T) result.getList());
-					}
-				}else{
-                    //用户token验证错误
-                    if(TOKEN_ERROR.equals(result.getCode())){
-                        mAccountVerify.notifyExpire();
-                    }
-                    if(onDataLoader!=null)onDataLoader.onFailure(result.getCode(),result.getMessage());
-				}
-			}
+    public static final String TAG = "ApiClient";
+    public static final boolean DEBUG = true;
+    public static final int MAX_THREAD = 5;
+    public static final String ERROR = "-1";
+    public static final String ERROR_CONNECT = "网络无法连接,请检查网络";
+    private AsyncHttpClient mAsyncHttpClient;
+    private Context mContext;
+    private static ApiClient client = null;
 
-			@Override
-			public void onFailure(Throwable e, String errorResponse) {
-				if(DEBUG)Log.d("Fail response:"+errorResponse+" "+e.getMessage());
-				if(onDataLoader!=null)onDataLoader.onFailure(ERROR,errorResponse);
-			}
-			
-		});
-	}
-	
-	private <E, T> void executePost(Object tag,final String url,RequestParams params,final String root,final OnDataLoader<T> onDataLoader){
-		mAsyncHttpClient.post(tag,url,params, new JsonHttpResponseHandler() {
-			long lasttime=0;
-			@Override
-			public void onStart() {
-				super.onStart();
-				lasttime=System.currentTimeMillis();
-			}
+    private ApiClient(Context context) {
+        mContext = context;
+        mAsyncHttpClient = AsyncHttpClient.build(TAG);
+        mAsyncHttpClient.setThreadool(PoolManager.buildPool(TAG, MAX_THREAD));
+    }
 
-			@Override
-			public void onSuccess(JSONObject response) {
-				super.onSuccess(response);
-				if(DEBUG)Log.d( "Success response:"+response);
-				Class<?> c=getGenericClass(onDataLoader.getClass().getGenericSuperclass());
-			    if(DEBUG)Log.d("Parser class:"+c);
-				ApiResult<T> result=(ApiResult<T>) ApiResult.parserObject(c, response,root);
-				if(result.isSuccess()){
-					if(result.getObject()!=null){
-						if(onDataLoader!=null)onDataLoader.onSuccess(result.getPage(),result.getObject());
-					}else{
-						if(onDataLoader!=null)onDataLoader.onSuccess(result.getPage(),(T) result.getList());
-					}
-				}else{
-					//用户token验证错误
-					if(TOKEN_ERROR.equals(result.getCode())){
-						mAccountVerify.notifyExpire();
-					}
-					if(onDataLoader!=null)onDataLoader.onFailure(result.getCode(),result.getMessage());
-				}
-			}
+    public static ApiClient getInstance(Context context) {
+        if (client == null) {
+            client = new ApiClient(context);
+        }
+        return client;
+    }
 
-			@Override
-			public void onFailure(Throwable e, String errorResponse) {
-				if(DEBUG)Log.d("Fail response:"+errorResponse+" "+e.getMessage());
-				if(onDataLoader!=null)onDataLoader.onFailure(ERROR,errorResponse);
-			}
-			
-		});
-	}
+    public void cancel(Object tag, boolean mayInterruptIfRunning) {
+        mAsyncHttpClient.cancelRequests(tag, mayInterruptIfRunning);
+    }
+
+    public <E, T> void execute(Object tag, Method method, final String url, HashMap<String, Object> params, String root, final OnResponse onResponse) {
+        RequestParams requestParams = new RequestParams();
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            if (entry.getValue() instanceof File) {
+                try {
+                    requestParams.put(entry.getKey(), (File) entry.getValue());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } else if (entry.getValue() instanceof InputStream) {
+                requestParams.put(entry.getKey(), (InputStream) entry.getValue());
+            } else if (entry.getValue() != null) {
+                requestParams.put(entry.getKey(), String.valueOf(entry.getValue()));
+            }
+        }
+        if (DEBUG) Log.d(AsyncHttpClient.getUrlWithQueryString(url, requestParams));
+        if (DEBUG) Log.d(requestParams.toDebugString());
+        if (onResponse != null) onResponse.onStart();
+        if (!DeviceInfo.isConnection(mContext)) {
+            if (onResponse != null) onResponse.onFailure(ERROR, ERROR_CONNECT);
+            return;
+        }
+        if (method == Method.GET) {
+            executeGet(tag, url, requestParams, root, onResponse);
+        } else {
+            executePost(tag, url, requestParams, root, onResponse);
+        }
+    }
+
+    private void executeGet(Object tag, final String url, RequestParams params, final String root, final OnResponse onResponse) {
+        mAsyncHttpClient.get(tag, url, params, new JsonHttpResponseHandler() {
+            long lastTime = 0;
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                lastTime = System.currentTimeMillis();
+            }
+
+            @Override
+            public void onSuccess(JSONObject response) {
+                super.onSuccess(response);
+                if (DEBUG) Log.d("executeGet idle:" + (System.currentTimeMillis() - lastTime));
+                if (onResponse != null)
+                    onResponse.onSuccess(response);
+
+            }
+
+            @Override
+            public void onFailure(Throwable e, String errorResponse) {
+                if (DEBUG) Log.d("executeGet idle:" + (System.currentTimeMillis() - lastTime));
+                if (onResponse != null)
+                    onResponse.onFailure(ERROR, errorResponse);
+            }
+
+
+        });
+    }
+
+    private void executePost(Object tag, final String url, RequestParams params, final String root, final OnResponse onResponse) {
+        mAsyncHttpClient.post(tag, url, params, new JsonHttpResponseHandler() {
+            long lastTime = 0;
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                lastTime = System.currentTimeMillis();
+            }
+
+            @Override
+            public void onSuccess(JSONObject response) {
+                super.onSuccess(response);
+                if (DEBUG) Log.d("executePost idle:" + (System.currentTimeMillis() - lastTime));
+                if (onResponse != null)
+                    onResponse.onSuccess(response);
+
+            }
+
+            @Override
+            public void onFailure(Throwable e, String errorResponse) {
+                if (DEBUG) Log.d("executePost idle:" + (System.currentTimeMillis() - lastTime));
+                if (onResponse != null)
+                    onResponse.onFailure(ERROR, errorResponse);
+            }
+
+        });
+    }
+
+    public interface OnResponse {
+        void onStart();
+
+        void onSuccess(JSONObject response);
+
+        void onFailure(String code, String response);
+    }
 }

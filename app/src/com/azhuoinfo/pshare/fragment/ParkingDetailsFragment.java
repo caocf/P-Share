@@ -173,7 +173,7 @@ public class ParkingDetailsFragment extends BaseContentFragment implements AMapL
             }
 
             @Override
-            public void onSuccess(boolean page, List<Parking> list) {
+            public void onSuccess(List<Parking> list) {
                 if (isEnable()) {
                     updateViews(list);
                 }
@@ -200,7 +200,7 @@ public class ParkingDetailsFragment extends BaseContentFragment implements AMapL
             }
 
             @Override
-            public void onSuccess(boolean page, List<Parking> list) {
+            public void onSuccess(List<Parking> list) {
                 if (isEnable()) {
                     updateViews(list);
                 }

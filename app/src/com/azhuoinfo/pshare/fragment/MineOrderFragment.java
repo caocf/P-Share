@@ -120,7 +120,7 @@ public class MineOrderFragment extends BaseContentFragment{
             public void onStart(){
             }
             @Override
-            public void onSuccess(boolean page, List<UnfinishedOrderInfo> unfinishedOrderInfos) {
+            public void onSuccess(List<UnfinishedOrderInfo> unfinishedOrderInfos) {
                 Log.e(TAG, unfinishedOrderInfos.size() + "");
                 listSize=unfinishedOrderInfos.size();
                 if(listSize!=0){

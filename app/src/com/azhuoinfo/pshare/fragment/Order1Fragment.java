@@ -10,8 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -28,12 +26,13 @@ import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.api.ApiResult;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
+import com.azhuoinfo.pshare.api.task.ResultFactory;
 import com.azhuoinfo.pshare.fragment.adapter.ImageAdapter;
-import com.azhuoinfo.pshare.model.comment;
 import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.OrderPay;
 import com.azhuoinfo.pshare.model.UnfinishedOrderInfo;
 import com.azhuoinfo.pshare.model.UserAuth;
+import com.azhuoinfo.pshare.model.comment;
 import com.azhuoinfo.pshare.view.CommonDialog;
 import com.azhuoinfo.pshare.view.LoadingDialog;
 
@@ -317,7 +316,7 @@ public class Order1Fragment extends BaseContentFragment{
         public boolean isFailResponse(String content) {
             Log.d("ResponseHandler", "isFailResponse content=" + content);
             try {
-                ApiResult apiResult = ApiResult.parserObject(UnfinishedOrderInfo.class, new JSONObject(content), "orderInfo");
+                ApiResult<UnfinishedOrderInfo> apiResult = (ApiResult<UnfinishedOrderInfo>) ResultFactory.getInstance().parserResult(UnfinishedOrderInfo.class, new JSONObject(content), "orderInfo");
                 //List<UnfinishedOrderInfo> unfinishedOrderInfos = apiResult.getList();
                 List<UnfinishedOrderInfo> unfinishedOrderInfos = apiResult.getList();
                 if(isEnable()){
@@ -384,7 +383,7 @@ public class Order1Fragment extends BaseContentFragment{
                 loadingDialog = LoadingDialog.show(getActivity());
             }
             @Override
-            public void onSuccess(boolean page, List<UnfinishedOrderInfo> unfinishedOrderInfos) {
+            public void onSuccess(List<UnfinishedOrderInfo> unfinishedOrderInfos) {
                 if(isEnable()){
                     Log.e(TAG, unfinishedOrderInfos.size() + "");
                     listSize = unfinishedOrderInfos.size();
@@ -407,7 +406,7 @@ public class Order1Fragment extends BaseContentFragment{
                             orderActualBegin=unfinishedOrderInfo.getOrder_actual_begin_start();
                             Log.e(TAG, order_state);
                             if (order_state.equals("3") || order_state.equals("4")) {
-                                dateDiff(orderActualBegin, this.getApiResult().getTimestamp(), "yyyy-MM-dd HH:mm:ss");
+                                dateDiff(orderActualBegin, ((ApiResult)this.getResult()).getTimestamp(), "yyyy-MM-dd HH:mm:ss");
                             }
                         }
                     }
@@ -437,7 +436,7 @@ public class Order1Fragment extends BaseContentFragment{
             }
 
             @Override
-            public void onSuccess(boolean page, UserAuth auth) {
+            public void onSuccess(UserAuth auth) {
                 mOrder1RelativeLayout.setVisibility(View.VISIBLE);
                 mOrder2RelativeLayout.setVisibility(View.GONE);
                 mOrder3ScrollView.setVisibility(View.GONE);
@@ -465,7 +464,7 @@ public class Order1Fragment extends BaseContentFragment{
             }
 
             @Override
-            public void onSuccess(boolean page, UserAuth userAuth) {
+            public void onSuccess(UserAuth userAuth) {
                 mFinishButton.setVisibility(View.VISIBLE);
                 mGetCarButton.setVisibility(View.GONE);
 /*                mFinishButton.setOnClickListener(new View.OnClickListener() {
@@ -498,7 +497,7 @@ public class Order1Fragment extends BaseContentFragment{
             }
 
             @Override
-            public void onSuccess(boolean page, OrderPay orderPay) {
+            public void onSuccess(OrderPay orderPay) {
                 totalPay = orderPay.toTalPay();
                 showPayMethodDialog();
                 loadingDialog.dismiss();
@@ -525,7 +524,7 @@ public class Order1Fragment extends BaseContentFragment{
             }
 
             @Override
-            public void onSuccess(boolean page, comment comment) {
+            public void onSuccess(comment comment) {
                 showToast("评论发送成功");
                 commentDialog.dismiss();
                 loadingDialog.dismiss();

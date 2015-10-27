@@ -151,7 +151,7 @@ public class MineHomeFragment extends BaseContentFragment{
             }
 
             @Override
-            public void onSuccess(boolean page, List<Parking> list) {
+            public void onSuccess(List<Parking> list) {
                 if (isEnable()) {
                     updateViews(list);
                     mPromptView.showContent();
@@ -177,7 +177,7 @@ public class MineHomeFragment extends BaseContentFragment{
             }
 
             @Override
-            public void onSuccess(boolean page, String result) {
+            public void onSuccess(String result) {
                 if (isEnable()) {
                     showToast("删除成功！");
                 }

@@ -151,7 +151,7 @@ public class AddCarInformationFragment extends BaseContentFragment{
                     if (mLoadingDialog == null) mLoadingDialog = LoadingDialog.show(getActivity());
             }
             @Override
-            public void onSuccess(boolean page, AddCarInfo addCarInfo) {
+            public void onSuccess(AddCarInfo addCarInfo) {
                 if(isEnable()){
                     if (mLoadingDialog != null) mLoadingDialog.dismiss();
                     popBackStack();

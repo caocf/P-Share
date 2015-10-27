@@ -147,7 +147,7 @@ public class LoginFragment extends BaseContentFragment {
             }
 
             @Override
-            public void onSuccess(boolean page, CustomerInfo customerInfo) {
+            public void onSuccess(CustomerInfo customerInfo) {
                 if (isEnable()) {
                     if (mLoadingDialog != null) mLoadingDialog.dismiss();
                     if (customerInfo != null) {

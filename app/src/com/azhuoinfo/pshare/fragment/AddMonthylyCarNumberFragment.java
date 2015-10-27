@@ -120,7 +120,7 @@ public class AddMonthylyCarNumberFragment extends BaseContentFragment{
                     mPromptView.showLoading();
             }
             @Override
-            public void onSuccess(boolean page, List<CarList> list) {
+            public void onSuccess(List<CarList> list) {
                 if (isEnable()) {
                     updateViews(list);
                     mPromptView.showContent();

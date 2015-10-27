@@ -160,7 +160,7 @@ public class CarListFragment extends BaseContentFragment{
                     mPromptView.showLoading();
             }
             @Override
-            public void onSuccess(boolean page, List<CarList> list) {
+            public void onSuccess(List<CarList> list) {
                 if (isEnable()) {
                     updateViews(list);
                     mPromptView.showContent();
@@ -183,7 +183,7 @@ public class CarListFragment extends BaseContentFragment{
             }
 
             @Override
-            public void onSuccess(boolean page, String result) {
+            public void onSuccess(String result) {
                 if (isEnable()) {
                     showToast("删除成功！");
                 }

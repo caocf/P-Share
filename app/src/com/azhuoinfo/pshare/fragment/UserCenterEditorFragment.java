@@ -331,7 +331,7 @@ public class UserCenterEditorFragment extends BaseContentFragment {
             }
 
             @Override
-            public void onSuccess(boolean page, CustomerInfo customerInfo) {
+            public void onSuccess(CustomerInfo customerInfo) {
                 if (isEnable()) {
                     mLoading.dismiss();
                     showToast("修改成功");

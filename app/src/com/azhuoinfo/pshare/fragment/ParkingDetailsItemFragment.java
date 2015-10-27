@@ -311,7 +311,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 loadingDialog = LoadingDialog.show(getActivity());
             }
             @Override
-            public void onSuccess(boolean page, List<UnfinishedOrderInfo> unfinishedOrderInfos) {
+            public void onSuccess(List<UnfinishedOrderInfo> unfinishedOrderInfos) {
                 Log.e(TAG, unfinishedOrderInfos.size() + "");
                 listSize=unfinishedOrderInfos.size();
                 Session session=getSession();
@@ -344,7 +344,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 loadingDialog = LoadingDialog.show(getActivity());
             }
             @Override
-            public void onSuccess(boolean page, OrderInfo orderInfos) {
+            public void onSuccess(OrderInfo orderInfos) {
                 mStopLinearLayout.setVisibility(View.GONE);
                 mCancelButton.setVisibility(View.VISIBLE);
                 mOrderTextLinearLayout.setVisibility(View.VISIBLE);
@@ -382,7 +382,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 loadingDialog = LoadingDialog.show(getActivity());
             }
             @Override
-            public void onSuccess(boolean page, UserAuth auth) {
+            public void onSuccess(UserAuth auth) {
                 listSize = 0;
                 mStopLinearLayout.setVisibility(View.VISIBLE);
                 mCancelButton.setVisibility(View.GONE);

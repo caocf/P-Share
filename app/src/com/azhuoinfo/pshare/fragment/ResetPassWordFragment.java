@@ -106,7 +106,7 @@ public class ResetPassWordFragment extends BaseContentFragment {
 				}
 			}
 			@Override
-			public void onSuccess(boolean page, UserAuth auth) {
+			public void onSuccess(UserAuth auth) {
 					replaceFragment(LoginFragment.class,"LoginFragment",null);
 			}
 			@Override

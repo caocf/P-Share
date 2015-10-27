@@ -380,7 +380,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             }
 
             @Override
-            public void onSuccess(boolean page, Parking parking) {
+            public void onSuccess(Parking parking) {
                 if (isEnable()) {
                     mGlobalData.save("default_parking",parking);
                     mDefaultParking=parking;
@@ -427,7 +427,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             }
 
             @Override
-            public void onSuccess(boolean page, List<Parking> list) {
+            public void onSuccess(List<Parking> list) {
                 if (isEnable()) {
                         drawMarker(list);
                 }
@@ -455,7 +455,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             }
 
             @Override
-            public void onSuccess(boolean page, List<Parking> list) {
+            public void onSuccess(List<Parking> list) {
                 if (isEnable()) {
                     drawMarker(list);
                 }

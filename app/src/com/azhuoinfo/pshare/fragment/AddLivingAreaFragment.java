@@ -128,7 +128,7 @@ public class AddLivingAreaFragment extends BaseContentFragment{
                     mPromptView.showLoading();
             }
             @Override
-            public void onSuccess(boolean page, List<Parking> list) {
+            public void onSuccess(List<Parking> list) {
                   if (isEnable()) {
                     updateViews(list);
                 }
@@ -153,7 +153,7 @@ public class AddLivingAreaFragment extends BaseContentFragment{
             }
 
             @Override
-            public void onSuccess(boolean page, List<Parking> list) {
+            public void onSuccess(List<Parking> list) {
                 if (isEnable()) {
                     updateViews(list);
                 }

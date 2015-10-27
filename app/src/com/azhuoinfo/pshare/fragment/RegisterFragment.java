@@ -146,7 +146,7 @@ public class RegisterFragment extends BaseContentFragment {
 			}
 
 			@Override
-			public void onSuccess(boolean page, UserAuth userAuth) {
+			public void onSuccess(UserAuth userAuth) {
 
 			}
 
@@ -169,7 +169,7 @@ public class RegisterFragment extends BaseContentFragment {
 				}
 			}
 			@Override
-			public void onSuccess(boolean page, UserAuth auth) {
+			public void onSuccess(UserAuth auth) {
 					postRegister(mMobileEditText.getText().toString(), mPasswordEditText.getText().toString(),mCodeEditText.getText().toString());
 					replaceFragment(LoginFragment.class, "LoginFragment", null);
 			}
@@ -195,7 +195,7 @@ public class RegisterFragment extends BaseContentFragment {
 				}
 			}
 			@Override
-			public void onSuccess(boolean page, UserAuth auth) {
+			public void onSuccess(UserAuth auth) {
 				if (getActivity() != null) {
 					replaceFragment(LoginFragment.class, "LoginFragment", null);
 				}

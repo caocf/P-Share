@@ -123,7 +123,7 @@ public class RetrievePassWordFragment extends BaseContentFragment {
 			}
 
 			@Override
-			public void onSuccess(boolean page, UserCode userAuth) {
+			public void onSuccess(UserCode userAuth) {
 				Log.e(TAG,userAuth+"");
 			}
 
@@ -146,7 +146,7 @@ public class RetrievePassWordFragment extends BaseContentFragment {
 				}
 			}
 			@Override
-			public void onSuccess(boolean page, UserCode auth) {
+			public void onSuccess(UserCode auth) {
 				Log.e(TAG,"vCode:"+auth);
 				Bundle bundle = new Bundle();
 				bundle.putString("customer_mobile", mCustomerMobileEditText.getText().toString());
