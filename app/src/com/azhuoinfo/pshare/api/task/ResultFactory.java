@@ -62,6 +62,7 @@ public class ResultFactory {
         }
         return result;
     }
+
     public static <T> Result<T> parserApiResult(ApiResult result,Class<T> c,JSONObject json,String root){
         try {
             result.setSource(json.toString());

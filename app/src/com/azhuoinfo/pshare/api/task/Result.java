@@ -5,7 +5,7 @@ import java.util.List;
 public abstract class Result<T>  {
 
 
-    private boolean success;
+    protected boolean success;
     protected String source;
     protected String message;
     protected String code;

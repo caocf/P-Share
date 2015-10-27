@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.api.ApiContants;
+import com.azhuoinfo.pshare.api.ApiResult;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.fragment.adapter.MineHomeAdapter;
