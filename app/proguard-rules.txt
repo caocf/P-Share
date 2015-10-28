@@ -31,6 +31,10 @@
 -keepattributes Signature
 -keepattributes *Annotation*
 
+#-printseeds seeds.txt
+#-printusage unused.txt
+#-printmapping mapping.txt
+
 -keepclasseswithmembernames class * {
     native <methods>;
 }
