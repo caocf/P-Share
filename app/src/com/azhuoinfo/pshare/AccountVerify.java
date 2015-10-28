@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import mobi.cangol.mobile.base.BaseFragment;
 import mobi.cangol.mobile.logging.Log;
 import mobi.cangol.mobile.service.AppService;
-import mobi.cangol.mobile.service.global.GlobalData;
+import mobi.cangol.mobile.service.session.SessionService;
 
 public class AccountVerify {
 	private static final String TAG="AccountVerify";
@@ -29,12 +29,12 @@ public class AccountVerify {
 	private Application application;
 	private ApiContants apiContants;
 	private SharedPreferences sp;
-    private GlobalData mGlobalData;
+    private SessionService mSessionService;
 	private AccountVerify(MobileApplication application) {
 		this.application = application;
 		apiContants=ApiContants.instance(application);
 		sp=application.getSharedPreferences(Constants.SHARED, Activity.MODE_PRIVATE);
-        mGlobalData= (GlobalData) application.getAppService(AppService.GLOBAL_DATA);
+        mSessionService= application.getSession();
 	}
 
 	public static AccountVerify getInstance(Context context) {
@@ -51,7 +51,7 @@ public class AccountVerify {
 	public void login(CustomerInfo user) {
         isLogin=true;
         this.user = user;
-        mGlobalData.save(KEY_USER,user);
+        mSessionService.saveSerializable(KEY_USER, user);
         notifyLogin();
 		//注册推送ID 暂时停用
 		//pushReg();
@@ -60,7 +60,7 @@ public class AccountVerify {
 	public void setUser(CustomerInfo user) {
         isLogin=true;
         this.user = user;
-        mGlobalData.save(KEY_USER,user);
+        mSessionService.saveSerializable(KEY_USER, user);
 		notifyUpdate();
 	}
 	
@@ -86,7 +86,7 @@ public class AccountVerify {
 	public void logout() {
 		isLogin = false;
 		user = null;
-        mGlobalData.remove(KEY_USER);
+        mSessionService.remove(KEY_USER);
 		notifyLogout();
 	}
 	

@@ -1,9 +1,12 @@
 package com.azhuoinfo.pshare.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Azhuo on 2015/10/9.
  */
-public class UnfinishedOrderInfo {
+public class UnfinishedOrderInfo implements Serializable{
+    private static final long serialVersionUID = 0L;
     private String  car_brand;//": "",
     private String parker_id_back;//": "0000-00-00 00:00:00",
     private String parker_carid_back;//": "",

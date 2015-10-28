@@ -1,6 +1,5 @@
 package com.azhuoinfo.pshare.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,14 +21,11 @@ import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.view.LoadingDialog;
 
-import java.util.List;
-
-import mobi.cangol.mobile.Session;
-import mobi.cangol.mobile.actionbar.ActionBarActivity;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.service.AppService;
-import mobi.cangol.mobile.service.global.GlobalData;
+import mobi.cangol.mobile.service.session.SessionService;
+
 /**
 * 登录
 * */
@@ -47,7 +43,7 @@ public class LoginFragment extends BaseContentFragment {
 	private TextView loginActivity_forget_password;
 
 	private AccountVerify mAccountVerify;
-    private GlobalData mGlobalData;
+    private SessionService mSessionService;
 	private SharedPreferences preferences;
 	private SharedPreferences.Editor editor;
 	@Override
@@ -55,7 +51,7 @@ public class LoginFragment extends BaseContentFragment {
 		super.onCreate(savedInstanceState);
 		this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.left_head, R.drawable.left_head);
 		mAccountVerify = AccountVerify.getInstance(getActivity());
-        mGlobalData= (GlobalData) this.getAppService(AppService.GLOBAL_DATA);
+        mSessionService= getSession();
 	}
 
 	@Override

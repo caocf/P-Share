@@ -7,20 +7,15 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.azhuoinfo.pshare.AccountVerify;
-import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
-import mobi.cangol.mobile.base.BaseMenuFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
-import mobi.cangol.mobile.service.global.GlobalData;
-	/**
+import mobi.cangol.mobile.service.session.SessionService;
+
+/**
 	* 设置中意见反馈
 	* */
 public class SuggestionFeedbackFragment extends BaseContentFragment {
@@ -31,7 +26,7 @@ public class SuggestionFeedbackFragment extends BaseContentFragment {
 	private Button mSuggestionSubmitButton;
 
 	private AccountVerify mAccountVerify;
-	private GlobalData mGlobalData;
+	private SessionService mSessionService;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mAccountVerify = AccountVerify.getInstance(getActivity());

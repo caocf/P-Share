@@ -11,11 +11,9 @@ import android.widget.TextView;
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.api.ApiContants;
-import com.azhuoinfo.pshare.api.ApiResult;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.fragment.adapter.MineHomeAdapter;
-import com.azhuoinfo.pshare.model.CarList;
 import com.azhuoinfo.pshare.model.Parking;
 import com.azhuoinfo.pshare.view.CommonDialog;
 import com.azhuoinfo.pshare.view.PromptView;
@@ -24,8 +22,7 @@ import java.util.List;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
-import mobi.cangol.mobile.service.AppService;
-import mobi.cangol.mobile.service.global.GlobalData;
+import mobi.cangol.mobile.service.session.SessionService;
 
 /**
  * Created by Azhuo on 2015/9/22.
@@ -39,12 +36,12 @@ public class MineHomeFragment extends BaseContentFragment{
     private TextView mAddTexView;
     private AccountVerify mAccountVerify;
     private MineHomeAdapter mDataAdapter;
-    private GlobalData mGlobalData;
+    private SessionService mSessionService;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAccountVerify = AccountVerify.getInstance(getActivity());
-        mGlobalData = (GlobalData) getAppService(AppService.GLOBAL_DATA);
+        mSessionService = getSession();
     }
 
     @Override
@@ -90,8 +87,8 @@ public class MineHomeFragment extends BaseContentFragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Parking item = (Parking) parent.getItemAtPosition(position);
                 mDataAdapter.setDefault(item.getParking_id());
-                mGlobalData.remove("default_parking");
-                mGlobalData.save("default_parking", item);
+                mSessionService.remove("default_parking");
+                mSessionService.saveSerializable("default_parking", item);
             }
         });
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -113,8 +110,8 @@ public class MineHomeFragment extends BaseContentFragment{
     }
     @Override
     protected void initData(Bundle bundle) {
-        if(mGlobalData.get("default_parking")!=null)
-            mDataAdapter.setDefault(((Parking) mGlobalData.get("default_parking")).getParking_id());
+        if(mSessionService.getSerializable("default_parking")!=null)
+            mDataAdapter.setDefault(((Parking) mSessionService.getSerializable("default_parking")).getParking_id());
         getSearchSaveParkList(mAccountVerify.getCustomer_Id());
     }
     public void showDeleteDialog(final int position){

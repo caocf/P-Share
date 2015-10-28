@@ -141,7 +141,7 @@ public class Order1Fragment extends BaseContentFragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAccountVerify = AccountVerify.getInstance(getActivity());
-        customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
+        customerInfo=(CustomerInfo)this.getSession().getSerializable("customerInfo");
         customerId=customerInfo.getCustomer_Id();
 
     }

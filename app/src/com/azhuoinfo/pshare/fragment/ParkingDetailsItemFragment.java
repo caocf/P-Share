@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import mobi.cangol.mobile.Session;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 
@@ -99,11 +98,11 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
+        customerInfo=(CustomerInfo)this.app.getSession().getSerializable("customerInfo");
         customer_id=customerInfo.getCustomer_Id().toString();
         mAccountVerify = AccountVerify.getInstance(getActivity());
         parking=this.getArguments().getParcelable("parking");
-        customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
+        customerInfo=(CustomerInfo)this.app.getSession().getSerializable("customerInfo");
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -314,8 +313,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
             public void onSuccess(List<UnfinishedOrderInfo> unfinishedOrderInfos) {
                 Log.e(TAG, unfinishedOrderInfos.size() + "");
                 listSize=unfinishedOrderInfos.size();
-                Session session=getSession();
-                session.put("unfinishedOrderInfos", unfinishedOrderInfos);
+                getSession().put("unfinishedOrderInfos", unfinishedOrderInfos);
 
                 if (listSize>0){
                     setButtonEnable(false);

@@ -24,7 +24,6 @@ import mobi.cangol.mobile.service.ServiceProperty;
 import mobi.cangol.mobile.service.conf.ConfigService;
 import mobi.cangol.mobile.service.crash.CrashReportListener;
 import mobi.cangol.mobile.service.crash.CrashService;
-import mobi.cangol.mobile.service.global.GlobalData;
 import mobi.cangol.mobile.service.status.StatusService;
 import mobi.cangol.mobile.utils.DeviceInfo;
 import mobi.cangol.mobile.utils.FileUtils;
@@ -32,7 +31,6 @@ import mobi.cangol.mobile.utils.FileUtils;
 public class MobileApplication extends CoreApplication {
 	public final String TAG = "MobileApplication";
 	private static final boolean LIFECYCLE = Constants.DEVMODE;
-	private GlobalData globalData;
 	private StatusService statusService;
 	private AccountVerify accountVerify;
 	private DatabaseHelper databaseHelper;
@@ -152,11 +150,7 @@ public class MobileApplication extends CoreApplication {
 		statusService = (StatusService) getAppService(AppService.STATUS_SERVICE);
 		appStatusListener = new AppStatusListener();
 		statusService.registerStatusListener(appStatusListener);
-		
-		Log.d("初始化GlobalData");
-		globalData=(GlobalData) getAppService(AppService.GLOBAL_DATA);
-        globalData.refresh();
-		
+
 		Log.d("初始化CrashService");
 		CrashService crashService = (CrashService) getAppService(AppService.CRASH_SERVICE);
 		crashService.setDebug(false);

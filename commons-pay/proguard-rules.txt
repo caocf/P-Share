@@ -1,17 +1,17 @@
 -dontshrink
--dontpreverify 
--dontoptimize 
--dontusemixedcaseclassnames 
+-dontpreverify
+-dontoptimize
+-dontusemixedcaseclassnames
 
 -flattenpackagehierarchy
--allowaccessmodification 
--printmapping map.txt 
+-allowaccessmodification
+-printmapping map.txt
 
--optimizationpasses 7 
--verbose 
+-optimizationpasses 7
+-verbose
 -keepattributes Exceptions,InnerClasses
--dontskipnonpubliclibraryclasses 
--dontskipnonpubliclibraryclassmembers 
+-dontskipnonpubliclibraryclasses
+-dontskipnonpubliclibraryclassmembers
 -ignorewarnings
 
 -keep public class * extends android.app.Activity
@@ -55,3 +55,8 @@
 #微信
 -keep class com.tencent.mm.sdk.** {*;}
 
+-libraryjars libs/alipaysdk.jar
+-libraryjars libs/alipaysecsdk.jar
+-libraryjars libs/alipayutdit.jar
+-libraryjars libs/httpmime-4.1.3.jar
+-libraryjars libs/libammsdk.jar

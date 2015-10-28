@@ -48,7 +48,7 @@ public class HistoryOrderFragment extends BaseContentFragment{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         mAccountVerify = AccountVerify.getInstance(getActivity());
-        customerInfo=(CustomerInfo)this.app.getSession().get("customerInfo");
+        customerInfo=(CustomerInfo)this.app.getSession().getSerializable("customerInfo");
         customerId=customerInfo.getCustomer_Id();
     }
 

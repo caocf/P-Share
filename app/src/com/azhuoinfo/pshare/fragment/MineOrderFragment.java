@@ -1,16 +1,11 @@
 package com.azhuoinfo.pshare.fragment;
-import android.app.FragmentManager;
-import android.graphics.Color;
+
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -19,18 +14,14 @@ import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
-import com.azhuoinfo.pshare.fragment.adapter.MyPagerAdapter;
 import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.UnfinishedOrderInfo;
 import com.azhuoinfo.pshare.view.TabManager;
-import com.azhuoinfo.pshare.view.TabPageManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
-import mobi.cangol.mobile.http.extras.PollingHttpClient;
 
 /**
  * Created by Azhuo on 2015/9/22.
@@ -50,7 +41,7 @@ public class MineOrderFragment extends BaseContentFragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAccountVerify = AccountVerify.getInstance(getActivity());
-        customerInfo=(CustomerInfo) this.app.getSession().get("customerInfo");
+        customerInfo=(CustomerInfo) this.getSession().getSerializable("customerInfo");
         customer_Id=customerInfo.getCustomer_Id();
         //AlarmManager am = (AlarmManager)("http://139.196.12.103/1/1.0.0/customer/unfinishedOrder?customer_id="+customer_Id.toString());
        // am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,0,5*1000,);

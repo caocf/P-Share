@@ -46,8 +46,7 @@ import mobi.cangol.mobile.actionbar.view.SearchView;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.logging.Log;
-import mobi.cangol.mobile.service.AppService;
-import mobi.cangol.mobile.service.global.GlobalData;
+import mobi.cangol.mobile.service.session.SessionService;
 import mobi.cangol.mobile.utils.BitmapUtils;
 import mobi.cangol.mobile.utils.DeviceInfo;
 
@@ -68,13 +67,13 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
     private LocationManagerProxy mAMapLocationManager;
 
     private Parking mDefaultParking;
-    private GlobalData mGlobalData;
+    private SessionService mSessionService;
     private static final int ZOOM=15;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.homepager_user, R.drawable.left_head);
 		mAccountVerify = AccountVerify.getInstance(getActivity());
-        mGlobalData = (GlobalData) getAppService(AppService.GLOBAL_DATA);
+        mSessionService = getSession();
 	}
 
 	@Override
@@ -149,8 +148,8 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 	protected void initData(Bundle savedInstanceState) {
         init();
 
-        if(mGlobalData.get("default_parking")!=null){
-            mDefaultParking= (Parking) mGlobalData.get("default_parking");
+        if(mSessionService.getSerializable("default_parking")!=null){
+            mDefaultParking= (Parking) mSessionService.getSerializable("default_parking");
             getSearchParkbyId(mDefaultParking.getParking_id());
         }else{
             Log.e("default_id not");
@@ -382,7 +381,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             @Override
             public void onSuccess(Parking parking) {
                 if (isEnable()) {
-                    mGlobalData.save("default_parking",parking);
+                    mSessionService.saveSerializable("default_parking", parking);
                     mDefaultParking=parking;
                     updateDefaltParking(parking);
                 }

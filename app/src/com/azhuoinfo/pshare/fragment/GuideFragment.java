@@ -18,8 +18,7 @@ import com.azhuoinfo.pshare.view.pager.CirclePageIndicator;
 import mobi.cangol.mobile.actionbar.ActionBarActivity;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
-import mobi.cangol.mobile.service.AppService;
-import mobi.cangol.mobile.service.global.GlobalData;
+import mobi.cangol.mobile.service.session.SessionService;
 import mobi.cangol.mobile.utils.DeviceInfo;
 
 public class GuideFragment extends BaseContentFragment {
@@ -27,14 +26,14 @@ public class GuideFragment extends BaseContentFragment {
     private ViewPager mViewPager;
     private CirclePageIndicator mCirclePageIndicator;
     private GuideAdapter mGuideAdapter;
-    private GlobalData mGlobalData;
+    private SessionService mSessionService;
     private LinearLayout mLinearLayout;
     private boolean isDisplay = false;//在设置里展示
     private boolean isLogin=false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mGlobalData = (GlobalData) getAppService(AppService.GLOBAL_DATA);
+        mSessionService = getSession();
         if (this.getArguments() != null) {
             isDisplay = this.getArguments().getBoolean("isDisplay", false);
         }
@@ -105,7 +104,7 @@ public class GuideFragment extends BaseContentFragment {
             @Override
             public void onClick(View v) {
                 popBackStack();
-                mGlobalData.save("newVersion", DeviceInfo.getAppVersion(getActivity()));
+                mSessionService.saveString("newVersion", DeviceInfo.getAppVersion(getActivity()));
                 if (!isDisplay)
                     toMain();
             }
@@ -116,7 +115,7 @@ public class GuideFragment extends BaseContentFragment {
             @Override
             public void onClick(View v) {
                 popBackStack();
-                mGlobalData.save("newVersion", DeviceInfo.getAppVersion(getActivity()));
+                mSessionService.saveString("newVersion", DeviceInfo.getAppVersion(getActivity()));
                 if (!isDisplay) {
                     toMain();
                 }
