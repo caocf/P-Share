@@ -7,7 +7,6 @@ dependencies {
     compile project(':uiframe-1.0.0')
     compile project(':appcore-1.0.0')
     compile project(':commons-pay')
-    compile files('libs/Android_Map_2.5.1.20150827.jar')
 }
 
 android {
@@ -49,9 +48,18 @@ android {
         abortOnError false
     }
     buildTypes {
+        debug{
+            minifyEnabled false
+            zipAlignEnabled false
+            manifestPlaceholders = [AMAP_APIKEY: amap_ak_debug]
+        }
         release {
             debuggable false
+            minifyEnabled true
+            zipAlignEnabled true
             signingConfig signingConfigs.config
+            manifestPlaceholders = [AMAP_APIKEY: amap_ak_release]
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
         }
     }
 }
