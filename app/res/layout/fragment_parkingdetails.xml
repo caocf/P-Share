@@ -24,7 +24,7 @@
             android:layout_marginRight="@dimen/padding4"
             android:textSize="@dimen/text_size3"
             android:textColor="@color/text_light_gray"
-            android:text="@string/price2"/>
+            android:text="总车位"/>
         <TextView
             android:id="@+id/distance2" 
             android:layout_height="wrap_content"

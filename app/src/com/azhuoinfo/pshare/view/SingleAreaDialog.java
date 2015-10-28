@@ -248,6 +248,8 @@ public class SingleAreaDialog {
                 }
             }
 
+            mCurrentDistrictName = mDistrictDatas[0];
+
 
             /*for (int i=0; i< provinceList.size(); i++) {
                 mProvinceDatas[i] = provinceList.get(i).getName();

@@ -413,4 +413,52 @@ customer_age*/
 		params.put("comment_content",comment_content );
 		return params;
 	}
+
+
+	public static String API_CUSTOMER_UNITPRICE="/customer/getunitprice";
+	/**
+	 *
+	 * @return
+	 */
+	public HashMap<String, String> getUnitPrice(String villageId, String carNumber){
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("villageId", villageId);
+		params.put("carNumber", carNumber);
+		//params.put("order_id",orderId);
+		return params;
+	}
+
+
+	public static String API_CUSTOMER_POSTORDERINFO="/customer/postorderinfo";
+	/**
+	 *
+	 * @return
+	 */
+	public HashMap<String, String> getPostOrderInfo(String villageId,
+													String village_name,
+													String carNumber,
+													String price,
+													String validity_start_time,
+													String validity_end_time,
+													String customer_id,
+													String customer_name,
+													String timequantum,
+													String order_type,
+													String area,
+													String county){
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("villageId",villageId);
+		params.put("village_name",village_name);
+		params.put("carNumber",carNumber);
+		params.put("price",price);
+		params.put("validity_start_time",validity_start_time);
+		params.put("validity_end_time",validity_end_time);
+		params.put("customer_id",customer_id);
+		params.put("customer_name",customer_name);
+		params.put("timequantum",timequantum);
+		params.put("order_type",order_type);
+		params.put("area",area);
+		params.put("county",county);
+		return params;
+	}
 }

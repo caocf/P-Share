@@ -60,7 +60,7 @@
         android:layout_marginLeft="6dp"
         android:gravity="right"
         android:text="20元/时"
-        android:textColor="#f05b72"
+
         android:textSize="@dimen/text_size3"/>
 
     <TextView

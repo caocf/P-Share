@@ -33,6 +33,7 @@ import com.azhuoinfo.pshare.model.OrderPay;
 import com.azhuoinfo.pshare.model.UnfinishedOrderInfo;
 import com.azhuoinfo.pshare.model.UserAuth;
 import com.azhuoinfo.pshare.model.comment;
+import com.azhuoinfo.pshare.utils.Constants;
 import com.azhuoinfo.pshare.view.CommonDialog;
 import com.azhuoinfo.pshare.view.LoadingDialog;
 
@@ -224,7 +225,7 @@ public class Order1Fragment extends BaseContentFragment{
     public void onPause() {
         super.onPause();
         if (pollingHttpClient!=null) {
-            pollingHttpClient.cancelRequests(getActivity(), true);
+            pollingHttpClient.cancelRequests(getActivity(), false);
         }
         if (timer2!=null) {
             timer2.cancel();
@@ -515,9 +516,10 @@ public class Order1Fragment extends BaseContentFragment{
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_CALCULATEPAY));
-        apiTask.setParams(ApiContants.instance(getActivity()).getComment(order_id,  comment_operater_id, comment_level,comment_content));
+        apiTask.setParams(ApiContants.instance(getActivity()).getComment(order_id, comment_operater_id, comment_level, comment_content));
         apiTask.execute(new OnDataLoader<comment>() {
             LoadingDialog loadingDialog;
+
             @Override
             public void onStart() {
                 loadingDialog = LoadingDialog.show(getActivity());
@@ -653,8 +655,18 @@ public class Order1Fragment extends BaseContentFragment{
                 mFinishButton.setVisibility(View.GONE);
                 mGetCarButton.setVisibility(View.VISIBLE);
             } if (order_state.equals("8")||order_state.equals("9")){
-                mFinishButton.setVisibility(View.VISIBLE);
-                mGetCarButton.setVisibility(View.GONE);
+                if(order_state.equals("8")){
+                    mFinishButton.setVisibility(View.VISIBLE);
+                    mFinishButton.setEnabled(false);
+                    mFinishButton.setBackgroundResource(R.drawable.button_false);
+                    mGetCarButton.setVisibility(View.GONE);
+
+                }else {
+                    mFinishButton.setVisibility(View.VISIBLE);
+                    mFinishButton.setEnabled(true);
+                    mFinishButton.setBackgroundResource(R.drawable.button);
+                    mGetCarButton.setVisibility(View.GONE);
+                }
                 mFinishButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -670,7 +682,6 @@ public class Order1Fragment extends BaseContentFragment{
                     postGetCar(customerId, orderId);
                 }
             });
-
         }
     }
     /**
@@ -839,11 +850,12 @@ public class Order1Fragment extends BaseContentFragment{
                 if (checkedId == R.id.alipay) {
                     Log.e("OnButtonClick", "alipay");
                     //toPay(PayManager.PAY_TYPE_ALIPAY, paySubject, payDesc, totalPay);
-                    toPay(PayManager.PAY_TYPE_ALIPAY, paySubject, payDesc, "0.01","");
+                    toPay(PayManager.PAY_TYPE_ALIPAY, paySubject, payDesc, "0.01",Constants.ALIPAY_NOTIFY_URL);
                 } else if (checkedId == R.id.wechatpay) {
                     Log.e("OnButtonClick", "wechatpay");
-                    int fee = Integer.parseInt(totalPay) * 100;
-                    toPay(PayManager.PAY_TYPE_WECHAT, paySubject, payDesc, "" + fee,"");
+                    int fee = (int)Double.parseDouble(totalPay) * 100;
+                    fee = 1;
+                    toPay(PayManager.PAY_TYPE_WECHAT, paySubject, payDesc, "" + fee,Constants.WECHAT_NOTIFY_URL);
                 }
             }
         });

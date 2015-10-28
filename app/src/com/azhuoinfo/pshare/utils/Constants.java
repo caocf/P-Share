@@ -48,6 +48,9 @@ public class Constants {
 
 
     // 在商户后台回调地址
-    public static final String NOTIFY_URL = "http://139.196.12.103/notify_url.jsp";
+    public static final String ALIPAY_NOTIFY_URL = "http://139.196.12.103/notify_url.jsp";
+    public static final String ALIPAY_RENT_NOTIFY_URL = "http://139.196.12.103/payBackOrder.jsp";
+    public static final String WECHAT_NOTIFY_URL = "http://139.196.12.103/{client_type}/{version}/customer/payOrder";
+    public static final String WECHAT_RENT_NOTIFY_URL = "http://139.196.12.103/{client_type}/{version}/customer/payAmount";
 
 }

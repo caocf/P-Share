@@ -115,7 +115,7 @@
     <string name="tv_city">国、省、市:</string>
     <string name="tv_area">区:</string>
     <string name="tv_living_area">小区:</string>
-    <string name="tv_time_frame">时间段:</string>
+    <string name="tv_time_frame">停车时间(月):</string>
     <string name="tv_start_time">开始时间:</string>
     <string name="tv_finish_time">结束时间:</string>
     <string name="tv_price">单价:</string>

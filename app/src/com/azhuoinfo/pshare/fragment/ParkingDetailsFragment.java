@@ -265,5 +265,4 @@ public class ParkingDetailsFragment extends BaseContentFragment implements AMapL
         super.onDestroyView();
         mLocationManagerProxy.destroy();
     }
-
 }

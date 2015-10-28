@@ -11,6 +11,28 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:orientation="vertical">
+			<RelativeLayout
+				android:layout_height="@dimen/padding7"
+				android:layout_width="match_parent"
+				android:layout_marginTop="@dimen/padding10"
+				android:background="@color/text_white">
+				<TextView
+					android:id="@+id/iv_type"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:layout_marginLeft="@dimen/padding2"
+					android:textSize="@dimen/text_size3"
+					android:layout_centerVertical="true"
+					android:text="缴费类型:"/>
+				<TextView
+					android:id="@+id/tv_type"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:layout_toRightOf="@+id/iv_type"
+					android:layout_centerVertical="true"
+					android:textColor="@color/text_light_gray"
+					android:layout_marginRight="@dimen/padding1"/>
+			</RelativeLayout>
             <RelativeLayout
                 android:id="@+id/rl_CPC"
 	            android:layout_height="@dimen/padding7"
@@ -221,8 +243,7 @@
 	                android:layout_width="wrap_content"
 	                android:layout_alignParentRight="true"
 	                android:layout_centerVertical="true"
-	                android:layout_marginRight="@dimen/padding5"
-	                android:text="100元/月"/>
+	                android:layout_marginRight="@dimen/padding5"/>
         	</RelativeLayout>
         	<RelativeLayout
         	    android:id="@+id/rl_customer_name"
@@ -247,7 +268,6 @@
 	                android:background="@drawable/edittext_time"
 	                android:textSize="@dimen/text_size3"
 	                android:gravity="right"
-	                android:hint="车"
 	                android:layout_marginRight="@dimen/padding5"/>
         	</RelativeLayout>
         	<RelativeLayout
