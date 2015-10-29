@@ -1,8 +1,10 @@
 package com.azhuoinfo.pshare.utils;
 
+import com.azhuoinfo.pshare.BuildConfig;
+
 public class Constants {
 	// 开发模式 显示log、生命周期等
-	public static final boolean DEVMODE = true;
+	public static final boolean DEVMODE = BuildConfig.DEBUG;
 
 	public static final int DATABASE_VERSION = 1;
 

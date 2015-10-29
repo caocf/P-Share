@@ -31,6 +31,7 @@ public class SplashActivity extends BaseActionBarActivity {
         setContentView(R.layout.activity_splashing);
         initFragmentStack(R.id.layout_splashing);
         mSessionService = getSession();
+        mSessionService.refresh();
         checkGuide();
         new Handler().postDelayed(new Runnable() {
             @Override

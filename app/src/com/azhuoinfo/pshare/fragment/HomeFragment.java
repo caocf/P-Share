@@ -342,7 +342,6 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 Double geoLat = aMapLocation.getLatitude();
                 Double geoLng = aMapLocation.getLongitude();
                 getSearchParkListByLL("" + geoLat, "" + geoLng);
-                updateDefaltParking(mDefaultParking);
             }
         }
     }
@@ -428,7 +427,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             @Override
             public void onSuccess(List<Parking> list) {
                 if (isEnable()) {
-                        drawMarker(list);
+                        drawMarker(list,true);
                 }
             }
 
@@ -456,7 +455,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             @Override
             public void onSuccess(List<Parking> list) {
                 if (isEnable()) {
-                    drawMarker(list);
+                    drawMarker(list,false);
                 }
             }
 
@@ -484,14 +483,10 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             }
         });
     }
-    public void drawMarker(List<Parking> list){
+    public void drawMarker(List<Parking> list,boolean move){
         if(list!=null&&list.size()>0){
             if(mAMapLocation!=null)
             sort(list);
-            //mAmap.clear();//清除marker信息，（清除掉了当前位置）
-            mAmap.setLocationSource(this);
-            mAmap.getUiSettings().setMyLocationButtonEnabled(true);
-            mAmap.setMyLocationEnabled(true);
             MarkerOptions markerOption=null;
             Parking parking=null;
             Marker marker=null;
@@ -535,9 +530,8 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 markerOption.anchor(0.2f,1.0f);
                 marker=mAmap.addMarker(markerOption);
                 marker.setObject(parking);
-                if(i==0){
+                if(i==0&&move){
                     marker.showInfoWindow();
-
                     mAmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())),ZOOM));
                 }
             }
