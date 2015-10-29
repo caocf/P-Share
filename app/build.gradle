@@ -61,7 +61,7 @@ android {
         }
         release {
             debuggable false
-            minifyEnabled true
+            minifyEnabled false
             zipAlignEnabled true
             shrinkResources false
             signingConfig signingConfigs.config

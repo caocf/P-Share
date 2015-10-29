@@ -17,16 +17,17 @@
             android:text="@string/tv_living_area_name"
             android:textSize="@dimen/text_size3" />
 
-        <TextView
-            android:id="@+id/tv_living_area_address"
-            style="@style/listitem_monthlyrent"
-            android:text="@string/tv_living_area_address"/>
-
         <LinearLayout
+            android:layout_marginTop="@dimen/padding2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
-
+            <TextView
+                android:id="@+id/start_year_time"
+                android:text="@string/year_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+<!--
             <TextView
                 android:id="@+id/start_year_time"
                 style="@style/listitem_monthlyrent"
@@ -78,7 +79,7 @@
             <TextView
                 android:id="@+id/finish_day_time"
                 style="@style/listitem_monthlyrent"
-                android:text="@string/day_time" />
+                android:text="@string/day_time" />-->
         </LinearLayout>
     </LinearLayout>
 
@@ -97,31 +98,19 @@
             android:textColor="@color/text_green"
             android:textSize="@dimen/text_size3" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"            
-            android:orientation="horizontal" >
-
-            <TextView
-                style="@style/listitem_monthlyrent"
-                android:text="@string/already_pay" />
-
-            <TextView
-                android:id="@+id/pay_money"
-                style="@style/listitem_monthlyrent"
-                android:text="@string/money" />
-
-            <TextView
-                style="@style/listitem_monthlyrent"
-                android:text="@string/yuan" />
-        </LinearLayout>
 
         <LinearLayout
+            android:layout_marginTop="@dimen/padding2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
-
             <TextView
+                android:id="@+id/pay_year_time"
+                android:layout_height="wrap_content"
+                android:text="@string/year_time"
+                android:layout_width="wrap_content" />
+
+<!--            <TextView
                 android:id="@+id/pay_year_time"
                 style="@style/listitem_monthlyrent"
                 android:text="@string/year_time" />
@@ -149,7 +138,7 @@
                 style="@style/listitem_monthlyrent"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:text="@string/pay_time" />
+                android:text="@string/pay_time" />-->
         </LinearLayout>
     </LinearLayout>
 

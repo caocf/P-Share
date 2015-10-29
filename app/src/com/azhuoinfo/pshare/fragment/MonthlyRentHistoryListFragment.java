@@ -1,6 +1,7 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,15 @@ import android.widget.ListView;
 
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.api.ApiContants;
+import com.azhuoinfo.pshare.api.task.ApiTask;
+import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.fragment.adapter.MonthlyRentHistoryListAdapter;
+import com.azhuoinfo.pshare.model.FeeOrderInfo;
+import com.azhuoinfo.pshare.view.LoadingDialog;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
@@ -24,7 +31,7 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
 
     //月租历史缴费列表
     private ListView mMonthlyRentHistoryListView;
-    private ArrayList<String> list=new ArrayList<String>();
+    private ArrayList<FeeOrderInfo> list=new ArrayList<>();
 
     private AccountVerify mAccountVerify;
     @Override
@@ -52,14 +59,12 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
         initData(savedInstanceState);
     }
 
+    MonthlyRentHistoryListAdapter monthlyRentHistoryListAdapter;
     @Override
     protected void findViews(View view) {
         mMonthlyRentHistoryListView=(ListView) view.findViewById(R.id.lv_monthlyrnet_history);
-        list.clear();
-        for (int i = 0; i < 4; i++) {
-            list.add(""+i);
-        }
-        mMonthlyRentHistoryListView.setAdapter(new MonthlyRentHistoryListAdapter(this.getActivity(),list));
+        monthlyRentHistoryListAdapter = new MonthlyRentHistoryListAdapter(this.getActivity(), list);
+        mMonthlyRentHistoryListView.setAdapter(monthlyRentHistoryListAdapter);
     }
 
     @Override
@@ -67,7 +72,7 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
         mMonthlyRentHistoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                replaceFragment(MonthlyRentCarfinishPayFragment.class,"MonthlyRentCarFinishPayFragment",null);
+                replaceFragment(MonthlyRentCarfinishPayFragment.class, "MonthlyRentCarFinishPayFragment", null);
             }
         });
     }
@@ -75,6 +80,44 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
     @Override
     protected void initData(Bundle bundle) {
 
+    }
+
+    public void postGetOrderInfo(String customer_id,String index) {
+        ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
+        apiTask.setMethod("GET");
+        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_GETORDERINFO));
+        apiTask.setParams(ApiContants.instance(getActivity()).getGetOrderInfo(customer_id, index));
+        apiTask.setRoot("feeOrderInfoList");
+        apiTask.execute(new OnDataLoader<List<FeeOrderInfo>>() {
+
+            LoadingDialog loadingDialog;
+
+            public void onStart() {
+                if (isEnable()) {
+                    loadingDialog = LoadingDialog.show(getActivity());
+                }
+            }
+
+            @Override
+            public void onSuccess(List<FeeOrderInfo> feeOrderInfoList) {
+                if (!feeOrderInfoList.isEmpty()){
+                    monthlyRentHistoryListAdapter.getItems().clear();
+                    monthlyRentHistoryListAdapter.getItems().addAll(feeOrderInfoList);
+                    monthlyRentHistoryListAdapter.notifyDataSetChanged();
+                    //mMonthlyRentListView.deferNotifyDataSetChanged();
+                }
+                for (FeeOrderInfo feeOrderInfo : feeOrderInfoList) {
+                    Log.i("fee", feeOrderInfo.toString());
+                }
+                loadingDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(String code, String message) {
+                showToast(message);
+                loadingDialog.dismiss();
+            }
+        });
     }
 
     @Override

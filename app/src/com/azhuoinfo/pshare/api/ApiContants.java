@@ -461,4 +461,28 @@ customer_age*/
 		params.put("county",county);
 		return params;
 	}
+
+
+	public static String API_CUSTOMER_GETORDERINFO="/customer/getorderinfo";
+	/**
+	 *
+	 * @return
+	 */
+	public HashMap<String, String> getGetOrderInfo(String customer_id,String index){
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("customer_id",customer_id);
+		params.put("index",index);
+		return params;
+	}
+
+
+	public static String API_CUSTOMER_DELETEORDER="/customer/delOrder";
+	/**
+	 * @return
+	 */
+	public HashMap<String, String> deleteOrder(String id){
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("id", id );
+		return params;
+	}
 }
