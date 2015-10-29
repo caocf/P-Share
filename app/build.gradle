@@ -6,8 +6,8 @@ dependencies {
     compile project(':actionbar-1.0.1')
     compile project(':uiframe-1.0.0')
     compile project(':commons-pay')
-    compile 'com.android.support:support-v13:21.0.2'
     compile project(':appcore-1.0.1')
+    compile 'com.android.support:support-v13:13.0.0+'
 }
 
 android {
@@ -47,6 +47,11 @@ android {
     }
     lintOptions {
         abortOnError false
+
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
     buildTypes {
         debug{
@@ -61,7 +66,7 @@ android {
             shrinkResources false
             signingConfig signingConfigs.config
             manifestPlaceholders = [AMAP_APIKEY: amap_ak_release]
-            proguardFiles getDefaultProguardFile('proguard-android.txt'),'proguard-rules.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),'proguard-rules.txt','../commons-pay/proguard-rules.txt'
         }
     }
 }
