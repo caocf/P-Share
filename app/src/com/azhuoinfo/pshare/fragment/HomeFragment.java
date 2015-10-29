@@ -147,7 +147,6 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 	@Override
 	protected void initData(Bundle savedInstanceState) {
         init();
-
         if(mSessionService.getSerializable("default_parking")!=null){
             mDefaultParking= (Parking) mSessionService.getSerializable("default_parking");
             getSearchParkbyId(mDefaultParking.getParking_id());

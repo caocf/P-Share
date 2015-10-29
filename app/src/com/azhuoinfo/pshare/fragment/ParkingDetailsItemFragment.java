@@ -2,6 +2,8 @@ package com.azhuoinfo.pshare.fragment;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +21,10 @@ import android.widget.Toast;
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.api.ApiContants;
+import com.azhuoinfo.pshare.api.ApiResult;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
+import com.azhuoinfo.pshare.api.task.ResultFactory;
 import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.OrderInfo;
 import com.azhuoinfo.pshare.model.Parking;
@@ -29,12 +33,17 @@ import com.azhuoinfo.pshare.model.UserAuth;
 import com.azhuoinfo.pshare.view.CountDownTextView;
 import com.azhuoinfo.pshare.view.LoadingDialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
+import mobi.cangol.mobile.http.extras.PollingHttpClient;
+import mobi.cangol.mobile.http.extras.PollingResponseHandler;
 
 /**
  * Created by Azhuo on 2015/9/22.
@@ -119,6 +128,22 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         super.onActivityCreated(savedInstanceState);
         initViews(savedInstanceState);
         initData(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (pollingHttpClient!=null) {
+            PollingUnfinishedOrder(customer_id);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (pollingHttpClient!=null) {
+            pollingHttpClient.cancelRequests(getActivity(), true);
+        }
     }
 
     @Override
@@ -236,7 +261,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 if (listSize > 0) {
                     Toast.makeText(getActivity(), "已有订单", Toast.LENGTH_SHORT).show();
                 } else {
-                    Log.e("mImmediateTimeText",mImmediateTimeText+"");
+                    Log.e("mImmediateTimeText", mImmediateTimeText + "");
                     postCreateOrder(customer_id, parking.getParking_id(), mImmediateTimeText, strAppointmentNeed);
                 }
             }
@@ -251,8 +276,8 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                     if (listSize > 0) {
                         Toast.makeText(getActivity(), "已有订单", Toast.LENGTH_SHORT).show();
                     } else {
-                        Log.e("mTimeText",mTimeText+"");
-                        postCreateOrder(customer_id, parking.getParking_id(), mTimeText,strAppointmentNeed);
+                        Log.e("mTimeText", mTimeText + "");
+                        postCreateOrder(customer_id, parking.getParking_id(), mTimeText, strAppointmentNeed);
                     }
                 }
             }
@@ -268,6 +293,20 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     @Override
     protected void initData(Bundle bundle) {
         postUnfinishedOrder(customer_id);
+
+        updateHandler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                String order_state = (String)msg.obj;
+                if (order_state != null ){
+                    if (!order_state.equals("1")){
+                        showToast("代泊员已接单");
+                        popBackStack();
+                    }
+                }
+                return false;
+            }
+        });
 
     }
     @Override
@@ -329,7 +368,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         });
     }
 
-    public void postCreateOrder(String customerId,String parkingId,String orderPlanBegin,String order_img_count) {
+    public void postCreateOrder(final String customerId,String parkingId,String orderPlanBegin,String order_img_count) {
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_CREATEORDER));
@@ -350,12 +389,16 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 mOrderTextView.setText("正在为你搭配代泊员...");
                 mOrderCountDownTextView.starTimeByMillisInFuture(3 * 60 * 1000);
                 loadingDialog.dismiss();
+                PollingUnfinishedOrder(customerId);
+
                 mOrderCountDownTextView.setOnCountDownListener(new CountDownTextView.OnCountDownListener() {
                     @Override
                     public void onFinish() {
+                        pollingHttpClient.cancelRequests(getActivity(),true);
                         postCancelOrder(order_id);
                         mOrderTextView.setText("代泊员正忙，未接单，订单取消");
                         mOrderCountDownTextView.setText("");
+
                     }
                 });
             }
@@ -397,6 +440,70 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 }
             }
         });
+    }
+
+    Handler updateHandler;
+    PollingHttpClient pollingHttpClient;
+
+    public void PollingUnfinishedOrder(final String customerId){
+        pollingHttpClient = new PollingHttpClient();
+        PollingUnfinishedOrderHandler pollingUnfinishedOrderHandler = new PollingUnfinishedOrderHandler();
+        pollingHttpClient.send(
+                getActivity(),
+                ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_UNFINISHEDORDER),
+                ApiContants.instance(getActivity()).unFinishedOrder(customerId),
+                pollingUnfinishedOrderHandler,
+                18, 10000);
+    }
+    class PollingUnfinishedOrderHandler extends PollingResponseHandler {
+
+        @Override
+        public void onStart() {
+            Log.d("ResponseHandler", "onStart");
+        }
+
+        @Override
+        public boolean isFailResponse(String content) {
+            Log.d("ResponseHandler", "isFailResponse content=" + content);
+            try {
+                ApiResult<UnfinishedOrderInfo> apiResult = (ApiResult<UnfinishedOrderInfo>) ResultFactory.getInstance().parserResult(UnfinishedOrderInfo.class, new JSONObject(content), "orderInfo");
+                //List<UnfinishedOrderInfo> unfinishedOrderInfos = apiResult.getList();
+                List<UnfinishedOrderInfo> unfinishedOrderInfos = apiResult.getList();
+                if(isEnable()){
+                    //Log.e(TAG, unfinishedOrderInfos.size() + "");
+                    listSize = unfinishedOrderInfos.size();
+                    if (listSize != 0) {
+                        for (int i = 0; i < unfinishedOrderInfos.size(); i++) {
+                            UnfinishedOrderInfo unfinishedOrderInfo = unfinishedOrderInfos.get(i);
+                            Message message = updateHandler.obtainMessage(1, unfinishedOrderInfo.getOrder_state());
+                            updateHandler.sendMessage(message);
+                        }
+                    }
+
+
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return true;
+        }
+
+        @Override
+        public void onPollingFinish(int execTimes, String content) {
+            Log.d("ResponseHandler", "execTimes=" + execTimes + " content:" + content);
+        }
+
+        @Override
+        public void onSuccess(int statusCode, String content) {
+            Log.d("ResponseHandler", "statusCode=" + statusCode + " content:" + content);
+        }
+
+        @Override
+        public void onFailure(Throwable error, String content) {
+            Log.d("ResponseHandler", "error=" + error + " content:" + content);
+        }
     }
 
     /**

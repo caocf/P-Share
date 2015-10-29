@@ -168,6 +168,8 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment {
     protected String mBeginTime;
     protected String mEndTime;
 
+    final String dateFmt = "yyyy/MM/dd";
+
     @Override
     protected void initData(Bundle bundle) {
 
@@ -216,7 +218,7 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment {
 
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.DAY_OF_MONTH, calendar.getMinimum(Calendar.DAY_OF_MONTH));
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFmt);
             mBeginTime = simpleDateFormat.format(calendar.getTime());
             mMonthlyrentBegintTimeTextView.setText(mBeginTime);
             calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
@@ -247,6 +249,10 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment {
         mAreaRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mCurrentCityName==null || mCurrentCityName.isEmpty()){
+                    showToast("国、省、市不能为空");
+                    return;
+                }
                 SingleAreaDialog dialog = SingleAreaDialog.creatDialog(getActivity(), mCurrentProviceName, mCurrentCityName);
                 dialog.setOnSelectListener(new SingleAreaDialog.OnSelectListener() {
                     @Override
@@ -279,7 +285,7 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment {
                         int addMonth = Integer.parseInt(mTimeFrame) - 1;
                         mTimeFrameTextView.setText(array[index]);
                         String stime = mMonthlyrentBegintTimeTextView.getText().toString();
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFmt);
                         try {
                             Date date = simpleDateFormat.parse(stime);
                             date.getTime();
@@ -321,7 +327,7 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         DatePicker datePicker = ((DatePickerDialog) dialog).getDatePicker();
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFmt);
                         Calendar calendar = Calendar.getInstance();
                         calendar.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
                         calendar.set(Calendar.DAY_OF_MONTH, calendar.getMinimum(Calendar.DAY_OF_MONTH));
@@ -402,8 +408,6 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment {
                     showToast("区不能为空");
                     return;
                 }
-                mParkingId = "zghy20151013000001";
-                carNumber = "苏E23232";
                 postPostOrderInfo(
                         mParkingId,
                         mParking_name,
@@ -456,8 +460,6 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment {
     }
 
     public void postUnitPrice(String villageId, String carNumber) {
-        villageId = "zghy20151013000001";
-        carNumber = "苏E23232";
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_UNITPRICE));

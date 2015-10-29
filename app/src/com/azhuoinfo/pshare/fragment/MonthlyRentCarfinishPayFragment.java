@@ -162,7 +162,7 @@ public class MonthlyRentCarfinishPayFragment extends BaseContentFragment{
 
         TextView tv_money;
         tv_money = (TextView)payDialog.findViewById(R.id.tv_money);
-        tv_money.setText(String.format("%.2f", Double.parseDouble(toString())));
+        tv_money.setText(String.format("%.2f", Double.parseDouble(totalPay)));
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -175,7 +175,8 @@ public class MonthlyRentCarfinishPayFragment extends BaseContentFragment{
             }
         });
 
-        mButtonFinishPay.setOnClickListener(new View.OnClickListener() {
+        Button payButton = (Button)payDialog.findViewById(R.id.btn_pay);
+        payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String paySubject = "口袋停-产权月租";
@@ -207,7 +208,7 @@ public class MonthlyRentCarfinishPayFragment extends BaseContentFragment{
             @Override
             public String getOrderId() {
                 //自定义订单号
-                return mFeeOrderInfo.getOrderSerialNumber();
+                return mFeeOrderInfo.getID();
             }
         }, new OnPayResultListener() {
             @Override
