@@ -90,7 +90,7 @@ public class MonthlyRentFragment extends BaseContentFragment{
         history_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replaceFragment(MonthlyRentHistoryListFragment.class, "MonthlyRentListFragment", null);
+                replaceFragment(MonthlyRentHistoryListFragment.class, "MonthlyRentHistoryListFragment", null);
             }
         });
     }
