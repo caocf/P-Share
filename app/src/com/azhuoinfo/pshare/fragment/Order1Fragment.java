@@ -225,7 +225,7 @@ public class Order1Fragment extends BaseContentFragment{
     public void onPause() {
         super.onPause();
         if (pollingHttpClient!=null) {
-            pollingHttpClient.cancelRequests(getActivity(), false);
+            pollingHttpClient.cancelRequests(getActivity(), true);
         }
         if (timer2!=null) {
             timer2.cancel();
@@ -620,9 +620,10 @@ public class Order1Fragment extends BaseContentFragment{
             Date date = new Date();
             SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//24小时制
             LgTime = sdformat.format(date);
-           // new Thread(new MyThread()).start();
 
+           // new Thread(new MyThread()).start();
            // runnable.run();
+
             mList = new ArrayList<Map<String, Object>>();
             urls = new ArrayList<String>();
             show = new ArrayList<String>();

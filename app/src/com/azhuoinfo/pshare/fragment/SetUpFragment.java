@@ -1,7 +1,9 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import com.azhuoinfo.pshare.view.CommonDialog;
 
 import java.security.spec.EncodedKeySpec;
 
+import mobi.cangol.mobile.actionbar.ActionBarActivity;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 
@@ -38,6 +41,8 @@ public class SetUpFragment extends BaseContentFragment{
     private RelativeLayout mScoreCheerRelativeLayout;
     //关于我们
     private RelativeLayout mAboutUsRelativeLayout;
+    //帮助
+    private RelativeLayout mHelpRelativeLayout;
     //推送
     private RelativeLayout mPushRelativeLayout;
     //退出登录
@@ -75,6 +80,7 @@ public class SetUpFragment extends BaseContentFragment{
         mSuggestionFeedbackRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_suggestion_feedback);
         mScoreCheerRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl__cheer_score);
         mAboutUsRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_about_us);
+        mHelpRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_help);
         mPushRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_push);
         mLogOutButton=(Button) view.findViewById(R.id.button_log_out);
     }
@@ -112,7 +118,26 @@ public class SetUpFragment extends BaseContentFragment{
                 }
             }
         });
+
+        mHelpRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showcase();
+            }
+        });
     }
+
+    private void showcase(){
+            ((ActionBarActivity)this.getActivity()).setMaskView(R.layout.layout_showcase_home);
+            ((ActionBarActivity)this.getActivity()).displayMaskView(true);
+            this.getActivity().findViewById(R.id.imageView_showcase).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ActionBarActivity) getActivity()).displayMaskView(false);
+                }
+            });
+    }
+
     public void showLogoutDialog(){
         CommonDialog mDialog = CommonDialog.creatDialog(getActivity());
         mDialog.setTitle(R.string.dialog_logout_title);

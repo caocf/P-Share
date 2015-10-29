@@ -14,6 +14,7 @@ import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.fragment.adapter.MonthlyRentHistoryListAdapter;
+import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.FeeOrderInfo;
 import com.azhuoinfo.pshare.view.LoadingDialog;
 
@@ -32,12 +33,16 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
     //月租历史缴费列表
     private ListView mMonthlyRentHistoryListView;
     private ArrayList<FeeOrderInfo> list=new ArrayList<>();
+    private CustomerInfo customerInfo;
+    private String customerId;
 
     private AccountVerify mAccountVerify;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAccountVerify = AccountVerify.getInstance(getActivity());
+        customerInfo=(CustomerInfo)this.app.getSession().getSerializable("customerInfo");
+        customerId=customerInfo.getCustomer_Id();
     }
 
     @Override
@@ -79,7 +84,7 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
 
     @Override
     protected void initData(Bundle bundle) {
-
+        postGetOrderInfo(customerId,"1");
     }
 
     public void postGetOrderInfo(String customer_id,String index) {
