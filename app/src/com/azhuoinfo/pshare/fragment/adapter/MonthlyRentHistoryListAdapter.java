@@ -29,7 +29,7 @@ public class MonthlyRentHistoryListAdapter extends BaseAdapter<FeeOrderInfo> {
 		if (convertView==null) {
 			convertView = this.mInflater.inflate(R.layout.listview_item_historymonthlyrent, parent, false);
 			mViewHolder=new ViewHolder();
-			mViewHolder.tv_living_area=(TextView) convertView.findViewById(R.id.tv_living_area);
+			mViewHolder.tv_living_area=(TextView) convertView.findViewById(R.id.tv_living_area_name);
 			mViewHolder.start_year_time=(TextView) convertView.findViewById(R.id.start_year_time);
 			mViewHolder.car_number=(TextView) convertView.findViewById(R.id.car_number);
 			mViewHolder.pay_year_time=(TextView) convertView.findViewById(R.id.pay_year_time);

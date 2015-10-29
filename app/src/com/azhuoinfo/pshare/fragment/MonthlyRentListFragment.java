@@ -181,7 +181,7 @@ public class MonthlyRentListFragment extends BaseContentFragment{
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_GETORDERINFO));
-        apiTask.setParams(ApiContants.instance(getActivity()).getGetOrderInfo(customer_id, index));
+        apiTask.setParams(ApiContants.instance(getActivity()).getGetOrderInfo(customer_id, index,"1"));
         apiTask.setRoot("feeOrderInfoList");
         apiTask.execute(new OnDataLoader<List<FeeOrderInfo>>() {
 

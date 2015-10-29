@@ -25,6 +25,7 @@ import com.azhuoinfo.pshare.api.ApiResult;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.api.task.ResultFactory;
+import com.azhuoinfo.pshare.model.ChargeStandard;
 import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.OrderInfo;
 import com.azhuoinfo.pshare.model.Parking;
@@ -182,7 +183,23 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         Log.e(TAG, parking.getParking_can_use() + "");
         mParkingDistanceTextView.setText(parking.getParking_distance() + "");
         mParkingCanUseTextView.setText(parking.getParking_can_use() + "");
-        mParkingPriceTextView.setText(parking.getParking_charging_standard() + "");
+        StringBuilder priceString = new StringBuilder();
+        List<ChargeStandard> list = parking.getChargeStandard();
+        if (list!=null && !list.isEmpty()){
+            priceString.append("停车时长");
+
+            priceString.append(String.format("0-%d小时(含):%d元", list.get(0).getCharge_time(), list.get(0).getCharge_unit()));
+
+            for (int i = 0; i < list.size()-1; i++) {
+                priceString.append(String.format("; %d-%d小时(含):%d元",
+                        list.get(i).getCharge_time(),list.get(i+1).getCharge_time(), list.get(i+1).getCharge_unit()));
+            }
+        }else {
+            priceString.append("价格未知");
+        }
+
+        //mParkingPriceTextView.setText(parking.getParking_charging_standard() + "");
+        mParkingPriceTextView.setText(priceString.toString());
         mAppointmentTimeRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -391,13 +408,17 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 loadingDialog.dismiss();
                 PollingUnfinishedOrder(customerId);
 
+                mCB_WashCar.setClickable(false);
+                mAppointmentTimeRelativeLayout.setClickable(false);
+
                 mOrderCountDownTextView.setOnCountDownListener(new CountDownTextView.OnCountDownListener() {
                     @Override
                     public void onFinish() {
-                        pollingHttpClient.cancelRequests(getActivity(),true);
+                        pollingHttpClient.cancelRequests(getActivity(), true);
                         postCancelOrder(order_id);
                         mOrderTextView.setText("代泊员正忙，未接单，订单取消");
                         mOrderCountDownTextView.setText("");
+
 
                     }
                 });
@@ -430,6 +451,8 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 mOrderTextLinearLayout.setVisibility(View.GONE);
 
                 setButtonEnable(true);
+                mCB_WashCar.setClickable(true);
+                mAppointmentTimeRelativeLayout.setClickable(true);
                 loadingDialog.dismiss();
             }
             @Override
@@ -479,9 +502,6 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                             updateHandler.sendMessage(message);
                         }
                     }
-
-
-
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

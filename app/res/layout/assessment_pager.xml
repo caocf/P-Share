@@ -11,23 +11,28 @@
         android:background="@android:color/white"
         android:orientation="vertical"
         android:padding="15dp" >
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal" >
             <TextView
                 android:id="@+id/text_money"
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="0dp"
                 android:text="请您对代泊员评价"/>
             <ImageView
                 android:id="@+id/iv_close"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/circle_rectangle"/>
-        </RelativeLayout>
+        </LinearLayout>
         <RadioGroup
             android:gravity="center_vertical"
             android:id="@+id/rg"

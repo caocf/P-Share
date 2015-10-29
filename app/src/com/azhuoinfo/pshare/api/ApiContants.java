@@ -350,9 +350,10 @@ customer_age*/
 	 * @param customer_id
 	 * @return
 	 */
-	public HashMap<String, String> historyOrder(String customer_id){
+	public HashMap<String, String> historyOrder(String customer_id,String pageindex){
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("customer_id", customer_id );
+		params.put("pageindex", pageindex );
 		return params;
 	}
 
@@ -468,10 +469,12 @@ customer_age*/
 	 *
 	 * @return
 	 */
-	public HashMap<String, String> getGetOrderInfo(String customer_id,String index){
+	public HashMap<String, String> getGetOrderInfo(String customer_id,String index,String pageindex){
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("customer_id",customer_id);
 		params.put("index",index);
+		params.put("pageindex",pageindex);
+
 		return params;
 	}
 

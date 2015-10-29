@@ -200,7 +200,7 @@ public class Order1Fragment extends BaseContentFragment{
                         Log.d("order_string", "last_order " + last_order_state);
                         Log.d("order_string", "order " + order_state);
                         last_order_state = new String(order_state);
-                        if (order_state.equals("3") || order_state.equals("4")) {
+                        if (order_state.equals("3") || order_state.equals("4")|| order_state.equals("8")) {
                             dateDiff(orderActualBegin, (String) msg.obj, "yyyy-MM-dd HH:mm:ss");
                         }
                     }
@@ -411,8 +411,8 @@ public class Order1Fragment extends BaseContentFragment{
                             }
                         }
                     }
-                    initOrderState();
 
+                    initOrderState();
                     loadingDialog.dismiss();
                 }
             }
@@ -681,6 +681,11 @@ public class Order1Fragment extends BaseContentFragment{
                 @Override
                 public void onClick(View v) {
                     postGetCar(customerId, orderId);
+
+                    mFinishButton.setVisibility(View.VISIBLE);
+                    mFinishButton.setEnabled(false);
+                    mFinishButton.setBackgroundResource(R.drawable.button_false);
+                    mGetCarButton.setVisibility(View.GONE);
                 }
             });
         }
@@ -701,7 +706,7 @@ public class Order1Fragment extends BaseContentFragment{
                 urls.add(parkingPath);
             }
         }
-        for (int j = 0; j < 3; j++) {
+        for (int j = 0; j < urls.size(); j++) {
             show.add(urls.get(j));
         }
         Log.d("saveList", urls.size() + "");
@@ -804,7 +809,7 @@ public class Order1Fragment extends BaseContentFragment{
                     level = 3;
                 }
                 EditText et = (EditText)commentDialog.findViewById(R.id.comment_content);
-                postAssessment(orderId,customerId,""+level,et.getText().toString());
+                postAssessment(orderId,customerId,""+level,""+et.getText().toString());
             }
         });
 
@@ -910,27 +915,22 @@ public class Order1Fragment extends BaseContentFragment{
             final long nh = 1000 * 60 * 60;//一小时的毫秒数
             final long nm = 1000 * 60;//一分钟的毫秒数
             final long ns = 1000;//一秒钟的毫秒数
+
             @Override
             public void run() {
-                diff+=1000;
+                diff += 1000;
                 hour = diff / nh;//计算差多少小时
-                min = diff %  nh / nm;//计算差多少分钟
+                min = diff % nh / nm;//计算差多少分钟
                 sec = diff % nh % nm / ns;//计算差多少秒
-                Log.e("sec",sec+"");
-                Log.e("diff",diff+"");
+                Log.e("sec", sec + "");
+                Log.e("diff", diff + "");
                 //String str=hour+":"+min+":"+sec;
-                String str=String.format("%02d:%02d:%02d",hour,min,sec);
-                Message message = handler.obtainMessage(1,str);
+                String str = String.format("%02d:%02d:%02d", hour, min, sec);
+                Message message = handler.obtainMessage(1, str);
                 handler.sendMessage(message);
-                Log.e("str2",str);
+                Log.e("str2", str);
                 Log.e("str", str);
             }
         },0,1000);
-    }
-
-    @Override
-    public void onDestroy() {
-        //handler.removeCallbacks();
-        super.onDestroy();
     }
 }

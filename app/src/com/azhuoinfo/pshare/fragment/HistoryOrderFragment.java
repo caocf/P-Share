@@ -21,7 +21,11 @@ import com.azhuoinfo.pshare.fragment.adapter.ParkingDetailsAdapter;
 import com.azhuoinfo.pshare.model.CustomerInfo;
 import com.azhuoinfo.pshare.model.OrderList;
 import com.azhuoinfo.pshare.model.Parking;
+import com.azhuoinfo.pshare.view.LoadingDialog;
 import com.azhuoinfo.pshare.view.PromptView;
+import com.azhuoinfo.pshare.view.listview.LoadMoreAdapter;
+import com.azhuoinfo.pshare.view.listview.OnLoadMoreListener;
+import com.azhuoinfo.pshare.view.listview.pull.PullRefreshListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +40,8 @@ import mobi.cangol.mobile.base.FragmentInfo;
 public class HistoryOrderFragment extends BaseContentFragment{
 
     //历史订单列表
-    private ListView mHistoryOrderListView;
+    private PullRefreshListView mHistoryOrderListView;
+    LoadMoreAdapter<OrderList> mListLoadMoreAdapter;
     private PromptView mPromptView;
     private AMapLocation mAMapLocation;
     private AccountVerify mAccountVerify;
@@ -64,10 +69,11 @@ public class HistoryOrderFragment extends BaseContentFragment{
         findViews(view);
     }
 
+    int mPageIndex = 1;
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        postHistoryOrder(customerId);
+        postHistoryOrder(customerId, mPageIndex);
         initViews(savedInstanceState);
         initData(savedInstanceState);
     }
@@ -75,35 +81,66 @@ public class HistoryOrderFragment extends BaseContentFragment{
     @Override
     protected void findViews(View view) {
         mPromptView=(PromptView) findViewById(R.id.promptView);
-        mHistoryOrderListView=(ListView) findViewById(R.id.lv_history_order);
-
+        mHistoryOrderListView=(PullRefreshListView) findViewById(R.id.lv_history_order);
     }
 
     @Override
     protected void initViews(Bundle bundle) {
         mDataAdapter=new HistoryOrderAdapter(this.getActivity());
-        mHistoryOrderListView.setAdapter(mDataAdapter);
+        mListLoadMoreAdapter.setIsPullMode(false);
+
+        mListLoadMoreAdapter = new LoadMoreAdapter<>(mDataAdapter);
+        mListLoadMoreAdapter.setAbsListView(mHistoryOrderListView);
+        mHistoryOrderListView.setAdapter(mListLoadMoreAdapter);
+
+        mListLoadMoreAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public boolean hasMore() {
+                return true;
+            }
+
+            @Override
+            public void onLoadMore() {
+                postHistoryOrder(customerId,mPageIndex);
+            }
+        });
+
         mHistoryOrderListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 OrderList item = (OrderList) parent.getItemAtPosition(position);
+                Log.e("pos",""+position);
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("orderList",item);
+                bundle.putParcelable("orderList", item);
                 replaceParentFragment(HistoryOrderDetailsFragment.class, "HistoryOrderDetailsFragment", bundle);
             }
         });
+
+/*        mHistoryOrderListView.setOnRefreshListener(new PullRefreshListView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPageIndex++;
+                postHistoryOrder(customerId,mPageIndex);
+            }
+        });*/
     }
 
     @Override
     protected void initData(Bundle bundle) {
-
     }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mPageIndex = 1;
+    }
+
     protected void updateViews(List<OrderList> list) {
         if(list!=null&&list.size()>0){
             Log.e("updateViews",list+"");
-            mDataAdapter.clear();
-            mDataAdapter.addAll(list);
-            if(mDataAdapter.getCount()>0){
+            mListLoadMoreAdapter.addMoreData(list);
+            if(mListLoadMoreAdapter.getCount()>0){
                 mPromptView.showContent();
             }else{
                 mPromptView.showPrompt(R.string.common_empty);
@@ -112,6 +149,7 @@ public class HistoryOrderFragment extends BaseContentFragment{
             mPromptView.showPrompt(R.string.common_empty);
         }
     }
+
     @Override
     protected FragmentInfo getNavigtionUpToFragment() {
         return null;
@@ -121,33 +159,54 @@ public class HistoryOrderFragment extends BaseContentFragment{
     public boolean isCleanStack() {
         return true;
     }
-    public void postHistoryOrder(String customerId){
+    public void postHistoryOrder(String customerId, final int pageindex){
+        if (pageindex == -1) {
+            mListLoadMoreAdapter.addMoreData(new ArrayList<OrderList>());
+            return;
+        }
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_HISTORYORDER));
-        apiTask.setParams(ApiContants.instance(getActivity()).historyOrder(customerId));
+        apiTask.setParams(ApiContants.instance(getActivity()).historyOrder(customerId, "" + pageindex));
         apiTask.setRoot("orderInfo");
         apiTask.execute(new OnDataLoader<List<OrderList>>() {
+            LoadingDialog loadingDialog;
             @Override
             public void onStart() {
-                /*if (isEnable())
-                    mPromptView.showLoading();*/
+                if (isEnable())
+                    loadingDialog = LoadingDialog.show(getActivity());
             }
             @Override
             public void onSuccess(List<OrderList> orderLists) {
                 if (isEnable()) {
-                    updateViews(orderLists);
-                    Log.e(TAG, orderLists + "");
-                }
+                    if (pageindex<=1) {
+                        updateViews(orderLists);
+                    }else {
+                        if (orderLists!=null && !orderLists.isEmpty()) {
+                            mListLoadMoreAdapter.addMoreData(orderLists);
+                        }
+                    }
 
+                    if (orderLists != null && orderLists.size()==10){
+                        mPageIndex++;
+                    }else {
+                        mPageIndex = -1;
+                    }
+
+                    Log.e(TAG, orderLists + "");
+                    loadingDialog.dismiss();
+                }
             }
             @Override
             public void onFailure(String code, String message) {
                 showToast(message);
-                if (isEnable())
+                if (isEnable()) {
                     mPromptView.showEmpty();
+                    loadingDialog.dismiss();
+                }
             }
         });
-
     }
+
+
 }

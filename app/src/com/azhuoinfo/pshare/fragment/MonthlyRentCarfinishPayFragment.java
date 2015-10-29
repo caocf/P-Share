@@ -143,8 +143,6 @@ public class MonthlyRentCarfinishPayFragment extends BaseContentFragment{
                     showPayMethodDialog();
                 }
             });
-
-
         }else {
             mButtonFinishPay.setText("已支付");
             mButtonFinishPay.setBackgroundResource(R.drawable.button_false);

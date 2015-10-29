@@ -30,7 +30,7 @@ public class ImageAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return 3;
+        return urls.size();
     }
 
     @Override
