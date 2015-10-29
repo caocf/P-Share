@@ -402,6 +402,8 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment {
                     showToast("区不能为空");
                     return;
                 }
+                mParkingId = "zghy20151013000001";
+                carNumber = "苏E23232";
                 postPostOrderInfo(
                         mParkingId,
                         mParking_name,
@@ -455,7 +457,7 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment {
 
     public void postUnitPrice(String villageId, String carNumber) {
         villageId = "zghy20151013000001";
-        carNumber = "苏E23233";
+        carNumber = "苏E23232";
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_UNITPRICE));

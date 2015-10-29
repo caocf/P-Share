@@ -1,6 +1,7 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,17 @@ import android.widget.TextView;
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.ModuleMenuIDS;
 import com.azhuoinfo.pshare.R;
+import com.azhuoinfo.pshare.api.ApiContants;
+import com.azhuoinfo.pshare.api.task.ApiTask;
+import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.fragment.adapter.MonthlyRentListAdapter;
+import com.azhuoinfo.pshare.model.CarList;
+import com.azhuoinfo.pshare.model.CustomerInfo;
+import com.azhuoinfo.pshare.model.FeeOrderInfo;
+import com.azhuoinfo.pshare.model.Success;
 import com.azhuoinfo.pshare.view.AllListView;
+import com.azhuoinfo.pshare.view.CommonDialog;
+import com.azhuoinfo.pshare.view.LoadingDialog;
 import com.azhuoinfo.pshare.view.listview.MyListView;
 
 import java.util.ArrayList;
@@ -36,12 +46,18 @@ public class MonthlyRentListFragment extends BaseContentFragment{
     //添加月租车
     private RelativeLayout mAddMonthlyRentCarRelativeLayout;
 
-    private List<String> list=new ArrayList<String>();
+    private List<FeeOrderInfo> list=new ArrayList<>();
     private AccountVerify mAccountVerify;
+
+    private CustomerInfo customerInfo;
+    private String customerId;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAccountVerify = AccountVerify.getInstance(getActivity());
+        customerInfo=(CustomerInfo)this.app.getSession().getSerializable("customerInfo");
+        customerId=customerInfo.getCustomer_Id();
     }
 
     @Override
@@ -66,24 +82,32 @@ public class MonthlyRentListFragment extends BaseContentFragment{
     protected void findViews(View view) {
 
     }
-
+    MonthlyRentListAdapter monthlyRentListAdapter;
     @Override
-    protected void initViews(Bundle bundle) {
+    protected void initViews(final Bundle bundle) {
         mMonthlyRentListView=(AllListView) findViewById(R.id.lv_monthlyRent_list);
-        list.clear();
-        for (int i = 0; i < 4; i++) {
-            list.add(""+i);
-        }
-        mMonthlyRentListView.setAdapter(new MonthlyRentListAdapter(this.getActivity(), list));
+        monthlyRentListAdapter=new MonthlyRentListAdapter(this.getActivity(), list);
+        mMonthlyRentListView.setAdapter(monthlyRentListAdapter);
         mAddMonthlyRentCarRelativeLayout=(RelativeLayout) findViewById(R.id.rl_add_monthlyRent);
 
 
         mMonthlyRentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                replaceFragment(AddMonthlyRentCarFragment.class, "AddMonthlyRentCarFragment", null);
+                Bundle itemBundle =  new Bundle();
+                itemBundle.putParcelable("data", monthlyRentListAdapter.getItems().get(position));
+                replaceFragment(MonthlyRentCarfinishPayFragment.class, "MonthlyRentCarfinishPayFragment", itemBundle);
             }
         });
+
+        mMonthlyRentListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                showDeleteDialog(position);
+                return true;
+            }
+        });
+
         mAddMonthlyRentCarRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,9 +116,55 @@ public class MonthlyRentListFragment extends BaseContentFragment{
         });
     }
 
+    public void showDeleteDialog(final int position){
+        CommonDialog dialog = CommonDialog.creatDialog(getActivity());
+        //dialog.setTitle(R.string.dialog_delete_title);
+        dialog.setMessage(R.string.dialog_delete_content);
+        dialog.setLeftButtonInfo(getString(R.string.common_dialog_confirm), new CommonDialog.OnButtonClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                FeeOrderInfo item = monthlyRentListAdapter.get(position);
+                deleteRentOrder(item.getID());
+                monthlyRentListAdapter.remove(position);
+            }
+
+        });
+        dialog.setRightButtonInfo(getString(R.string.common_dialog_cancel), new CommonDialog.OnButtonClickListener() {
+            @Override
+            public void onClick(View view) {
+                // do nothing
+            }
+        });
+        dialog.show();
+    }
+
+    public void deleteRentOrder(String orderId){
+        ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
+        apiTask.setMethod("GET");
+        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_DELETEORDER));
+        apiTask.setParams(ApiContants.instance(getActivity()).deleteOrder(orderId));
+        apiTask.execute(new OnDataLoader<String>() {
+            public void onStart() {
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                if (isEnable()) {
+                    showToast("删除成功！");
+                }
+            }
+
+            @Override
+            public void onFailure(String code, String message) {
+                if (isEnable()) showToast(message);
+            }
+        });
+    }
+
     @Override
     protected void initData(Bundle bundle) {
-
+        postGetOrderInfo(customerId,"0");
     }
 
     @Override
@@ -106,4 +176,43 @@ public class MonthlyRentListFragment extends BaseContentFragment{
     public boolean isCleanStack() {
         return false;
     }
+
+    public void postGetOrderInfo(String customer_id,String index) {
+        ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
+        apiTask.setMethod("GET");
+        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_GETORDERINFO));
+        apiTask.setParams(ApiContants.instance(getActivity()).getGetOrderInfo(customer_id, index));
+        apiTask.setRoot("feeOrderInfoList");
+        apiTask.execute(new OnDataLoader<List<FeeOrderInfo>>() {
+
+            LoadingDialog loadingDialog;
+
+            public void onStart() {
+                if (isEnable()) {
+                    loadingDialog = LoadingDialog.show(getActivity());
+                }
+            }
+
+            @Override
+            public void onSuccess(List<FeeOrderInfo> feeOrderInfoList) {
+                if (!feeOrderInfoList.isEmpty()){
+                    monthlyRentListAdapter.getItems().clear();
+                    monthlyRentListAdapter.getItems().addAll(feeOrderInfoList);
+                    monthlyRentListAdapter.notifyDataSetChanged();
+                    //mMonthlyRentListView.deferNotifyDataSetChanged();
+                }
+                for (FeeOrderInfo feeOrderInfo : feeOrderInfoList) {
+                    Log.i("fee", feeOrderInfo.toString());
+                }
+                loadingDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(String code, String message) {
+                showToast(message);
+                loadingDialog.dismiss();
+            }
+        });
+    }
+
 }

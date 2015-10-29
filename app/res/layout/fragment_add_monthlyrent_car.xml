@@ -245,10 +245,11 @@
 	                android:layout_centerVertical="true"
 	                android:layout_marginRight="@dimen/padding5"/>
         	</RelativeLayout>
-        	<RelativeLayout
+        	<LinearLayout
         	    android:id="@+id/rl_customer_name"
 	            android:layout_height="@dimen/padding7"
 	            android:layout_width="match_parent"
+				android:gravity="center_vertical"
 	            android:layout_marginTop="@dimen/padding10"        
 	            android:background="@color/text_white">
 	            <TextView 
@@ -261,7 +262,7 @@
 	            <EditText
 	                android:id="@+id/et_customer_name"
 	                android:layout_height="wrap_content"
-	                android:layout_width="wrap_content"
+	                android:layout_width="match_parent"
 	                android:layout_alignParentRight="true"
 	                android:layout_centerVertical="true"
 	                android:textColor="@color/text_light_gray"
@@ -269,7 +270,7 @@
 	                android:textSize="@dimen/text_size3"
 	                android:gravity="right"
 	                android:layout_marginRight="@dimen/padding5"/>
-        	</RelativeLayout>
+        	</LinearLayout>
         	<RelativeLayout
         	    android:id="@+id/rl_car_number"
 	            android:layout_height="@dimen/padding7"
