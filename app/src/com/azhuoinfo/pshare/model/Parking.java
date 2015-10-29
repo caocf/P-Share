@@ -4,12 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by weixuewu on 15/10/12.
  */
 public class Parking implements Parcelable ,Serializable{
 
+    private static final long serialVersionUID = 0L;
     private String parking_address; //德平路333号
     private String parking_area; //浦东区
     private int parking_can_use; //32
@@ -27,47 +29,16 @@ public class Parking implements Parcelable ,Serializable{
     private String parking_province; //上海
     private String parking_status; //0
     private String parking_distance;
-
+    private List<ChargeStandard> chargeStandard;
     public Parking() {
     }
-    protected Parking(Parcel in) {
-        parking_address = in.readString();
-        parking_area = in.readString();
-        parking_can_use = in.readInt();
-        parking_charging_standard = in.readInt();
-        parking_city = in.readString();
-        parking_count = in.readInt();
-        parking_country = in.readString();
-        parking_county = in.readString();
-        parking_id = in.readString();
-        parking_info = in.readString();
-        parking_latitude = in.readString();
-        parking_longitude = in.readString();
-        parking_name = in.readString();
-        parking_path = in.readString();
-        parking_province = in.readString();
-        parking_status = in.readString();
-        parking_distance = in.readString();
+
+    public String getParking_status() {
+        return parking_status;
     }
 
-    public static final Creator<Parking> CREATOR = new Creator<Parking>() {
-        @Override
-        public Parking createFromParcel(Parcel in) {
-            return new Parking(in);
-        }
-
-        @Override
-        public Parking[] newArray(int size) {
-            return new Parking[size];
-        }
-    };
-
-    public String getParking_distance() {
-        return parking_distance;
-    }
-
-    public void setParking_distance(String parking_distance) {
-        this.parking_distance = parking_distance;
+    public void setParking_status(String parking_status) {
+        this.parking_status = parking_status;
     }
 
     public String getParking_address() {
@@ -86,16 +57,6 @@ public class Parking implements Parcelable ,Serializable{
         this.parking_area = parking_area;
     }
 
-
-
-    public String getParking_city() {
-        return parking_city;
-    }
-
-    public void setParking_city(String parking_city) {
-        this.parking_city = parking_city;
-    }
-
     public int getParking_can_use() {
         return parking_can_use;
     }
@@ -110,6 +71,14 @@ public class Parking implements Parcelable ,Serializable{
 
     public void setParking_charging_standard(int parking_charging_standard) {
         this.parking_charging_standard = parking_charging_standard;
+    }
+
+    public String getParking_city() {
+        return parking_city;
+    }
+
+    public void setParking_city(String parking_city) {
+        this.parking_city = parking_city;
     }
 
     public int getParking_count() {
@@ -134,6 +103,14 @@ public class Parking implements Parcelable ,Serializable{
 
     public void setParking_county(String parking_county) {
         this.parking_county = parking_county;
+    }
+
+    public String getParking_distance() {
+        return parking_distance;
+    }
+
+    public void setParking_distance(String parking_distance) {
+        this.parking_distance = parking_distance;
     }
 
     public String getParking_id() {
@@ -192,13 +169,46 @@ public class Parking implements Parcelable ,Serializable{
         this.parking_province = parking_province;
     }
 
-    public String getParking_status() {
-        return parking_status;
+    public List<ChargeStandard> getChargeStandard() {
+        return chargeStandard;
     }
 
-    public void setParking_status(String parking_status) {
-        this.parking_status = parking_status;
+    public void setChargeStandard(List<ChargeStandard> chargeStandard) {
+        this.chargeStandard = chargeStandard;
     }
+
+    protected Parking(Parcel in) {
+        parking_address = in.readString();
+        parking_area = in.readString();
+        parking_can_use = in.readInt();
+        parking_charging_standard = in.readInt();
+        parking_city = in.readString();
+        parking_count = in.readInt();
+        parking_country = in.readString();
+        parking_county = in.readString();
+        parking_id = in.readString();
+        parking_info = in.readString();
+        parking_latitude = in.readString();
+        parking_longitude = in.readString();
+        parking_name = in.readString();
+        parking_path = in.readString();
+        parking_province = in.readString();
+        parking_status = in.readString();
+        parking_distance = in.readString();
+        chargeStandard = in.createTypedArrayList(ChargeStandard.CREATOR);
+    }
+
+    public static final Creator<Parking> CREATOR = new Creator<Parking>() {
+        @Override
+        public Parking createFromParcel(Parcel in) {
+            return new Parking(in);
+        }
+
+        @Override
+        public Parking[] newArray(int size) {
+            return new Parking[size];
+        }
+    };
 
     @Override
     public int describeContents() {
@@ -224,5 +234,6 @@ public class Parking implements Parcelable ,Serializable{
         dest.writeString(parking_province);
         dest.writeString(parking_status);
         dest.writeString(parking_distance);
+        dest.writeTypedList(chargeStandard);
     }
 }
