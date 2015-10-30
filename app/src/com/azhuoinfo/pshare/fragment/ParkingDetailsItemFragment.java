@@ -33,6 +33,7 @@ import com.azhuoinfo.pshare.model.UnfinishedOrderInfo;
 import com.azhuoinfo.pshare.model.UserAuth;
 import com.azhuoinfo.pshare.view.CountDownTextView;
 import com.azhuoinfo.pshare.view.LoadingDialog;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,6 +65,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     //时间
     private RelativeLayout mAppointmentTimeRelativeLayout;
     private TextView mAppointmentTimeTextView;
+    ImageView mIV_Park;
     ImageView mIV_WashCar;
     CheckBox mCB_WashCar;
 /*    private CheckBox mCheckBox0;
@@ -154,6 +156,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mParkingDistanceTextView=(TextView) view.findViewById(R.id.tv_parking_distance);
         mParkingCanUseTextView=(TextView) view.findViewById(R.id.tv_parking_can_use);
         mParkingPriceTextView=(TextView) view.findViewById(R.id.tv_parking_price);
+        mIV_Park = (ImageView)view.findViewById(R.id.iv_list_head);
 /*        mCheckBox1=(CheckBox) findViewById(R.id.ib_shopping_cart);
         mCheckBox2=(CheckBox)findViewById(R.id.ib_flashlight);
         mCheckBox3=(CheckBox) findViewById(R.id.ib_wash_car);
@@ -178,6 +181,14 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     @Override
     protected void initViews(Bundle bundle){
         this.setTitle(parking.getParking_name());
+
+        if (parking.getParking_path()!=null && !parking.getParking_path().isEmpty()) {
+            ImageLoader loader = ImageLoader.getInstance();
+            loader.displayImage(parking.getParking_path(), mIV_Park);
+        }else {
+            mIV_Park.setImageResource(R.drawable.iv_integration_freeparking_ticket);
+        }
+
         mParkingNameTextView.setText(parking.getParking_name() + "");
         mParkingAddressTextView.setText(parking.getParking_address() + "");
         Log.e(TAG, parking.getParking_can_use() + "");

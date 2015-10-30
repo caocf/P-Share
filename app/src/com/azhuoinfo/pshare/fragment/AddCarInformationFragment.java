@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
@@ -103,6 +104,10 @@ public class AddCarInformationFragment extends BaseContentFragment{
                     String mCarNumber = mCarNumbrEditText.getText().toString();
                     String mCarBrand = mCarBrandEditText.getText().toString();
                     String mCarSfzid = mCarSFZIDEditText.getText().toString();
+                    if (mCarNumber.length()!=6){
+                        showToast("车牌格式错误");
+                        return;
+                    }
 
                     postAddcar(mAccountVerify.getCustomer_Id(), mCarBrand, null, null, mCarSfzid, zh + en + mCarNumber);
                 }
@@ -163,7 +168,6 @@ public class AddCarInformationFragment extends BaseContentFragment{
                     if (mLoadingDialog != null) mLoadingDialog.dismiss();
                     showToast(message);
                 }
-
             }
         });
     }

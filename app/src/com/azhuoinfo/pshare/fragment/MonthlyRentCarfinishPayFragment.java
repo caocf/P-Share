@@ -6,10 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.azhuoinfo.pshare.AccountVerify;
@@ -33,7 +31,7 @@ public class MonthlyRentCarfinishPayFragment extends BaseContentFragment{
     //private Button mBackButton;
 
     //国
-    private TextView mCountryTextView;/*
+    private TextView mPayTypeTextView;/*
     //省
     private TextView mProvinceTextView;
     //市
@@ -56,6 +54,9 @@ public class MonthlyRentCarfinishPayFragment extends BaseContentFragment{
     private TextView mCarNumberTextView;
 
     private Button mButtonFinishPay;
+
+    //车牌
+    private TextView mAmountTextView;
 
 
 
@@ -89,7 +90,7 @@ public class MonthlyRentCarfinishPayFragment extends BaseContentFragment{
     protected void findViews(View view) {
         //mBackButton=(Button) view.findViewById(R.id.activity_back);
 
-        mCountryTextView=(TextView) view.findViewById(R.id.tv_country);/*
+        mPayTypeTextView =(TextView) view.findViewById(R.id.tv_pay_type);/*
         mProvinceTextView=(TextView) view.findViewById(R.id.tv_province);
         mCityTextView=(TextView) view.findViewById(R.id.tv_city);*/
 
@@ -110,12 +111,13 @@ public class MonthlyRentCarfinishPayFragment extends BaseContentFragment{
         mCarNumberTextView=(TextView) view.findViewById(R.id.tv_car_number);
 
         mButtonFinishPay=(Button) view.findViewById(R.id.button_finish_pay);
+
+        mAmountTextView=(TextView) view.findViewById(R.id.tv_amount);
     }
 
     @Override
     protected void initViews(Bundle bundle) {
        this.setTitle(R.string.rent);
-
     }
 
     FeeOrderInfo mFeeOrderInfo;
@@ -123,7 +125,13 @@ public class MonthlyRentCarfinishPayFragment extends BaseContentFragment{
     protected void initData(Bundle bundle) {
         Bundle data = getArguments();
         mFeeOrderInfo = data.getParcelable("data");
-        mCountryTextView.setText(mFeeOrderInfo.getArea());
+
+        if (mFeeOrderInfo.getOrderType().equals("0")) {
+            mPayTypeTextView.setText("产权");
+        } else {
+            mPayTypeTextView.setText("月租");
+        }
+
         mAreaTextView.setText(mFeeOrderInfo.getCounty());
         mLivingAreaTextView.setText(mFeeOrderInfo.getVillageName());
         mTimeFrameTextView.setText(mFeeOrderInfo.getTimeQuantum());
@@ -132,6 +140,7 @@ public class MonthlyRentCarfinishPayFragment extends BaseContentFragment{
         mMonthlyrentPriceTextView.setText(mFeeOrderInfo.getPrice());
         mCustomerNameEditText.setText(mFeeOrderInfo.getCustomerName());
         mCarNumberTextView.setText(mFeeOrderInfo.getCarNumber());
+        mAmountTextView.setText(mFeeOrderInfo.getAmount());
 
         if (mFeeOrderInfo.getOrderStatus().equals("0")){
             mButtonFinishPay.setText("点击支付");

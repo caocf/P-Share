@@ -11,7 +11,6 @@
     <com.azhuoinfo.pshare.view.listview.pull.PullRefreshListView
         android:id="@+id/lv_history_order"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:background="@color/text_white">
-    </com.azhuoinfo.pshare.view.listview.pull.PullRefreshListView>
+        android:layout_width="match_parent"
+        android:background="@color/text_white"/>
 </LinearLayout>

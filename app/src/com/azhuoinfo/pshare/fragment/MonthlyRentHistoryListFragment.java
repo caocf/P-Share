@@ -81,6 +81,7 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
         mListLoadMoreAdapter.setIsPullMode(false);
         mListLoadMoreAdapter.setAbsListView(mMonthlyRentHistoryListView);
         mMonthlyRentHistoryListView.setAdapter(mListLoadMoreAdapter);
+        mMonthlyRentHistoryListView.setPullRefreshEnable(false);
 
         mListLoadMoreAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -164,6 +165,7 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
 
             @Override
             public void onFailure(String code, String message) {
+                mPageIndex = -1;
                 showToast(message);
                 loadingDialog.dismiss();
             }

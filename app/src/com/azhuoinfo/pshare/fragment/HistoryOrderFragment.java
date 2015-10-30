@@ -73,7 +73,6 @@ public class HistoryOrderFragment extends BaseContentFragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        postHistoryOrder(customerId, mPageIndex);
         initViews(savedInstanceState);
         initData(savedInstanceState);
     }
@@ -87,11 +86,11 @@ public class HistoryOrderFragment extends BaseContentFragment{
     @Override
     protected void initViews(Bundle bundle) {
         mDataAdapter=new HistoryOrderAdapter(this.getActivity());
-        mListLoadMoreAdapter.setIsPullMode(false);
-
         mListLoadMoreAdapter = new LoadMoreAdapter<>(mDataAdapter);
+        mListLoadMoreAdapter.setIsPullMode(false);
         mListLoadMoreAdapter.setAbsListView(mHistoryOrderListView);
         mHistoryOrderListView.setAdapter(mListLoadMoreAdapter);
+        mHistoryOrderListView.setPullRefreshEnable(false);
 
         mListLoadMoreAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -115,20 +114,17 @@ public class HistoryOrderFragment extends BaseContentFragment{
                 replaceParentFragment(HistoryOrderDetailsFragment.class, "HistoryOrderDetailsFragment", bundle);
             }
         });
-
-/*        mHistoryOrderListView.setOnRefreshListener(new PullRefreshListView.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPageIndex++;
-                postHistoryOrder(customerId,mPageIndex);
-            }
-        });*/
     }
 
     @Override
     protected void initData(Bundle bundle) {
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        postHistoryOrder(customerId, mPageIndex);
+    }
 
     @Override
     public void onStop() {
@@ -173,7 +169,7 @@ public class HistoryOrderFragment extends BaseContentFragment{
             LoadingDialog loadingDialog;
             @Override
             public void onStart() {
-                if (isEnable())
+                //if (isEnable())
                     loadingDialog = LoadingDialog.show(getActivity());
             }
             @Override
@@ -194,16 +190,18 @@ public class HistoryOrderFragment extends BaseContentFragment{
                     }
 
                     Log.e(TAG, orderLists + "");
-                    loadingDialog.dismiss();
+
                 }
+                loadingDialog.dismiss();
             }
             @Override
             public void onFailure(String code, String message) {
+                mPageIndex = -1;
                 showToast(message);
                 if (isEnable()) {
                     mPromptView.showEmpty();
-                    loadingDialog.dismiss();
                 }
+                loadingDialog.dismiss();
             }
         });
     }

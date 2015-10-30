@@ -119,7 +119,7 @@
     <string name="tv_time_frame">停车时间(月):</string>
     <string name="tv_start_time">开始时间:</string>
     <string name="tv_finish_time">结束时间:</string>
-    <string name="tv_price">单价:</string>
+    <string name="tv_price">月单价:</string>
     <string name="tv_name">姓名:</string>
     <string name="tv_car_brand">车牌:</string>
     <string name="pay_money">金额：</string>
@@ -132,7 +132,7 @@
     <string name="tv_order_servicePerson_position">职务：</string>
     <string name="tv_you_servicePerson">您的代泊员：</string>
     <string name="tv_user_stop_state">您的停车状态：</string>
-    <string name="tv_order_car_number">车牌号:</string>
+    <string name="tv_order_car_number">车牌号：</string>
     <string name="button_payfinish">完成订单支付</string>
     <string name="button_make_car">我要取车</string>
     <string name="tv_order_takeCar_remainingtime">停车计时：</string>

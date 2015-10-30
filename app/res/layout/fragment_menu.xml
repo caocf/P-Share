@@ -177,6 +177,7 @@
                 <View style="@style/view_line"/>
                 <!--  优惠/积分-->
                 <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/rl_points"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

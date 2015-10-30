@@ -17,6 +17,8 @@ import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.fragment.adapter.ImageAdapter;
 import com.azhuoinfo.pshare.model.OrderList;
+import com.azhuoinfo.pshare.view.imageview.round.RoundedImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,7 +39,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 public class HistoryOrderDetailsFragment extends BaseContentFragment{
 
     //代泊员头像
-    private ImageView mParkerHeadImageView;
+    private RoundedImageView mParkerHeadImageView;
     //代泊员ID
     private TextView mParkerIDTextView;
     //代泊员职务
@@ -84,6 +86,7 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
     private String order_actual_end_stop;
     private String orderState;
     private String order_path;
+    private String parkerHead;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,7 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
         orderTotalFee=orderList.getOrder_total_fee();
         parkerName=orderList.getParker_name();
         parkingName=orderList.getParking_name();
+        parkerHead = orderList.getParking_img_count();
         carNumber=orderList.getCar_number();
         order_path=orderList.getOrder_path();
         order_actual_begin_start=orderList.getOrder_actual_begin_start();
@@ -129,7 +133,7 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
         mImageGridView=(GridView)findViewById(R.id.gridview_photos);
         mLeftImageView=(ImageView) findViewById(R.id.iv_left);
         mRightImageView=(ImageView) findViewById(R.id.iv_right);
-        mParkerHeadImageView=(ImageView) view.findViewById(R.id.iv_parker_head);
+        mParkerHeadImageView=(RoundedImageView) view.findViewById(R.id.iv_parker_head);
         mParkerIDTextView=(TextView) view.findViewById(R.id.tv_parker_id);
         mParkerPositionTextView=(TextView) view.findViewById(R.id.tv_parker_position);
         mParkerAreaTextView=(TextView) view.findViewById(R.id.tv_parker_area);
@@ -159,6 +163,14 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
         mPayMoneyTextView.setText(orderTotalFee);
         mOrderDateTextView.setText(orderDate);
         mCarNumberTextView.setText(carNumber);
+
+        if (parkerHead!=null && !parkerHead.isEmpty()) {
+            ImageLoader loader = ImageLoader.getInstance();
+            loader.displayImage(parkerHead, mParkerHeadImageView);
+        }else {
+            mParkerHeadImageView.setImageResource(R.drawable.userhead);
+        }
+
         mList = new ArrayList<Map<String, Object>>();
         urls = new ArrayList<String>();
         show = new ArrayList<String>();
@@ -191,7 +203,7 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
 
     @Override
     protected FragmentInfo getNavigtionUpToFragment() {
-        return null;
+        return new FragmentInfo(MineOrderFragment.class,"MineOrderFragment",null);
     }
 
     @Override
@@ -204,7 +216,7 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
     private void saveList() {
         String order_path = orderList.getOrder_path();
         String parking_path=orderList.getParking_path();
-        if(order_path!=null){
+        /*if(order_path!=null){
             String[] orderPaths = order_path.split(",");
             Log.e("orderPaths", orderPaths.length + "");
             for (int i = 0; i < (orderPaths.length+1) ; i++) {
@@ -216,7 +228,17 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
                 Log.e("path", orderPaths[orderPaths.length-1]);
                 Log.e("orderPaths", orderPaths+"");
             }
+        }*/
+
+        if(order_path!=null) {
+            String[] orderPaths = order_path.split(",");
+            for (int i = 0; i < orderPaths.length; i++) {
+                if (orderPaths[i] != null && !orderPaths[i].isEmpty()) {
+                    urls.add(orderPaths[i]);
+                }
+            }
         }
+
         if(parking_path!=null){
             if(parking_path.contains(",")){
                 parking_path=parking_path.replaceAll(",","");
@@ -224,8 +246,12 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
             }
         }
         Log.e("order_path",order_path+"");
+
+        if (!urls.isEmpty()) {
+            right = urls.size()<3? urls.size()-1:2;
+        }
         if(order_path!=null){
-            for (int j = 0; j < 3; j++) {
+            for (int j = 0; j < urls.size(); j++) {
                 show.add(urls.get(j));
             }
         }
@@ -257,7 +283,7 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
     }
 
     private void toRight() {
-        if (right == urls.size() - 1) {
+        if (urls.isEmpty() || right == urls.size() - 1) {
             Toast.makeText(getActivity(),"当前位于最右方!",Toast.LENGTH_SHORT).show();
             //showToast("当前位于最右方!");
         } else {
@@ -291,4 +317,5 @@ public class HistoryOrderDetailsFragment extends BaseContentFragment{
             e.printStackTrace();
         }
     }
+
 }

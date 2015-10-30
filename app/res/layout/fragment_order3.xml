@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:id="@+id/fragment_order3"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/fragment_background" >
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/fragment_background">
     <LinearLayout 
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
@@ -30,12 +30,14 @@
 		        android:layout_marginTop="@dimen/padding4"
 		        android:background="@drawable/order_car_bg"/>
 	        <!-- 代泊员头像  -->
-	        <ImageView
+	        <com.azhuoinfo.pshare.view.imageview.round.RoundedImageView
+				app:oval="true"
 	            android:id="@+id/iv_parker_head"
-	            android:layout_height="wrap_content"
-	            android:layout_width="wrap_content"
+				android:scaleType="centerCrop"
+	            android:layout_height="100dp"
+	            android:layout_width="100dp"
 	            android:layout_centerHorizontal="true"
-	            android:layout_marginTop="@dimen/padding1"
+	            android:layout_marginTop="@dimen/padding2"
 	            android:src="@drawable/userhead"/> 
 	        <!-- 代泊员号  -->
 			<LinearLayout

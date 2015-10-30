@@ -88,6 +88,7 @@
 					android:id="@+id/tv_parker_Level4"
 					android:layout_height="wrap_content"
 					android:layout_width="wrap_content"
+					android:text="高级代泊员"
 					android:textSize="@dimen/text_size3"/>
 			</LinearLayout>
 			<!-- 代泊员负责的区域地点 -->
@@ -237,8 +238,11 @@
 	             android:text="@string/text_order_car_number"/>
 	     </LinearLayout>
 		<RelativeLayout
+			android:paddingTop="25dp"
+			android:paddingBottom="25dp"
 			android:layout_width="match_parent"
-			android:layout_height="@dimen/padding11"
+			android:layout_height="@dimen/padding12"
+			android:background="@color/text_white"
 			android:id="@+id/container"
 			android:clipChildren="false"
 			android:gravity="center"
@@ -247,26 +251,26 @@
 			<ImageView
 				android:id="@+id/iv_left"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginLeft="10dp"
+				android:layout_height="match_parent"
+				android:padding="10dp"
 				android:layout_centerVertical="true"
 				android:src="@drawable/order_left"/>
 			<GridView
 				android:id="@+id/gridview_photos4"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
+				android:background="@color/text_white"
 				android:layout_toRightOf="@+id/iv_left"
 				android:layout_toLeftOf="@+id/iv_right"
-				android:layout_marginLeft="10dp"
-				android:layout_marginRight="10dp"
+				android:scrollbars="none"
 				android:numColumns="3"
 				android:clipChildren="false">
 			</GridView>
 			<ImageView
 				android:id="@+id/iv_right"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginRight="10dp"
+				android:layout_height="match_parent"
+				android:padding="10dp"
 				android:layout_alignParentRight="true"
 				android:layout_centerVertical="true"
 				android:src="@drawable/order_right"/>

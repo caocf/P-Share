@@ -36,6 +36,8 @@ import com.azhuoinfo.pshare.model.comment;
 import com.azhuoinfo.pshare.utils.Constants;
 import com.azhuoinfo.pshare.view.CommonDialog;
 import com.azhuoinfo.pshare.view.LoadingDialog;
+import com.azhuoinfo.pshare.view.imageview.round.RoundedImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,7 +78,7 @@ public class Order1Fragment extends BaseContentFragment{
     private RelativeLayout mOrder3RelativeLayout;
     private ImageView mAnimationImageView;
     //代泊员头像
-    private ImageView mParkerHeadImageView;
+    private RoundedImageView mParkerHeadImageView;
     //代泊员ID
     private TextView mParkerIDTextView;
     //代泊员职务
@@ -109,7 +111,7 @@ public class Order1Fragment extends BaseContentFragment{
     private List<String> show;
     //当前相机返回的照片的存储路径
     private String path;
-    private int left=0,right=2;
+    private int left=0,right=0;
     private int listSize;
     private String order_state;
     private CustomerInfo customerInfo;
@@ -136,6 +138,10 @@ public class Order1Fragment extends BaseContentFragment{
     private String orderActualBegin;
     private String LgTime;
     private Handler handler;
+    private String parkerHead;
+
+/*    ImageLoader loader=ImageLoader.getInstance();
+    loader.displayImage(urls.get(position),holder.image);*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -179,40 +185,46 @@ public class Order1Fragment extends BaseContentFragment{
         mToPayRelativeLayout=(RelativeLayout) findViewById(R.id.fg_list_menu_pay_pager);
     }
 
-    LoadingDialog loadingDialog;
+
     @Override
     protected void initData(Bundle bundle) {
+        final LoadingDialog loadingDialog =LoadingDialog.show(getActivity());
        /* handler.postDelayed(runnable, 2000);//每两秒执行一次runnable.*/
         //postUnfinishedOrder(customerId);
         //initOrderState();
-        loadingDialog = LoadingDialog.show(getActivity());
+        /*if (loadingDialog!=null && loadingDialog.isShowing()){
+            loadingDialog.dismiss();
+        }*/
+
         updateHandler = new Handler(new Handler.Callback() {
+
             String last_order_state = "";
             @Override
             public boolean handleMessage(Message msg) {
-                if (order_state == null || listSize == 0){
-                    initOrderState();
+
+                if (msg.what == 1) {
+                    //loadingDialog = LoadingDialog.show(getActivity());
                 }else {
-                    Log.d("updateHandler", "receive order_state " + last_order_state + " " + order_state);
-                    if (!last_order_state.equals(order_state)) {
-                        Log.d("updateHandler", "update order_state " + last_order_state + " " + order_state);
+                    if (order_state == null || listSize == 0) {
                         initOrderState();
-                        Log.d("order_string", "last_order " + last_order_state);
-                        Log.d("order_string", "order " + order_state);
-                        last_order_state = new String(order_state);
-                        if (order_state.equals("3") || order_state.equals("4")|| order_state.equals("8")) {
-                            dateDiff(orderActualBegin, (String) msg.obj, "yyyy-MM-dd HH:mm:ss");
+                    } else {
+                        Log.d("updateHandler", "receive order_state " + last_order_state + " " + order_state);
+                        if (!last_order_state.equals(order_state)) {
+                            Log.d("updateHandler", "update order_state " + last_order_state + " " + order_state);
+                            initOrderState();
+                            Log.d("order_string", "last_order " + last_order_state);
+                            Log.d("order_string", "order " + order_state);
+                            last_order_state = new String(order_state);
+                            if (order_state.equals("3") || order_state.equals("4") || order_state.equals("8")) {
+                                dateDiff(orderActualBegin, (String) msg.obj, "yyyy-MM-dd HH:mm:ss");
+                            }
                         }
                     }
-                }
-                if (loadingDialog.isShowing()){
                     loadingDialog.dismiss();
                 }
                 return false;
             }
         });
-
-
     }
 
     @Override
@@ -311,6 +323,7 @@ public class Order1Fragment extends BaseContentFragment{
         @Override
         public void onStart() {
             Log.d("ResponseHandler", "onStart");
+            updateHandler.sendEmptyMessage(1);
         }
 
         @Override
@@ -339,12 +352,13 @@ public class Order1Fragment extends BaseContentFragment{
                             carNumber = unfinishedOrderInfo.getCar_number();
                             orderPath = unfinishedOrderInfo.getOrder_path();
                             parkingPath=unfinishedOrderInfo.getParking_path();
+                            parkerHead = unfinishedOrderInfo.getParking_img_count();
                             orderActualBegin=unfinishedOrderInfo.getOrder_actual_begin_start();
                             Log.e(TAG, "order_state is " + order_state);
                         }
                     }
 
-                    Message message = updateHandler.obtainMessage(1,apiResult.getTimestamp());
+                    Message message = updateHandler.obtainMessage(2,apiResult.getTimestamp());
                     updateHandler.sendMessage(message);
 
                 }
@@ -515,7 +529,7 @@ public class Order1Fragment extends BaseContentFragment{
     public void postAssessment(String order_id, String comment_operater_id,  String comment_level,String comment_content){
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
-        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_CALCULATEPAY));
+        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_COMMENT));
         apiTask.setParams(ApiContants.instance(getActivity()).getComment(order_id, comment_operater_id, comment_level, comment_content));
         apiTask.execute(new OnDataLoader<comment>() {
             LoadingDialog loadingDialog;
@@ -550,7 +564,7 @@ public class Order1Fragment extends BaseContentFragment{
         });
     }
     public void initViewsOrder3(){
-//        mParkerHeadImageView=(ImageView) findViewById(R.id.iv_parker_head);
+        mParkerHeadImageView=(RoundedImageView) findViewById(R.id.iv_parker_head);
         mParkerIDTextView=(TextView) findViewById(R.id.tv_parker_id);
         mParkerLevelTextView=(TextView) findViewById(R.id.tv_parker_Level);
         mParkerAreaTextView=(TextView) findViewById(R.id.tv_parker_area);
@@ -559,6 +573,13 @@ public class Order1Fragment extends BaseContentFragment{
         mAppointmentTimeTextView=(TextView) findViewById(R.id.tv_appointment_time);
         mOrder3RelativeLayout=(RelativeLayout) findViewById(R.id.rl_unselect_order3);
         if(order_state.equals("2")){
+            if (parkerHead!=null && !parkerHead.isEmpty()) {
+                ImageLoader loader = ImageLoader.getInstance();
+                loader.displayImage(parkerHead, mParkerHeadImageView);
+            }else {
+                mParkerHeadImageView.setImageResource(R.drawable.userhead);
+            }
+
             //mParkerHeadImageView.setImageBitmap();
             mParkerIDTextView.setText(parakerId + "");
             mParkerAreaTextView.setText(parkingName + "");
@@ -584,7 +605,7 @@ public class Order1Fragment extends BaseContentFragment{
         }
     }
     public void initViewsOrder4() {
-        //mParkerHeadImageView = (ImageView) findViewById(R.id.iv_parker_head);
+        mParkerHeadImageView = (RoundedImageView) findViewById(R.id.iv_parker_head);
         mParkerIDTextView = (TextView) findViewById(R.id.tv_parker_id4);
         mParkerLevelTextView = (TextView) findViewById(R.id.tv_parker_Level4);
         mParkerAreaTextView = (TextView) findViewById(R.id.tv_parker_area4);
@@ -600,7 +621,16 @@ public class Order1Fragment extends BaseContentFragment{
         mLeft = (ImageView) findViewById(R.id.iv_left);
         mRight = (ImageView) findViewById(R.id.iv_right);
         if (order_state.equals("3") || order_state.equals("4") || order_state.equals("8")|| order_state.equals("9")){
+
             Log.e(TAG, parakerId + ":" + parkerName + ":" + parakerId + ":" + parkerMobile + ":" + parkerLevel + ":" + orderPlanBegin + ":" + orderPlanEnd);
+
+            if (parkerHead!=null && !parkerHead.isEmpty()) {
+                ImageLoader loader = ImageLoader.getInstance();
+                loader.displayImage(parkerHead, mParkerHeadImageView);
+            }else {
+                mParkerHeadImageView.setImageResource(R.drawable.userhead);
+            }
+
             mParkerIDTextView.setText(parakerId + "");
             mParkerAreaTextView.setText(parkingName + "");
             mParkerMobileTextView.setText(parkerMobile + "");
@@ -697,18 +727,27 @@ public class Order1Fragment extends BaseContentFragment{
         if(orderPath!=null){
             String[] orderPaths = orderPath.split(",");
             for (int i = 0; i < orderPaths.length ; i++) {
-                urls.add(orderPaths[i]);
+                if (orderPaths[i]!=null && !orderPaths[i].isEmpty()) {
+                    urls.add(orderPaths[i]);
+                }
             }
         }
+
         if(parkingPath!=null){
             if(parkingPath.contains(",")){
                 parkingPath=parkingPath.replaceAll(",","");
                 urls.add(parkingPath);
             }
         }
+
+        if (!urls.isEmpty()) {
+            right = urls.size()<3? urls.size()-1:2;
+        }
+
         for (int j = 0; j < urls.size(); j++) {
             show.add(urls.get(j));
         }
+
         Log.d("saveList", urls.size() + "");
     }
     /**
@@ -735,7 +774,7 @@ public class Order1Fragment extends BaseContentFragment{
         }
     }
     private void toRight(){
-        if (right == urls.size() - 1) {
+        if (urls.isEmpty() ||right == urls.size() - 1) {
             Toast.makeText(getActivity(),"当前位于最右方!",Toast.LENGTH_SHORT).show();
             //showToast("当前位于最右方!");
         } else {
@@ -887,7 +926,11 @@ public class Order1Fragment extends BaseContentFragment{
     boolean isStopTimer = false;
     Timer timer2;
     public void dateDiff(String orderActualBegin, String currentTime, String format) {
-        timer2 = new Timer();
+        if (timer2!=null) {
+            timer2.cancel();
+            timer2.purge();
+        }
+            timer2 = new Timer();
 
         //按照传入的格式生成一个simpledateformate对象
         SimpleDateFormat sd = new SimpleDateFormat(format);

@@ -100,34 +100,5 @@ public class MineOrderFragment extends BaseContentFragment{
     public boolean isCleanStack() {
         return true;
     }
-    public void postUnfinishedOrder(String customerId){
-        ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
-        apiTask.setMethod("GET");
-        apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_UNFINISHEDORDER));
-        apiTask.setParams(ApiContants.instance(getActivity()).unFinishedOrder(customerId));
-        apiTask.setRoot("orderInfo");
-        apiTask.execute(new OnDataLoader<List<UnfinishedOrderInfo>>() {
-            @Override
-            public void onStart(){
-            }
-            @Override
-            public void onSuccess(List<UnfinishedOrderInfo> unfinishedOrderInfos) {
-                Log.e(TAG, unfinishedOrderInfos.size() + "");
-                listSize=unfinishedOrderInfos.size();
-                if(listSize!=0){
-                    for(int i=0;i<unfinishedOrderInfos.size();i++){
-                        UnfinishedOrderInfo unfinishedOrderInfo=unfinishedOrderInfos.get(i);
-                        order_state=unfinishedOrderInfo.getOrder_state();
-                        Log.e(TAG, order_state);
-                    }
-                }
-                //initTable();
-            }
-            @Override
-            public void onFailure(String code, String message) {
-
-            }
-        });
-    }
 
 }
