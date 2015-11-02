@@ -69,7 +69,9 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
     private Parking mDefaultParking;
     private SessionService mSessionService;
     private static final int ZOOM=15;
-	public void onCreate(Bundle savedInstanceState) {
+    private TextView mParkAddressTextView;
+
+    public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.homepager_user, R.drawable.left_head);
 		mAccountVerify = AccountVerify.getInstance(getActivity());
@@ -102,7 +104,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 		mMineHomeButtonLinearLayout=(LinearLayout) view.findViewById(R.id.ll_mine_home);
         mParkNameTextView=(TextView) view.findViewById(R.id.tv_parking_name);
         mParkNumTextView=(TextView) view.findViewById(R.id.tv_parking_num);
-        mParkDistanceTextView=(TextView) view.findViewById(R.id.tv_parking_distance);
+        mParkAddressTextView = (TextView)view.findViewById(R.id.tv_parking_address);
         mParkChangeTextView=(TextView) view.findViewById(R.id.tv_parking_change);
 	}
 
@@ -130,12 +132,19 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 }
             }
         });
+
+        if (mSessionService.getBoolean("IsHomeLayoutOpen",false)){
+            mMineHomeButtonLinearLayout.setVisibility(View.VISIBLE);
+        }
+
 		mMineHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mMineHomeButtonLinearLayout.getVisibility() == View.VISIBLE) {
                     mMineHomeButtonLinearLayout.setVisibility(View.GONE);
+                    mSessionService.put("IsHomeLayoutOpen",false);
                 } else {
+                    mSessionService.put("IsHomeLayoutOpen",true);
                     mMineHomeButtonLinearLayout.setVisibility(View.VISIBLE);
                 }
             }
@@ -395,18 +404,20 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
     private void updateDefaltParking(Parking parking) {
         if(parking!=null){
             mParkNameTextView.setText(parking.getParking_name());
-            if(parking.getParking_can_use()>0){
+            mParkNumTextView.setText("剩余车位:"+parking.getParking_can_use());
+            mParkAddressTextView.setText(parking.getParking_address());
+            /*if(parking.getParking_can_use()>0){
                 mParkNumTextView.setText("空:"+parking.getParking_can_use());
             }else{
                 mParkNumTextView.setText("满:"+parking.getParking_can_use());
-            }
+            }*/
             mMineHomeButton.setText(""+parking.getParking_can_use());
-            if(mAMapLocation!=null){
-                int s = (int) AMapUtils.calculateLineDistance(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())),
-                        new LatLng(mAMapLocation.getLatitude(), mAMapLocation.getLongitude()));
-                parking.setParking_distance("" + s);
-                mParkDistanceTextView.setText(s+"米");
-            }
+//            if(mAMapLocation!=null){
+//                int s = (int) AMapUtils.calculateLineDistance(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())),
+//                        new LatLng(mAMapLocation.getLatitude(), mAMapLocation.getLongitude()));
+//                parking.setParking_distance("" + s);
+//                mParkDistanceTextView.setText(s+"米");
+//            }
         }else{
 
         }

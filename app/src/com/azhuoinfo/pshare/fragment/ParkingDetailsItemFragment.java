@@ -1,6 +1,7 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.app.TimePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -116,16 +117,19 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         parking=this.getArguments().getParcelable("parking");
         customerInfo=(CustomerInfo)this.app.getSession().getSerializable("customerInfo");
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_parkingdetailsitem,container,false);
     }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
     }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
@@ -189,11 +193,11 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
             mIV_Park.setImageResource(R.drawable.iv_integration_freeparking_ticket);
         }
 
-        mParkingNameTextView.setText(parking.getParking_name() + "");
-        mParkingAddressTextView.setText(parking.getParking_address() + "");
-        Log.e(TAG, parking.getParking_can_use() + "");
-        mParkingDistanceTextView.setText(parking.getParking_distance() + "");
-        mParkingCanUseTextView.setText(parking.getParking_can_use() + "");
+        mParkingNameTextView.setText(""+parking.getParking_name());
+        mParkingAddressTextView.setText(""+parking.getParking_address());
+        Log.e(TAG, ""+parking.getParking_can_use());
+        mParkingDistanceTextView.setText(""+parking.getParking_distance());
+        mParkingCanUseTextView.setText(""+parking.getParking_can_use());
         StringBuilder priceString = new StringBuilder();
         List<ChargeStandard> list = parking.getChargeStandard();
         if (list!=null && !list.isEmpty()){
@@ -239,8 +243,10 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
                     strAppointmentNeed="1";
+                    mCB_WashCar.setTextColor(Color.rgb(0xff,0x66,0x03));
                     mIV_WashCar.setImageResource(R.drawable.xiche_select);
                 }else {
+                    mCB_WashCar.setTextColor(Color.BLACK);
                     strAppointmentNeed="0";
                     mIV_WashCar.setImageResource(R.drawable.xiche);
                 }

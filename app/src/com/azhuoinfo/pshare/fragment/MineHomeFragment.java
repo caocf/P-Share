@@ -91,13 +91,14 @@ public class MineHomeFragment extends BaseContentFragment{
                 mSessionService.saveSerializable("default_parking", item);
             }
         });
-        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+        /*mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 showDeleteDialog(position);
                 return false;
             }
-        });
+        });*/
     }
 
     private void updateViews(List<Parking> list) {

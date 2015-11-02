@@ -35,7 +35,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 public class MonthlyRentHistoryListFragment extends BaseContentFragment{
 
     //月租历史缴费列表
-    private PullRefreshListView mMonthlyRentHistoryListView;
+    private ListView mMonthlyRentHistoryListView;
     private ArrayList<FeeOrderInfo> list=new ArrayList<>();
     private CustomerInfo customerInfo;
     private String customerId;
@@ -77,13 +77,16 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
         mMonthlyRentHistoryListView=(PullRefreshListView) view.findViewById(R.id.lv_monthlyrnet_history);
 
         monthlyRentHistoryListAdapter = new MonthlyRentHistoryListAdapter(this.getActivity(), list);
+        mMonthlyRentHistoryListView.setAdapter(monthlyRentHistoryListAdapter);
+/*
         mListLoadMoreAdapter = new LoadMoreAdapter<FeeOrderInfo>(monthlyRentHistoryListAdapter);
         mListLoadMoreAdapter.setIsPullMode(false);
         mListLoadMoreAdapter.setAbsListView(mMonthlyRentHistoryListView);
         mMonthlyRentHistoryListView.setAdapter(mListLoadMoreAdapter);
         mMonthlyRentHistoryListView.setPullRefreshEnable(false);
+*/
 
-        mListLoadMoreAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+/*        mListLoadMoreAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public boolean hasMore() {
                 return true;
@@ -93,7 +96,7 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
             public void onLoadMore() {
                 postGetOrderInfo(customerId, "1", mPageIndex);
             }
-        });
+        });*/
 
     }
 
@@ -122,10 +125,10 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
     }
 
     public void postGetOrderInfo(String customer_id,String index, final int pageindex) {
-        if (pageindex == -1) {
+        /*if (pageindex == -1) {
             mListLoadMoreAdapter.addMoreData(new ArrayList<FeeOrderInfo>());
             return;
-        }
+        }*/
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_GETORDERINFO));
@@ -143,8 +146,14 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
 
             @Override
             public void onSuccess(List<FeeOrderInfo> feeOrderInfoList) {
+                if (!feeOrderInfoList.isEmpty()){
+                    monthlyRentHistoryListAdapter.getItems().clear();
+                    monthlyRentHistoryListAdapter.getItems().addAll(feeOrderInfoList);
+                    monthlyRentHistoryListAdapter.notifyDataSetChanged();
+                    //mMonthlyRentListView.deferNotifyDataSetChanged();
+                }
 
-                if (pageindex<=1) {
+                /*if (pageindex<=1) {
                     if (feeOrderInfoList!=null && !feeOrderInfoList.isEmpty()) {
                         mListLoadMoreAdapter.addMoreData(feeOrderInfoList);
                     }
@@ -158,14 +167,14 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
                     mPageIndex++;
                 }else {
                     mPageIndex = -1;
-                }
+                }*/
 
                 loadingDialog.dismiss();
             }
 
             @Override
             public void onFailure(String code, String message) {
-                mPageIndex = -1;
+                //mPageIndex = -1;
                 showToast(message);
                 loadingDialog.dismiss();
             }

@@ -1,16 +1,14 @@
 <?xml version="1.0"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/fragment_background"
-                android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fragment_background"
+    android:orientation="vertical">
 
     <com.amap.api.maps.MapView
         android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <Button
         android:id="@+id/button_mine_home"
@@ -23,55 +21,74 @@
         android:gravity="center"
         android:text="0"
         android:textSize="10sp"
-        android:textColor="@color/actionbar_background"/>
+        android:textColor="@color/actionbar_background" />
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_mine_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="#bfffffff"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="16dp">
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/layout_parking"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left|center_vertical"
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_parking_name"
+            <LinearLayout
+                android:id="@+id/layout_parking"
                 android:layout_width="wrap_content"
+                android:minWidth="150dp"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_gravity="center_vertical"/>
-            <TextView
-                android:id="@+id/tv_parking_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"/>
+                android:gravity="left|center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_parking_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/tv_parking_address"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_parking_distance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"/>
+                android:gravity="end|center_vertical"
+                android:id="@+id/tv_parking_num"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp" />
+
         </LinearLayout>
 
         <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/actionbar_background" />
 
+        <TextView
             android:id="@+id/tv_parking_change"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/padding4"
+            android:paddingRight="10dp"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
             android:background="#66ffffff"
-            android:gravity="right"
-            android:text="更改>>"
-            android:textColor="@color/actionbar_background"/>
+            android:gravity="right|center_vertical"
+            android:text="更改>"
+            android:textColor="@color/actionbar_background" />
     </LinearLayout>
 
 </RelativeLayout>
