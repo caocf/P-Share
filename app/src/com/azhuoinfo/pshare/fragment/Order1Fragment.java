@@ -395,6 +395,7 @@ public class Order1Fragment extends BaseContentFragment{
             LoadingDialog loadingDialog;
             @Override
             public void onStart() {
+                if (isEnable())
                 loadingDialog = LoadingDialog.show(getActivity());
             }
             @Override
@@ -432,8 +433,10 @@ public class Order1Fragment extends BaseContentFragment{
             }
             @Override
             public void onFailure(String code, String message) {
-                Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
-                loadingDialog.dismiss();
+                if (isEnable()) {
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                    loadingDialog.dismiss();
+                }
             }
         });
     }
@@ -447,23 +450,29 @@ public class Order1Fragment extends BaseContentFragment{
 
             @Override
             public void onStart() {
-                loadingDialog = LoadingDialog.show(getActivity());
+                if (isEnable()) {
+                    loadingDialog = LoadingDialog.show(getActivity());
+                }
             }
 
             @Override
             public void onSuccess(UserAuth auth) {
-                mOrder1RelativeLayout.setVisibility(View.VISIBLE);
-                mOrder2RelativeLayout.setVisibility(View.GONE);
-                mOrder3ScrollView.setVisibility(View.GONE);
-                mOrder4ScrollView.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), "订单已取消", Toast.LENGTH_SHORT);
-                loadingDialog.dismiss();
+                if (isEnable()) {
+                    mOrder1RelativeLayout.setVisibility(View.VISIBLE);
+                    mOrder2RelativeLayout.setVisibility(View.GONE);
+                    mOrder3ScrollView.setVisibility(View.GONE);
+                    mOrder4ScrollView.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(), "订单已取消", Toast.LENGTH_SHORT);
+                    loadingDialog.dismiss();
+                }
             }
 
             @Override
             public void onFailure(String code, String message) {
-                mobi.cangol.mobile.logging.Log.d(TAG, "code=:" + code + ",message=" + message);
-                loadingDialog.dismiss();
+                if (isEnable()) {
+                    mobi.cangol.mobile.logging.Log.d(TAG, "code=:" + code + ",message=" + message);
+                    loadingDialog.dismiss();
+                }
             }
         });
     }
@@ -480,14 +489,16 @@ public class Order1Fragment extends BaseContentFragment{
 
             @Override
             public void onSuccess(UserAuth userAuth) {
-                mFinishButton.setVisibility(View.VISIBLE);
-                mGetCarButton.setVisibility(View.GONE);
+                if (isEnable()) {
+                    mFinishButton.setVisibility(View.VISIBLE);
+                    mGetCarButton.setVisibility(View.GONE);
 /*                mFinishButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         showPayMethodDialog();
                     }
                 });*/
+                }
             }
 
             @Override
@@ -508,19 +519,25 @@ public class Order1Fragment extends BaseContentFragment{
             LoadingDialog loadingDialog;
             @Override
             public void onStart() {
-                loadingDialog = LoadingDialog.show(getActivity());
+                if (isEnable()) {
+                    loadingDialog = LoadingDialog.show(getActivity());
+                }
             }
 
             @Override
             public void onSuccess(OrderPay orderPay) {
-                totalPay = orderPay.toTalPay();
-                showPayMethodDialog();
-                loadingDialog.dismiss();
+                if (isEnable()) {
+                    totalPay = orderPay.toTalPay();
+                    showPayMethodDialog();
+                    loadingDialog.dismiss();
+                }
             }
 
             @Override
             public void onFailure(String code, String message) {
-                loadingDialog.dismiss();
+                if (isEnable()) {
+                    loadingDialog.dismiss();
+                }
             }
         });
     }
@@ -536,19 +553,25 @@ public class Order1Fragment extends BaseContentFragment{
 
             @Override
             public void onStart() {
-                loadingDialog = LoadingDialog.show(getActivity());
+                if (isEnable()) {
+                    loadingDialog = LoadingDialog.show(getActivity());
+                }
             }
 
             @Override
             public void onSuccess(comment comment) {
-                showToast("评论发送成功");
-                commentDialog.dismiss();
-                loadingDialog.dismiss();
+                if (isEnable()) {
+                    showToast("评论发送成功");
+                    commentDialog.dismiss();
+                    loadingDialog.dismiss();
+                }
             }
 
             @Override
             public void onFailure(String code, String message) {
-                loadingDialog.dismiss();
+                if (isEnable()) {
+                    loadingDialog.dismiss();
+                }
             }
         });
     }

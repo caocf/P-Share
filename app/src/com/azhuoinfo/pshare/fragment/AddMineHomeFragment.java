@@ -149,6 +149,7 @@ public class AddMineHomeFragment extends BaseContentFragment {
 
             @Override
             public void onFailure(String code, String message) {
+                if (isEnable())
                 showToast(message);
             }
         });

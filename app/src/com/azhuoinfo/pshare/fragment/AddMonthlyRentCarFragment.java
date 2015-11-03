@@ -477,24 +477,28 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment {
 
             @Override
             public void onSuccess(UnitPrice unitPrice) {
-                Log.e("Month price", unitPrice.toString());
-                mPrice = unitPrice.getUnitPrice();
-                mMonthlyrentPriceTextView.setText(mPrice);
+                if (isEnable()) {
+                    Log.e("Month price", unitPrice.toString());
+                    mPrice = unitPrice.getUnitPrice();
+                    mMonthlyrentPriceTextView.setText(mPrice);
 
-                mOrderType = unitPrice.getUnitPriceType();
-                if (mOrderType.equals("0")) {
-                    mPayTypeTextView.setText("产权");
-                } else {
-                    mPayTypeTextView.setText("月租");
+                    mOrderType = unitPrice.getUnitPriceType();
+                    if (mOrderType.equals("0")) {
+                        mPayTypeTextView.setText("产权");
+                    } else {
+                        mPayTypeTextView.setText("月租");
+                    }
+
+                    loadingDialog.dismiss();
                 }
-
-                loadingDialog.dismiss();
             }
 
             @Override
             public void onFailure(String code, String message) {
-                showToast(message);
-                loadingDialog.dismiss();
+                if (isEnable()) {
+                    showToast(message);
+                    loadingDialog.dismiss();
+                }
             }
         });
     }
@@ -540,17 +544,21 @@ public class AddMonthlyRentCarFragment extends BaseContentFragment {
 
             @Override
             public void onSuccess(Success success) {
-                if (success.getSuccess().equals("1")){
-                    showToast("提交成功");
+                if (isEnable()) {
+                    if (success.getSuccess().equals("1")) {
+                        showToast("提交成功");
+                    }
+                    loadingDialog.dismiss();
+                    popBackStack();
                 }
-                loadingDialog.dismiss();
-                popBackStack();
             }
 
             @Override
             public void onFailure(String code, String message) {
-                showToast(message);
-                loadingDialog.dismiss();
+                if (isEnable()) {
+                    showToast(message);
+                    loadingDialog.dismiss();
+                }
             }
         });
     }

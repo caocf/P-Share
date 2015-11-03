@@ -169,7 +169,7 @@ public class HistoryOrderFragment extends BaseContentFragment{
             LoadingDialog loadingDialog;
             @Override
             public void onStart() {
-                //if (isEnable())
+                if (isEnable())
                     loadingDialog = LoadingDialog.show(getActivity());
             }
             @Override
@@ -191,17 +191,19 @@ public class HistoryOrderFragment extends BaseContentFragment{
 
                     Log.e(TAG, orderLists + "");
 
+                    loadingDialog.dismiss();
                 }
-                loadingDialog.dismiss();
             }
             @Override
             public void onFailure(String code, String message) {
-                mPageIndex = -1;
-                showToast(message);
+
                 if (isEnable()) {
+                    mPageIndex = -1;
+                    showToast(message);
                     mPromptView.showEmpty();
+                    loadingDialog.dismiss();
                 }
-                loadingDialog.dismiss();
+
             }
         });
     }

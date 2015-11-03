@@ -1,6 +1,7 @@
 package com.azhuoinfo.pshare.fragment.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -48,13 +49,18 @@ public class ParkingDetailsAdapter extends BaseAdapter<Parking> {
         }
         holder.mParkingNameTextView.setText(item.getParking_name());
         holder.mParkingAddressTextView.setText(item.getParking_address());
-        if("0".equals(item.getParking_status())){
+        //if("0".equals(item.getParking_status())){
+        if(item.getParking_can_use()>0){
             holder.mParkingStatusTextView.setText("空:");
+            holder.mParkingStatusTextView.setTextColor(Color.BLACK);
+            holder.mParkingCanUseTextView.setText("" + item.getParking_can_use());
         }else{
-            holder.mParkingStatusTextView.setText("满:");
+            holder.mParkingStatusTextView.setText("满");
+            holder.mParkingStatusTextView.setTextColor(Color.RED);
+            holder.mParkingCanUseTextView.setText("");
         }
 
-        holder.mParkingCanUseTextView.setText("" + item.getParking_can_use());
+        //holder.mParkingCanUseTextView.setText("" + item.getParking_can_use());
         //holder.mParkingPriceTextView.setText("" + item.getParking_charging_standard() + "元/时");
         holder.mParkingPriceTextView.setText("" + item.getParking_count());
         if (aMapLocation!=null && !item.getParking_latitude().isEmpty() && !item.getParking_longitude().isEmpty()) {

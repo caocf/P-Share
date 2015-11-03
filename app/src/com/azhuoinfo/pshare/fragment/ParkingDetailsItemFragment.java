@@ -193,10 +193,14 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
             mIV_Park.setImageResource(R.drawable.iv_integration_freeparking_ticket);
         }
 
-        mParkingNameTextView.setText(""+parking.getParking_name());
-        mParkingAddressTextView.setText(""+parking.getParking_address());
-        Log.e(TAG, ""+parking.getParking_can_use());
-        mParkingDistanceTextView.setText(""+parking.getParking_distance());
+        mParkingNameTextView.setText("" + parking.getParking_name());
+        mParkingAddressTextView.setText("" + parking.getParking_address());
+        Log.e(TAG, "" + parking.getParking_can_use());
+        if (parking.getParking_distance()!=null){
+            mParkingDistanceTextView.setText(""+parking.getParking_distance());
+        }else {
+            mParkingDistanceTextView.setText("");
+        }
         mParkingCanUseTextView.setText(""+parking.getParking_can_use());
         StringBuilder priceString = new StringBuilder();
         List<ChargeStandard> list = parking.getChargeStandard();
@@ -380,24 +384,31 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
             LoadingDialog loadingDialog;
             @Override
             public void onStart(){
-                loadingDialog = LoadingDialog.show(getActivity());
+                if (isEnable()) {
+                    loadingDialog = LoadingDialog.show(getActivity());
+                }
             }
             @Override
             public void onSuccess(List<UnfinishedOrderInfo> unfinishedOrderInfos) {
-                Log.e(TAG, unfinishedOrderInfos.size() + "");
-                listSize=unfinishedOrderInfos.size();
-                getSession().put("unfinishedOrderInfos", unfinishedOrderInfos);
+                if (isEnable()) {
+                    Log.e(TAG, unfinishedOrderInfos.size() + "");
+                    listSize = unfinishedOrderInfos.size();
+                    getSession().put("unfinishedOrderInfos", unfinishedOrderInfos);
 
-                if (listSize>0){
-                    setButtonEnable(false);
-                }else {
-                    setButtonEnable(true);
+
+                    if (listSize > 0) {
+                        setButtonEnable(false);
+                    } else {
+                        setButtonEnable(true);
+                    }
+                    loadingDialog.dismiss();
                 }
-                loadingDialog.dismiss();
             }
             @Override
             public void onFailure(String code, String message) {
-                loadingDialog.dismiss();
+                if (isEnable()) {
+                    loadingDialog.dismiss();
+                }
             }
         });
     }
@@ -412,38 +423,44 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
             LoadingDialog loadingDialog;
             @Override
             public void onStart() {
-                loadingDialog = LoadingDialog.show(getActivity());
+                if (isEnable()) {
+                    loadingDialog = LoadingDialog.show(getActivity());
+                }
             }
             @Override
             public void onSuccess(OrderInfo orderInfos) {
-                mStopLinearLayout.setVisibility(View.GONE);
-                mCancelButton.setVisibility(View.VISIBLE);
-                mOrderTextLinearLayout.setVisibility(View.VISIBLE);
-                order_id=orderInfos.getOrder_id();
-                mOrderTextView.setText("正在为你搭配代泊员...");
-                mOrderCountDownTextView.starTimeByMillisInFuture(3 * 60 * 1000);
-                loadingDialog.dismiss();
-                PollingUnfinishedOrder(customerId);
+                if (isEnable()) {
+                    mStopLinearLayout.setVisibility(View.GONE);
+                    mCancelButton.setVisibility(View.VISIBLE);
+                    mOrderTextLinearLayout.setVisibility(View.VISIBLE);
+                    order_id = orderInfos.getOrder_id();
+                    mOrderTextView.setText("正在为你搭配代泊员...");
+                    mOrderCountDownTextView.starTimeByMillisInFuture(3 * 60 * 1000);
+                    loadingDialog.dismiss();
+                    PollingUnfinishedOrder(customerId);
 
-                mCB_WashCar.setClickable(false);
-                mAppointmentTimeRelativeLayout.setClickable(false);
+                    mCB_WashCar.setClickable(false);
+                    mAppointmentTimeRelativeLayout.setClickable(false);
 
-                mOrderCountDownTextView.setOnCountDownListener(new CountDownTextView.OnCountDownListener() {
-                    @Override
-                    public void onFinish() {
-                        pollingHttpClient.cancelRequests(getActivity(), true);
-                        postCancelOrder(order_id);
-                        mOrderTextView.setText("代泊员正忙，未接单，订单取消");
-                        mOrderCountDownTextView.setText("");
+                    mOrderCountDownTextView.setOnCountDownListener(new CountDownTextView.OnCountDownListener() {
+                        @Override
+                        public void onFinish() {
+                            pollingHttpClient.cancelRequests(getActivity(), true);
+                            postCancelOrder(order_id);
+                            mOrderTextView.setText("代泊员正忙，未接单，订单取消");
+                            mOrderCountDownTextView.setText("");
 
 
-                    }
-                });
+                        }
+                    });
+                }
             }
             @Override
             public void onFailure(String code, String message) {
-                Log.e(TAG, "请求数据失败");
-                loadingDialog.dismiss();
+                if (isEnable()) {
+                    Log.e(TAG, "请求数据失败");
+                    loadingDialog.dismiss();
+                }
             }
         });
     }
@@ -458,24 +475,28 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
             LoadingDialog loadingDialog;
             @Override
             public void onStart() {
-                loadingDialog = LoadingDialog.show(getActivity());
+                if (isEnable()) {
+                    loadingDialog = LoadingDialog.show(getActivity());
+                }
             }
             @Override
             public void onSuccess(UserAuth auth) {
-                listSize = 0;
-                mStopLinearLayout.setVisibility(View.VISIBLE);
-                mCancelButton.setVisibility(View.GONE);
-                mOrderTextLinearLayout.setVisibility(View.GONE);
+                if (isEnable()) {
+                    listSize = 0;
+                    mStopLinearLayout.setVisibility(View.VISIBLE);
+                    mCancelButton.setVisibility(View.GONE);
+                    mOrderTextLinearLayout.setVisibility(View.GONE);
 
-                setButtonEnable(true);
-                mCB_WashCar.setClickable(true);
-                mAppointmentTimeRelativeLayout.setClickable(true);
-                loadingDialog.dismiss();
+                    setButtonEnable(true);
+                    mCB_WashCar.setClickable(true);
+                    mAppointmentTimeRelativeLayout.setClickable(true);
+                    loadingDialog.dismiss();
+                }
             }
             @Override
             public void onFailure(String code, String message) {
-                mobi.cangol.mobile.logging.Log.d(TAG, "code=:" + code + ",message=" + message);
-                if (getActivity() != null) {
+                if (isEnable()) {
+                    mobi.cangol.mobile.logging.Log.d(TAG, "code=:" + code + ",message=" + message);
                     loadingDialog.dismiss();
                 }
             }
@@ -486,6 +507,7 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
     PollingHttpClient pollingHttpClient;
 
     public void PollingUnfinishedOrder(final String customerId){
+
         pollingHttpClient = new PollingHttpClient();
         PollingUnfinishedOrderHandler pollingUnfinishedOrderHandler = new PollingUnfinishedOrderHandler();
         pollingHttpClient.send(
@@ -504,24 +526,26 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
 
         @Override
         public boolean isFailResponse(String content) {
-            Log.d("ResponseHandler", "isFailResponse content=" + content);
-            try {
-                ApiResult<UnfinishedOrderInfo> apiResult = (ApiResult<UnfinishedOrderInfo>) ResultFactory.getInstance().parserResult(UnfinishedOrderInfo.class, new JSONObject(content), "orderInfo");
-                //List<UnfinishedOrderInfo> unfinishedOrderInfos = apiResult.getList();
-                List<UnfinishedOrderInfo> unfinishedOrderInfos = apiResult.getList();
-                if(isEnable()){
-                    //Log.e(TAG, unfinishedOrderInfos.size() + "");
-                    listSize = unfinishedOrderInfos.size();
-                    if (listSize != 0) {
-                        for (int i = 0; i < unfinishedOrderInfos.size(); i++) {
-                            UnfinishedOrderInfo unfinishedOrderInfo = unfinishedOrderInfos.get(i);
-                            Message message = updateHandler.obtainMessage(1, unfinishedOrderInfo.getOrder_state());
-                            updateHandler.sendMessage(message);
+            if (isEnable()) {
+                Log.d("ResponseHandler", "isFailResponse content=" + content);
+                try {
+                    ApiResult<UnfinishedOrderInfo> apiResult = (ApiResult<UnfinishedOrderInfo>) ResultFactory.getInstance().parserResult(UnfinishedOrderInfo.class, new JSONObject(content), "orderInfo");
+                    //List<UnfinishedOrderInfo> unfinishedOrderInfos = apiResult.getList();
+                    List<UnfinishedOrderInfo> unfinishedOrderInfos = apiResult.getList();
+                    if (isEnable()) {
+                        //Log.e(TAG, unfinishedOrderInfos.size() + "");
+                        listSize = unfinishedOrderInfos.size();
+                        if (listSize != 0) {
+                            for (int i = 0; i < unfinishedOrderInfos.size(); i++) {
+                                UnfinishedOrderInfo unfinishedOrderInfo = unfinishedOrderInfos.get(i);
+                                Message message = updateHandler.obtainMessage(1, unfinishedOrderInfo.getOrder_state());
+                                updateHandler.sendMessage(message);
+                            }
                         }
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
 
             return true;

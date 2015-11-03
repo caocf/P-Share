@@ -198,7 +198,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                 final SearchView searchView=((ActionBarActivity)getActivity()).startSearchMode();
                 searchView.setSearchTextHint("我想停在哪里附近？");
                 searchView.setActioImageResource(R.drawable.actionbar_search);
-                searchView.setSearchHistoryEnable(false);
+                searchView.setSearchHistoryEnable(true);
                 searchView.setOnTouchOutsiteDimiss(false);
                 searchView.setOnActionClickListener(new SearchView.OnActionClickListener() {
                     @Override
