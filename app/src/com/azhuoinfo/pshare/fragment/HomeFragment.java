@@ -4,14 +4,27 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -28,6 +41,10 @@ import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.services.core.AMapException;
+import com.amap.api.services.help.Inputtips;
+import com.amap.api.services.help.Tip;
+import com.amap.api.services.poisearch.PoiSearch;
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.api.ApiContants;
@@ -35,9 +52,11 @@ import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.model.Parking;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import mobi.cangol.mobile.actionbar.ActionBarActivity;
 import mobi.cangol.mobile.actionbar.ActionMenu;
@@ -191,41 +210,152 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         actionMenu.addMenu(2, R.string.menu_list_car, R.drawable.list_car, 1);
         return true;
     }
+
+    TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            android.util.Log.e("Text Change", "before " + s);
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            android.util.Log.e("Text Change", "on     " + s);
+            if (isEnable()) {
+                String newText = s.toString().trim();
+
+                final Inputtips inputTips = new Inputtips(getActivity(),
+                        new Inputtips.InputtipsListener() {
+
+                            @Override
+                            public void onGetInputtips(List<Tip> tipList, int rCode) {
+                                if (rCode == 0) {// 正确返回
+                                    mTipList = tipList;
+                                    List<String> listString = new ArrayList<String>();
+
+                                    for (int i = 0; i < tipList.size(); i++) {
+                                        listString.add(tipList.get(i).getName());
+                                        android.util.Log.e("search result", listString.get(i));
+                                    }
+                                    if (mArrayAdapter!=null){
+                                        mArrayAdapter.clear();
+                                        mArrayAdapter.addAll(listString);
+                                    }
+                                    //showPopUp(getActivity().findViewById(R.id.layout_main), listString);
+                                }
+                            }
+                        });
+
+                try {
+                    inputTips.requestInputtips(newText, "021");// 第一个参数表示提示关键字，第二个参数默认代表全国，也可以为城市区号
+                } catch (AMapException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    };
+
+    List<Tip> mTipList;
+
+    private PoiSearch.Query query;// Poi查询条件类
+    private PoiSearch poiSearch;// POI搜索
+
+    ArrayAdapter<String> mArrayAdapter;
     @Override
     public boolean onMenuActionSelected(ActionMenuItem action) {
         switch(action.getId()){
             case 1:
-                final SearchView searchView=((ActionBarActivity)getActivity()).startSearchMode();
+                final SearchView searchView;
+                searchView=((ActionBarActivity)getActivity()).startSearchMode();
                 searchView.setSearchTextHint("我想停在哪里附近？");
                 searchView.setActioImageResource(R.drawable.actionbar_search);
-                searchView.setSearchHistoryEnable(true);
-                searchView.setOnTouchOutsiteDimiss(false);
+                searchView.setSearchHistoryEnable(false);
+                LinearLayout linearLayout = (LinearLayout)searchView.findViewById(R.id.actionbar_search_content);
+                final View view = getActivity().getLayoutInflater().inflate(R.layout.popupview,linearLayout,true);
+                ListView innerlistView = (ListView)view.findViewById(R.id.list);
+                innerlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Tip tip = mTipList.get(0);
+                        searchView.hide();
+                        mAmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(tip.getPoint().getLatitude(), tip.getPoint().getLongitude()), ZOOM + 2));
+                    }
+                });
+
+                mArrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1);
+                innerlistView.setAdapter(mArrayAdapter);
+                searchView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+                    @Override
+                    public void onSystemUiVisibilityChange(int visibility) {
+                        if (visibility != View.VISIBLE) {
+                            String slog = "";
+                            switch (visibility) {
+                                case View.VISIBLE:
+                                    slog = "VISIBLE";
+                                    break;
+                                case View.INVISIBLE:
+                                    slog = "INVISIBLE";
+                                    break;
+                                case View.GONE:
+                                    slog = "GONE";
+                                    break;
+                            }
+                            Log.e("visibility", slog);
+                        }
+                    }
+                });
                 searchView.setOnActionClickListener(new SearchView.OnActionClickListener() {
                     @Override
                     public boolean onActionClick(String s) {
-                        getSearchParkListbyName(s);
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(getActivity().getCurrentFocus(), InputMethodManager.HIDE_NOT_ALWAYS);
+                        Log.e("visibility", "act");
+                        return true;
+                    }
+                });
+/*
+                searchView.setOnActionClickListener(new SearchView.OnActionClickListener() {
+                    @Override
+                    public boolean onActionClick(String s) {
+                        //getSearchParkListbyName(s);
                         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(searchView.geSearchEditText().getWindowToken(), 0);
                         return true;
                     }
                 });
+
                 searchView.setOnSearchTextListener(new SearchView.OnSearchTextListener() {
                     @Override
                     public boolean onSearchText(String s) {
-                        getSearchParkListbyName(s);
+                        android.util.Log.e("search string", s);
+                        //getSearchParkListbyName(s);
                         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(searchView.geSearchEditText().getWindowToken(), 0);
                         return true;
                     }
                 });
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(searchView.geSearchEditText(), InputMethodManager.SHOW_FORCED);
+*/
+
+/*                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(searchView.geSearchEditText(), InputMethodManager.SHOW_FORCED);*/
+                /*searchView.geSearchEditText().removeTextChangedListener(textWatcher);
+                searchView.geSearchEditText().addTextChangedListener(textWatcher);*/
+                //searchView.geSearchEditText().requestFocus();
                 break;
             case 2:
                 replaceFragment(ParkingDetailsFragment.class,"ParkingDetailsFragment",null);
                 break;
         }
         return super.onMenuActionSelected(action);
+    }
+
+    void hideInput(){
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        //imm.showSoftInput(getView(), InputMethodManager.HIDE_NOT_ALWAYS);
+        imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
     }
 
 
