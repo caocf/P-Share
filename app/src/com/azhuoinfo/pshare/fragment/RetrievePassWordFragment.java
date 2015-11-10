@@ -17,6 +17,7 @@ import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.model.UserAuth;
 import com.azhuoinfo.pshare.model.UserCode;
+import com.azhuoinfo.pshare.view.CountDownTextView;
 
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
@@ -32,7 +33,7 @@ public class RetrievePassWordFragment extends BaseContentFragment {
 	//定义填写手机号码的控件
 	private EditText mCustomerMobileEditText;
 	//获取验证码
-	private TextView mCodeTextView;
+	private CountDownTextView mCodeTextView;
 	//定义输入验证码的控件
 	private EditText mCodeEditText;
 	//下一步
@@ -67,19 +68,42 @@ public class RetrievePassWordFragment extends BaseContentFragment {
 	protected void findViews(View view) {
 		this.setTitle(R.string.reset_password);
 		mCustomerMobileEditText=(EditText) view.findViewById(R.id.retrieveActivity_editText_Phone);
-		mCodeTextView=(TextView) view.findViewById(R.id.get_code);
+		mCodeTextView=(CountDownTextView) view.findViewById(R.id.get_code);
 		mCodeEditText=(EditText) view.findViewById(R.id.retrieveActivity_editText_Code);
 		next_step=(Button) view.findViewById(R.id.next_step);
 	}
 
 	@Override
 	protected void initViews(final Bundle bundle) {
-		mCodeTextView.setOnClickListener(new View.OnClickListener() {
+/*		mCodeTextView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				postSendSmsCode(mCustomerMobileEditText.getText().toString());
 			}
+		});*/
+
+		mCodeTextView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (mCustomerMobileEditText.getText() != null && mCustomerMobileEditText.getText().length()>0) {
+					postSendSmsCode(mCustomerMobileEditText.getText().toString());
+					mCodeTextView.starTimeByMillisInFuture(60 * 1000);
+					mCodeTextView.setEnabled(false);
+				} else {
+					Toast.makeText(getActivity(), "请输入手机号", Toast.LENGTH_SHORT).show();
+				}
+
+			}
 		});
+		mCodeTextView.setOnCountDownListener(new CountDownTextView.OnCountDownListener() {
+			@Override
+			public void onFinish() {
+				mCodeTextView.setEnabled(true);
+				mCodeTextView.setText(R.string.get_code);
+			}
+		});
+
+
 		next_step.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -158,7 +182,7 @@ public class RetrievePassWordFragment extends BaseContentFragment {
 			public void onFailure(String code, String message) {
 				Log.d(TAG, "code=:" + code + ",message=" + message);
 				if (getActivity() != null) {
-					Toast.makeText(getActivity(), "验证码不正确", Toast.LENGTH_SHORT);
+					Toast.makeText(getActivity(), "验证码不正确", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});

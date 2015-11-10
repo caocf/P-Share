@@ -35,9 +35,7 @@
         <RelativeLayout 
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_marginTop="@dimen/padding2"
-            android:layout_marginBottom="@dimen/padding2"
-            android:layout_marginLeft="@dimen/padding2"
+            android:layout_margin="@dimen/padding2"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
             <ImageView
@@ -61,7 +59,6 @@
 		        android:id="@+id/loginActivity_editText_Phone"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_marginRight="@dimen/padding2"
 		        android:layout_toRightOf="@+id/textView1"
 		        android:layout_centerVertical="true"
 		        android:ems="10"
@@ -74,13 +71,6 @@
                 android:text="">
 				<requestFocus />	       
 		    </EditText>
-		    <ImageView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/down_head"
-                android:layout_marginRight="@dimen/padding2"/>
         </RelativeLayout>
         <TextView 
             android:layout_height="@dimen/padding10"
@@ -92,10 +82,8 @@
             android:layout_marginBottom="@dimen/padding1" />
 	    <LinearLayout 
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="@dimen/padding2"
-            android:layout_marginBottom="@dimen/padding2"
-            android:layout_marginLeft="@dimen/padding2"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/padding2"
             android:orientation="horizontal">
             <ImageView 
                 android:layout_width="wrap_content"
@@ -119,7 +107,6 @@
 		        android:hint="@string/password"
                 android:maxLength="11"
                 android:text="">
-				<requestFocus />	       
 		    </EditText>
         </LinearLayout>       
 		
@@ -130,25 +117,27 @@
         android:text="@string/login"
         />
      <RelativeLayout 
-	    android:layout_height="wrap_content"
+	    android:layout_height="24dp"
 	    android:layout_width="match_parent"
+         android:paddingLeft="@dimen/padding5"
+         android:paddingRight="@dimen/padding5"
 	    android:layout_marginTop="@dimen/padding2"
 	    >
 		<TextView
+            android:gravity="center_vertical"
 		    android:id="@+id/loginActivity_forget_password" 
-		    android:layout_height="wrap_content"
+		    android:layout_height="match_parent"
 		    android:layout_width="wrap_content"
 		    android:layout_alignParentLeft="true"
-		    android:layout_marginLeft="@dimen/padding5"
-		    android:layout_marginTop="@dimen/padding1"
 		    android:layout_centerVertical="true"
 		    android:textSize="@dimen/text_size3"
 		    android:text="@string/forget_password"
 		    />
 		<LinearLayout
 		    android:id="@+id/ll_LoginActivity_back_registerActivity" 
-		    android:layout_height="wrap_content"
+		    android:layout_height="match_parent"
 		    android:layout_width="wrap_content"
+            android:gravity="center_vertical"
 		    android:layout_alignParentRight="true"
 		    >		    
 		    <TextView 
@@ -156,17 +145,14 @@
 		        android:layout_width="wrap_content"
 		        android:text="@string/registered"
 		        android:textSize="@dimen/text_size3"
-		        android:layout_gravity="center_vertical"
 		        android:layout_toLeftOf="@+id/LoginActivity_back_registerActivity"
 		        android:layout_marginRight="@dimen/padding2"/>
 		    <ImageView
 		        android:id="@+id/LoginActivity_back_registerActivity" 
 		        android:layout_height="wrap_content"
 		        android:layout_width="wrap_content"
-		        android:layout_gravity="center_vertical"
 		        android:layout_centerVertical="true"
 		        android:layout_alignParentRight="true"
-		        android:layout_marginRight="@dimen/padding4"
 		        android:src="@drawable/back_doublehead"/>
 		</LinearLayout>
 	</RelativeLayout>

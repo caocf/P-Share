@@ -1,24 +1,32 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.amap.api.services.help.Tip;
 import com.azhuoinfo.pshare.AccountVerify;
 import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.api.ApiContants;
@@ -39,10 +47,15 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import mobi.cangol.mobile.actionbar.ActionBarActivity;
+import mobi.cangol.mobile.actionbar.ActionMenu;
+import mobi.cangol.mobile.actionbar.ActionMenuItem;
+import mobi.cangol.mobile.actionbar.view.SearchView;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.http.extras.PollingHttpClient;
@@ -161,10 +174,6 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mParkingCanUseTextView=(TextView) view.findViewById(R.id.tv_parking_can_use);
         mParkingPriceTextView=(TextView) view.findViewById(R.id.tv_parking_price);
         mIV_Park = (ImageView)view.findViewById(R.id.iv_list_head);
-/*        mCheckBox1=(CheckBox) findViewById(R.id.ib_shopping_cart);
-        mCheckBox2=(CheckBox)findViewById(R.id.ib_flashlight);
-        mCheckBox3=(CheckBox) findViewById(R.id.ib_wash_car);
-        mCheckBox4=(CheckBox)findViewById(R.id.ib_umbrella);*/
         mIV_WashCar = (ImageView)view.findViewById(R.id.iv_washcar);
         mCB_WashCar = (CheckBox)view.findViewById(R.id.cb_washcar);
         mAppointmentTimeRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_parking_appointment_time);
@@ -173,9 +182,6 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         mImmediateButton=(Button) view.findViewById(R.id.immediate_stop);
         mAppointmentButton=(Button) view.findViewById(R.id.appointment_stop);
         mCancelButton=(Button) view.findViewById(R.id.cancel_stop);
-
-        /*mAppointmentRelativeLayout=(RelativeLayout) view.findViewById(R.id.rl_appointment);
-        mAppointmentTextView=(TextView) view.findViewById(R.id.tv_appointment);*/
 
         mOrderTextLinearLayout=(LinearLayout) view.findViewById(R.id.ll_order_text);
         mOrderCountDownTextView=(CountDownTextView) view.findViewById(R.id.tv_order_text);
@@ -256,42 +262,6 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 }
             }
         });
-        /*mCheckBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    strAppointmentNeed+="1,";
-                    Log.e("strAppointmentNeed1",strAppointmentNeed);
-                }
-            }
-        });
-        mCheckBox2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    strAppointmentNeed+="2,";
-                    Log.e("strAppointmentNeed2",strAppointmentNeed);
-                }
-            }
-        });
-        mCheckBox3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    strAppointmentNeed+="3,";
-                    Log.e("strAppointmentNeed3",strAppointmentNeed);
-                }
-            }
-        });
-        mCheckBox4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    strAppointmentNeed+="4,";
-                    Log.e("strAppointmentNeed4",strAppointmentNeed);
-                }
-            }
-        });*/
         mImmediateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -530,10 +500,8 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                 Log.d("ResponseHandler", "isFailResponse content=" + content);
                 try {
                     ApiResult<UnfinishedOrderInfo> apiResult = (ApiResult<UnfinishedOrderInfo>) ResultFactory.getInstance().parserResult(UnfinishedOrderInfo.class, new JSONObject(content), "orderInfo");
-                    //List<UnfinishedOrderInfo> unfinishedOrderInfos = apiResult.getList();
                     List<UnfinishedOrderInfo> unfinishedOrderInfos = apiResult.getList();
                     if (isEnable()) {
-                        //Log.e(TAG, unfinishedOrderInfos.size() + "");
                         listSize = unfinishedOrderInfos.size();
                         if (listSize != 0) {
                             for (int i = 0; i < unfinishedOrderInfos.size(); i++) {
@@ -547,7 +515,6 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
                     e.printStackTrace();
                 }
             }
-
             return true;
         }
 
@@ -567,6 +534,30 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         }
     }
 
+    @Override
+    protected boolean onMenuActionCreated(ActionMenu actionMenu) {
+        super.onMenuActionCreated(actionMenu);
+        actionMenu.addMenu(1, R.string.action_menu_shared, -1, 1);
+        actionMenu.addMenu(2, R.string.action_menu_navigation,-1, 1);
+        return true;
+    }
+
+    @Override
+    protected boolean onMenuActionSelected(ActionMenuItem action) {
+        switch(action.getId()){
+            case 1:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+                break;
+            case 2:
+                popupNavi(getCustomActionBar().getActionMenu().getActionMenuItemView(getCustomActionBar().getActionMenu().size()));
+        }
+        return super.onMenuActionSelected(action);
+    }
+
     /**
     * 取当前时间
     * */
@@ -579,4 +570,85 @@ public class ParkingDetailsItemFragment extends BaseContentFragment{
         minute = calendar.get(Calendar.MINUTE);
         mImmediateTimeText = year + "/" + (monthOfYear + 1) % 12 + "/" + dayOfMonth + " " + hourOfDay + ":" + minute;
     }
+
+    void popupNavi(View view){
+        PopupMenu popupMenu = new PopupMenu(getActivity(),view);
+        popupMenu.inflate(R.menu.navi_menu);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.action_autonavi:
+                        if (isAppInstalled(getActivity(), "com.autonavi.minimap")) {
+                            shareToAutoNavi();
+                        } else {
+                            showToast("高德地图未安装");
+                        }
+                        break;
+                    case R.id.action_baidunavi:
+                        if (isAppInstalled(getActivity(), "com.baidu.BaiduMap")) {
+                            shareToBaidu();
+                        } else {
+                            showToast("百度地图未安装");
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
+        popupMenu.show();
+    }
+    void shareToAutoNavi(){
+        String uriString = String.format(
+                "androidamap://navi?sourceApplication=%s&poiname=%s&lat=%s&lon=%s&dev=1&style=2",
+                "口袋停",
+                parking.getParking_name(),
+                parking.getParking_latitude(),
+                parking.getParking_longitude()
+        );
+        try {
+            Intent intent = Intent.parseUri(uriString,0);
+            intent.setPackage("com.autonavi.minimap");
+            startActivity(intent);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void shareToBaidu(){
+        String uriString = String.format(
+                "intent://map/direction?origin=latlng:%s,%s|name:%s&destination=%s&mode=driving&src=口袋停|口袋停#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end",
+                parking.getParking_latitude(),
+                parking.getParking_longitude(),
+                "我的位置",
+                parking.getParking_name()
+        );
+
+        try {
+            Intent intent = Intent.parseUri(uriString,0);
+            startActivity(intent); //启动调用
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isAppInstalled(Context context,String packagename)
+    {
+        PackageInfo packageInfo;
+        try {
+            packageInfo = context.getPackageManager().getPackageInfo(packagename, 0);
+        }catch (PackageManager.NameNotFoundException e) {
+            packageInfo = null;
+            e.printStackTrace();
+        }
+        if(packageInfo ==null){
+            //System.out.println("没有安装");
+            return false;
+        }else{
+            //System.out.println("已经安装");
+            return true;
+        }
+    }
+
 }

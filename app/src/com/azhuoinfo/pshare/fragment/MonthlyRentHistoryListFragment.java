@@ -35,7 +35,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 public class MonthlyRentHistoryListFragment extends BaseContentFragment{
 
     //月租历史缴费列表
-    private ListView mMonthlyRentHistoryListView;
+    private PullRefreshListView mMonthlyRentHistoryListView;
     private ArrayList<FeeOrderInfo> list=new ArrayList<>();
     private CustomerInfo customerInfo;
     private String customerId;
@@ -74,19 +74,19 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
     int mPageIndex = 1;
     @Override
     protected void findViews(View view) {
-        mMonthlyRentHistoryListView=(PullRefreshListView) view.findViewById(R.id.lv_monthlyrnet_history);
 
+        mMonthlyRentHistoryListView=(PullRefreshListView) view.findViewById(R.id.lv_monthlyrnet_history);
         monthlyRentHistoryListAdapter = new MonthlyRentHistoryListAdapter(this.getActivity(), list);
+        /*
         mMonthlyRentHistoryListView.setAdapter(monthlyRentHistoryListAdapter);
-/*
+*/
+
         mListLoadMoreAdapter = new LoadMoreAdapter<FeeOrderInfo>(monthlyRentHistoryListAdapter);
         mListLoadMoreAdapter.setIsPullMode(false);
         mListLoadMoreAdapter.setAbsListView(mMonthlyRentHistoryListView);
         mMonthlyRentHistoryListView.setAdapter(mListLoadMoreAdapter);
         mMonthlyRentHistoryListView.setPullRefreshEnable(false);
-*/
-
-/*        mListLoadMoreAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+        mListLoadMoreAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public boolean hasMore() {
                 return true;
@@ -96,7 +96,7 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
             public void onLoadMore() {
                 postGetOrderInfo(customerId, "1", mPageIndex);
             }
-        });*/
+        });
 
     }
 
@@ -106,7 +106,7 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FeeOrderInfo item = (FeeOrderInfo) parent.getItemAtPosition(position);
-                Bundle itemBundle =  new Bundle();
+                Bundle itemBundle = new Bundle();
                 itemBundle.putParcelable("data", item);
                 replaceFragment(MonthlyRentCarfinishPayFragment.class, "MonthlyRentCarFinishPayFragment", itemBundle);
             }
@@ -115,20 +115,21 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
 
     @Override
     protected void initData(Bundle bundle) {
-        postGetOrderInfo(customerId,"1",mPageIndex);
+        postGetOrderInfo(customerId, "1", mPageIndex);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         mPageIndex = 1;
+        monthlyRentHistoryListAdapter.clear();
     }
 
     public void postGetOrderInfo(String customer_id,String index, final int pageindex) {
-        /*if (pageindex == -1) {
+        if (pageindex == -1) {
             mListLoadMoreAdapter.addMoreData(new ArrayList<FeeOrderInfo>());
             return;
-        }*/
+        }
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_GETORDERINFO));
@@ -146,14 +147,14 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
 
             @Override
             public void onSuccess(List<FeeOrderInfo> feeOrderInfoList) {
-                if (!feeOrderInfoList.isEmpty()){
+                /*if (!feeOrderInfoList.isEmpty()){
                     monthlyRentHistoryListAdapter.getItems().clear();
                     monthlyRentHistoryListAdapter.getItems().addAll(feeOrderInfoList);
                     monthlyRentHistoryListAdapter.notifyDataSetChanged();
                     //mMonthlyRentListView.deferNotifyDataSetChanged();
-                }
+                }*/
 
-                /*if (pageindex<=1) {
+                if (pageindex<=1) {
                     if (feeOrderInfoList!=null && !feeOrderInfoList.isEmpty()) {
                         mListLoadMoreAdapter.addMoreData(feeOrderInfoList);
                     }
@@ -162,19 +163,21 @@ public class MonthlyRentHistoryListFragment extends BaseContentFragment{
                         mListLoadMoreAdapter.addMoreData(feeOrderInfoList);
                     }
                 }
+
+
 
                 if (feeOrderInfoList != null && feeOrderInfoList.size()==10){
                     mPageIndex++;
                 }else {
                     mPageIndex = -1;
-                }*/
+                }
 
                 loadingDialog.dismiss();
             }
 
             @Override
             public void onFailure(String code, String message) {
-                //mPageIndex = -1;
+                mPageIndex = -1;
                 showToast(message);
                 loadingDialog.dismiss();
             }

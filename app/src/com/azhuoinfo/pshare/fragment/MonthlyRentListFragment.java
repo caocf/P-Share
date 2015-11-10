@@ -19,6 +19,7 @@ import com.azhuoinfo.pshare.R;
 import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
+import com.azhuoinfo.pshare.fragment.adapter.CarListAdapter;
 import com.azhuoinfo.pshare.fragment.adapter.MonthlyRentListAdapter;
 import com.azhuoinfo.pshare.model.CarList;
 import com.azhuoinfo.pshare.model.CustomerInfo;
@@ -27,7 +28,10 @@ import com.azhuoinfo.pshare.model.Success;
 import com.azhuoinfo.pshare.view.AllListView;
 import com.azhuoinfo.pshare.view.CommonDialog;
 import com.azhuoinfo.pshare.view.LoadingDialog;
+import com.azhuoinfo.pshare.view.listview.LoadMoreAdapter;
 import com.azhuoinfo.pshare.view.listview.MyListView;
+import com.azhuoinfo.pshare.view.listview.OnLoadMoreListener;
+import com.azhuoinfo.pshare.view.listview.pull.PullRefreshListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +46,7 @@ import mobi.cangol.mobile.base.FragmentInfo;
 public class MonthlyRentListFragment extends BaseContentFragment{
 
     //月租车列表
-    private AllListView mMonthlyRentListView;
+    private PullRefreshListView mMonthlyRentListView;
     //添加月租车
     private RelativeLayout mAddMonthlyRentCarRelativeLayout;
 
@@ -51,6 +55,10 @@ public class MonthlyRentListFragment extends BaseContentFragment{
 
     private CustomerInfo customerInfo;
     private String customerId;
+
+    //private PullRefreshListView mListView;
+    LoadMoreAdapter<FeeOrderInfo> mListLoadMoreAdapter;
+    int mPageIndex = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,13 +90,46 @@ public class MonthlyRentListFragment extends BaseContentFragment{
     protected void findViews(View view) {
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        postGetOrderInfo(customerId, "0", mPageIndex);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mPageIndex = 1;
+        monthlyRentListAdapter.clear();
+    }
+
+
     MonthlyRentListAdapter monthlyRentListAdapter;
     @Override
     protected void initViews(final Bundle bundle) {
-        mMonthlyRentListView=(AllListView) findViewById(R.id.lv_monthlyRent_list);
+        mMonthlyRentListView=(PullRefreshListView) findViewById(R.id.lv_monthlyRent_list);
         monthlyRentListAdapter=new MonthlyRentListAdapter(this.getActivity(), list);
-        mMonthlyRentListView.setAdapter(monthlyRentListAdapter);
+        /*mMonthlyRentListView.setAdapter(monthlyRentListAdapter);*/
         mAddMonthlyRentCarRelativeLayout=(RelativeLayout) findViewById(R.id.rl_add_monthlyRent);
+
+        mListLoadMoreAdapter = new LoadMoreAdapter<>(monthlyRentListAdapter);
+        mListLoadMoreAdapter.setIsPullMode(false);
+        mListLoadMoreAdapter.setAbsListView(mMonthlyRentListView);
+        mMonthlyRentListView.setAdapter(mListLoadMoreAdapter);
+        mMonthlyRentListView.setPullRefreshEnable(false);
+
+        mListLoadMoreAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public boolean hasMore() {
+                return true;
+            }
+
+            @Override
+            public void onLoadMore() {
+                postGetOrderInfo(customerId, "0", mPageIndex);
+            }
+        });
 
 
         mMonthlyRentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -164,7 +205,7 @@ public class MonthlyRentListFragment extends BaseContentFragment{
 
     @Override
     protected void initData(Bundle bundle) {
-        postGetOrderInfo(customerId,"0");
+        postGetOrderInfo(customerId, "0", mPageIndex);
     }
 
     @Override
@@ -177,11 +218,17 @@ public class MonthlyRentListFragment extends BaseContentFragment{
         return false;
     }
 
-    public void postGetOrderInfo(String customer_id,String index) {
+    public void postGetOrderInfo(String customer_id,String index, final int pageIndex) {
+
+        if (pageIndex == -1) {
+            mListLoadMoreAdapter.addMoreData(new ArrayList<FeeOrderInfo>());
+            return;
+        }
+
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_GETORDERINFO));
-        apiTask.setParams(ApiContants.instance(getActivity()).getGetOrderInfo(customer_id, index,"1"));
+        apiTask.setParams(ApiContants.instance(getActivity()).getGetOrderInfo(customer_id, index, "" + pageIndex));
         apiTask.setRoot("feeOrderInfoList");
         apiTask.execute(new OnDataLoader<List<FeeOrderInfo>>() {
 
@@ -195,7 +242,7 @@ public class MonthlyRentListFragment extends BaseContentFragment{
 
             @Override
             public void onSuccess(List<FeeOrderInfo> feeOrderInfoList) {
-                if (!feeOrderInfoList.isEmpty()){
+                /*if (!feeOrderInfoList.isEmpty()){
                     monthlyRentListAdapter.getItems().clear();
                     monthlyRentListAdapter.getItems().addAll(feeOrderInfoList);
                     monthlyRentListAdapter.notifyDataSetChanged();
@@ -203,13 +250,30 @@ public class MonthlyRentListFragment extends BaseContentFragment{
                 }
                 for (FeeOrderInfo feeOrderInfo : feeOrderInfoList) {
                     Log.i("fee", feeOrderInfo.toString());
+                }*/
+                if (pageIndex <= 1) {
+                    if (feeOrderInfoList != null && !feeOrderInfoList.isEmpty()) {
+                        mListLoadMoreAdapter.addMoreData(feeOrderInfoList);
+                    }
+                } else {
+                    if (feeOrderInfoList != null && !feeOrderInfoList.isEmpty()) {
+                        mListLoadMoreAdapter.addMoreData(feeOrderInfoList);
+                    }
                 }
+
+                if (feeOrderInfoList != null && feeOrderInfoList.size() == 10) {
+                    mPageIndex++;
+                } else {
+                    mPageIndex = -1;
+                }
+
                 loadingDialog.dismiss();
             }
 
             @Override
             public void onFailure(String code, String message) {
                 showToast(message);
+                mPageIndex = -1;
                 loadingDialog.dismiss();
             }
         });

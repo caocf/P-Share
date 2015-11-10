@@ -190,11 +190,11 @@ public class MonthlyRentCarfinishPayFragment extends BaseContentFragment{
                 final String payDesc = "产权月租";
                 int checkedId = radioGroup.getCheckedRadioButtonId();
                 if (checkedId == R.id.alipay) {;
-                    toPay(PayManager.PAY_TYPE_ALIPAY, paySubject, payDesc, "0.01", Constants.ALIPAY_NOTIFY_URL);
+                    toPay(PayManager.PAY_TYPE_ALIPAY, paySubject, payDesc, "0.01", Constants.ALIPAY_RENT_NOTIFY_URL);
                 } else if (checkedId == R.id.wechatpay) {
                     int fee = (int) Double.parseDouble(totalPay) * 100;
                     fee = 1;
-                    toPay(PayManager.PAY_TYPE_WECHAT, paySubject, payDesc, "" + fee, Constants.WECHAT_NOTIFY_URL);
+                    toPay(PayManager.PAY_TYPE_WECHAT, paySubject, payDesc, "" + fee, Constants.WECHAT_RENT_NOTIFY_URL);
                 }
             }
         });

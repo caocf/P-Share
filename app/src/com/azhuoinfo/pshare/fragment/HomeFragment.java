@@ -1,7 +1,10 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -14,6 +17,7 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -41,6 +46,8 @@ import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.MyLocationStyleCreator;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.help.Inputtips;
 import com.amap.api.services.help.Tip;
@@ -52,6 +59,7 @@ import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.model.Parking;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -65,6 +73,7 @@ import mobi.cangol.mobile.actionbar.view.SearchView;
 import mobi.cangol.mobile.base.BaseContentFragment;
 import mobi.cangol.mobile.base.FragmentInfo;
 import mobi.cangol.mobile.logging.Log;
+import mobi.cangol.mobile.sdk.utils.HttpUtils;
 import mobi.cangol.mobile.service.session.SessionService;
 import mobi.cangol.mobile.utils.BitmapUtils;
 import mobi.cangol.mobile.utils.DeviceInfo;
@@ -97,6 +106,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         mSessionService = getSession();
 	}
 
+    //View contentView;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
@@ -172,6 +182,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 
 	}
 
+    //InputMethodManager imm;
 	@Override
 	protected void initData(Bundle savedInstanceState) {
         init();
@@ -183,7 +194,10 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             updateDefaltParking(null);
         }
 
-	}
+
+
+
+    }
     private void showcase(){
         SharedPreferences  preferences=getActivity().getPreferences(Context.MODE_PRIVATE);
         if(!preferences.getBoolean("showcase_home",false)){
@@ -287,26 +301,6 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 
                 mArrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1);
                 innerlistView.setAdapter(mArrayAdapter);
-                searchView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-                    @Override
-                    public void onSystemUiVisibilityChange(int visibility) {
-                        if (visibility != View.VISIBLE) {
-                            String slog = "";
-                            switch (visibility) {
-                                case View.VISIBLE:
-                                    slog = "VISIBLE";
-                                    break;
-                                case View.INVISIBLE:
-                                    slog = "INVISIBLE";
-                                    break;
-                                case View.GONE:
-                                    slog = "GONE";
-                                    break;
-                            }
-                            Log.e("visibility", slog);
-                        }
-                    }
-                });
                 searchView.setOnActionClickListener(new SearchView.OnActionClickListener() {
                     @Override
                     public boolean onActionClick(String s) {
@@ -315,7 +309,9 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                         Log.e("visibility", "act");
                         return true;
                     }
-                });
+                });/*
+                contentView = searchView.geSearchEditText().getRootView();
+                imm = (InputMethodManager)getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);*/
 /*
                 searchView.setOnActionClickListener(new SearchView.OnActionClickListener() {
                     @Override
@@ -341,8 +337,8 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 
 /*                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(searchView.geSearchEditText(), InputMethodManager.SHOW_FORCED);*/
-                /*searchView.geSearchEditText().removeTextChangedListener(textWatcher);
-                searchView.geSearchEditText().addTextChangedListener(textWatcher);*/
+                searchView.geSearchEditText().removeTextChangedListener(textWatcher);
+                searchView.geSearchEditText().addTextChangedListener(textWatcher);
                 //searchView.geSearchEditText().requestFocus();
                 break;
             case 2:
@@ -373,12 +369,13 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
     private void setUpMap() {
         mAmap.setLocationSource(this);// 设置定位监听
         mAmap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
+        mAmap.getUiSettings().setScaleControlsEnabled(true);
         mAmap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         // 设置定位的类型为定位模式：定位（AMap.LOCATION_TYPE_LOCATE）、跟随（AMap.LOCATION_TYPE_MAP_FOLLOW）
         // 地图根据面向方向旋转（AMap.LOCATION_TYPE_MAP_ROTATE）三种模式
         mAmap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
         mAmap.setOnMarkerClickListener(this);// 设置点击marker事件监听器
-        mAmap.setOnInfoWindowClickListener(this);// 设置点击infoWindow事件监听器
+        //mAmap.setOnInfoWindowClickListener(this);// 设置点击infoWindow事件监听器
         mAmap.getUiSettings().setZoomControlsEnabled(false);
         mAmap.getUiSettings().setZoomPosition(AMapOptions.ZOOM_POSITION_RIGHT_CENTER);
         mAmap.getUiSettings().setLogoPosition(AMapOptions.LOGO_POSITION_BOTTOM_RIGHT);
@@ -389,28 +386,35 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             @Override
             public View getInfoWindow(Marker marker) {
                 LayoutInflater mInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View view = mInflater.inflate(R.layout.view_mark_content, null, false);
-                Parking parking = (Parking) marker.getObject();
+                View view = mInflater.inflate(R.layout.view_mark_content2, null, false);
+                final Parking parking = (Parking) marker.getObject();
                 TextView name = (TextView) view.findViewById(R.id.view_marker_name);
                 TextView num = (TextView) view.findViewById(R.id.view_marker_num);
                 TextView distance = (TextView) view.findViewById(R.id.view_marker_distance);
-                TextView address = (TextView) view.findViewById(R.id.view_marker_address);
-                TextView price = (TextView) view.findViewById(R.id.view_marker_price);
 
                 name.setText("" + parking.getParking_name());
-                if (parking.getParking_can_use() == 0) {
-                    num.setText("满:" + parking.getParking_can_use());
-                    num.setTextColor(getResources().getColor(R.color.parking_full));
-                } else if (parking.getParking_can_use() <5) {
-                    num.setText("紧:" + parking.getParking_can_use());
-                    num.setTextColor(getResources().getColor(R.color.parking_lack));
-                }else{
-                    num.setText("空:" + parking.getParking_can_use());
-                    num.setTextColor(getResources().getColor(R.color.parking_empty));
-                }
-                price.setText(parking.getParking_charging_standard()+"元");
-                address.setText("" + parking.getParking_address());
-                distance.setText(parking.getParking_distance() + "米");
+                num.setText("剩余车位：" + parking.getParking_can_use());
+                distance.setText("距离：" + parking.getParking_distance() + "米");
+
+                LinearLayout ll_park_item = (LinearLayout)view.findViewById(R.id.park_item);
+                LinearLayout ll_park_navigate = (LinearLayout)view.findViewById(R.id.park_navigate);
+
+                ll_park_item.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("parking", parking);
+                        replaceFragment(ParkingDetailsItemFragment.class, "ParkingDetailsItemFragment", bundle);
+                    }
+                });
+
+                ll_park_navigate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupNavi(v,parking);
+                    }
+                });
+
                 return view;
             }
 
@@ -692,5 +696,102 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         Bundle bundle=new Bundle();
         bundle.putParcelable("parking", parking);
         replaceFragment(ParkingDetailsItemFragment.class, "ParkingDetailsItemFragment", bundle);
+    }
+
+    void popupNavi(View view,final Parking parking){
+        PopupMenu popupMenu = new PopupMenu(getActivity(),view);
+        popupMenu.inflate(R.menu.navi_menu);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.action_autonavi:
+                        if (isAppInstalled(getActivity(), "com.autonavi.minimap")) {
+                            shareToAutoNavi(parking);
+                        } else {
+                            showToast("高德地图未安装");
+                        }
+                        break;
+                    case R.id.action_baidunavi:
+                        if (isAppInstalled(getActivity(), "com.baidu.BaiduMap")) {
+                            shareToBaidu(parking);
+                        } else {
+                            showToast("百度地图未安装");
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
+        popupMenu.show();
+    }
+    void shareToAutoNavi(Parking parking){
+        String uriString = String.format(
+                "androidamap://navi?sourceApplication=%s&poiname=%s&lat=%s&lon=%s&dev=1&style=2",
+                "口袋停",
+                parking.getParking_name(),
+                parking.getParking_latitude(),
+                parking.getParking_longitude()
+        );
+        try {
+            Intent intent = Intent.parseUri(uriString,0);
+            intent.setPackage("com.autonavi.minimap");
+            startActivity(intent);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void shareToBaidu(Parking parking){
+        String uriString = String.format(
+                "intent://map/direction?origin=latlng:%s,%s|name:%s&destination=%s&mode=driving&src=口袋停|口袋停#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end",
+                parking.getParking_latitude(),
+                parking.getParking_longitude(),
+                "我的位置",
+                parking.getParking_name()
+        );
+
+        try {
+            Intent intent = Intent.parseUri(uriString,0);
+            startActivity(intent); //启动调用
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isAppInstalled(Context context,String packagename)
+    {
+        PackageInfo packageInfo;
+        try {
+            packageInfo = context.getPackageManager().getPackageInfo(packagename, 0);
+        }catch (PackageManager.NameNotFoundException e) {
+            packageInfo = null;
+            e.printStackTrace();
+        }
+        if(packageInfo ==null){
+            //System.out.println("没有安装");
+            return false;
+        }else{
+            //System.out.println("已经安装");
+            return true;
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {/*
+        if(imm!=null){
+            imm.hideSoftInputFromWindow(contentView.getWindowToken()
+                    , InputMethodManager.HIDE_NOT_ALWAYS);
+            imm = null;
+        }*/
+        return super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onDestroyView() {
+
+
+        super.onDestroyView();
     }
 }

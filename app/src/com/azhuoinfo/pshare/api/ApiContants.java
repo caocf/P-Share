@@ -23,6 +23,7 @@ public class ApiContants {
 	/**
 	 * test server address
 	 */
+	//public static String TEST_SERVER_URI = "http://139.196.48.108/";
 	public static String TEST_SERVER_URI = "http://139.196.12.103/";
 	/**
 	 * release server address
@@ -225,9 +226,10 @@ customer_age*/
 	 *customer_id，car_brand，car_number，car_color，car_size，owner_id_number（未确定是否需
 	 * @return
 	 */
-	public HashMap<String, String> userCarList(String customerId){
+	public HashMap<String, String> userCarList(String customerId,String pageindex){
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("customer_id", customerId );
+		params.put("pageindex", pageindex );
 		//params.put("order_id",orderId);
 		return params;
 	}

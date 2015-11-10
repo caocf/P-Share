@@ -178,6 +178,7 @@
     <string name="image_saved_title">已保存到</string>
     <string name="image_saved_fail">没有可用的存储空间</string>
     <string name="image_setas_title">设置为 &#8230;</string>
+    <string name="action_menu_navigation">导航</string>
 
     <string-array name="wallpaper_action_array">
         <item>保存到本地</item>

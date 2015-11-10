@@ -11,6 +11,9 @@ dependencies {
 }
 
 android {
+    defaultConfig{
+
+    }
     signingConfigs {
         config {
             keyAlias 'pshare'

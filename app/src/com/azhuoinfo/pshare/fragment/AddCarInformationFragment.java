@@ -101,10 +101,11 @@ public class AddCarInformationFragment extends BaseContentFragment{
             @Override
             public void onClick(View v) {
                 if(validate()){
+                    String carlocation = mCarLocationEditText.getText().toString();
                     String mCarNumber = mCarNumbrEditText.getText().toString();
                     String mCarBrand = mCarBrandEditText.getText().toString();
                     String mCarSfzid = mCarSFZIDEditText.getText().toString();
-                    if (mCarNumber.length()!=6){
+                    if ((carlocation + mCarNumber).length()!=7){
                         showToast("车牌格式错误");
                         return;
                     }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_autonavi" android:title="高德导航"
+        android:orderInCategory="100"/>
+    <item android:id="@+id/action_baidunavi" android:title="百度导航"
+        android:orderInCategory="200"/>
+</menu>

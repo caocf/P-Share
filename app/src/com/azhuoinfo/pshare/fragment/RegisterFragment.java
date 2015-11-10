@@ -43,7 +43,7 @@ public class RegisterFragment extends BaseContentFragment {
 	//定义注册账号的控件
 	private Button register;
 	//定义返回到登录页面的控件
-	private RelativeLayout rl_registerActivity_backLoginActivity;
+	//private RelativeLayout rl_registerActivity_backLoginActivity;
 	//private SmsObserver smsObserver;
 
 	@Override
@@ -77,7 +77,7 @@ public class RegisterFragment extends BaseContentFragment {
 		get_code=(CountDownTextView) view.findViewById(R.id.get_code);
 		mCodeEditText=(EditText) view.findViewById(R.id.registerActivity_editText_Code);
 		register=(Button) view.findViewById(R.id.register);
-		rl_registerActivity_backLoginActivity=(RelativeLayout) view.findViewById(R.id.rl_registerActivity_backLoginActivity);
+		//rl_registerActivity_backLoginActivity=(RelativeLayout) view.findViewById(R.id.rl_registerActivity_backLoginActivity);
 	}
 
 	@Override
@@ -86,12 +86,12 @@ public class RegisterFragment extends BaseContentFragment {
 		get_code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mMobileEditText.getText() != null) {
+                if (mMobileEditText.getText() != null && mMobileEditText.getText().length()>0) {
                     postSendSmsCode(mMobileEditText.getText().toString());
                     get_code.starTimeByMillisInFuture(60 * 1000);
                     get_code.setEnabled(false);
                 } else {
-                    Toast.makeText(getActivity(), "请输入手机号", Toast.LENGTH_SHORT);
+                    Toast.makeText(getActivity(), "请输入手机号", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -107,20 +107,21 @@ public class RegisterFragment extends BaseContentFragment {
 			@Override
 			public void onClick(View v) {
 
-				if (mMobileEditText.getText() != null  && mPasswordEditText.getText() != null) {
+				if (mMobileEditText.getText() != null  && mPasswordEditText.getText() != null
+						&& mMobileEditText.getText().length()>0  && mPasswordEditText.getText().length()>=8) {
 					//postVerifySmsCode(mMobileEditText.getText().toString(),mCodeEditText.getText().toString());
 					postRegister(mMobileEditText.getText().toString(), mPasswordEditText.getText().toString(),mCodeEditText.getText().toString());
 				} else {
-					Toast.makeText(getActivity(), "手机号或密码不正确", Toast.LENGTH_SHORT);
+					Toast.makeText(getActivity(), "手机号或密码不正确", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
-		rl_registerActivity_backLoginActivity.setOnClickListener(new View.OnClickListener() {
+		/*rl_registerActivity_backLoginActivity.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				//replaceFragment(LoginFragment.class, "LoginFragment", null);
 			}
-		});
+		});*/
 	}
 	@Override
 	protected void initData(Bundle bundle) {

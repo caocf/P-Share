@@ -5,17 +5,18 @@
               android:background="@color/fragment_background"
               android:orientation="vertical">
 
-    <com.azhuoinfo.pshare.view.AllListView
+    <com.azhuoinfo.pshare.view.listview.pull.PullRefreshListView
         android:id="@+id/lv_monthlyRent_list"
         style="@style/Common_ListView"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="0dp"/>
 
     <RelativeLayout
         android:id="@+id/rl_add_monthlyRent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/padding1"
+        android:layout_margin="@dimen/padding1"
         android:background="@color/text_white"
         android:padding="@dimen/padding2">
 

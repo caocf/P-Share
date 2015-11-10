@@ -1,6 +1,7 @@
 package com.azhuoinfo.pshare.utils;
 
 import com.azhuoinfo.pshare.BuildConfig;
+import com.azhuoinfo.pshare.api.ApiContants;
 
 public class Constants {
 	// 开发模式 显示log、生命周期等
@@ -50,9 +51,21 @@ public class Constants {
 
 
     // 在商户后台回调地址
-    public static final String ALIPAY_NOTIFY_URL = "http://139.196.12.103/notify_url.jsp";
+/*    public static final String ALIPAY_NOTIFY_URL = "http://139.196.12.103/notify_url.jsp";
     public static final String ALIPAY_RENT_NOTIFY_URL = "http://139.196.12.103/payBackOrder.jsp";
     public static final String WECHAT_NOTIFY_URL = "http://139.196.12.103/{client_type}/{version}/customer/payOrder";
-    public static final String WECHAT_RENT_NOTIFY_URL = "http://139.196.12.103/{client_type}/{version}/customer/payAmount";
+    public static final String WECHAT_RENT_NOTIFY_URL = "http://139.196.12.103/{client_type}/{version}/customer/payAmount";*/
+
+    private static final String baseUrl = ApiContants.DEBUG? ApiContants.TEST_SERVER_URI : ApiContants.RELEASE_SERVER_URI;
+
+    public static final String ALIPAY_NOTIFY_URL_SUFFIX = "/notify_url.jsp";
+    public static final String ALIPAY_RENT_NOTIFY_URL_SUFFIX = "/payBackOrder.jsp";
+    public static final String WECHAT_NOTIFY_URL_SUFFIX = "/{client_type}/{version}/customer/payOrder";
+    public static final String WECHAT_RENT_NOTIFY_URL_SUFFIX = "/{client_type}/{version}/customer/payAmount";
+
+    public static final String ALIPAY_NOTIFY_URL = baseUrl + ALIPAY_NOTIFY_URL_SUFFIX;
+    public static final String ALIPAY_RENT_NOTIFY_URL = baseUrl + ALIPAY_RENT_NOTIFY_URL_SUFFIX;
+    public static final String WECHAT_NOTIFY_URL = baseUrl + WECHAT_NOTIFY_URL_SUFFIX;
+    public static final String WECHAT_RENT_NOTIFY_URL = baseUrl + WECHAT_RENT_NOTIFY_URL_SUFFIX;
 
 }

@@ -72,13 +72,15 @@ public class ResetPassWordFragment extends BaseContentFragment {
 		submit.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Log.e(TAG,mCustomerPasswordEditText.getText().toString());
+				Log.e(TAG, mCustomerPasswordEditText.getText().toString());
 				Log.e(TAG, mConfrimPasswordEditText.getText().toString());
-				if (mCustomerPasswordEditText.getText().toString().equals(mConfrimPasswordEditText.getText().toString())) {
-					customerPassword= mCustomerPasswordEditText.getText().toString();
+				if (mCustomerPasswordEditText.getText().length() < 8) {
+					Toast.makeText(getActivity(), R.string.password, Toast.LENGTH_SHORT).show();
+				} else if (mCustomerPasswordEditText.getText().toString().equals(mConfrimPasswordEditText.getText().toString())) {
+					customerPassword = mCustomerPasswordEditText.getText().toString();
 					getResetPwd(customerMobile, customerPassword);
 				} else {
-					Toast.makeText(getActivity(),"密码不一致",Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), "密码不一致", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});

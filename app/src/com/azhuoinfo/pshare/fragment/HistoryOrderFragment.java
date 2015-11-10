@@ -40,8 +40,12 @@ import mobi.cangol.mobile.base.FragmentInfo;
 public class HistoryOrderFragment extends BaseContentFragment{
 
     //历史订单列表
+
     private PullRefreshListView mHistoryOrderListView;
     LoadMoreAdapter<OrderList> mListLoadMoreAdapter;
+    int mPageIndex = 1;
+
+
     private PromptView mPromptView;
     private AMapLocation mAMapLocation;
     private AccountVerify mAccountVerify;
@@ -69,7 +73,7 @@ public class HistoryOrderFragment extends BaseContentFragment{
         findViews(view);
     }
 
-    int mPageIndex = 1;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -85,6 +89,7 @@ public class HistoryOrderFragment extends BaseContentFragment{
 
     @Override
     protected void initViews(Bundle bundle) {
+
         mDataAdapter=new HistoryOrderAdapter(this.getActivity());
         mListLoadMoreAdapter = new LoadMoreAdapter<>(mDataAdapter);
         mListLoadMoreAdapter.setIsPullMode(false);
@@ -108,7 +113,7 @@ public class HistoryOrderFragment extends BaseContentFragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 OrderList item = (OrderList) parent.getItemAtPosition(position);
-                Log.e("pos",""+position);
+                Log.e("pos", "" + position);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("orderList", item);
                 replaceParentFragment(HistoryOrderDetailsFragment.class, "HistoryOrderDetailsFragment", bundle);
@@ -130,6 +135,7 @@ public class HistoryOrderFragment extends BaseContentFragment{
     public void onStop() {
         super.onStop();
         mPageIndex = 1;
+        mDataAdapter.clear();
     }
 
     protected void updateViews(List<OrderList> list) {
