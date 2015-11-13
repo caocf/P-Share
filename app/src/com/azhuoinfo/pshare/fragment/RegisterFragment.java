@@ -1,12 +1,14 @@
 package com.azhuoinfo.pshare.fragment;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -84,33 +86,33 @@ public class RegisterFragment extends BaseContentFragment {
 	protected void initViews(Bundle bundle) {
 		this.setTitle(R.string.registered);
 		get_code.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mMobileEditText.getText() != null && mMobileEditText.getText().length()>0) {
-                    postSendSmsCode(mMobileEditText.getText().toString());
-                    get_code.starTimeByMillisInFuture(60 * 1000);
-                    get_code.setEnabled(false);
-                } else {
-                    Toast.makeText(getActivity(), "请输入手机号", Toast.LENGTH_SHORT).show();
-                }
+			@Override
+			public void onClick(View v) {
+				if (mMobileEditText.getText() != null && mMobileEditText.getText().length() > 0) {
+					postSendSmsCode(mMobileEditText.getText().toString());
+					get_code.starTimeByMillisInFuture(60 * 1000);
+					get_code.setEnabled(false);
+				} else {
+					Toast.makeText(getActivity(), "请输入手机号", Toast.LENGTH_SHORT).show();
+				}
 
-            }
-        });
+			}
+		});
         get_code.setOnCountDownListener(new CountDownTextView.OnCountDownListener() {
-            @Override
-            public void onFinish() {
-                get_code.setEnabled(true);
-                get_code.setText(R.string.get_code);
-            }
-        });
+			@Override
+			public void onFinish() {
+				get_code.setEnabled(true);
+				get_code.setText(R.string.get_code);
+			}
+		});
 		register.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
-				if (mMobileEditText.getText() != null  && mPasswordEditText.getText() != null
-						&& mMobileEditText.getText().length()>0  && mPasswordEditText.getText().length()>=8) {
+				if (mMobileEditText.getText() != null && mPasswordEditText.getText() != null
+						&& mMobileEditText.getText().length() > 0 && mPasswordEditText.getText().length() >= 8) {
 					//postVerifySmsCode(mMobileEditText.getText().toString(),mCodeEditText.getText().toString());
-					postRegister(mMobileEditText.getText().toString(), mPasswordEditText.getText().toString(),mCodeEditText.getText().toString());
+					postRegister(mMobileEditText.getText().toString(), mPasswordEditText.getText().toString(), mCodeEditText.getText().toString());
 				} else {
 					Toast.makeText(getActivity(), "手机号或密码不正确", Toast.LENGTH_SHORT).show();
 				}
@@ -186,7 +188,7 @@ public class RegisterFragment extends BaseContentFragment {
 	private void postRegister(String mobile,String password,String smsCode) {
 		ApiTask apiTask=ApiTask.build(this.getActivity(),TAG);
 		apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_REGISTER));
-		apiTask.setParams(ApiContants.instance(getActivity()).register(mobile, password,smsCode));
+		apiTask.setParams(ApiContants.instance(getActivity()).register(mobile, password, smsCode));
 		apiTask.setRoot(null);
 		apiTask.execute(new OnDataLoader<UserAuth>() {
 			@Override
@@ -209,5 +211,16 @@ public class RegisterFragment extends BaseContentFragment {
 				}
 			}
 		});
+	}
+
+	@Override
+	public boolean onSupportNavigateUp() {
+		hideInputMethod();
+		return super.onSupportNavigateUp();
+	}
+
+	void hideInputMethod(){
+		((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE))
+				.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 	}
 }

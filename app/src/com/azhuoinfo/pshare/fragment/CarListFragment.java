@@ -5,12 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.azhuoinfo.pshare.AccountVerify;
@@ -20,17 +15,10 @@ import com.azhuoinfo.pshare.api.ApiContants;
 import com.azhuoinfo.pshare.api.task.ApiTask;
 import com.azhuoinfo.pshare.api.task.OnDataLoader;
 import com.azhuoinfo.pshare.fragment.adapter.CarListAdapter;
-import com.azhuoinfo.pshare.fragment.adapter.HistoryOrderAdapter;
-import com.azhuoinfo.pshare.fragment.adapter.ParkingDetailsAdapter;
 import com.azhuoinfo.pshare.model.CarList;
-import com.azhuoinfo.pshare.model.CustomerInfo;
-import com.azhuoinfo.pshare.model.OrderList;
-import com.azhuoinfo.pshare.model.Parking;
 import com.azhuoinfo.pshare.view.CommonDialog;
 import com.azhuoinfo.pshare.view.LoadingDialog;
-import com.azhuoinfo.pshare.view.PromptView;
 import com.azhuoinfo.pshare.view.listview.LoadMoreAdapter;
-import com.azhuoinfo.pshare.view.listview.MyListView;
 import com.azhuoinfo.pshare.view.listview.OnLoadMoreListener;
 import com.azhuoinfo.pshare.view.listview.pull.PullRefreshListView;
 
@@ -44,12 +32,11 @@ import mobi.cangol.mobile.base.FragmentInfo;
  * Created by Azhuo on 2015/9/22.
  * 我的车辆模块车列表
  */
-public class CarListFragment extends BaseContentFragment{
+public class CarListFragment extends BaseContentFragment {
     //private ListView mListView;
     private CarListAdapter mDataAdapter;
     private TextView mAddCarTextView;
     private AccountVerify mAccountVerify;
-
 
 
     private PullRefreshListView mListView;
@@ -66,7 +53,7 @@ public class CarListFragment extends BaseContentFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_car_list,container,false);
+        return inflater.inflate(R.layout.fragment_car_list, container, false);
     }
 
     @Override
@@ -84,15 +71,15 @@ public class CarListFragment extends BaseContentFragment{
 
     @Override
     protected void findViews(View view) {
-        mListView=(PullRefreshListView) findViewById(R.id.lv_list_car);
-        mAddCarTextView= (TextView) findViewById(R.id.tv_listcar_add);
+        mListView = (PullRefreshListView) findViewById(R.id.lv_list_car);
+        mAddCarTextView = (TextView) findViewById(R.id.tv_listcar_add);
     }
 
     @Override
     protected void initViews(Bundle bundle) {
         this.setTitle(R.string.mine_carList);
 
-        mDataAdapter=new CarListAdapter(this.getActivity());
+        mDataAdapter = new CarListAdapter(this.getActivity());
         mListLoadMoreAdapter = new LoadMoreAdapter<>(mDataAdapter);
         mListLoadMoreAdapter.setIsPullMode(false);
         mListLoadMoreAdapter.setAbsListView(mListView);
@@ -111,8 +98,6 @@ public class CarListFragment extends BaseContentFragment{
             }
         });
 
-
-
         mAddCarTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,11 +111,7 @@ public class CarListFragment extends BaseContentFragment{
                 return false;
             }
         });
-
-
-
     }
-
 
     @Override
     public void onResume() {
@@ -145,23 +126,18 @@ public class CarListFragment extends BaseContentFragment{
         mDataAdapter.clear();
     }
 
-
     @Override
     protected void initData(Bundle bundle) {
-/*        if(mAccountVerify.isLogin())
-            postCarList(mAccountVerify.getCustomer_Id(),mPageIndex);
-        else
-            mAccountVerify.showLoginDialog(this);*/
     }
-    public void showDeleteDialog(final int position){
+
+    public void showDeleteDialog(final int position) {
         CommonDialog dialog = CommonDialog.creatDialog(getActivity());
-        //dialog.setTitle(R.string.dialog_delete_title);
         dialog.setMessage(R.string.dialog_delete_content);
         dialog.setLeftButtonInfo(getString(R.string.common_dialog_confirm), new CommonDialog.OnButtonClickListener() {
 
             @Override
             public void onClick(View view) {
-                CarList item= mDataAdapter.get(position);
+                CarList item = mDataAdapter.get(position);
                 deleteCar(item.getCar_id());
                 mDataAdapter.remove(position);
             }
@@ -175,6 +151,7 @@ public class CarListFragment extends BaseContentFragment{
         });
         dialog.show();
     }
+
     @Override
     protected FragmentInfo getNavigtionUpToFragment() {
         return null;
@@ -184,20 +161,22 @@ public class CarListFragment extends BaseContentFragment{
     public boolean isCleanStack() {
         return true;
     }
+
     protected void updateViews(List<CarList> list) {
-        if(list!=null&&list.size()>0){
+        if (list != null && list.size() > 0) {
             Log.e("updateViews", list + "");
             mListLoadMoreAdapter.addMoreData(list);
-            if(mListLoadMoreAdapter.getCount()>0){
+            if (mListLoadMoreAdapter.getCount() > 0) {
 
-            }else{
+            } else {
 
             }
-        }else{
+        } else {
 
         }
     }
-    public void postCarList(String customerId,final int pageIndex){
+
+    public void postCarList(String customerId, final int pageIndex) {
         if (pageIndex == -1) {
             mListLoadMoreAdapter.addMoreData(new ArrayList<CarList>());
             return;
@@ -209,31 +188,34 @@ public class CarListFragment extends BaseContentFragment{
         apiTask.setRoot("orderInfo");
         apiTask.execute(new OnDataLoader<List<CarList>>() {
             LoadingDialog loadingDialog;
+
             public void onStart() {
                 if (isEnable())
                     loadingDialog = LoadingDialog.show(getActivity());
             }
+
             @Override
             public void onSuccess(List<CarList> list) {
                 if (isEnable()) {
                     loadingDialog.dismiss();
-                    if (pageIndex<=1) {
+                    if (pageIndex <= 1) {
                         updateViews(list);
 
-                    }else {
-                        if (list!=null && !list.isEmpty()) {
+                    } else {
+                        if (list != null && !list.isEmpty()) {
                             mListLoadMoreAdapter.addMoreData(list);
                         }
                     }
 
-                    if (list != null && list.size()==10){
+                    if (list != null && list.size() == 10) {
                         mPageIndex++;
-                    }else {
+                    } else {
                         mPageIndex = -1;
                     }
 
                 }
             }
+
             @Override
             public void onFailure(String code, String message) {
                 mPageIndex = -1;
@@ -242,7 +224,8 @@ public class CarListFragment extends BaseContentFragment{
             }
         });
     }
-    public void deleteCar(String car_id){
+
+    public void deleteCar(String car_id) {
         ApiTask apiTask = ApiTask.build(this.getActivity(), TAG);
         apiTask.setMethod("GET");
         apiTask.setUrl(ApiContants.instance(getActivity()).getActionUrl(ApiContants.API_CUSTOMER_DELETECAR));
@@ -260,7 +243,7 @@ public class CarListFragment extends BaseContentFragment{
 
             @Override
             public void onFailure(String code, String message) {
-                if (isEnable())showToast(message);
+                if (isEnable()) showToast(message);
             }
         });
     }

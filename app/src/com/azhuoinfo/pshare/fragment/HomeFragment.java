@@ -193,10 +193,6 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             Log.e("default_id not");
             updateDefaltParking(null);
         }
-
-
-
-
     }
     private void showcase(){
         SharedPreferences  preferences=getActivity().getPreferences(Context.MODE_PRIVATE);
@@ -254,7 +250,6 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                                         mArrayAdapter.clear();
                                         mArrayAdapter.addAll(listString);
                                     }
-                                    //showPopUp(getActivity().findViewById(R.id.layout_main), listString);
                                 }
                             }
                         });
@@ -309,37 +304,9 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
                         Log.e("visibility", "act");
                         return true;
                     }
-                });/*
-                contentView = searchView.geSearchEditText().getRootView();
-                imm = (InputMethodManager)getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);*/
-/*
-                searchView.setOnActionClickListener(new SearchView.OnActionClickListener() {
-                    @Override
-                    public boolean onActionClick(String s) {
-                        //getSearchParkListbyName(s);
-                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(searchView.geSearchEditText().getWindowToken(), 0);
-                        return true;
-                    }
                 });
-
-                searchView.setOnSearchTextListener(new SearchView.OnSearchTextListener() {
-                    @Override
-                    public boolean onSearchText(String s) {
-                        android.util.Log.e("search string", s);
-                        //getSearchParkListbyName(s);
-                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(searchView.geSearchEditText().getWindowToken(), 0);
-                        return true;
-                    }
-                });
-*/
-
-/*                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(searchView.geSearchEditText(), InputMethodManager.SHOW_FORCED);*/
                 searchView.geSearchEditText().removeTextChangedListener(textWatcher);
                 searchView.geSearchEditText().addTextChangedListener(textWatcher);
-                //searchView.geSearchEditText().requestFocus();
                 break;
             case 2:
                 replaceFragment(ParkingDetailsFragment.class,"ParkingDetailsFragment",null);
@@ -347,13 +314,6 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         }
         return super.onMenuActionSelected(action);
     }
-
-    void hideInput(){
-        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        //imm.showSoftInput(getView(), InputMethodManager.HIDE_NOT_ALWAYS);
-        imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-    }
-
 
     /**
      * 初始化AMap对象
@@ -540,18 +500,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             mParkNameTextView.setText(parking.getParking_name());
             mParkNumTextView.setText("剩余车位:"+parking.getParking_can_use());
             mParkAddressTextView.setText(parking.getParking_address());
-            /*if(parking.getParking_can_use()>0){
-                mParkNumTextView.setText("空:"+parking.getParking_can_use());
-            }else{
-                mParkNumTextView.setText("满:"+parking.getParking_can_use());
-            }*/
             mMineHomeButton.setText(""+parking.getParking_can_use());
-//            if(mAMapLocation!=null){
-//                int s = (int) AMapUtils.calculateLineDistance(new LatLng(Double.parseDouble(parking.getParking_latitude()), Double.parseDouble(parking.getParking_longitude())),
-//                        new LatLng(mAMapLocation.getLatitude(), mAMapLocation.getLongitude()));
-//                parking.setParking_distance("" + s);
-//                mParkDistanceTextView.setText(s+"米");
-//            }
         }else{
 
         }
@@ -599,7 +548,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
             @Override
             public void onSuccess(List<Parking> list) {
                 if (isEnable()) {
-                    drawMarker(list,false);
+                    drawMarker(list, false);
                 }
             }
 
@@ -726,6 +675,7 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
         });
         popupMenu.show();
     }
+
     void shareToAutoNavi(Parking parking){
         String uriString = String.format(
                 "androidamap://navi?sourceApplication=%s&poiname=%s&lat=%s&lon=%s&dev=1&style=2",
@@ -779,19 +729,9 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
     }
 
     @Override
-    public boolean onSupportNavigateUp() {/*
-        if(imm!=null){
-            imm.hideSoftInputFromWindow(contentView.getWindowToken()
-                    , InputMethodManager.HIDE_NOT_ALWAYS);
-            imm = null;
-        }*/
-        return super.onSupportNavigateUp();
-    }
-
-    @Override
     public void onDestroyView() {
-
-
         super.onDestroyView();
     }
+
+
 }
