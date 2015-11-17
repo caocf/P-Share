@@ -101,7 +101,6 @@ public class HomeFragment extends BaseContentFragment implements LocationSource,
 
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.getCustomActionBar().setCustomHomeAsUpIndicator(R.drawable.homepager_user, R.drawable.left_head);
 		mAccountVerify = AccountVerify.getInstance(getActivity());
         mSessionService = getSession();
 	}

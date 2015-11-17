@@ -1,2 +1,2 @@
-include ':app', ':commons-zxing', ':commons-pay', ':uiframe-1.0.0', ':actionbar-1.0.1', ':appcore-1.0.1'
+include ':app', ':commons-zxing', ':commons-pay', ':uiframe-1.0.1', ':actionbar-1.0.1', ':appcore-1.0.1'
 
